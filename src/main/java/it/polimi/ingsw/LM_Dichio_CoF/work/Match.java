@@ -7,7 +7,7 @@ import java.util.List;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.Field;
 
 
-public class Game {
+public class Match {
 
 	private Configurations config;
 	private Player arrayPlayer[];
@@ -29,7 +29,7 @@ public class Game {
 	 *  Lancia il gioco tramite il metodo startGame()
 	 *  
 	 */
-	public Game(Configurations config, Player[] arrayPlayer) {
+	public Match(Configurations config, Player[] arrayPlayer) {
 
 		this.config = config;
 		this.arrayPlayer = arrayPlayer;
