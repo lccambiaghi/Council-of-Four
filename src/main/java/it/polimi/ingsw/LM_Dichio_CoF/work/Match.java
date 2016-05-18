@@ -11,6 +11,8 @@ public class Match {
 
 	private Configurations config;
 	private Player arrayPlayer[];
+	private int numberPlayers;
+	
 	private Field field;
 	private Market market;
 	private Integer orderPlayers[];
@@ -33,15 +35,17 @@ public class Match {
 		this.config = config;
 		this.arrayPlayer = arrayPlayer;
 		
-		/*
-		 *  Bisogna implementare l'accettazione di parametro "config" nel campo
-		 */
-		//field = new Field(this.config);
+		numberPlayers=arrayPlayer.length;
 		
 		/*
 		 *  Restituisce un array di Integer casuali, costituente l'ordine di gioco 
 		 */
 		orderPlayers = randomizeOrderPlayer(arrayPlayer);
+		
+		/*
+		 *  Bisogna implementare l'accettazione di parametro "config" nel campo
+		 */
+		//field = new Field(config, numberPlayers, orderPlayers);
 		
 		startGame();
 		
