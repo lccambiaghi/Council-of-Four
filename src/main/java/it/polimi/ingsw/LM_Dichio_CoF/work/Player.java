@@ -1,19 +1,41 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
+import java.net.Socket;
+
 public class Player {
 
-	String IP;
 	String id;
 	String nickname;
 	
 	char typeOfConnection;
+	Socket playerSocket;
+	
+	char CLIorGUI;
 
-	public Player(char typeOfConnection, String IP){
+	public Player(String typeOfConnection){
 		
-		this.typeOfConnection=typeOfConnection;
-		this.IP=IP;
+		this.typeOfConnection=typeOfConnection.charAt(0);
 		
 	}
+
+	public Socket getPlayerSocket() {
+		return playerSocket;
+	}
+
+	public void setPlayerSocket(Socket playerSocket) {
+		this.playerSocket = playerSocket;
+		
+		
+		
+	}
+	
+	
+	public char getCLIorGUI() {
+		return CLIorGUI;
+	}
+	public void setCLIorGUI(char cLIorGUI) {
+		CLIorGUI = cLIorGUI;
+	}	
 
 	public String getNickname() {
 		return nickname;
