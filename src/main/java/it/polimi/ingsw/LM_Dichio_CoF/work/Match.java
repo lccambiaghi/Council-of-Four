@@ -13,7 +13,6 @@ public class Match {
 	private Player arrayPlayer[];
 	private Field field;
 	private Market market;
-	private PoliticCard politicCard;
 	private Integer orderPlayers[];
 	
 	
