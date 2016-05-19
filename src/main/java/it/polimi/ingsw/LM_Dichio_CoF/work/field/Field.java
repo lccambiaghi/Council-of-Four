@@ -10,7 +10,8 @@ public class Field {
 	
 	public Field(Configurations config, int numberPlayers, Player[] orderPlayers) {
 		
-		//GESTIONE REGIONI
+		//GESTIONE REGIONI -- C'è da creare una random che distribuisca i colori tra le regioni
+		
 		int numberCitiesPerRegion = (config.getNumberCities())/3;
 
 		arrayRegion[0] = new Region (numberCitiesPerRegion,NameRegion.Sea, 0);
