@@ -1,16 +1,16 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Colors;
+import it.polimi.ingsw.LM_Dichio_CoF.work.field.Color;
 import java.util.ArrayList;
 
 public class PoliticCard {
 	
-	Colors cardColor;
+	Color cardColor;
 	
 	public PoliticCard (){
-		cardColor = Colors.getRandomColor(); 
+		cardColor = Color.getRandomColor(); 
 	}
 	
-	public Colors getCardColor() {
+	public Color getCardColor() {
 		return cardColor;
 	}
 

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 import java.util.Random;
 
-public enum Colors {
+public enum Color {
 	
 	White("255, 255, 255"),
 	Black("0, 0, 0"), 
@@ -13,7 +13,7 @@ public enum Colors {
 	
 	public String rgb;
 	
-	private Colors(String rgb) {
+	private Color(String rgb) {
 		this.rgb=rgb;
 	}
 	public String getRgb() {
@@ -23,7 +23,7 @@ public enum Colors {
 		this.rgb = rgb;
 	}
 	// the method getRandomColor select a Color from the enum list 
-	public static Colors getRandomColor(){
+	public static Color getRandomColor(){
 		Random random = new Random ();
 		return values()[random.nextInt(values().length)];
 	}

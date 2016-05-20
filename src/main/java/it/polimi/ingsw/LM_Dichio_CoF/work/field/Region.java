@@ -8,7 +8,7 @@ public class Region {
 	
 	/*
 	 * The constructor of Region takes as parameters the number of cities he has to have,
-	 * the name of the Region, the index to star creating cities: creates an array of cities.
+	 * the name of the Region, the index to start creating cities: creates an array of cities.
 	 * The point is that the constructor itself passes to each city the name of it, selecting 
 	 * the right ones.
 	 */
