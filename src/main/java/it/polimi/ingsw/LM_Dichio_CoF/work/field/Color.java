@@ -22,9 +22,14 @@ public enum Color {
 	public void setRgb(String rgb) {
 		this.rgb = rgb;
 	}
+	
 	// the method getRandomColor select a Color from the enum list 
 	public static Color getRandomColor(){
 		Random random = new Random ();
 		return values()[random.nextInt(values().length)];
+	}
+	
+	public static Color getColorFromIndex(int index){
+		return Color.values()[index];
 	}
 }

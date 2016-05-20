@@ -28,6 +28,6 @@ public class TestGetRandomColor {
 				 System.out.printf("color[%d] = %s%n", i, color);
 				 }
 		 }
-		 assertEquals(6,ColorsArrayList.size());
+		 assertEquals(7,ColorsArrayList.size());
 }
 }
