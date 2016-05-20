@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 public class Connection{
@@ -13,7 +12,7 @@ public class Connection{
 	
 	public Connection() throws IOException{
 		
-		serverSocket = new ServerSocket(Constant.PORT); 
+		serverSocket = new ServerSocket(Constant.PORT_SOCKET); 
 		while(true){
 			Socket clientSocket = serverSocket.accept();
 			new SocketConnectionWithClient(clientSocket);

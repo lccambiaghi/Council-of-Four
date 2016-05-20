@@ -10,7 +10,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.field.Field;
 public class Match {
 
 	private Configurations config;
-	private Player arrayPlayer[];
+	private ArrayList<Player> arrayListPlayer;
 	private int numberPlayers;
 	
 	private Field field;
@@ -30,17 +30,15 @@ public class Match {
 	 *  Lancia il gioco tramite il metodo startGame()
 	 *  
 	 */
-	public Match(Configurations config, Player[] arrayPlayer) {
+	public Match(Configurations config, ArrayList<Player> arrayListPlayer) {
 
 		this.config = config;
-		this.arrayPlayer = arrayPlayer;
+		this.arrayListPlayer = arrayListPlayer;
 		
-		numberPlayers=arrayPlayer.length;
+		numberPlayers=arrayListPlayer.size();
 		
-		/*
-		 *  Restituisce un array di Integer casuali, costituente l'ordine di gioco 
-		 */
-		orderPlayers = randomizeOrderPlayer(arrayPlayer);
+		Collections.shuffle(arrayListPlayer);
+		
 		
 		/*
 		 *  Bisogna implementare l'accettazione di parametro "config" nel campo
@@ -51,20 +49,10 @@ public class Match {
 		
 	}
 	
-	private Integer[] randomizeOrderPlayer(Player[] arrayPlayer){
-		
-		ArrayList<Integer> numbers = new ArrayList<Integer>();
-		int numberOfPlayer = arrayPlayer.length;
-		
-		for(int i=0; i<numberOfPlayer; i++){
-			numbers.add(i);
-		}
-		Collections.shuffle(numbers);
 	
-		Integer orderInteger[] = new Integer[numbers.size()];
-		orderInteger = numbers.toArray(orderInteger);
-		return orderInteger;
-	}	
+	
+	
+	
 	
 	private void startGame() {	
 		
