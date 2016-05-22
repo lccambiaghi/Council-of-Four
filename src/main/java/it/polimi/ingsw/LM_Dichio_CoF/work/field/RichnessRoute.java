@@ -1,5 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
-public class RichnessRoute extends Route {
+public class RichnessRoute implements Route {
 
 }
