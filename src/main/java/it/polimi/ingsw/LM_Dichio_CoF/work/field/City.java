@@ -1,25 +1,47 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import java.util.Random;
+
+import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
+
 public class City {
 
-	NameCity name;
-	Bonus bonus[];
+	NameCity nameCity;
+	int numberBonus;
+	Bonus[] arrayBonus;
 	City nearbyCity[];
 	
 	
 	/*
 	 * As we can see the Constructor only receives the name of the city given by the Region
 	 */
-	public City(NameCity name){
-		this.name=name;
+	public City(Configurations config, NameCity nameCity){
+		Random random = new Random();
+		
+		this.nameCity=nameCity;
+		
+		numberBonus= random.nextInt(config.getMaxNumberBonusPerCity()-
+				config.getMinNumberBonusPerCity()+1) +
+				config.getMinNumberBonusPerCity();
+		
+		arrayBonus = new Bonus[numberBonus];
+		for(int i=0; i< numberBonus; i++){
+			// Polymorphism
+			arrayBonus[i]= new BonusCity();
+		}
+		
+	}	
+	
+	public NameCity getNameCity() {
+		return nameCity;
 	}
 
-	public NameCity getName() {
-		return name;
+	public void setNameCity(NameCity nameCity) {
+		this.nameCity = nameCity;
 	}
-
-	public void setNameCity(NameCity name) {
-		this.name = name;
+	
+	public Bonus[] getArrayBonus() {
+		return arrayBonus;
 	}
 	
 	
