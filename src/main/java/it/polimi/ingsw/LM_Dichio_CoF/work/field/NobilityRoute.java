@@ -9,7 +9,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 
 public class NobilityRoute implements Route{
 
-	RouteCell nobilityRouteCell;
+	NobilityRouteCell nobilityRouteCell;
 	Map <Player,Integer> nobilityMap = new HashMap<>();
 	
 	public NobilityRoute(ArrayList<Player> arrayListPlayer){
