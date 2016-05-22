@@ -12,7 +12,11 @@ public class Field {
 	
 	public Field(Configurations config, int numberPlayers, Player[] orderPlayers) {
 		
-		//GESTIONE REGIONI -- C'è da creare una random che distribuisca i colori tra le regioni
+		/*
+		 * GESTIONE REGIONI -- C'è da creare una random che distribuisca i colori tra le regioni,
+		 * inoltre bisogna trovare un modo (matrice di inceidenza o liste) per creare le città vicine
+		 */
+		
 		
 		int numberCitiesPerRegion = (config.getNumberCities())/3;
 
