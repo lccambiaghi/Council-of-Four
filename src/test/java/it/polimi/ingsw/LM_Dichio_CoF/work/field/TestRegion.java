@@ -5,8 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.Region;
 import junit.framework.Assert;
+import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
+import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.City;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.NameCity;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.NameRegion;
 
 public class TestRegion {
@@ -14,15 +15,16 @@ public class TestRegion {
 	@Test
 	public void citiesInRegion(){
 		
-		Region region = new Region(8, NameRegion.Mountain,16);
+		TestCases testCases = new TestCases();
 		
+		Configurations config =testCases.configurations();
 		
-		City[] arrayCity = new City[7];
+		Region region = new Region(config, NameRegion.Mountain);
 		
-		arrayCity = region.getArrayCity();
+		City[] arrayCityPerRegion = region.getArrayCity();
 		
-		for (City city : arrayCity){
-			System.out.println(city.getName());
+		for (City city : arrayCityPerRegion){
+			System.out.println(city.getNameCity());
 		}
 		
 	}
