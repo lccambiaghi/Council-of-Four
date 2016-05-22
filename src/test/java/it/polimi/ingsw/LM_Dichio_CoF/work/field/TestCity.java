@@ -20,11 +20,13 @@ public class TestCity {
 		
 		for(City city: arrayCity){
 			System.out.println(city.getNameCity());
-			Bonus[] arrayBonus = city.getArrayBonus();
-			for(Bonus bonus: arrayBonus){
-				System.out.print(bonus.getBonusName() +" " + bonus.getIncrement() + " ");
+			if(city.hasBonus()){
+				Bonus[] arrayBonus = city.getArrayBonus();
+				for(Bonus bonus: arrayBonus){
+					System.out.print(bonus.getBonusName() +" " + bonus.getIncrement() + " ");
+				}
+				System.out.println();
 			}
-			System.out.println();
 		}
 		
 	}
