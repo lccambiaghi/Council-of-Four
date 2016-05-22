@@ -29,4 +29,9 @@ public enum BonusName {
     	return values()[random.nextInt(values().length)];
     }
     
+    public static BonusName getRandomBonusNameWithoutMainMove(){
+    	Random random = new Random();
+    	return values()[random.nextInt(values().length-1)];
+    }
+    
 }
