@@ -10,7 +10,7 @@ public class City {
 	/*
 	 * As we can see the Constructor only receives the name of the city given by the Region
 	 */
-	City(NameCity name){
+	public City(NameCity name){
 		this.name=name;
 	}
 

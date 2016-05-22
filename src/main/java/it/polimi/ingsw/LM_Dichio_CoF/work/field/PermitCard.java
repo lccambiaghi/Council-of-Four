@@ -23,7 +23,8 @@ public class PermitCard {
 		int numberPossibleCities=Constant.MAX_CITIES_PER_PERMIT_CARD +
 				possibleCityWhereBuild.length - Constant.MIN_CITIES_PER_REGION;
 		
-		int lengthCityWhereBuild = random.nextInt(numberPossibleCities)+
+		int lengthCityWhereBuild = 
+				random.nextInt(numberPossibleCities-Constant.MIN_CITIES_PER_PERMIT_CARD+1)+
 				Constant.MIN_CITIES_PER_PERMIT_CARD;
 		
 		Collections.shuffle(Arrays.asList(possibleCityWhereBuild));
