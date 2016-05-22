@@ -19,12 +19,9 @@ public class Field {
 		 * inoltre bisogna trovare un modo (matrice di inceidenza o liste) per creare le città vicine
 		 */
 		
-		
-		int numberCitiesPerRegion = (config.getNumberCities())/3;
-
-		arrayRegion[0] = new Region (numberCitiesPerRegion,NameRegion.Sea, 0);
-		arrayRegion[1] = new Region (numberCitiesPerRegion,NameRegion.Hill, numberCitiesPerRegion);
-		arrayRegion[2] = new Region (numberCitiesPerRegion,NameRegion.Mountain, numberCitiesPerRegion*2);
+		arrayRegion[0] = new Region (config,NameRegion.Sea);
+		arrayRegion[1] = new Region (config, NameRegion.Hill);
+		arrayRegion[2] = new Region (config, NameRegion.Mountain);
 
 		
 		
