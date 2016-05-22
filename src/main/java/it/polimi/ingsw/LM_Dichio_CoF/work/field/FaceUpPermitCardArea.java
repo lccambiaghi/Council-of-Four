@@ -10,14 +10,16 @@ public class FaceUpPermitCardArea {
 	
 	/*
 	 * Constructor
-	 * It tackes the array of cities that the permitCard belonging to 
+	 * It takes the array of cities that the permitCard belonging to 
 	 * a region can have.
-	 * It initialize the arrayPermitCard with NUMBER_FACE_UP_PERMIT_CARD_PER_REGION
+	 * It initializes the arrayPermitCard with NUMBER_FACE_UP_PERMIT_CARD_PER_REGION
 	 * permit cards.
 	 */
 	public FaceUpPermitCardArea(City[] arrayCity){
 		
+		this.arrayCity = new City[arrayCity.length];
 		this.arrayCity=arrayCity;
+		
 		arrayPermitCard = new PermitCard[Constant.NUMBER_FACE_UP_PERMIT_CARD_PER_REGION];
 		
 		for(int i=0; i< arrayPermitCard.length; i++){
