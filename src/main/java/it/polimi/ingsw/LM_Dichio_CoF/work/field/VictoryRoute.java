@@ -13,7 +13,7 @@ public class VictoryRoute implements Route {
 	public VictoryRoute (ArrayList <Player> arrayListPlayer){
 		for(int i=0; i<arrayListPlayer.size(); i++)
 			victoryMap.put(arrayListPlayer.get(i), 0);
-		}
+	}
 		
 	public void movePlayer (int increment, Player player){
 		int oldValue = victoryMap.get(player);
@@ -21,12 +21,10 @@ public class VictoryRoute implements Route {
 			victoryMap.replace(player, oldValue+increment);
 		else 
 			victoryMap.replace(player, Constant.MAX_VICTORY);
-		}
+	}
 	
 	public int getPosition (Player player){
-		int victoryPosition;
-		victoryPosition=victoryMap.get(player);
-		return victoryPosition;
+		return victoryMap.get(player);
 	}
 	
 }
