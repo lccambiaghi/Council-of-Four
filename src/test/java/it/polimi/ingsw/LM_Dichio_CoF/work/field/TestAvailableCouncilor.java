@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF;
+package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import static org.junit.Assert.*;
 
@@ -11,7 +11,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
 public class TestAvailableCouncilor {
 
 	@Test
-	public void test() {
+	public void initialCouncilors() {
 		/*
 		 * This test controls the correct implementation of the singleton and the 
 		 * list of councilers that are created the first time

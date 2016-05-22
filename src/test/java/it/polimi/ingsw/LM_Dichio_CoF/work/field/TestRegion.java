@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF;
+package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +12,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.field.NameRegion;
 public class TestRegion {
 	
 	@Test
-	public void test(){
+	public void citiesInRegion(){
 		
 		Region region = new Region(8, NameRegion.Mountain,16);
 		

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF;
+package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +14,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.field.NameRegion;;
 public class TestBalcony {
 
 	@Test
-	public void test() {
+	public void councilorsInBalcony() {
 		
 		AvailableCouncilor availableCouncilor = new AvailableCouncilor();
 		
