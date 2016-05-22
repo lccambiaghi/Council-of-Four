@@ -1,9 +1,12 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
+import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
+
 public class Region {
 
-	NameRegion name;
-	int numberCities;
+	NameRegion nameRegion;
+	int numberCitiesPerRegion;
 	City[] arrayCity;
 	FaceUpPermitCardArea faceUpPermitCardArea;
 	
@@ -14,16 +17,18 @@ public class Region {
 	 * the right ones.
 	 * It also creates the faceUpPermitCardArea, calling his constructor
 	 */
-	public Region(int numberCities, NameRegion name, int indexStartingCity){
+	public Region(Configurations config, NameRegion nameRegion){
 		
-		this.numberCities=numberCities;
-		this.name = name;
+		this.numberCitiesPerRegion=config.getNumberCities()/Constant.NUMBER_OF_REGIONS;
+		this.nameRegion = nameRegion;
 		
-		arrayCity = new City[numberCities];
+		this.arrayCity = new City[numberCitiesPerRegion];
 		
-		for(int i = 0; i<numberCities; i++){
+		int indexStartingCity = NameRegion.getIndex(nameRegion)*numberCitiesPerRegion;
+		
+		for(int i = 0; i<numberCitiesPerRegion; i++){
 			NameCity nameCity = NameCity.getNameCity(i + indexStartingCity);
-			arrayCity[i] = new City(nameCity);
+			arrayCity[i] = new City(config, nameCity);
 		}
 		
 		
