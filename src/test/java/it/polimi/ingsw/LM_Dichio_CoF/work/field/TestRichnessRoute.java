@@ -1,5 +1,6 @@
-package it.polimi.ingsw.LM_Dichio_CoF;
+package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.RichnessRoute;
 import org.junit.Test;
