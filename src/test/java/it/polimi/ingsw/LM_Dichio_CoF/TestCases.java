@@ -35,7 +35,7 @@ public class TestCases {
 		int n = config.getNumberCities();
 		City[] arrayCity = new City[n];
 		for(int i=0; i<n; i++){
-			arrayCity[i] = new City(config, NameCity.getNameCity(i));
+			arrayCity[i] = new City(config, NameCity.getNameCity(i), NameRegion.Sea);
 		}
 		
 		return arrayCity;
