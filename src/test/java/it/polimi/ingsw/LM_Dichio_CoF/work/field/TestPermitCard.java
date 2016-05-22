@@ -30,7 +30,7 @@ public class TestPermitCard {
 			City[] arrayCityWhereBuild = p.getArrayCityWhereBuild();
 			
 			for(City c: arrayCityWhereBuild){
-				System.out.print(c.getName().toString());
+				System.out.print(c.getNameCity().toString());
 			}
 			
 			System.out.println();
