@@ -43,7 +43,7 @@ public class Match {
 		/*
 		 *  Bisogna implementare l'accettazione di parametro "config" nel campo
 		 */
-		//field = new Field(config, numberPlayers, orderPlayers);
+		//field = new Field(config, arrayListPlayer);
 		
 		startGame();
 		

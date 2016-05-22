@@ -1,5 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import java.util.ArrayList;
+
 import it.polimi.ingsw.LM_Dichio_CoF.work.*;
 
 public class Field {
@@ -10,7 +12,7 @@ public class Field {
 	Route route;
 	
 	
-	public Field(Configurations config, int numberPlayers, Player[] orderPlayers) {
+	public Field(Configurations config, ArrayList<Player> arrayListPlayer) {
 		
 		/*
 		 * GESTIONE REGIONI -- C'è da creare una random che distribuisca i colori tra le regioni,
