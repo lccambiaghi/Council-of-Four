@@ -8,8 +8,8 @@ import java.util.Random;
 public enum BonusName {
 
     Assistant(3),
-    Richness(5),
-    Nobility(2),
+    Richness(4),
+    Nobility(1),
     Victory(5),
     Cards(3),
     MainMove(1);
