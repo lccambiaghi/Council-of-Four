@@ -2,6 +2,10 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 public enum NameRegion {
 
-	Mountain, Hill, Sea
+	Sea, Hill, Mountain;
+	
+	public static int getIndex (NameRegion nameRegion){
+		return nameRegion.ordinal();
+	}
 	
 }
