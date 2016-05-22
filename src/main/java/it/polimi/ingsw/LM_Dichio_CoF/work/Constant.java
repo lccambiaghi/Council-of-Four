@@ -8,6 +8,7 @@ public class Constant {
 	public static final int TOTAL_NUMBER_COUNCILORS=24; //IT HAS TO BE A MULTIPLE OF THREE
 	public static final int NUMBER_INITIAL_POLITIC_CARDS=6;
 	public static final int INITIAL_RICHNESS_FIRST_PLAYER=10;
+	public static final int NUMBER_OF_REGIONS=3;
 	public static final int NUMBER_FACE_UP_PERMIT_CARD_PER_REGION=2;
 	public static final int MAX_CITIES_PER_PERMIT_CARD=3;
 	public static final int MIN_CITIES_PER_PERMIT_CARD=1;
