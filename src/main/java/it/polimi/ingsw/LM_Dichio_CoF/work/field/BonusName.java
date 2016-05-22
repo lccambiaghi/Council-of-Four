@@ -1,5 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import java.util.Random;
+
 /**
  * Created by Luca on 22/05/16.
  */
@@ -20,5 +22,11 @@ public enum BonusName {
     public static BonusName getBonusName (int index){return values()[index];}
      */
 
-    public static int getMaxIncrement(BonusName bonusName){return bonusName.maxIncrement;}
+    public int getMaxIncrement(BonusName bonusName){return bonusName.maxIncrement;}
+
+    public static BonusName getRandomBonusName(){
+    	Random random = new Random();
+    	return values()[random.nextInt(values().length)];
+    }
+    
 }
