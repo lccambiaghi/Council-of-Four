@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
 
-public class FieldTest {
+public class TestField {
 
 	TestCases testCases = new TestCases();
 	
