@@ -6,6 +6,7 @@ public class Constant {
 	
 	public static final int PORT_SOCKET=3000;
 	public static final int NUMBER_COUNCILERS_PER_BALCONY=4;
+	public static final int NUMBER_BALCONIES=4;
 	public static final int NUMBER_OF_COLORS=6; // COUNCILORS
 	public static final int TOTAL_NUMBER_COUNCILORS=24; //IT HAS TO BE A MULTIPLE OF THREE
 	public static final int NUMBER_INITIAL_POLITIC_CARDS=6;
