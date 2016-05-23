@@ -20,6 +20,7 @@ public class PermitCard {
 	public PermitCard(City[] arrayCity) {
 		
 		City[] arrayPossibleCityWhereBuild = new City[arrayCity.length];
+		arrayPossibleCityWhereBuild = arrayCity;
 		
 		/*
 		 * "numberPossibleCities" contains the MAX number of cities that the permit card
