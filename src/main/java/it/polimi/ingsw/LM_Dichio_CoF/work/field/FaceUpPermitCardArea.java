@@ -51,6 +51,8 @@ public class FaceUpPermitCardArea {
 		return arrayPermitCard[index-1];
 	}
 	
-	
+	public PermitCard[] getArrayPermitCard(){
+		return arrayPermitCard;
+	}
 	
 }
