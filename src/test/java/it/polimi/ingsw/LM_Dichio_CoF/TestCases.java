@@ -32,7 +32,7 @@ public class TestCases {
 		
 		Configurations config = configurations();
 		
-		int n = config.getNumberCities();
+		int n = config.getNumberCities()/3;
 		City[] arrayCity = new City[n];
 		for(int i=0; i<n; i++){
 			arrayCity[i] = new City(config, NameCity.getNameCity(i), NameRegion.Sea);
