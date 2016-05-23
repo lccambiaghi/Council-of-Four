@@ -23,6 +23,9 @@ public class Balcony {
 		 * It is random, because during the creation of AvailableCouncilor (that cointains
 		 * all the councilor initially - in the game 24) the arrayList is shuffled
 		 */
+		
+		
+		
 		for(int i=0;i< Constant.NUMBER_COUNCILERS_PER_BALCONY; i++){
 			
 			Councilor councilor = availableCouncilor.removeCouncilor();

@@ -58,14 +58,16 @@ public class Field {
 		 * Create one (AND ONLY FOR ALL THE GAME) instance for the Available Councilor
 		 */
 		
-		/*
+		
 		availableCouncilor = new AvailableCouncilor();
+		
+		arrayBalcony = new Balcony[Constant.NUMBER_BALCONIES];
 		
 		arrayBalcony[0] = new Balcony (availableCouncilor, NameRegion.Sea.toString()+"Balcony");
 		arrayBalcony[1] = new Balcony (availableCouncilor, NameRegion.Hill.toString()+"Balcony");
 		arrayBalcony[2] = new Balcony (availableCouncilor, NameRegion.Mountain.toString()+"Balcony");
 		arrayBalcony[3] = new KingBalcony (availableCouncilor, "KingBalcony");
-		*/
+		
 		
 		
 		//GESTIONE PERCORSI
