@@ -6,7 +6,6 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 public class Region {
 
 	NameRegion nameRegion;
-	int numberCitiesPerRegion;
 	City[] arrayCity;
 	FaceUpPermitCardArea faceUpPermitCardArea;
 	
@@ -20,8 +19,9 @@ public class Region {
 	 */
 	public Region(Configurations config, NameRegion nameRegion){
 		
-		this.numberCitiesPerRegion=config.getNumberCities()/Constant.NUMBER_OF_REGIONS;
 		this.nameRegion = nameRegion;
+		
+		int numberCitiesPerRegion=config.getNumberCities()/Constant.NUMBER_OF_REGIONS;
 		
 		this.arrayCity = new City[numberCitiesPerRegion];
 		
@@ -41,5 +41,10 @@ public class Region {
 	public City[] getArrayCity() {
 		return arrayCity;
 	}
+	
+	public FaceUpPermitCardArea getFaceUpPermitCardArea(){
+		return faceUpPermitCardArea;
+	}
+
 	
 }
