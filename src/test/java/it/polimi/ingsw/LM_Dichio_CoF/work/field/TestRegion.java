@@ -3,32 +3,24 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Region;
-import junit.framework.Assert;
+
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.City;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.NameRegion;
 
 public class TestRegion {
+
+	TestCases testCases = new TestCases();
 	
 	@Test
-	public void citiesInRegion(){
+	public void constructor() {
 		
-		TestCases testCases = new TestCases();
+		Region region = new Region(NameRegion.Mountain, testCases.arrayCity());
 		
-		Configurations config =testCases.configurations();
+		City[] arrayCity = region.getArrayCity();
 		
-		Region region = new Region(config, NameRegion.Mountain);
-		
-		City[] arrayCityPerRegion = region.getArrayCity();
-		
-		for (City city : arrayCityPerRegion){
-			System.out.println(city.getNameCity());
+		for(City city: arrayCity){
+			System.out.println(city.getNameCity().toString());
 		}
 		
 	}
-	
-	
-	
+
 }
