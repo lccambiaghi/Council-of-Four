@@ -8,7 +8,6 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 public class PermitCard {
 
-	City[] possibleCityWhereBuild;
 	City[] arrayCityWhereBuild;
 	Bonus[] arrayBonus;
 	
@@ -18,27 +17,51 @@ public class PermitCard {
 	 * Then, based on the dimension of it, it create the array of cities 
 	 * where the card permit to build
 	 */
-	public PermitCard(City[] possibleCityWhereBuild) {
+	public PermitCard(City[] arrayCity) {
 		
-		this.possibleCityWhereBuild = new City[possibleCityWhereBuild.length];
+		City[] arrayPossibleCityWhereBuild = new City[arrayCity.length];
 		
+		/*
+		 * "numberPossibleCities" contains the MAX number of cities that the permit card
+		 * can permit to build. 
+		 * It depends on the size of the array "this.possibleCityWhereBuild", because the more
+		 * it is long, the more "numberPossibleCities" has to be long as well
+		 */
+		int numberPossibleCities = Constant.MAX_CITIES_PER_PERMIT_CARD +
+				arrayPossibleCityWhereBuild.length - Constant.MIN_CITIES_PER_REGION;
+		
+		
+		/*
+		 * Here there is a random in order to have the number of cities that ACTUALLY the permit card
+		 * permits to build.
+		 * The ranges of it are: "numberPossibleCities" (MAX) and Constant.MIN_CITIES_PER_PERMIT_CARD (MIN)
+		 * The result is "lengthArrayCityWhereBuild", used to define the length of "arrayCityWhereBuild",
+		 * the array that will contain the real available cities of the permit card
+		 */
 		Random random = new Random();
-		
-		int numberPossibleCities=Constant.MAX_CITIES_PER_PERMIT_CARD +
-				this.possibleCityWhereBuild.length - Constant.MIN_CITIES_PER_REGION;
-		
-		int lengthCityWhereBuild = 
+		int lengthArrayCityWhereBuild = 
 				random.nextInt(numberPossibleCities-Constant.MIN_CITIES_PER_PERMIT_CARD+1)+
 				Constant.MIN_CITIES_PER_PERMIT_CARD;
+		arrayCityWhereBuild = new City[lengthArrayCityWhereBuild];
 		
-		Collections.shuffle(Arrays.asList(this.possibleCityWhereBuild));
+		/*
+		 * This method permit to shuffle the array "possibleCityWhereBuild"
+		 */
+		Collections.shuffle(Arrays.asList(arrayPossibleCityWhereBuild));
 		
-		arrayCityWhereBuild = new City[lengthCityWhereBuild];
 		
-		for(int i=0; i< lengthCityWhereBuild; i++){
-			arrayCityWhereBuild[i]=this.possibleCityWhereBuild[i];
+		/*
+		 * Now we assign the first "lengthArrayCityWhereBuild" elements of the array "arrayPossibleCityWhereBuild"
+		 * that has been  previously shuffled.
+		 */
+		for(int i=0; i< lengthArrayCityWhereBuild; i++){
+			arrayCityWhereBuild[i]=arrayPossibleCityWhereBuild[i];
 		}
 		
+		/*
+		 * Now we assign the bonuses that the permit card will have.
+		 * They are in a fixed number: Constant.NUMBER_BONUS_PER_PERMIT_CARD
+		 */
 		arrayBonus = new Bonus[Constant.NUMBER_BONUS_PER_PERMIT_CARD];
 		for(int i=0; i < arrayBonus.length; i++){
 			arrayBonus[i] = new BonusPermitCard();
