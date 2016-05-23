@@ -8,4 +8,8 @@ public enum NameRegion {
 		return nameRegion.ordinal();
 	}
 	
+	public static NameRegion getNameRegion (int index){
+		return values()[index];
+	}
+	
 }
