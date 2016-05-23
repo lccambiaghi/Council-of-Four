@@ -21,35 +21,33 @@ public class Field {
 		 * inoltre bisogna trovare un modo (matrice di inceidenza o liste) per creare le città vicine
 		 */
 		
+		
+		/*
+		 * Creation of the cities that are assigned to the specified Region
+		 */
+		int numberCities = config.getNumberCities();
+		int numberCitiesPerRegion = numberCities/Constant.NUMBER_OF_REGIONS;
+		
+		arrayCity = new City[numberCities];
 		arrayRegion = new Region[Constant.NUMBER_OF_REGIONS];
 		
-		arrayRegion[0] = new Region (config, NameRegion.Sea);
-		arrayRegion[1] = new Region (config, NameRegion.Hill);
-		arrayRegion[2] = new Region (config, NameRegion.Mountain);
-		
-		/*
-		 * This array will contain the cities created by every region
-		 */
-		arrayCity = new City[config.getNumberCities()];
-		
-		/*
-		 * k=iterator in arrayCity
-		 * j=iterator in arrayRegion
-		 * i=iterator in arrayCity(of every region)
-		 */
-		for(int k=0,j=0; j<Constant.NUMBER_OF_REGIONS; j++){
-			for(int i=0; i<arrayRegion[j].getArrayCity().length; i++, k++){
-				arrayCity[k]=(arrayRegion[j].getArrayCity())[i];
-				
-				/*
-				 * if the City is the king one it initializes the king
-				 */
-				if(arrayCity[k].getNameCity() == Constant.INITIAL_KING_CITY){
-					king = new King(arrayCity[k]);
-				}
-			}
-		}
+		City[] arrayCityPerRegion = new City[numberCitiesPerRegion];
 
+		for(int itRegion=0; itRegion<Constant.NUMBER_OF_REGIONS ; itRegion++){
+			NameRegion nameRegion = NameRegion.getNameRegion(itRegion);
+			
+			for(int itCity=0; itCity<numberCitiesPerRegion; itCity++){
+				
+				NameCity nameCity = NameCity.getNameCity(itCity + itRegion*numberCitiesPerRegion);
+				arrayCity[itCity + itRegion*numberCitiesPerRegion] = new City(config, nameCity, nameRegion);
+				
+				arrayCityPerRegion[itCity] = arrayCity[itRegion*numberCitiesPerRegion];
+			}
+			
+			arrayRegion[itRegion] = new Region (nameRegion, arrayCityPerRegion);
+			
+		}
+		
 		
 		
 		
@@ -78,5 +76,6 @@ public class Field {
 	public City[] getArrayCity(){
 		return arrayCity;
 	}
+	
 	
 }
