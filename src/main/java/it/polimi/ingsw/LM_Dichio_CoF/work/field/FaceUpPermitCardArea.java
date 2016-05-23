@@ -17,7 +17,6 @@ public class FaceUpPermitCardArea {
 	 */
 	public FaceUpPermitCardArea(City[] arrayCity){
 		
-		this.arrayCity = new City[arrayCity.length];
 		this.arrayCity=arrayCity;
 		
 		arrayPermitCard = new PermitCard[Constant.NUMBER_FACE_UP_PERMIT_CARD_PER_REGION];
