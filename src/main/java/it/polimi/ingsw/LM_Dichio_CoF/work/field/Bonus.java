@@ -13,4 +13,18 @@ public class Bonus {
 		return increment;
 	}
 	
+	
+	/*
+	 * This method verify if the BonusName of the bonus that calls it is present in the arrayBonus (parameter)
+	 */
+	public boolean bonusNameIsIn(Bonus[] arrayBonus){
+		
+		for(int i=0; i<arrayBonus.length; i++){
+			if(arrayBonus[i]!=null)
+				if(bonusName==arrayBonus[i].getBonusName())
+					return true;
+		}
+		return false;
+	}
+	
 }
