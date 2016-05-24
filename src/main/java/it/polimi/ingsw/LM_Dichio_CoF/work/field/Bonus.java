@@ -4,7 +4,7 @@ public class Bonus {
 
 	BonusName bonusName;
 	int increment;
-	
+		
 	public BonusName getBonusName() {
 		return bonusName;
 	}
