@@ -3,6 +3,8 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
+
+import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 
@@ -13,11 +15,11 @@ public class PermitCard {
 	
 	/*
 	 * Constructor
-	 * It takes as parameter the array of possible cities where build
+	 * It takes as parameter the array of possible cities where build and the config
 	 * Then, based on the dimension of it, it create the array of cities 
 	 * where the card permit to build
 	 */
-	public PermitCard(City[] arrayCity) {
+	public PermitCard(City[] arrayCity, Configurations config) {
 		
 		City[] arrayPossibleCityWhereBuild = arrayCity.clone();
 		
@@ -38,9 +40,9 @@ public class PermitCard {
 		 * The result is "lengthArrayCityWhereBuild", used to define the length of "arrayCityWhereBuild",
 		 * the array that will contain the real available cities of the permit card
 		 */
-		Random random = new Random();
+		Random randomCities = new Random();
 		int lengthArrayCityWhereBuild = 
-				random.nextInt(numberPossibleCities-Constant.MIN_CITIES_PER_PERMIT_CARD+1)+
+				randomCities.nextInt(numberPossibleCities-Constant.MIN_CITIES_PER_PERMIT_CARD+1)+
 				Constant.MIN_CITIES_PER_PERMIT_CARD;
 		arrayCityWhereBuild = new City[lengthArrayCityWhereBuild];
 		
@@ -60,10 +62,20 @@ public class PermitCard {
 		
 		/*
 		 * Now we assign the bonuses that the permit card will have.
-		 * They are in a fixed number: Constant.NUMBER_BONUS_PER_PERMIT_CARD
+		 * The ranges of it are: "MaxNumberBonusPerPermitCard" (MAX) and MinNumberBonusPerPermitCard (MIN)
+		 * The result is "numberBonus", used to define the length of "arrayBonus",
+		 * the array that will contain the bonuses of the permit card
 		 */
 		
-		arrayBonus = BonusPermitCard.getArrayBonusPermitCard(Constant.NUMBER_BONUS_PER_PERMIT_CARD);
+		int numberBonus;
+		Random randomBonus = new Random();
+		numberBonus= randomBonus.nextInt(config.getMaxNumberBonusPerPermitCard()-
+				config.getMinNumberBonusPerPermitCard()+1) +
+				config.getMinNumberBonusPerPermitCard();
+		
+		if(numberBonus!=0){
+			arrayBonus = BonusPermitCard.getArrayBonusPermitCard(numberBonus);
+		}
 		
 	}
 	
@@ -74,5 +86,11 @@ public class PermitCard {
 	public Bonus[] getArrayBonus() {
 		return arrayBonus;
 	}		
+	
+	public boolean hasBonus(){
+		if (arrayBonus== null)
+			return false;
+		return true;
+	}
 	
 }
