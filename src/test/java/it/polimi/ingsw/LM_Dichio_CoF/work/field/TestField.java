@@ -18,8 +18,8 @@ public class TestField {
 		City[] arrayCity = field.getArrayCity();
 		
 		for(City city: arrayCity){
-			System.out.println(city.getNameRegion());
-			System.out.println(city.getNameCity());
+			System.out.println("Region: " + city.getNameRegion());
+			System.out.println("City: " + city.getNameCity());
 			if(city.hasBonus()){
 				Bonus[] arrayBonus = new Bonus[city.getArrayBonus().length];
 				arrayBonus = city.getArrayBonus();

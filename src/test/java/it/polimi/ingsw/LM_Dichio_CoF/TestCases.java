@@ -22,7 +22,7 @@ public class TestCases {
 		
 		// Parameters constructor: numberCities, minNumberBonusPerCity,
 		// maxNumberBonusPerCity
-		Configurations config = new Configurations(15,1,2);
+		Configurations config = new Configurations(15,0,3);
 		return config;
 		
 	}
