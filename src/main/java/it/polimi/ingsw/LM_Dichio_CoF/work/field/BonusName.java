@@ -12,7 +12,11 @@ public enum BonusName {
     Nobility(1),
     Victory(5),
     Cards(3),
-    MainMove(1);
+    MainMove(1),
+    BuiltCityBonus(1),
+    FaceUpPermitCard(1),
+    OwnedPermitCardBonus(1),
+    TwoBuiltDifferentBonus(1);
 
     private int maxIncrement;
 
@@ -26,12 +30,13 @@ public enum BonusName {
 
     public static BonusName getRandomBonusName(){
     	Random random = new Random();
-    	return values()[random.nextInt(values().length)];
+    	return values()[random.nextInt(values().length-4)];
     }
     
     public static BonusName getRandomBonusNameWithoutMainMove(){
     	Random random = new Random();
-    	return values()[random.nextInt(values().length-1)];
+    	return values()[random.nextInt(values().length-5)];
     }
     
+
 }
