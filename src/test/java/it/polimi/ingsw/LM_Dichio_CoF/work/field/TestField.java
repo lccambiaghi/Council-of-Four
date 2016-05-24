@@ -18,11 +18,17 @@ public class TestField {
 		City[] arrayCity = field.getArrayCity();
 		
 		for(City city: arrayCity){
+			
 			System.out.println("Region: " + city.getNameRegion());
 			System.out.println("City: " + city.getNameCity());
+			
+			City[] arrayCityConnected = city.getNearbyCity();
+			for(City cityConnected: arrayCityConnected){
+				System.out.println("City connected: " + cityConnected.getNameCity());
+			}	
+			
 			if(city.hasBonus()){
-				Bonus[] arrayBonus = new Bonus[city.getArrayBonus().length];
-				arrayBonus = city.getArrayBonus();
+				Bonus[] arrayBonus = city.getArrayBonus();
 				for(Bonus bonus: arrayBonus){
 					System.out.print(bonus.getBonusName() + " " + bonus.getIncrement()+ "  ");
 				}
@@ -31,6 +37,17 @@ public class TestField {
 			System.out.println();
 		}
 		
+	}	
+	
+	
+	/*
+	@Test
+	public void creationNearbyCities(){
+		
+		assignNearbyCities("n".charAt(0), testCases.arrayCity());
+	
+	
 	}
+	*/
 
 }
