@@ -62,10 +62,8 @@ public class PermitCard {
 		 * Now we assign the bonuses that the permit card will have.
 		 * They are in a fixed number: Constant.NUMBER_BONUS_PER_PERMIT_CARD
 		 */
-		arrayBonus = new Bonus[Constant.NUMBER_BONUS_PER_PERMIT_CARD];
-		for(int i=0; i < arrayBonus.length; i++){
-			arrayBonus[i] = new BonusPermitCard();
-		}
+		
+		arrayBonus = BonusPermitCard.getArrayBonusPermitCard(Constant.NUMBER_BONUS_PER_PERMIT_CARD);
 		
 	}
 	

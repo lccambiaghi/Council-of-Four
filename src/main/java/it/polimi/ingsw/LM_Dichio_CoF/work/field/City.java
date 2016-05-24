@@ -34,11 +34,7 @@ public class City {
 					config.getMinNumberBonusPerCity();
 			
 			if(numberBonus!=0){
-				arrayBonus = new Bonus[numberBonus];
-				for(int i=0; i< numberBonus; i++){
-					// Polymorphism
-					arrayBonus[i]= new BonusCity();
-				}
+				arrayBonus = BonusCity.getArrayBonusCity(numberBonus);
 			}
 		}	
 	}	
