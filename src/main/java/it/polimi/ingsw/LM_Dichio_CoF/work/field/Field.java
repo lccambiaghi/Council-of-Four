@@ -1,7 +1,10 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.Scanner;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.*;
 
@@ -49,6 +52,7 @@ public class Field {
 		}
 		
 		
+		assignNearbyCities(config.getDifficulty(), arrayCity);
 		
 		
 		//GESTIONE BALCONATE
@@ -77,6 +81,81 @@ public class Field {
 	
 	public City[] getArrayCity(){
 		return arrayCity;
+	}
+	
+	
+	/*
+	 * This method assigns to every city of the arrayCity the cities that are connected to it
+	 * It uses an arrayList to make the creation of the array of cities connected to every city simpler
+	 * 
+	 */
+	private void assignNearbyCities(char difficulty,City[] arrayCity){
+		
+		int[][] matrix = importMatrix(difficulty, arrayCity.length);
+		
+		for(int row=0; row<arrayCity.length; row++){
+			
+        	ArrayList<City> arrayListCityConnected = new ArrayList<City>();
+			for (int column=0; column<arrayCity.length; column++){
+        		if(matrix[row][column]==1){
+        			arrayListCityConnected.add(arrayCity[column]);
+        		}	
+        	}
+			/*
+			 * ArrayList to simplify the procedure
+			 */
+			City[] arrayCityConnected = new City[arrayListCityConnected.size()];
+			arrayListCityConnected.toArray(arrayCityConnected);
+			arrayCity[row].setNearbyCity(arrayCityConnected);
+			
+		}  
+
+	}
+	
+	/*
+	 * This method is used to import the matrix (txt file) corresponding to the parameters passed:
+	 * "difficulty" is the first letter of the file, "numberCities" the second one
+	 */
+	private int[][] importMatrix(char difficulty , int numberCities){
+		
+		int[][]matrix = new int[numberCities][numberCities];
+		
+		try {
+			
+			
+			FileReader inFile = new FileReader("./src/nearbyCities/"+ difficulty + numberCities+".txt");
+			Scanner in = new Scanner(inFile);
+			
+			
+			for(int i=0; i<numberCities; i++) {
+	            for(int j=0; j<numberCities; j++){
+	            	String read = in.next();
+	            	if (read.equals("1")){
+	            		matrix[i][j]=1;
+	            		/*
+	            		 * This second assignment is for making the matrix specular,
+	            		 * because in the txt file it is only upper triangular set
+	            		 */
+	            		matrix[j][i]=1;
+	            	}
+	            }
+	            	
+	        }
+			
+	        in.close();
+	        
+	        try {
+				inFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	
+		return matrix;
+		
 	}
 	
 	
