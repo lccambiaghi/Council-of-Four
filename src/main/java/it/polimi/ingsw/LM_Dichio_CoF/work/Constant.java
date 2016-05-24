@@ -23,6 +23,13 @@ public class Constant {
 	
 	public static final NameCity INITIAL_KING_CITY= NameCity.J;
 
+	public static final int[] CITIES_BLUE_NUMBER = {2,2,3};
+	public static final int[] CITIES_BRONZE_NUMBER = {3,4,4};
+	public static final int[] CITIES_GOLD_NUMBER = {5,6,6};
+	public static final int[] CITIES_PURPLE_NUMBER = {1,1,1};
+	public static final int[] CITIES_SILVER_NUMBER = {4,5,5};
+	public static final int[] CITIES_RED_NUMBER = {0,0,2};
+
 	public static final int CITIES_NUMBER_LOW = 15;
 	public static final int CITIES_NUMBER_MEDIUM = 18;
 	public static final int CITIES_NUMBER_HIGH = 21;
