@@ -8,17 +8,22 @@ public class Configurations {
 	int minNumberBonusPerCity;
 	int maxNumberBonusPerCity;
 	
+	int minNumberBonusPerPermitCard;
+	int maxNumberBonusPerPermitCard;
+	
 	public Configurations(int numberCities, char difficulty, int minNumberBonusPerCity,
-			int maxNumberBonusPerCity){
+			int maxNumberBonusPerCity,int minNumberBonusPerPermitCard, int maxNumberBonusPerPermitCard){
 		
 		this.numberCities=numberCities;
 		this.difficulty=difficulty;
 		this.minNumberBonusPerCity=minNumberBonusPerCity;
 		this.maxNumberBonusPerCity=maxNumberBonusPerCity;
+		this.minNumberBonusPerPermitCard=minNumberBonusPerPermitCard;
+		this.maxNumberBonusPerPermitCard=maxNumberBonusPerPermitCard;
 		
 	}
-	
-	
+
+
 	public char getDifficulty() {
 		return difficulty;
 	}
@@ -52,4 +57,22 @@ public class Configurations {
 		this.numberCities = numberCities;
 	}
 	
+	public int getMinNumberBonusPerPermitCard() {
+		return minNumberBonusPerPermitCard;
+	}
+
+
+	public void setMinNumberBonusPerPermitCard(int minNumberBonusPerPermitCard) {
+		this.minNumberBonusPerPermitCard = minNumberBonusPerPermitCard;
+	}
+
+
+	public int getMaxNumberBonusPerPermitCard() {
+		return maxNumberBonusPerPermitCard;
+	}
+
+
+	public void setMaxNumberBonusPerPermitCard(int maxNumberBonusPerPermitCard) {
+		this.maxNumberBonusPerPermitCard = maxNumberBonusPerPermitCard;
+	}
 }
