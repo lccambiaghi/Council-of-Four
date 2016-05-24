@@ -16,4 +16,23 @@ public class BonusCity extends Bonus{
 				
 	}
 	
+	/*
+	 * This method is static.
+	 * It returns an array of "differentBonus" different types of bonus
+	 */
+	public static Bonus[] getArrayBonusCity(int differentBonus){
+		
+		Bonus[] arrayBonus = new Bonus[differentBonus];
+		Bonus bonus;
+		
+		for(int i=0; i < differentBonus; i++){
+			do 
+				bonus = new BonusCity();
+			while(bonus.bonusNameIsIn(arrayBonus));
+			arrayBonus[i]=bonus;
+		}
+		
+		return arrayBonus;
+	}
+	
 }
