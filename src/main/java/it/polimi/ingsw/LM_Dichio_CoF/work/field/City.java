@@ -11,9 +11,8 @@ public class City {
 	NameRegion nameRegion;
 	int numberBonus;
 	Bonus[] arrayBonus;
-	City nearbyCity[];
-	
-	
+	City[] nearbyCity;
+
 	/*
 	 * The constructor receives the configurations, the name of the city given by the Region
 	 * and the name of the region itself
@@ -57,6 +56,14 @@ public class City {
 
 	public Bonus[] getArrayBonus() {
 		return arrayBonus;
+	}
+	
+	public City[] getNearbyCity() {
+		return nearbyCity;
+	}
+
+	public void setNearbyCity(City[] nearbyCity) {
+		this.nearbyCity = nearbyCity;
 	}
 	
 	
