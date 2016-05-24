@@ -26,7 +26,7 @@ public class TestPermitCard {
 		
 		for(PermitCard p: arrayPermitCard){
 			
-			p = new PermitCard(arrayCity);
+			p = new PermitCard(arrayCity,testCases.configurations());
 			City[] arrayCityWhereBuild = p.getArrayCityWhereBuild();
 			
 			for(City c: arrayCityWhereBuild){

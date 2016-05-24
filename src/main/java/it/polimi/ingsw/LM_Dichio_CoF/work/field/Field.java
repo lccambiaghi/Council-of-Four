@@ -106,7 +106,7 @@ public class Field {
 				arrayCityPerRegion[itCity] = arrayCity[itRegion*numberCitiesPerRegion];
 			}
 
-			arrayRegion[itRegion] = new Region (nameRegion, arrayCityPerRegion);
+			arrayRegion[itRegion] = new Region (nameRegion, arrayCityPerRegion, config);
 
 		}
 

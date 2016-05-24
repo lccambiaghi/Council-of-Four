@@ -1,11 +1,13 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 public class FaceUpPermitCardArea {
 	
 	PermitCard[] arrayPermitCard;
 	City[] arrayCity;
+	Configurations config;
 
 	
 	/*
@@ -15,14 +17,15 @@ public class FaceUpPermitCardArea {
 	 * It initializes the arrayPermitCard with NUMBER_FACE_UP_PERMIT_CARD_PER_REGION
 	 * permit cards.
 	 */
-	public FaceUpPermitCardArea(City[] arrayCity){
+	public FaceUpPermitCardArea(City[] arrayCity, Configurations config){
 		
 		this.arrayCity=arrayCity;
+		this.config=config;
 		
 		arrayPermitCard = new PermitCard[Constant.NUMBER_FACE_UP_PERMIT_CARD_PER_REGION];
 		
 		for(int i=0; i< arrayPermitCard.length; i++){
-			arrayPermitCard[i]= new PermitCard(arrayCity);
+			arrayPermitCard[i]= new PermitCard(arrayCity, config);
 		}
 		
 	}
@@ -36,7 +39,7 @@ public class FaceUpPermitCardArea {
 	 */
 	public PermitCard takePermitCard(int index){
 		PermitCard permitCardTmp = arrayPermitCard[index-1];
-		arrayPermitCard[index-1]=new PermitCard(arrayCity);
+		arrayPermitCard[index-1]=new PermitCard(arrayCity, config);
 		return permitCardTmp;
 	}
 	

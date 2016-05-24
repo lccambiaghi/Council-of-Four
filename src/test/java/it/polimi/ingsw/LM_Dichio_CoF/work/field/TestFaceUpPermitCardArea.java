@@ -14,7 +14,7 @@ public class TestFaceUpPermitCardArea {
 	@Test
 	public void constructor() {
 		
-		FaceUpPermitCardArea faceUpPermitCardArea = new FaceUpPermitCardArea(testCases.arrayCity());
+		FaceUpPermitCardArea faceUpPermitCardArea = new FaceUpPermitCardArea(testCases.arrayCity(), testCases.configurations());
 		
 		
 		PermitCard[] arrayPermitCard = new PermitCard[faceUpPermitCardArea.getArrayPermitCard().length];
@@ -29,11 +29,12 @@ public class TestFaceUpPermitCardArea {
 				System.out.print(city.getNameCity() +" ");
 			}
 			System.out.println();
-			Bonus[] arrayBonus = new Bonus[permitCard.arrayBonus.length];
-			arrayBonus = permitCard.getArrayBonus();
-			for(Bonus bonus: arrayBonus){
-				System.out.print(bonus.getBonusName().toString() +" ");
-				System.out.println(bonus.getIncrement());
+			Bonus[] arrayBonus = permitCard.getArrayBonus();
+			if (permitCard.hasBonus()){
+				for(Bonus bonus: arrayBonus){
+					System.out.print(bonus.getBonusName().toString() +" ");
+					System.out.println(bonus.getIncrement());
+				}
 			}
 			System.out.println();
 		}
