@@ -26,7 +26,7 @@ public class TestFaceUpPermitCardArea {
 			City[] arrayCity = new City[permitCard.getArrayCityWhereBuild().length];
 			arrayCity = permitCard.getArrayCityWhereBuild();
 			for(City city: arrayCity){
-				System.out.print(city.nameCity.toString() +" ");
+				System.out.print(city.getNameCity() +" ");
 			}
 			System.out.println();
 			Bonus[] arrayBonus = new Bonus[permitCard.arrayBonus.length];

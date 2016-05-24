@@ -21,6 +21,7 @@ public class TestField {
 			
 			System.out.println("Region: " + city.getNameRegion());
 			System.out.println("City: " + city.getNameCity());
+			System.out.println("Color: " + city.getCityColor());
 			
 			City[] arrayCityConnected = city.getNearbyCity();
 			for(City cityConnected: arrayCityConnected){

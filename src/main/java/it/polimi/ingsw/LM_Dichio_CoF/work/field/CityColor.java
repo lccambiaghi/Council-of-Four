@@ -7,12 +7,12 @@ import java.util.Random;
  */
 public enum CityColor {
 
+    Red("255, 0, 0"), // Red solo per numberCities=21
+    Purple("88, 86, 214"),
     Blue("0, 0, 255"),
     Bronze("205, 127, 50"),
     Gold("255, 215, 0"),
-    Purple("88, 86, 214"),
-    Silver("192, 192, 192"),
-    Red("255, 0, 0"); // Red solo per numberCities=21
+    Silver("192, 192, 192");
 
     private String rgb;
 
@@ -35,9 +35,11 @@ public enum CityColor {
         return values()[random.nextInt(values().length)];
     }
 
+    /*
     public static CityColor getRandomCityColorWithoutRed(){
         Random random = new Random();
         return values()[random.nextInt(values().length-1)];
     }
+    */
 
 }

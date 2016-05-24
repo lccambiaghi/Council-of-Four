@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.field.CityColor;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.NameCity;
 
 public class Constant {
@@ -23,12 +24,11 @@ public class Constant {
 	
 	public static final NameCity INITIAL_KING_CITY= NameCity.J;
 
-	public static final int[] CITIES_BLUE_NUMBER = {2,2,3};
-	public static final int[] CITIES_BRONZE_NUMBER = {3,4,4};
-	public static final int[] CITIES_GOLD_NUMBER = {5,6,6};
-	public static final int[] CITIES_PURPLE_NUMBER = {1,1,1};
-	public static final int[] CITIES_SILVER_NUMBER = {4,5,5};
-	public static final int[] CITIES_RED_NUMBER = {0,0,2};
+	public static final CityColor[][] CITIES_COLOR = {
+			{CityColor.Blue, CityColor.Blue, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold},
+			{CityColor.Blue, CityColor.Blue, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold},
+			{CityColor.Red, CityColor.Red, CityColor.Blue, CityColor.Blue, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold},
+	};
 
 	public static final int CITIES_NUMBER_LOW = 15;
 	public static final int CITIES_NUMBER_MEDIUM = 18;

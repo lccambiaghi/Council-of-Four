@@ -4,8 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
-
 import it.polimi.ingsw.LM_Dichio_CoF.work.*;
 
 public class Field {
@@ -24,32 +25,7 @@ public class Field {
 		 * inoltre bisogna trovare un modo (matrice di inceidenza o liste) per creare le città vicine
 		 */
 		
-		
-		/*
-		 * Creation of the cities that are assigned to the specified Region
-		 */
-		int numberCities = config.getNumberCities();
-		int numberCitiesPerRegion = numberCities/Constant.NUMBER_OF_REGIONS;
-		
-		arrayCity = new City[numberCities];
-		arrayRegion = new Region[Constant.NUMBER_OF_REGIONS];
-		
-		City[] arrayCityPerRegion = new City[numberCitiesPerRegion];
-
-		for(int itRegion=0; itRegion<Constant.NUMBER_OF_REGIONS ; itRegion++){
-			NameRegion nameRegion = NameRegion.getNameRegion(itRegion);
-			
-			for(int itCity=0; itCity<numberCitiesPerRegion; itCity++){
-				
-				NameCity nameCity = NameCity.getNameCity(itCity + itRegion*numberCitiesPerRegion);
-				arrayCity[itCity + itRegion*numberCitiesPerRegion] = new City(config, nameCity, nameRegion);
-				
-				arrayCityPerRegion[itCity] = arrayCity[itRegion*numberCitiesPerRegion];
-			}
-			
-			arrayRegion[itRegion] = new Region (nameRegion, arrayCityPerRegion);
-			
-		}
+		createCitiesAndRegions(config);
 		
 		
 		assignNearbyCities(config.getDifficulty(), arrayCity);
@@ -78,11 +54,66 @@ public class Field {
 		
 		
 	}
-	
-	public City[] getArrayCity(){
-		return arrayCity;
+
+	private void createCitiesAndRegions(Configurations config){
+		/*
+		 * Creation of the cities that are assigned to the specified Region
+		 */
+		int numberCities = config.getNumberCities();
+		int numberCitiesPerRegion = numberCities/Constant.NUMBER_OF_REGIONS;
+
+		arrayCity = new City[numberCities];
+		arrayRegion = new Region[Constant.NUMBER_OF_REGIONS];
+
+		City[] arrayCityPerRegion = new City[numberCitiesPerRegion];
+
+		CityColor[] arrayCityColor = new CityColor[numberCities];
+
+		switch (numberCities) {
+
+			case Constant.CITIES_NUMBER_LOW:
+				arrayCityColor= Constant.CITIES_COLOR[0].clone();
+				break;
+
+			case Constant.CITIES_NUMBER_MEDIUM:
+				arrayCityColor= Constant.CITIES_COLOR[1].clone();
+				break;
+
+			case Constant.CITIES_NUMBER_HIGH:
+				arrayCityColor= Constant.CITIES_COLOR[2].clone();
+				break;
+
+		}
+
+		Collections.shuffle(Arrays.asList(arrayCityColor));
+
+		int itColor=0;
+
+		for(int itRegion=0; itRegion<Constant.NUMBER_OF_REGIONS ; itRegion++){
+			NameRegion nameRegion = NameRegion.getNameRegion(itRegion);
+
+			for(int itCity=0; itCity<numberCitiesPerRegion; itCity++){
+
+				NameCity nameCity = NameCity.getNameCity(itCity + itRegion*numberCitiesPerRegion);
+
+				if (nameCity.equals(Constant.INITIAL_KING_CITY)) {
+					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, nameCity, nameRegion, CityColor.Purple);
+				}
+				else {
+					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, nameCity, nameRegion, arrayCityColor[itColor]);
+					itColor++;
+				}
+				arrayCityPerRegion[itCity] = arrayCity[itRegion*numberCitiesPerRegion];
+			}
+
+			arrayRegion[itRegion] = new Region (nameRegion, arrayCityPerRegion);
+
+		}
+
+
+
 	}
-	
+
 	
 	/*
 	 * This method assigns to every city of the arrayCity the cities that are connected to it
@@ -157,6 +188,9 @@ public class Field {
 		return matrix;
 		
 	}
-	
+
+	public City[] getArrayCity(){
+		return arrayCity;
+	}
 	
 }
