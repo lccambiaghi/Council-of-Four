@@ -1,6 +1,8 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,8 +11,8 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 
 public class NobilityRoute implements Route{
 
-	NobilityRouteCell nobilityRouteCell;
 	Map <Player,Integer> nobilityMap = new HashMap<>();
+	NobilityRouteCell [] arrayNobilityRouteCell = new NobilityRouteCell[Constant.MAX_NOBILITY+1];
 	
 	public NobilityRoute(ArrayList<Player> arrayListPlayer){
 		
@@ -18,6 +20,10 @@ public class NobilityRoute implements Route{
 			nobilityMap.put(arrayListPlayer.get(i), 0);	
 		}
 		
+		for (int i=0; i<Constant.MAX_NOBILITY+1; i++){
+			arrayNobilityRouteCell[i] = new NobilityRouteCell(i); 
+		}
+		Collections.shuffle(Arrays.asList(arrayNobilityRouteCell));
 	}
 	
 	public void movePlayer(int increment, Player player){
