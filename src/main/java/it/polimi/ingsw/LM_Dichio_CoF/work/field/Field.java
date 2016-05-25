@@ -11,6 +11,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.*;
 
 public class Field {
 
+	Configurations config;
 	Region[] arrayRegion;
 	City[] arrayCity;
 	Balcony[] arrayBalcony;
@@ -20,15 +21,17 @@ public class Field {
 	
 	public Field(Configurations config, ArrayList<Player> arrayListPlayer) {
 		
+		this.config=config;
+		
 		/*
 		 * GESTIONE REGIONI -- C'è da creare una random che distribuisca i colori tra le regioni,
 		 * inoltre bisogna trovare un modo (matrice di inceidenza o liste) per creare le città vicine
 		 */
 		
-		createCitiesAndRegions(config);
+		createCitiesAndRegions();
 		
 		
-		assignNearbyCities(config.getDifficulty(), arrayCity);
+		assignNearbyCities();
 		
 		
 		//GESTIONE BALCONATE
@@ -55,7 +58,7 @@ public class Field {
 		
 	}
 
-	private void createCitiesAndRegions(Configurations config){
+	private void createCitiesAndRegions(){
 		/*
 		 * Creation of the cities that are assigned to the specified Region
 		 */
@@ -120,9 +123,9 @@ public class Field {
 	 * It uses an arrayList to make the creation of the array of cities connected to every city simpler
 	 * 
 	 */
-	private void assignNearbyCities(char difficulty,City[] arrayCity){
+	private void assignNearbyCities(){
 		
-		int[][] matrix = importMatrix(difficulty, arrayCity.length);
+		int[][] matrix = importMatrix(config.getDifficulty(), arrayCity.length);
 		
 		for(int row=0; row<arrayCity.length; row++){
 			
