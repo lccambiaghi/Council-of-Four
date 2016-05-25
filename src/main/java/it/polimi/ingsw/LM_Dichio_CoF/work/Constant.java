@@ -19,7 +19,7 @@ public class Constant {
 	public static final int MIN_CITIES_PER_PERMIT_CARD=1;
 	public static final int MIN_CITIES_PER_REGION=5;
 	public static final int MAX_RICHNESS=20;
-	public static final int MAX_NOBILITY=20;
+	public static final int MAX_NOBILITY=21;
 	public static final int MAX_VICTORY=100;
 	
 	public static final NameCity INITIAL_KING_CITY= NameCity.J;
