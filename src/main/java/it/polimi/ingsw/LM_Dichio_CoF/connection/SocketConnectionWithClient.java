@@ -22,7 +22,7 @@ public class SocketConnectionWithClient extends Thread {
 		
 	}
 	
-	
+	@Override
 	public void run(){
 		
 		GameSide.handlePlayer(player);
