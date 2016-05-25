@@ -26,5 +26,13 @@ public class Bonus {
 		}
 		return false;
 	}
+
+	public void setBonusName(BonusName bonusName) {
+		this.bonusName = bonusName;
+	}
+
+	public void setIncrement(int increment) {
+		this.increment = increment;
+	}
 	
 }
