@@ -38,5 +38,20 @@ public enum BonusName {
     	return values()[random.nextInt(values().length-5)];
     }
     
+    public static boolean containString(String test) {
+
+        for (BonusName bonusName : BonusName.values()) {
+            if (bonusName.name().equals(test)) {
+            	return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    
+    public static BonusName getBonusName(BonusName bonusName){
+    	return bonusName;
+    }
 
 }
