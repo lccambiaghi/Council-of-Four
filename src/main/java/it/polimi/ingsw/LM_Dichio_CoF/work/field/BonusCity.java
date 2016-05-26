@@ -21,12 +21,10 @@ public class BonusCity extends Bonus{
 		
 	public BonusCity(String bonusName, Integer bonusIncrement){
 		
-		this.bonusNameFromMap=bonusName;
-		this.bonusIncrement=bonusIncrement;
-		
 		if(BonusName.containString(bonusName)){
+			 this.bonusName = BonusName.stringToBonusName(bonusName);
+			 this.bonusIncrement=bonusIncrement;
 		}
-		
 		
 	}
 	
