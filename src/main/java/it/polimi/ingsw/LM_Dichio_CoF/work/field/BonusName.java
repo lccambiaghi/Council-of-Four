@@ -48,6 +48,16 @@ public enum BonusName {
         return false;
     }
     
+    public static BonusName stringToBonusName(String test) {
+
+        for (BonusName bonusName : BonusName.values()) {
+            if (bonusName.name().equals(test)) {
+            	return (BonusName) bonusName;
+            }
+        }
+		return null;
+    }
+    
     
     
     public static BonusName getBonusName(BonusName bonusName){
