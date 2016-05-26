@@ -2,6 +2,7 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -14,21 +15,21 @@ public class TestCity {
 	
 	@Test
 	public void bonus() {
-		
-		
+				
 		City[] arrayCity = testCases.arrayCity();
 		
 		for(City city: arrayCity){
 			System.out.println(city.getNameCity());
 			if(city.hasBonus()){
 				Bonus[] arrayBonus = city.getArrayBonus();
-				for(Bonus bonus: arrayBonus){
+				
+			for(Bonus bonus: arrayBonus){
 					System.out.print(bonus.getBonusName() +" " + bonus.getIncrement() + " ");
 				}
 				System.out.println();
 			}
 		}
 		
-	}
+	} 
 
 }
