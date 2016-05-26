@@ -1,9 +1,13 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.work.field.Bonus;
 
 public class City {
 
@@ -12,6 +16,9 @@ public class City {
 	private Bonus[] arrayBonus;
 	private City[] nearbyCity;
 	private CityColor cityColor;
+	private String bonusName;
+	private Integer bonusIncrement;
+	
 
 	/*
 	 * The constructor receives the configurations, the name of the city given by the Region
@@ -38,6 +45,22 @@ public class City {
 			}
 		}	
 	}	
+	
+	public City (Map <String, Integer> bonusMap, NameCity nameCity, NameRegion nameRegion, CityColor cityColor){
+		this.nameCity=nameCity;
+		this.nameRegion=nameRegion;
+		this.cityColor=cityColor;
+				
+		Iterator <Entry<String, Integer>> mapIterator = bonusMap.entrySet().iterator();
+		while(mapIterator.hasNext()){
+			Map.Entry entry = (Map.Entry)mapIterator.next();
+			bonusName = (String)entry.getKey();
+			bonusIncrement = (Integer)entry.getValue();
+			
+			
+		}
+		
+	}
 	
 	public NameCity getNameCity() {
 		return nameCity;
