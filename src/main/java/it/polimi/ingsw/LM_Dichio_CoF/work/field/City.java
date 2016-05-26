@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,7 +19,8 @@ public class City {
 	private CityColor cityColor;
 	private String bonusName;
 	private Integer bonusIncrement;
-	
+	private BonusCity bonus;
+
 
 	/*
 	 * The constructor receives the configurations, the name of the city given by the Region
@@ -46,21 +48,34 @@ public class City {
 		}	
 	}	
 	
+	
+	
+	/* Costruttore nuovo: riceve in ingresso la mappa con i bonus e gli incrementi
+	 * Crea un arraylist di bonus (unico modo per gestire la dinamicità dei valori
+	 * perchè non sappiamo quanti bonus l'utente inserirà. L'iterator scorre la mappa
+	 * fin tanto che c'è un elemento. Passa poi i valori al nuovo costruttore dei Bonus 
+	 * che riceve la stringa e l'incremento, dopo di che aggiunge il bonus all'arrayList
+	 * di Bonus della città
+	 */
 	public City (Map <String, Integer> bonusMap, NameCity nameCity, NameRegion nameRegion, CityColor cityColor){
 		this.nameCity=nameCity;
 		this.nameRegion=nameRegion;
 		this.cityColor=cityColor;
-				
+					
+		ArrayList <BonusCity> arrayListBonusCity = new ArrayList <BonusCity> ();
+		
 		Iterator <Entry<String, Integer>> mapIterator = bonusMap.entrySet().iterator();
 		while(mapIterator.hasNext()){
 			Map.Entry entry = (Map.Entry)mapIterator.next();
 			bonusName = (String)entry.getKey();
 			bonusIncrement = (Integer)entry.getValue();
-			
+			bonus = new BonusCity(bonusName, bonusIncrement);
+			arrayListBonusCity.add(bonus);
+			}
 			
 		}
 		
-	}
+
 	
 	public NameCity getNameCity() {
 		return nameCity;
