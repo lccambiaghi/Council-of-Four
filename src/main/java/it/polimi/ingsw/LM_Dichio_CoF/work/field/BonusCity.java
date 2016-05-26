@@ -4,6 +4,9 @@ import java.util.Random;
 
 public class BonusCity extends Bonus{
 
+	Integer bonusIncrement;
+	String bonusNameFromMap;
+	
 	public BonusCity(){
 		
 		Random random = new Random();
@@ -14,6 +17,17 @@ public class BonusCity extends Bonus{
 		
 		this.increment = random.nextInt(maxIncrement)+1;
 				
+	}
+		
+	public BonusCity(String bonusName, Integer bonusIncrement){
+		
+		this.bonusNameFromMap=bonusName;
+		this.bonusIncrement=bonusIncrement;
+		
+		if(BonusName.containString(bonusName)){
+		}
+		
+		
 	}
 	
 	/*
