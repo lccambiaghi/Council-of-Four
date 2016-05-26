@@ -3,6 +3,8 @@ package it.polimi.ingsw.LM_Dichio_CoF;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
@@ -31,15 +33,23 @@ public class TestCases {
 	public City[] arrayCity(){
 		
 		Configurations config = configurations();
+		Map <String, Integer> bonusMap =new HashMap <> ();
+		bonusMap.put("Richness", 2);
+		bonusMap.put("Nobility", 1);
+		bonusMap.put("Richness", 0);
 		
 		int n = config.getNumberCities()/3;
 		City[] arrayCity = new City[n];
 		for(int i=0; i<n; i++){
-			arrayCity[i] = new City(config, NameCity.getNameCity(i), NameRegion.Sea, CityColor.Blue);
+			
+			//arrayCity[i] = new City(config, NameCity.getNameCity(i), NameRegion.Sea, CityColor.Blue);
+			arrayCity[i] = new City(bonusMap, NameCity.getNameCity(i), NameRegion.Sea, CityColor.Blue);
 		}
 		
 		return arrayCity;
 	}
+	
+	
 	
 	
 	
