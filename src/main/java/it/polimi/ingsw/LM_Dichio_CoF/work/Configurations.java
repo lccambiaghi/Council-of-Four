@@ -5,6 +5,11 @@ public class Configurations {
 	int numberCities;
 	char difficulty;
 	
+	boolean nobilityBonusRandom;
+	boolean cityLinksPreconfigured;
+	
+	int nobilityBonusNumber; //how many bonus the user would on the nobilityRoute 
+	
 	int minNumberBonusPerCity;
 	int maxNumberBonusPerCity;
 	
