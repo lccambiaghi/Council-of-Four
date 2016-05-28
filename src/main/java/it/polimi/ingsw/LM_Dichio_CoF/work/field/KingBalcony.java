@@ -2,10 +2,10 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 public class KingBalcony extends Balcony {
 
-	AvailableCouncilor availableCouncilor;
+	AvailableCouncillor availableCouncillor;
 	
-	public KingBalcony(AvailableCouncilor availableCouncilor, String nameBalcony) {
-		super(availableCouncilor, nameBalcony);	
+	public KingBalcony(AvailableCouncillor availableCouncillor, String nameBalcony) {
+		super(availableCouncillor, nameBalcony);
 	}
 	
 	

@@ -5,7 +5,7 @@ import java.util.Collections;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
-public class AvailableCouncilor {
+public class AvailableCouncillor {
 
 	/*
 	 * Singleton DESIGN PATTERN
@@ -13,24 +13,24 @@ public class AvailableCouncilor {
 	 * Once the class is created for the first time, the method "createList()" is invoked
 	 */
 	
-	ArrayList <Councilor> arrayListCouncilor;
+	ArrayList <Councillor> arrayListCouncillor;
 	
 	
 	/// NON POSSO METTERLO SINGLETON :( o si? :D
 	/*
-	private static AvailableCouncilor instance = null; 
-	private AvailableCouncilor() { } 
-	public static AvailableCouncilor getInstance() {
+	private static AvailableCouncillor instance = null;
+	private AvailableCouncillor() { }
+	public static AvailableCouncillor getInstance() {
 		if (instance == null) {
-			instance = new AvailableCouncilor();
+			instance = new AvailableCouncillor();
 			createList();
 		}
 		return instance;
 	}
 	*/
 	
-	public AvailableCouncilor(){
-		arrayListCouncilor = new ArrayList<Councilor>();
+	public AvailableCouncillor(){
+		arrayListCouncillor = new ArrayList<Councillor>();
 		createArrayList();
 	}
 	
@@ -45,21 +45,21 @@ public class AvailableCouncilor {
 		
 		for(int i = 0; i< Constant.COUNCILORS_NUMBER_TOTAL; i++){
 			int indexOfColor =(int)(i/councilorsPerColor);
-			Councilor councilor = new Councilor(Color.getColorFromIndex(indexOfColor));
-			arrayListCouncilor.add(councilor);
+			Councillor councillor = new Councillor(Color.getColorFromIndex(indexOfColor));
+			arrayListCouncillor.add(councillor);
 		}
 			
-		Collections.shuffle(arrayListCouncilor);
+		Collections.shuffle(arrayListCouncillor);
 		
 	}
 	
-	public ArrayList<Councilor> getArrayListCouncilor() {
-		return arrayListCouncilor;
+	public ArrayList<Councillor> getArrayListCouncillor() {
+		return arrayListCouncillor;
 	}
 	
-	public Councilor removeCouncilor(){
-		Councilor councilor = arrayListCouncilor.remove(0);
-		return councilor;
+	public Councillor removeCouncilor(){
+		Councillor councillor = arrayListCouncillor.remove(0);
+		return councillor;
 	}
 	
 	

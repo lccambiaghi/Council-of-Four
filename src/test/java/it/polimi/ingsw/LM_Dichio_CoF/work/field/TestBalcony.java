@@ -6,28 +6,25 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.AvailableCouncilor;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Balcony;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Councilor;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.NameRegion;;
+;
 
 public class TestBalcony {
 
 	@Test
 	public void councilorsInBalcony() {
 		
-		AvailableCouncilor availableCouncilor = new AvailableCouncilor();
+		AvailableCouncillor availableCouncillor = new AvailableCouncillor();
 		
-		Balcony balcony = new Balcony (availableCouncilor, NameRegion.Sea.toString()+"Balcony");
+		Balcony balcony = new Balcony (availableCouncillor, NameRegion.Sea.toString()+"Balcony");
 		
-		ArrayList<Councilor> arrayListCouncilor = balcony.getArrayListCouncilor();
+		ArrayList<Councillor> arrayListCouncillor = balcony.getArrayListCouncillor();
 		
 		System.out.println(balcony.getNameBalcony());
-		for(Councilor c: arrayListCouncilor){
+		for(Councillor c: arrayListCouncillor){
 			System.out.println(c.getColor());
 		}
 		
-		assertEquals(4, arrayListCouncilor.size());
+		assertEquals(4, arrayListCouncillor.size());
 		
 		
 	}

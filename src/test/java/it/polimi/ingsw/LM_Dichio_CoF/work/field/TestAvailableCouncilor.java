@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
-
 public class TestAvailableCouncilor {
 
 	@Test
@@ -16,11 +14,11 @@ public class TestAvailableCouncilor {
 		 * This test controls the correct implementation of the singleton and the 
 		 * list of councilers that are created the first time
 		 */
-		AvailableCouncilor availableCouncilor = new AvailableCouncilor();
+		AvailableCouncillor availableCouncillor = new AvailableCouncillor();
 		
-		ArrayList<Councilor> a = availableCouncilor.getArrayListCouncilor();
+		ArrayList<Councillor> a = availableCouncillor.getArrayListCouncillor();
 		
-		for(Councilor c: a){
+		for(Councillor c: a){
 			System.out.println(c.getColor());
 		}
 	

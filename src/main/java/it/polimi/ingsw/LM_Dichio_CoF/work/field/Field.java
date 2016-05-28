@@ -15,7 +15,7 @@ public class Field {
 	Region[] arrayRegion;
 	City[] arrayCity;
 	Balcony[] arrayBalcony;
-	AvailableCouncilor availableCouncilor;
+	AvailableCouncillor availableCouncillor;
 	Route route;
 	King king;
 	
@@ -27,15 +27,15 @@ public class Field {
 		
 		assignNearbyCities();
 
-		//Create one (AND ONLY FOR ALL THE GAME) instance for the Available Councilor
-		availableCouncilor = new AvailableCouncilor();
+		//Create one (AND ONLY FOR ALL THE GAME) instance for the Available Councillor
+		availableCouncillor = new AvailableCouncillor();
 		
 		arrayBalcony = new Balcony[Constant.BALCONIES_NUMBER];
 		
-		arrayBalcony[0] = new Balcony (availableCouncilor, NameRegion.Sea.toString()+"Balcony");
-		arrayBalcony[1] = new Balcony (availableCouncilor, NameRegion.Hill.toString()+"Balcony");
-		arrayBalcony[2] = new Balcony (availableCouncilor, NameRegion.Mountain.toString()+"Balcony");
-		arrayBalcony[3] = new KingBalcony (availableCouncilor, "KingBalcony");
+		arrayBalcony[0] = new Balcony (availableCouncillor, NameRegion.Sea.toString()+"Balcony");
+		arrayBalcony[1] = new Balcony (availableCouncillor, NameRegion.Hill.toString()+"Balcony");
+		arrayBalcony[2] = new Balcony (availableCouncillor, NameRegion.Mountain.toString()+"Balcony");
+		arrayBalcony[3] = new KingBalcony (availableCouncillor, "KingBalcony");
 		
 		
 		

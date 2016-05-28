@@ -7,20 +7,20 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 public class Balcony {
 
 	String nameBalcony;
-	AvailableCouncilor availableCouncilor;
+	AvailableCouncillor availableCouncillor;
 	
-	ArrayList<Councilor> arrayListCouncilor = new ArrayList<Councilor>();
+	ArrayList<Councillor> arrayListCouncillor = new ArrayList<Councillor>();
 	
-	public Balcony(AvailableCouncilor availableCouncilor, String nameBalcony){
+	public Balcony(AvailableCouncillor availableCouncillor, String nameBalcony){
 		
 		this.nameBalcony=nameBalcony;
-		this.availableCouncilor = availableCouncilor;
+		this.availableCouncillor = availableCouncillor;
 		
 		
 		/*
-		 * This for cycle permit to remove a councilor from the AvailableCouncilor
-		 * and put it into the arrayListCouncilor.
-		 * It is random, because during the creation of AvailableCouncilor (that cointains
+		 * This for cycle permit to remove a councilor from the AvailableCouncillor
+		 * and put it into the arrayListCouncillor.
+		 * It is random, because during the creation of AvailableCouncillor (that cointains
 		 * all the councilor initially - in the game 24) the arrayList is shuffled
 		 */
 		
@@ -28,14 +28,14 @@ public class Balcony {
 		
 		for(int i = 0; i< Constant.COUNCILLORS_PER_BALCONY_NUMBER; i++){
 			
-			Councilor councilor = availableCouncilor.removeCouncilor();
-			arrayListCouncilor.add(councilor);
+			Councillor councillor = availableCouncillor.removeCouncilor();
+			arrayListCouncillor.add(councillor);
 		}
 		
 	}
 	
-	public ArrayList<Councilor> getArrayListCouncilor(){
-		return arrayListCouncilor;
+	public ArrayList<Councillor> getArrayListCouncillor(){
+		return arrayListCouncillor;
 	}
 
 	public String getNameBalcony() {

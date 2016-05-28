@@ -2,11 +2,11 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.Color;
 
-public class Councilor {
+public class Councillor {
 
 	Color color;
 	
-	public Councilor(Color color){
+	public Councillor(Color color){
 		this.color=color;
 	}
 
