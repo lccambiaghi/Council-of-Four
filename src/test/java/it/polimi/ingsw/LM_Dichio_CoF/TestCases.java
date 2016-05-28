@@ -37,7 +37,7 @@ public class TestCases {
 		for(int i=0; i<n; i++){
 			
 			//arrayCity[i] = new City(config, CityName.getCityName(i), RegionName.Sea, CityColor.Blue);
-			arrayCity[i] = new City(bonusMap, CityName.getNameCity(i), RegionName.Sea, CityColor.Blue);
+			arrayCity[i] = new City(bonusMap, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
 		}
 		
 		return arrayCity;

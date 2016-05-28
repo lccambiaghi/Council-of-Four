@@ -58,11 +58,11 @@ public class Field {
 
 		for(int itRegion = 0, itColor=0; itRegion<Constant.REGIONS_NUMBER; itRegion++){
 
-			RegionName regionName = RegionName.getNameRegion(itRegion);
+			RegionName regionName = RegionName.getRegionNameFromIndex(itRegion);
 
 			for(int itCity=0; itCity<numberCitiesPerRegion; itCity++){
 
-				CityName cityName = CityName.getNameCity(itCity + itRegion*numberCitiesPerRegion);
+				CityName cityName = CityName.getCityNameFromIndex(itCity + itRegion*numberCitiesPerRegion);
 
 				if (cityName.equals(Constant.KING_CITY_INITIAL)) {
 					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, cityName, regionName, CityColor.Purple);
