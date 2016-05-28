@@ -13,6 +13,17 @@ public class Bonus {
 		return increment;
 	}
 	
+	public Bonus(){}
+	
+	public Bonus(String bonusName, int increment){
+		
+		if(BonusName.containString(bonusName)){
+			 this.bonusName = BonusName.stringToBonusName(bonusName);
+			 this.increment=increment;
+		}
+		
+	}
+	
 	
 	/*
 	 * This method verify if the BonusName of the bonus that calls it is present in the arrayBonus (parameter)
