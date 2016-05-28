@@ -15,7 +15,7 @@ public class TestBalcony {
 		
 		AvailableCouncillor availableCouncillor = new AvailableCouncillor();
 		
-		Balcony balcony = new Balcony (availableCouncillor, NameRegion.Sea.toString()+"Balcony");
+		Balcony balcony = new Balcony (availableCouncillor, RegionName.Sea.toString()+"Balcony");
 		
 		ArrayList<Councillor> arrayListCouncillor = balcony.getArrayListCouncillor();
 		

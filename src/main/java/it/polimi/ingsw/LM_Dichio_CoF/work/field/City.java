@@ -1,7 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -12,17 +11,17 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 public class City {
 
 	private CityName cityName;
-	private NameRegion nameRegion;
+	private RegionName regionName;
 	private Bonus[] arrayBonus;
 	private City[] nearbyCity;
 	private CityColor cityColor;
 
 	/* Random bonus constructor: it receives the configurations, the name of the city given by the Region
 	 * and the name of the region itself */
-	public City(Configurations config, CityName cityName, NameRegion nameRegion, CityColor cityColor){
+	public City(Configurations config, CityName cityName, RegionName regionName, CityColor cityColor){
 		
 		this.cityName = cityName;
-		this.nameRegion=nameRegion;
+		this.regionName = regionName;
 		this.cityColor=cityColor;
 
 		int numberBonus;
@@ -50,10 +49,10 @@ public class City {
 
 	/* Assigned bonus constructor: it receives bonusMap, it creates arrayListBonusCity
 	  and assigns them to the city */
-	public City (Map <String, Integer> bonusMap, CityName cityName, NameRegion nameRegion, CityColor cityColor){
+	public City (Map <String, Integer> bonusMap, CityName cityName, RegionName regionName, CityColor cityColor){
 
 		this.cityName = cityName;
-		this.nameRegion=nameRegion;
+		this.regionName = regionName;
 		this.cityColor=cityColor;
 					
 		ArrayList <Bonus> arrayListBonusCity = new ArrayList <> ();
@@ -81,12 +80,12 @@ public class City {
 		this.cityName = cityName;
 	}
 	
-	public NameRegion getNameRegion() {
-		return nameRegion;
+	public RegionName getRegionName() {
+		return regionName;
 	}
 
-	public void setNameRegion(NameRegion nameRegion) {
-		this.nameRegion = nameRegion;
+	public void setRegionName(RegionName regionName) {
+		this.regionName = regionName;
 	}
 
 	public Bonus[] getArrayBonus() {

@@ -17,7 +17,7 @@ public class TestField {
 		
 		for(City city: arrayCity){
 			
-			System.out.println("Region: " + city.getNameRegion());
+			System.out.println("Region: " + city.getRegionName());
 			System.out.println("City: " + city.getCityName());
 			System.out.println("Color: " + city.getCityColor());
 			

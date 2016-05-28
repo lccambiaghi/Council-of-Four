@@ -30,9 +30,9 @@ public class Field {
 
 		Balcony[] arrayBalcony = new Balcony[Constant.BALCONIES_NUMBER];
 		
-		arrayBalcony[0] = new Balcony (availableCouncillor, NameRegion.Sea.toString()+"Balcony");
-		arrayBalcony[1] = new Balcony (availableCouncillor, NameRegion.Hill.toString()+"Balcony");
-		arrayBalcony[2] = new Balcony (availableCouncillor, NameRegion.Mountain.toString()+"Balcony");
+		arrayBalcony[0] = new Balcony (availableCouncillor, RegionName.Sea.toString()+"Balcony");
+		arrayBalcony[1] = new Balcony (availableCouncillor, RegionName.Hill.toString()+"Balcony");
+		arrayBalcony[2] = new Balcony (availableCouncillor, RegionName.Mountain.toString()+"Balcony");
 		arrayBalcony[3] = new KingBalcony (availableCouncillor, "KingBalcony");
 		
 		
@@ -47,13 +47,41 @@ public class Field {
 	private void createCitiesAndRegions(){
 
 		int numberCities = config.getNumberCities();
-		int numberCitiesPerRegion = numberCities/Constant.REGIONS_NUMBER;
 
 		arrayCity = new City[numberCities];
 		Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
 
+		int numberCitiesPerRegion = numberCities/Constant.REGIONS_NUMBER;
 		City[] arrayCityPerRegion = new City[numberCitiesPerRegion];
 
+		CityColor[] arrayCityColor = createArrayCityColor(numberCities);
+
+		for(int itRegion = 0, itColor=0; itRegion<Constant.REGIONS_NUMBER; itRegion++){
+
+			RegionName regionName = RegionName.getNameRegion(itRegion);
+
+			for(int itCity=0; itCity<numberCitiesPerRegion; itCity++){
+
+				CityName cityName = CityName.getNameCity(itCity + itRegion*numberCitiesPerRegion);
+
+				if (cityName.equals(Constant.KING_CITY_INITIAL)) {
+					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, cityName, regionName, CityColor.Purple);
+				}
+				else {
+					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, cityName, regionName, arrayCityColor[itColor]);
+					itColor++;
+				}
+				arrayCityPerRegion[itCity] = arrayCity[itRegion*numberCitiesPerRegion];
+			}
+
+			arrayRegion[itRegion] = new Region (regionName, arrayCityPerRegion, config);
+
+		}
+
+	}
+
+	/* This method returns an array of randomly orderered CityColors */
+	private CityColor[] createArrayCityColor(int numberCities){
 		CityColor[] arrayCityColor = new CityColor[numberCities];
 
 		switch (numberCities) {
@@ -74,33 +102,10 @@ public class Field {
 
 		Collections.shuffle(Arrays.asList(arrayCityColor));
 
-		int itColor=0;
-
-		for(int itRegion = 0; itRegion<Constant.REGIONS_NUMBER; itRegion++){
-			NameRegion nameRegion = NameRegion.getNameRegion(itRegion);
-
-			for(int itCity=0; itCity<numberCitiesPerRegion; itCity++){
-
-				CityName cityName = CityName.getNameCity(itCity + itRegion*numberCitiesPerRegion);
-
-				if (cityName.equals(Constant.KING_CITY_INITIAL)) {
-					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, cityName, nameRegion, CityColor.Purple);
-				}
-				else {
-					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, cityName, nameRegion, arrayCityColor[itColor]);
-					itColor++;
-				}
-				arrayCityPerRegion[itCity] = arrayCity[itRegion*numberCitiesPerRegion];
-			}
-
-			arrayRegion[itRegion] = new Region (nameRegion, arrayCityPerRegion, config);
-
-		}
-
+		return arrayCityColor;
 	}
 
-	
-	/* This method assigns to every city of the arrayCity the cities that are connected to it
+	/* This method assigns to every city in arrayCity the cities that are connected to it
 	  according to the matrix imported from .txt file */
 	private void assignNearbyCities(){
 		
@@ -114,9 +119,8 @@ public class Field {
         			arrayListCityConnected.add(arrayCity[column]);
         		}	
         	}
-			/*
-			 * ArrayList to simplify the procedure
-			 */
+
+			/* ArrayList to simplify the procedure*/
 			City[] arrayCityConnected = new City[arrayListCityConnected.size()];
 			arrayListCityConnected.toArray(arrayCityConnected);
 			arrayCity[row].setNearbyCity(arrayCityConnected);

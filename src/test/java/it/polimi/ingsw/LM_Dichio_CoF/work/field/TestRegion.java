@@ -11,7 +11,7 @@ public class TestRegion {
 	@Test
 	public void constructor() {
 		
-		Region region = new Region(NameRegion.Mountain, testCases.arrayCity(), testCases.configurations());
+		Region region = new Region(RegionName.Mountain, testCases.arrayCity(), testCases.configurations());
 		
 		City[] arrayCity = region.getArrayCity();
 		
