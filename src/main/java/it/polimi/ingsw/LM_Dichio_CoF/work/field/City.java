@@ -19,7 +19,6 @@ public class City {
 	private CityColor cityColor;
 	private String bonusName;
 	private Integer bonusIncrement;
-	private BonusCity bonus;
 
 
 	/*
@@ -62,18 +61,20 @@ public class City {
 		this.nameRegion=nameRegion;
 		this.cityColor=cityColor;
 					
-		ArrayList <BonusCity> arrayListBonusCity = new ArrayList <BonusCity> ();
-		
+		ArrayList <Bonus> arrayListBonusCity = new ArrayList <Bonus> ();
 		Iterator <Entry<String, Integer>> mapIterator = bonusMap.entrySet().iterator();
+		
 		while(mapIterator.hasNext()){
 			Map.Entry entry = (Map.Entry)mapIterator.next();
 			bonusName = (String)entry.getKey();
 			bonusIncrement = (Integer)entry.getValue();
-			bonus = new BonusCity(bonusName, bonusIncrement);
+			Bonus bonus = new Bonus(bonusName, bonusIncrement);
 			arrayListBonusCity.add(bonus);
-			}
-			
 		}
+		
+		this.arrayBonus=arrayListBonusCity.toArray(new Bonus[arrayListBonusCity.size()]);
+				
+	}
 		
 
 	
