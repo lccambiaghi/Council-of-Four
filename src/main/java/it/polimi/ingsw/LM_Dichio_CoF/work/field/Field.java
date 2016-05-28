@@ -25,17 +25,8 @@ public class Field {
 		
 		assignNearbyCities();
 
-		//Create one (AND ONLY FOR ALL THE GAME) instance for the Available Councillor
-		AvailableCouncillor availableCouncillor = new AvailableCouncillor();
 
-		Balcony[] arrayBalcony = new Balcony[Constant.BALCONIES_NUMBER];
-		
-		arrayBalcony[0] = new Balcony (availableCouncillor, RegionName.Sea.toString()+"Balcony");
-		arrayBalcony[1] = new Balcony (availableCouncillor, RegionName.Hill.toString()+"Balcony");
-		arrayBalcony[2] = new Balcony (availableCouncillor, RegionName.Mountain.toString()+"Balcony");
-		arrayBalcony[3] = new KingBalcony (availableCouncillor, "KingBalcony");
-		
-		
+		createBalconies();
 		
 		//GESTIONE PERCORSI
 		
@@ -60,18 +51,20 @@ public class Field {
 
 			RegionName regionName = RegionName.getRegionNameFromIndex(itRegion);
 
-			for(int itCity=0; itCity<numberCitiesPerRegion; itCity++){
+			for(int itCityPerRegion=0; itCityPerRegion<numberCitiesPerRegion; itCityPerRegion++){
 
-				CityName cityName = CityName.getCityNameFromIndex(itCity + itRegion*numberCitiesPerRegion);
+				int cityIndex = itCityPerRegion + itRegion*numberCitiesPerRegion;
+
+				CityName cityName = CityName.getCityNameFromIndex(cityIndex);
 
 				if (cityName.equals(Constant.KING_CITY_INITIAL)) {
-					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, cityName, regionName, CityColor.Purple);
+					arrayCity[cityIndex] = new City(config, cityName, regionName, CityColor.Purple);
 				}
 				else {
-					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, cityName, regionName, arrayCityColor[itColor]);
+					arrayCity[cityIndex] = new City(config, cityName, regionName, arrayCityColor[itColor]);
 					itColor++;
 				}
-				arrayCityPerRegion[itCity] = arrayCity[itRegion*numberCitiesPerRegion];
+				arrayCityPerRegion[itCityPerRegion] = arrayCity[cityIndex];
 			}
 
 			arrayRegion[itRegion] = new Region (regionName, arrayCityPerRegion, config);
@@ -169,6 +162,19 @@ public class Field {
 	
 		return cityLinksMatrix;
 		
+	}
+
+	/* This method creates four balconies and fills them with councillors */
+	private void createBalconies() {
+		//Create one (AND ONLY FOR ALL THE GAME) instance for the Available Councillor
+		AvailableCouncillor availableCouncillor = new AvailableCouncillor();
+
+		Balcony[] arrayBalcony = new Balcony[Constant.BALCONIES_NUMBER];
+
+		arrayBalcony[0] = new Balcony (availableCouncillor, RegionName.Sea.toString()+"Balcony");
+		arrayBalcony[1] = new Balcony (availableCouncillor, RegionName.Hill.toString()+"Balcony");
+		arrayBalcony[2] = new Balcony (availableCouncillor, RegionName.Mountain.toString()+"Balcony");
+		arrayBalcony[3] = new KingBalcony (availableCouncillor, "KingBalcony");
 	}
 
 	public City[] getArrayCity(){
