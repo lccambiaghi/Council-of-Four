@@ -1,33 +1,37 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
+import java.util.HashMap;
+
 public class Configurations {
 
 	int numberCities;
-	char difficulty;
+
+	int PermitCardBonusNumberMin;
+	int PermitCardBonusNumberMax;
 	
 	boolean nobilityBonusRandom;
+	int nobilityBonusNumber; //how many bonus the user wants on the nobilityRoute
+
 	boolean cityLinksPreconfigured;
+	char difficulty; // e, n, h
+	int cityLinksMatrix[][];
+
+	boolean cityBonusRandom;
+	int cityBonusNumberMin;
+	int cityBonusNumberMax;
+	HashMap<String,Integer> cityBonusArray[];
 	
-	int nobilityBonusNumber; //how many bonus the user would on the nobilityRoute 
-	
-	int minNumberBonusPerCity;
-	int maxNumberBonusPerCity;
-	
-	int minNumberBonusPerPermitCard;
-	int maxNumberBonusPerPermitCard;
-	
-	public Configurations(int numberCities, char difficulty, int minNumberBonusPerCity,
-			int maxNumberBonusPerCity,int minNumberBonusPerPermitCard, int maxNumberBonusPerPermitCard){
+	public Configurations(int numberCities, char difficulty, int cityBonusNumberMin,
+						  int cityBonusNumberMax, int PermitCardBonusNumberMin, int PermitCardBonusNumberMax){
 		
 		this.numberCities=numberCities;
 		this.difficulty=difficulty;
-		this.minNumberBonusPerCity=minNumberBonusPerCity;
-		this.maxNumberBonusPerCity=maxNumberBonusPerCity;
-		this.minNumberBonusPerPermitCard=minNumberBonusPerPermitCard;
-		this.maxNumberBonusPerPermitCard=maxNumberBonusPerPermitCard;
+		this.cityBonusNumberMin = cityBonusNumberMin;
+		this.cityBonusNumberMax = cityBonusNumberMax;
+		this.PermitCardBonusNumberMin = PermitCardBonusNumberMin;
+		this.PermitCardBonusNumberMax = PermitCardBonusNumberMax;
 		
 	}
-
 
 	public char getDifficulty() {
 		return difficulty;
@@ -37,21 +41,20 @@ public class Configurations {
 		this.difficulty = difficulty;
 	}
 
-
-	public int getMinNumberBonusPerCity() {
-		return minNumberBonusPerCity;
+	public int getCityBonusNumberMin() {
+		return cityBonusNumberMin;
 	}
 
-	public void setMinNumberBonusPerCity(int minNumberBonusPerCity) {
-		this.minNumberBonusPerCity = minNumberBonusPerCity;
+	public void setCityBonusNumberMin(int cityBonusNumberMin) {
+		this.cityBonusNumberMin = cityBonusNumberMin;
 	}
 
-	public int getMaxNumberBonusPerCity() {
-		return maxNumberBonusPerCity;
+	public int getCityBonusNumberMax() {
+		return cityBonusNumberMax;
 	}
 
-	public void setMaxNumberBonusPerCity(int maxNumberBonusPerCity) {
-		this.maxNumberBonusPerCity = maxNumberBonusPerCity;
+	public void setCityBonusNumberMax(int cityBonusNumberMax) {
+		this.cityBonusNumberMax = cityBonusNumberMax;
 	}
 
 	public int getNumberCities() {
@@ -62,22 +65,19 @@ public class Configurations {
 		this.numberCities = numberCities;
 	}
 	
-	public int getMinNumberBonusPerPermitCard() {
-		return minNumberBonusPerPermitCard;
+	public int getPermitCardBonusNumberMin() {
+		return PermitCardBonusNumberMin;
 	}
 
-
-	public void setMinNumberBonusPerPermitCard(int minNumberBonusPerPermitCard) {
-		this.minNumberBonusPerPermitCard = minNumberBonusPerPermitCard;
+	public void setPermitCardBonusNumberMin(int permitCardBonusNumberMin) {
+		this.PermitCardBonusNumberMin = permitCardBonusNumberMin;
 	}
 
-
-	public int getMaxNumberBonusPerPermitCard() {
-		return maxNumberBonusPerPermitCard;
+	public int getPermitCardBonusNumberMax() {
+		return PermitCardBonusNumberMax;
 	}
 
-
-	public void setMaxNumberBonusPerPermitCard(int maxNumberBonusPerPermitCard) {
-		this.maxNumberBonusPerPermitCard = maxNumberBonusPerPermitCard;
+	public void setPermitCardBonusNumberMax(int permitCardBonusNumberMax) {
+		this.PermitCardBonusNumberMax = permitCardBonusNumberMax;
 	}
 }
