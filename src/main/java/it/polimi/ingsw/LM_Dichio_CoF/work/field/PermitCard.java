@@ -69,9 +69,9 @@ public class PermitCard {
 		
 		int numberBonus;
 		Random randomBonus = new Random();
-		numberBonus= randomBonus.nextInt(config.getMaxNumberBonusPerPermitCard()-
-				config.getMinNumberBonusPerPermitCard()+1) +
-				config.getMinNumberBonusPerPermitCard();
+		numberBonus= randomBonus.nextInt(config.getPermitCardBonusNumberMax()-
+				config.getPermitCardBonusNumberMin()+1) +
+				config.getPermitCardBonusNumberMin();
 		
 		if(numberBonus!=0){
 			arrayBonus = BonusPermitCard.getArrayBonusPermitCard(numberBonus);
