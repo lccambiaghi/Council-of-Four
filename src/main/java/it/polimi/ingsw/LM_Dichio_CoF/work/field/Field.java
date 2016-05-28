@@ -23,25 +23,11 @@ public class Field {
 		
 		this.config=config;
 		
-		/*
-		 * GESTIONE REGIONI -- C'è da creare una random che distribuisca i colori tra le regioni,
-		 * inoltre bisogna trovare un modo (matrice di inceidenza o liste) per creare le città vicine
-		 */
-		
 		createCitiesAndRegions();
 		
-		
 		assignNearbyCities();
-		
-		
-		//GESTIONE BALCONATE
-		
-		
-		/*
-		 * Create one (AND ONLY FOR ALL THE GAME) instance for the Available Councilor
-		 */
-		
-		
+
+		//Create one (AND ONLY FOR ALL THE GAME) instance for the Available Councilor
 		availableCouncilor = new AvailableCouncilor();
 		
 		arrayBalcony = new Balcony[Constant.NUMBER_BALCONIES];
@@ -58,10 +44,10 @@ public class Field {
 		
 	}
 
+	/* This method creates arrayCity[config.numberCities] assigning cities their color,
+	 	then assigns them to the respective region  */
 	private void createCitiesAndRegions(){
-		/*
-		 * Creation of the cities that are assigned to the specified Region
-		 */
+
 		int numberCities = config.getNumberCities();
 		int numberCitiesPerRegion = numberCities/Constant.NUMBER_OF_REGIONS;
 
@@ -113,25 +99,22 @@ public class Field {
 
 		}
 
-
-
 	}
 
 	
 	/*
 	 * This method assigns to every city of the arrayCity the cities that are connected to it
-	 * It uses an arrayList to make the creation of the array of cities connected to every city simpler
-	 * 
+	 * according to the matrix imported from .txt file
 	 */
 	private void assignNearbyCities(){
 		
-		int[][] matrix = importMatrix(config.getDifficulty(), arrayCity.length);
+		int[][] cityLinksMatrix = importCityLinksMatrix(config.getDifficulty(), arrayCity.length);
 		
 		for(int row=0; row<arrayCity.length; row++){
 			
         	ArrayList<City> arrayListCityConnected = new ArrayList<City>();
 			for (int column=0; column<arrayCity.length; column++){
-        		if(matrix[row][column]==1){
+        		if(cityLinksMatrix[row][column]==1){
         			arrayListCityConnected.add(arrayCity[column]);
         		}	
         	}
@@ -147,30 +130,28 @@ public class Field {
 	}
 	
 	/*
-	 * This method is used to import the matrix (txt file) corresponding to the parameters passed:
+	 * This method imports cityLinksMatrix from the respective .txt file according to parameters passed:
 	 * "difficulty" is the first letter of the file, "numberCities" the second one
 	 */
-	private int[][] importMatrix(char difficulty , int numberCities){
+	private int[][] importCityLinksMatrix(char difficulty , int numberCities){
 		
-		int[][]matrix = new int[numberCities][numberCities];
+		int[][]cityLinksMatrix = new int[numberCities][numberCities];
 		
 		try {
-			
-			
+
 			FileReader inFile = new FileReader("./src/nearbyCities/"+ difficulty + numberCities+".txt");
 			Scanner in = new Scanner(inFile);
-			
 			
 			for(int i=0; i<numberCities; i++) {
 	            for(int j=0; j<numberCities; j++){
 	            	String read = in.next();
 	            	if (read.equals("1")){
-	            		matrix[i][j]=1;
+	            		cityLinksMatrix[i][j]=1;
 	            		/*
 	            		 * This second assignment is for making the matrix specular,
 	            		 * because in the txt file it is only upper triangular set
 	            		 */
-	            		matrix[j][i]=1;
+	            		cityLinksMatrix[j][i]=1;
 	            	}
 	            }
 	            	
@@ -188,7 +169,7 @@ public class Field {
 			e.printStackTrace();
 		}
 	
-		return matrix;
+		return cityLinksMatrix;
 		
 	}
 
