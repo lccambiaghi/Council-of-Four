@@ -21,7 +21,7 @@ public class TestNobilityRouteCell {
 		for (NobilityRouteCell a : arrayNobilityRouteCell){
 			if (a.hasBonus()){
 				for(Bonus bonus : a.getArrayBonus()){
-					System.out.print(bonus.getBonusName()+" ");
+					System.out.print(bonus.getBonusName()+" "+bonus.getIncrement());
 				}
 				System.out.println();
 				System.out.println();
