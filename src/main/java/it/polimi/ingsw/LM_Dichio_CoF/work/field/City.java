@@ -8,7 +8,6 @@ import java.util.Random;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Bonus;
 
 public class City {
 
@@ -38,9 +37,9 @@ public class City {
 		 * This "if" refers to the city of the king: it doesn't have to have bonuses
 		 */
 		if(!nameCity.equals(Constant.INITIAL_KING_CITY)){
-			numberBonus= random.nextInt(config.getMaxNumberBonusPerCity()-
-					config.getMinNumberBonusPerCity()+1) +
-					config.getMinNumberBonusPerCity();
+			numberBonus= random.nextInt(config.getCityBonusNumberMax()-
+					config.getCityBonusNumberMin()+1) +
+					config.getCityBonusNumberMin();
 			
 			if(numberBonus!=0){
 				arrayBonus = BonusCity.getArrayBonusCity(numberBonus);
