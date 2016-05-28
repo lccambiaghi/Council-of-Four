@@ -14,16 +14,16 @@ public class RichnessRoute implements Route {
 
     public RichnessRoute (ArrayList<Player> arrayListPlayer) {
         for (int i=0; i < arrayListPlayer.size(); i++) {
-            richnessMap.put(arrayListPlayer.get(i), Constant.INITIAL_RICHNESS_FIRST_PLAYER + i);
+            richnessMap.put(arrayListPlayer.get(i), Constant.RICHNESS_INITIAL_FIRST_PLAYER + i);
         }
     }
 
     public void movePlayer(int increment, Player player){
         int oldValue = richnessMap.get(player);
-        if(oldValue+increment<Constant.MAX_RICHNESS)
+        if(oldValue+increment<Constant.RICHNESS_MAX)
             richnessMap.replace(player, oldValue+increment);
         else
-            richnessMap.replace(player, Constant.MAX_RICHNESS);
+            richnessMap.replace(player, Constant.RICHNESS_MAX);
     }
 
     public int getPosition(Player player){

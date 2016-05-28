@@ -12,7 +12,7 @@ public class Connection{
 	
 	public Connection() throws IOException{
 		
-		serverSocket = new ServerSocket(Constant.PORT_SOCKET); 
+		serverSocket = new ServerSocket(Constant.SOCKET_PORT);
 		while(true){
 			Socket clientSocket = serverSocket.accept();
 			new SocketConnectionWithClient(clientSocket);

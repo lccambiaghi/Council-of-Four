@@ -30,7 +30,7 @@ public class Field {
 		//Create one (AND ONLY FOR ALL THE GAME) instance for the Available Councilor
 		availableCouncilor = new AvailableCouncilor();
 		
-		arrayBalcony = new Balcony[Constant.NUMBER_BALCONIES];
+		arrayBalcony = new Balcony[Constant.BALCONIES_NUMBER];
 		
 		arrayBalcony[0] = new Balcony (availableCouncilor, NameRegion.Sea.toString()+"Balcony");
 		arrayBalcony[1] = new Balcony (availableCouncilor, NameRegion.Hill.toString()+"Balcony");
@@ -49,10 +49,10 @@ public class Field {
 	private void createCitiesAndRegions(){
 
 		int numberCities = config.getNumberCities();
-		int numberCitiesPerRegion = numberCities/Constant.NUMBER_OF_REGIONS;
+		int numberCitiesPerRegion = numberCities/Constant.REGIONS_NUMBER;
 
 		arrayCity = new City[numberCities];
-		arrayRegion = new Region[Constant.NUMBER_OF_REGIONS];
+		arrayRegion = new Region[Constant.REGIONS_NUMBER];
 
 		City[] arrayCityPerRegion = new City[numberCitiesPerRegion];
 
@@ -78,14 +78,14 @@ public class Field {
 
 		int itColor=0;
 
-		for(int itRegion=0; itRegion<Constant.NUMBER_OF_REGIONS ; itRegion++){
+		for(int itRegion = 0; itRegion<Constant.REGIONS_NUMBER; itRegion++){
 			NameRegion nameRegion = NameRegion.getNameRegion(itRegion);
 
 			for(int itCity=0; itCity<numberCitiesPerRegion; itCity++){
 
 				CityName cityName = CityName.getNameCity(itCity + itRegion*numberCitiesPerRegion);
 
-				if (cityName.equals(Constant.INITIAL_KING_CITY)) {
+				if (cityName.equals(Constant.KING_CITY_INITIAL)) {
 					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, cityName, nameRegion, CityColor.Purple);
 				}
 				else {

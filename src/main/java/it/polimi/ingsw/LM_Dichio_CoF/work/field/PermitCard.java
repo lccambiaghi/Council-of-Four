@@ -29,21 +29,21 @@ public class PermitCard {
 		 * It depends on the size of the array "this.possibleCityWhereBuild", because the more
 		 * it is long, the more "numberPossibleCities" has to be long as well
 		 */
-		int numberPossibleCities = Constant.MAX_CITIES_PER_PERMIT_CARD +
-				arrayPossibleCityWhereBuild.length - Constant.MIN_CITIES_PER_REGION;
+		int numberPossibleCities = Constant.PERMIT_CARD_CITIES_NUMBER_MAX +
+				arrayPossibleCityWhereBuild.length - Constant.CITIES_PER_REGION_MIN;
 		
 		
 		/*
 		 * Here there is a random in order to have the number of cities that ACTUALLY the permit card
 		 * permits to build.
-		 * The ranges of it are: "numberPossibleCities" (MAX) and Constant.MIN_CITIES_PER_PERMIT_CARD (MIN)
+		 * The ranges of it are: "numberPossibleCities" (MAX) and Constant.PERMIT_CARD_CITIES_NUMBER_MIN (MIN)
 		 * The result is "lengthArrayCityWhereBuild", used to define the length of "arrayCityWhereBuild",
 		 * the array that will contain the real available cities of the permit card
 		 */
 		Random randomCities = new Random();
 		int lengthArrayCityWhereBuild = 
-				randomCities.nextInt(numberPossibleCities-Constant.MIN_CITIES_PER_PERMIT_CARD+1)+
-				Constant.MIN_CITIES_PER_PERMIT_CARD;
+				randomCities.nextInt(numberPossibleCities-Constant.PERMIT_CARD_CITIES_NUMBER_MIN +1)+
+				Constant.PERMIT_CARD_CITIES_NUMBER_MIN;
 		arrayCityWhereBuild = new City[lengthArrayCityWhereBuild];
 		
 		/*

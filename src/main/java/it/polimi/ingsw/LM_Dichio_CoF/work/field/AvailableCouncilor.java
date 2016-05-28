@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Color;
 
 public class AvailableCouncilor {
 
@@ -42,9 +41,9 @@ public class AvailableCouncilor {
 	 */
 	private void createArrayList(){
 		
-		int councilorsPerColor = Constant.TOTAL_NUMBER_COUNCILORS/Constant.NUMBER_OF_COLORS;
+		int councilorsPerColor = Constant.COUNCILORS_NUMBER_TOTAL /Constant.COLORS_NUMBER;
 		
-		for(int i=0; i< Constant.TOTAL_NUMBER_COUNCILORS; i++){
+		for(int i = 0; i< Constant.COUNCILORS_NUMBER_TOTAL; i++){
 			int indexOfColor =(int)(i/councilorsPerColor);
 			Councilor councilor = new Councilor(Color.getColorFromIndex(indexOfColor));
 			arrayListCouncilor.add(councilor);

@@ -17,10 +17,10 @@ public class VictoryRoute implements Route {
 		
 	public void movePlayer (int increment, Player player){
 		int oldValue = victoryMap.get(player);
-		if ((oldValue+increment)<Constant.MAX_VICTORY)
+		if ((oldValue+increment)<Constant.VICTORY_MAX)
 			victoryMap.replace(player, oldValue+increment);
 		else 
-			victoryMap.replace(player, Constant.MAX_VICTORY);
+			victoryMap.replace(player, Constant.VICTORY_MAX);
 	}
 	
 	public int getPosition (Player player){

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
-import static org.junit.Assert.*;
-
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -14,9 +12,9 @@ public class TestNobilityRouteCell {
 	@Test
 	public void Costruttore() {
 		
-		NobilityRouteCell [] arrayNobilityRouteCell = new NobilityRouteCell[Constant.MAX_NOBILITY];
+		NobilityRouteCell [] arrayNobilityRouteCell = new NobilityRouteCell[Constant.NOBILITY_MAX];
 
-		for (int i=0; i<Constant.MAX_NOBILITY; i++){
+		for (int i = 0; i<Constant.NOBILITY_MAX; i++){
 			arrayNobilityRouteCell[i] = new NobilityRouteCell(i); 
 		}
 		Collections.shuffle(Arrays.asList(arrayNobilityRouteCell));

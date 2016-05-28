@@ -26,7 +26,7 @@ public class Balcony {
 		
 		
 		
-		for(int i=0;i< Constant.NUMBER_COUNCILERS_PER_BALCONY; i++){
+		for(int i = 0; i< Constant.COUNCILLORS_PER_BALCONY_NUMBER; i++){
 			
 			Councilor councilor = availableCouncilor.removeCouncilor();
 			arrayListCouncilor.add(councilor);

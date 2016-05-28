@@ -35,7 +35,7 @@ public class City {
 		/* 
 		 * This "if" refers to the city of the king: it doesn't have to have bonuses
 		 */
-		if(!cityName.equals(Constant.INITIAL_KING_CITY)){
+		if(!cityName.equals(Constant.KING_CITY_INITIAL)){
 			numberBonus= random.nextInt(config.getCityBonusNumberMax()-
 					config.getCityBonusNumberMin()+1) +
 					config.getCityBonusNumberMin();
