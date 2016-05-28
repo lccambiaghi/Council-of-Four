@@ -4,35 +4,27 @@ import java.net.Socket;
 
 public class Player {
 
-	String id;
-	String nickname;
+	private String id;
+	private String nickname;
 	
-	char typeOfConnection;
-	Socket playerSocket;
+	private char typeOfConnection;
+	private Socket playerSocket;
 	
-	char CLIorGUI;
+	private char CLIorGUI;
 
-	public Player(String typeOfConnection){
-		
-		this.typeOfConnection=typeOfConnection.charAt(0);
-		
-	}
+	/* The constructor assigns to the player the type of connection */
+	public Player(String typeOfConnection){ this.typeOfConnection=typeOfConnection.charAt(0); }
 
 	public Socket getPlayerSocket() {
 		return playerSocket;
 	}
 
-	public void setPlayerSocket(Socket playerSocket) {
-		this.playerSocket = playerSocket;
-		
-		
-		
-	}
-	
+	public void setPlayerSocket(Socket playerSocket) { this.playerSocket = playerSocket; }
 	
 	public char getCLIorGUI() {
 		return CLIorGUI;
 	}
+
 	public void setCLIorGUI(char cLIorGUI) {
 		CLIorGUI = cLIorGUI;
 	}	
@@ -52,8 +44,5 @@ public class Player {
 	public void setTypeOfConnection(char typeOfConnection) {
 		this.typeOfConnection = typeOfConnection;
 	}
-	
-	
-	
 	
 }

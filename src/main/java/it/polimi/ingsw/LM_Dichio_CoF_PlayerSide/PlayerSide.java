@@ -15,12 +15,11 @@ public class PlayerSide {
 		connectToServer();
 	
 	}
-	
-	
+
 	private void connectToServer(){
 		
 		try {
-			
+
 			mySocket = new Socket(address,3000);
 			
 			System.out.println("I am connected to the Server");
@@ -31,8 +30,7 @@ public class PlayerSide {
 			
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 	
 	public static void main (String[] args){
@@ -40,6 +38,5 @@ public class PlayerSide {
 		new PlayerSide();
 		
 	}
-		
 	
 }

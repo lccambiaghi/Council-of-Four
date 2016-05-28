@@ -10,63 +10,44 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 public class PermitCard {
 
-	City[] arrayCityWhereBuild;
-	Bonus[] arrayBonus;
+	private City[] arrayBuildableCities;
+	private Bonus[] arrayBonus;
 	
-	/*
-	 * Constructor
-	 * It takes as parameter the array of possible cities where build and the config
-	 * Then, based on the dimension of it, it create the array of cities 
-	 * where the card permit to build
-	 */
+	/* The constructor takes as parameter the array of all possible buildable cities and the config
+	 * Then it create the array of ACTUALLY buildable cities */
 	public PermitCard(City[] arrayCity, Configurations config) {
 		
-		City[] arrayPossibleCityWhereBuild = arrayCity.clone();
+		City[] arrayTotalBuildableCities = arrayCity.clone();
 		
-		/*
-		 * "numberPossibleCities" contains the MAX number of cities that the permit card
+		/* "numberTotalBuildableCities" contains the MAX number of cities that the permit card
 		 * can permit to build. 
-		 * It depends on the size of the array "this.possibleCityWhereBuild", because the more
-		 * it is long, the more "numberPossibleCities" has to be long as well
-		 */
-		int numberPossibleCities = Constant.PERMIT_CARD_CITIES_NUMBER_MAX +
-				arrayPossibleCityWhereBuild.length - Constant.CITIES_PER_REGION_MIN;
+		 * It depends on the size of arrayTotalBuildableCities, because the more
+		 * it is long, the more "numberTotalBuildableCities" has to be long as well */
+		int numberTotalBuildableCities = Constant.PERMIT_CARD_CITIES_NUMBER_MAX +
+				arrayTotalBuildableCities.length - Constant.CITIES_PER_REGION_MIN;
 		
-		
-		/*
-		 * Here there is a random in order to have the number of cities that ACTUALLY the permit card
+		/* Here there is a random in order to have the number of cities that ACTUALLY the permit card
 		 * permits to build.
-		 * The ranges of it are: "numberPossibleCities" (MAX) and Constant.PERMIT_CARD_CITIES_NUMBER_MIN (MIN)
-		 * The result is "lengthArrayCityWhereBuild", used to define the length of "arrayCityWhereBuild",
-		 * the array that will contain the real available cities of the permit card
-		 */
+		 * The ranges of it are: "numberTotalBuildableCities" (MAX) and Constant.PERMIT_CARD_CITIES_NUMBER_MIN (MIN)
+		 * The result is "numberActuallyBuildableCities", used to define the length of "arrayBuildableCities",
+		 * the array that will contain the real available cities of the permit card*/
 		Random randomCities = new Random();
-		int lengthArrayCityWhereBuild = 
-				randomCities.nextInt(numberPossibleCities-Constant.PERMIT_CARD_CITIES_NUMBER_MIN +1)+
+		int numberActuallyBuildableCities =
+				randomCities.nextInt(numberTotalBuildableCities-Constant.PERMIT_CARD_CITIES_NUMBER_MIN +1)+
 				Constant.PERMIT_CARD_CITIES_NUMBER_MIN;
-		arrayCityWhereBuild = new City[lengthArrayCityWhereBuild];
+		arrayBuildableCities = new City[numberActuallyBuildableCities];
+
+		Collections.shuffle(Arrays.asList(arrayTotalBuildableCities));
+
+		/* Now we assign the first "numberActuallyBuildableCities" elements of the array "arrayTotalBuildableCities"
+		  that has been  previously shuffled. */
+		// for(int i=0; i< numberActuallyBuildableCities; i++){ arrayBuildableCities[i]=arrayTotalBuildableCities[i]; }
+		System.arraycopy(arrayTotalBuildableCities, 0, arrayBuildableCities, 0, numberActuallyBuildableCities);
 		
-		/*
-		 * This method permit to shuffle the array "possibleCityWhereBuild"
-		 */
-		Collections.shuffle(Arrays.asList(arrayPossibleCityWhereBuild));
-		
-		
-		/*
-		 * Now we assign the first "lengthArrayCityWhereBuild" elements of the array "arrayPossibleCityWhereBuild"
-		 * that has been  previously shuffled.
-		 */
-		for(int i=0; i< lengthArrayCityWhereBuild; i++){
-			arrayCityWhereBuild[i]=arrayPossibleCityWhereBuild[i];
-		}
-		
-		/*
-		 * Now we assign the bonuses that the permit card will have.
+		/* Now we assign the bonuses that the permit card will have.
 		 * The ranges of it are: "MaxNumberBonusPerPermitCard" (MAX) and MinNumberBonusPerPermitCard (MIN)
 		 * The result is "numberBonus", used to define the length of "arrayBonus",
-		 * the array that will contain the bonuses of the permit card
-		 */
-		
+		 * the array that will contain the bonuses of the permit card */
 		int numberBonus;
 		Random randomBonus = new Random();
 		numberBonus= randomBonus.nextInt(config.getPermitCardBonusNumberMax()-
@@ -74,23 +55,19 @@ public class PermitCard {
 				config.getPermitCardBonusNumberMin();
 		
 		if(numberBonus!=0){
-			arrayBonus = BonusPermitCard.getArrayBonusPermitCard(numberBonus);
+			arrayBonus = PermitCardBonus.getArrayPermitCardBonus(numberBonus);
 		}
 		
 	}
-	
-	public City[] getArrayCityWhereBuild() {
-		return arrayCityWhereBuild;
+
+	public boolean hasBonus(){ return arrayBonus != null; }
+
+	public City[] getArrayBuildableCities() {
+		return arrayBuildableCities;
 	}
 
 	public Bonus[] getArrayBonus() {
 		return arrayBonus;
-	}		
-	
-	public boolean hasBonus(){
-		if (arrayBonus== null)
-			return false;
-		return true;
 	}
 	
 }

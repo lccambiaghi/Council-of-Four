@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class CityBonus extends Bonus{
 
+	/* The constructor assigns a random bonus name and assigns a random increment*/
 	public CityBonus(){
 		
 		Random random = new Random();
@@ -16,10 +17,8 @@ public class CityBonus extends Bonus{
 				
 	}
 	
-	/*
-	 * This method is static.
-	 * It returns an array of "differentBonus" different types of bonus
-	 */
+	/* This method is static.
+	 * It returns an array of "differentBonus" different types of bonus */
 	public static Bonus[] getArrayBonusCity(int differentBonus){
 		
 		Bonus[] arrayBonus = new Bonus[differentBonus];

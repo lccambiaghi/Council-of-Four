@@ -1,11 +1,10 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Color;
-
 public class Councillor {
 
-	Color color;
-	
+	private Color color;
+
+	/* The constructor assigns the color passed */
 	public Councillor(Color color){
 		this.color=color;
 	}

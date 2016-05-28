@@ -12,18 +12,10 @@ public enum Color {
 	Multicolor("Multicolor"); //gestisci poi multicolor
 	
 	public String rgb;
-	
-	private Color(String rgb) {
-		this.rgb=rgb;
-	}
-	public String getRgb() {
-		return rgb;
-	}
-	public void setRgb(String rgb) {
-		this.rgb = rgb;
-	}
-	
-	// the method getRandomColor select a Color from the enum list 
+
+	/* The constructor assigns rgb*/
+	Color(String rgb) { this.rgb=rgb; }
+
 	public static Color getRandomColor(){
 		Random random = new Random ();
 		return values()[random.nextInt(values().length)];
@@ -32,4 +24,12 @@ public enum Color {
 	public static Color getColorFromIndex(int index){
 		return Color.values()[index];
 	}
+
+	public String getRgb() {
+		return rgb;
+	}
+	public void setRgb(String rgb) {
+		this.rgb = rgb;
+	}
+
 }

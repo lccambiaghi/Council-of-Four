@@ -2,9 +2,6 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import java.util.Random;
 
-/**
- * Created by Luca on 22/05/16.
- */
 public enum BonusName {
 
     Assistant(3),
@@ -20,13 +17,12 @@ public enum BonusName {
 
     private int maxIncrement;
 
+    /* The constructor assigns the increment to the bonus*/
     BonusName(int maxIncrement) {this.maxIncrement=maxIncrement;}
 
     /*
     public static BonusName getBonusName (int index){return values()[index];}
      */
-
-    public int getMaxIncrement(BonusName bonusName){return bonusName.maxIncrement;}
 
     public static BonusName getRandomBonusName(){
     	Random random = new Random();
@@ -37,7 +33,8 @@ public enum BonusName {
     	Random random = new Random();
     	return values()[random.nextInt(values().length-5)];
     }
-    
+
+    /* This method checks if the String parameter is a bonusName */
     public static boolean containString(String test) {
 
         for (BonusName bonusName : BonusName.values()) {
@@ -52,16 +49,16 @@ public enum BonusName {
 
         for (BonusName bonusName : BonusName.values()) {
             if (bonusName.name().equals(test)) {
-            	return (BonusName) bonusName;
+            	return bonusName;
             }
         }
 		return null;
     }
     
-    
-    
     public static BonusName getBonusName(BonusName bonusName){
     	return bonusName;
     }
+
+    public int getMaxIncrement(BonusName bonusName){return bonusName.maxIncrement;}
 
 }

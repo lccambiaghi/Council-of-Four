@@ -5,18 +5,13 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 public class FaceUpPermitCardArea {
 	
-	PermitCard[] arrayPermitCard;
-	City[] arrayCity;
-	Configurations config;
+	private PermitCard[] arrayPermitCard;
+	private City[] arrayCity;
+	private Configurations config;
 
-	
-	/*
-	 * Constructor
-	 * It takes the array of cities that the permitCard belonging to 
-	 * a region can have.
-	 * It initializes the arrayPermitCard with FACE_UP_PERMIT_CARD_PER_REGION_NUMBER
-	 * permit cards.
-	 */
+	/* The constructor receives the arrayCity belonging to a region and
+	  initializes the arrayPermitCard with FACE_UP_PERMIT_CARD_PER_REGION_NUMBER
+	  permit cards */
 	public FaceUpPermitCardArea(City[] arrayCity, Configurations config){
 		
 		this.arrayCity=arrayCity;
@@ -30,26 +25,20 @@ public class FaceUpPermitCardArea {
 		
 	}
 
-	/*
-	 * This method permit to take a permit card from the available ones.
-	 * It takes as parameters the index of the permit card (for example
-	 * "1" for the one in position "0" and so on)
+	/* This method is to take a permit card from the area.
+	 * It takes as parameters the index of the permit card
+	 * ("1" for arrayPermitCard[0] and so on)
 	 * It returns the wanted permit card, creating a new one in the place of the
-	 * taken one
-	 */
+	 * taken one */
 	public PermitCard takePermitCard(int index){
 		PermitCard permitCardTmp = arrayPermitCard[index-1];
 		arrayPermitCard[index-1]=new PermitCard(arrayCity, config);
 		return permitCardTmp;
 	}
 	
-	
-	/*
-	 * This method returns the permit card 
-	 * It takes as parameters the index of the permit card (for example
-	 * "1" for the one in position "0" and so on)
-	 */
-	public PermitCard getPermitCard(int index) {
+	/* This method returns the permit card at the specified index
+	  (("1" for arrayPermitCard[0] and so on)) */
+	public PermitCard getPermitCardFromIndex(int index) {
 		return arrayPermitCard[index-1];
 	}
 	

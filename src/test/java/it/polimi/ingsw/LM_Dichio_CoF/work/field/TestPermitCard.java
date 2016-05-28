@@ -22,7 +22,7 @@ public class TestPermitCard {
 		for(PermitCard p: arrayPermitCard){
 			
 			p = new PermitCard(arrayCity,testCases.configurations());
-			City[] arrayCityWhereBuild = p.getArrayCityWhereBuild();
+			City[] arrayCityWhereBuild = p.getArrayBuildableCities();
 			
 			for(City c: arrayCityWhereBuild){
 				System.out.print(c.getCityName().toString());

@@ -9,13 +9,11 @@ import java.util.Collections;
 import java.util.Scanner;
 import it.polimi.ingsw.LM_Dichio_CoF.work.*;
 
+/* The constructor creates cities, assign them to regions */
 public class Field {
 
-	Configurations config;
-	Region[] arrayRegion;
-	City[] arrayCity;
-	Balcony[] arrayBalcony;
-	AvailableCouncillor availableCouncillor;
+	private Configurations config;
+	private City[] arrayCity;
 	Route route;
 	King king;
 	
@@ -28,9 +26,9 @@ public class Field {
 		assignNearbyCities();
 
 		//Create one (AND ONLY FOR ALL THE GAME) instance for the Available Councillor
-		availableCouncillor = new AvailableCouncillor();
-		
-		arrayBalcony = new Balcony[Constant.BALCONIES_NUMBER];
+		AvailableCouncillor availableCouncillor = new AvailableCouncillor();
+
+		Balcony[] arrayBalcony = new Balcony[Constant.BALCONIES_NUMBER];
 		
 		arrayBalcony[0] = new Balcony (availableCouncillor, NameRegion.Sea.toString()+"Balcony");
 		arrayBalcony[1] = new Balcony (availableCouncillor, NameRegion.Hill.toString()+"Balcony");
@@ -52,7 +50,7 @@ public class Field {
 		int numberCitiesPerRegion = numberCities/Constant.REGIONS_NUMBER;
 
 		arrayCity = new City[numberCities];
-		arrayRegion = new Region[Constant.REGIONS_NUMBER];
+		Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
 
 		City[] arrayCityPerRegion = new City[numberCitiesPerRegion];
 
@@ -102,17 +100,15 @@ public class Field {
 	}
 
 	
-	/*
-	 * This method assigns to every city of the arrayCity the cities that are connected to it
-	 * according to the matrix imported from .txt file
-	 */
+	/* This method assigns to every city of the arrayCity the cities that are connected to it
+	  according to the matrix imported from .txt file */
 	private void assignNearbyCities(){
 		
 		int[][] cityLinksMatrix = importCityLinksMatrix(config.getDifficulty(), arrayCity.length);
 		
 		for(int row=0; row<arrayCity.length; row++){
 			
-        	ArrayList<City> arrayListCityConnected = new ArrayList<City>();
+        	ArrayList<City> arrayListCityConnected = new ArrayList<>();
 			for (int column=0; column<arrayCity.length; column++){
         		if(cityLinksMatrix[row][column]==1){
         			arrayListCityConnected.add(arrayCity[column]);
@@ -129,10 +125,8 @@ public class Field {
 
 	}
 	
-	/*
-	 * This method imports cityLinksMatrix from the respective .txt file according to parameters passed:
-	 * "difficulty" is the first letter of the file, "numberCities" the second one
-	 */
+	/* This method imports cityLinksMatrix from the respective .txt file according to parameters passed:
+	  "difficulty" is the first letter of the file, "numberCities" the second one */
 	private int[][] importCityLinksMatrix(char difficulty , int numberCities){
 		
 		int[][]cityLinksMatrix = new int[numberCities][numberCities];

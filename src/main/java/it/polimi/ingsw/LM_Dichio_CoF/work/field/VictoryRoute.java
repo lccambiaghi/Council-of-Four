@@ -8,13 +8,13 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 public class VictoryRoute implements Route {
 
-	Map <Player, Integer> victoryMap = new HashMap <>();
-	
+	private Map <Player, Integer> victoryMap = new HashMap <>();
+
+	/* The constructor creates richnessMap assigning initial richness to every player */
 	public VictoryRoute (ArrayList <Player> arrayListPlayer){
-		for(int i=0; i<arrayListPlayer.size(); i++)
-			victoryMap.put(arrayListPlayer.get(i), 0);
-	}
-		
+		for (Player anArrayListPlayer : arrayListPlayer) victoryMap.put(anArrayListPlayer, 0); }
+
+	/* This method increases/decreases the specified player's victoryMap of the increment specified */
 	public void movePlayer (int increment, Player player){
 		int oldValue = victoryMap.get(player);
 		if ((oldValue+increment)<Constant.VICTORY_MAX)

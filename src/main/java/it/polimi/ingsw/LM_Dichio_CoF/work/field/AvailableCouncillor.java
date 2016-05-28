@@ -13,7 +13,7 @@ public class AvailableCouncillor {
 	 * Once the class is created for the first time, the method "createList()" is invoked
 	 */
 	
-	ArrayList <Councillor> arrayListCouncillor;
+	private ArrayList <Councillor> arrayListCouncillor;
 	
 	
 	/// NON POSSO METTERLO SINGLETON :( o si? :D
@@ -34,17 +34,14 @@ public class AvailableCouncillor {
 		createArrayList();
 	}
 	
-	
-	/*
-	 * This method creates the councilers, put them in order in the arrayList "listCouncilor" and then
-	 * shuffle it to have them randomly
-	 */
+	/* This method creates councillors in order in the arrayList "listCouncilor" and then
+	  shuffles it */
 	private void createArrayList(){
 		
 		int councilorsPerColor = Constant.COUNCILORS_NUMBER_TOTAL /Constant.COLORS_NUMBER;
 		
 		for(int i = 0; i< Constant.COUNCILORS_NUMBER_TOTAL; i++){
-			int indexOfColor =(int)(i/councilorsPerColor);
+			int indexOfColor =(i/councilorsPerColor);
 			Councillor councillor = new Councillor(Color.getColorFromIndex(indexOfColor));
 			arrayListCouncillor.add(councillor);
 		}
@@ -52,15 +49,12 @@ public class AvailableCouncillor {
 		Collections.shuffle(arrayListCouncillor);
 		
 	}
-	
+
+	/* This method removes the leftmost Councillor on the balcony */
+	public Councillor removeCouncilor(){ return arrayListCouncillor.remove(0);	}
+
 	public ArrayList<Councillor> getArrayListCouncillor() {
 		return arrayListCouncillor;
 	}
-	
-	public Councillor removeCouncilor(){
-		Councillor councillor = arrayListCouncillor.remove(0);
-		return councillor;
-	}
-	
-	
+
 }

@@ -4,23 +4,24 @@ import java.util.HashMap;
 
 public class Configurations {
 
-	int numberCities;
+	private int numberCities;
 
-	int PermitCardBonusNumberMin;
-	int PermitCardBonusNumberMax;
+	private int PermitCardBonusNumberMin;
+	private int PermitCardBonusNumberMax;
 	
 	boolean nobilityBonusRandom;
 	int nobilityBonusNumber; //how many bonus the user wants on the nobilityRoute
 
 	boolean cityLinksPreconfigured;
-	char difficulty; // e, n, h
+	private char difficulty; // e, n, h
 	int cityLinksMatrix[][];
 
 	boolean cityBonusRandom;
-	int cityBonusNumberMin;
-	int cityBonusNumberMax;
+	private int cityBonusNumberMin;
+	private int cityBonusNumberMax;
 	HashMap<String,Integer> cityBonusArray[];
-	
+
+	/* The constructor assigns the parameter to the newly created config object */
 	public Configurations(int numberCities, char difficulty, int cityBonusNumberMin,
 						  int cityBonusNumberMax, int PermitCardBonusNumberMin, int PermitCardBonusNumberMax){
 		

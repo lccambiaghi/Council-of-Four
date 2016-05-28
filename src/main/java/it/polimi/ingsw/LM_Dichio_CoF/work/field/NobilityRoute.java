@@ -11,13 +11,15 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 
 public class NobilityRoute implements Route{
 
-	Map <Player,Integer> nobilityMap = new HashMap<>();
-	NobilityRouteCell [] arrayNobilityRouteCell = new NobilityRouteCell[Constant.NOBILITY_MAX];
-	
+	private Map <Player,Integer> nobilityMap = new HashMap<>();
+	private NobilityRouteCell [] arrayNobilityRouteCell = new NobilityRouteCell[Constant.NOBILITY_MAX];
+
+	/* The constructor assigns creates nobilityMap with every player
+	   starting at 0. Then it creates arrayNobilityRouteCell */
 	public NobilityRoute(ArrayList<Player> arrayListPlayer){
-		
-		for(int i=0; i<arrayListPlayer.size(); i++){
-			nobilityMap.put(arrayListPlayer.get(i), 0);	
+
+		for (Player anArrayListPlayer : arrayListPlayer) {
+			nobilityMap.put(anArrayListPlayer, 0);
 		}
 		
 		for (int i = 0; i<Constant.NOBILITY_MAX; i++){
@@ -25,7 +27,8 @@ public class NobilityRoute implements Route{
 		}
 		Collections.shuffle(Arrays.asList(arrayNobilityRouteCell));
 	}
-	
+
+	/* This method increases/decreases the specified player's nobilityMap of the increment specified */
 	public void movePlayer(int increment, Player player){
 		int oldValue = nobilityMap.get(player);
 		if (oldValue+increment < Constant.NOBILITY_MAX)
@@ -37,6 +40,5 @@ public class NobilityRoute implements Route{
 	public int getPosition(Player player){
 		return nobilityMap.get(player);
 	}
-	
-	
+
 }

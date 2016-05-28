@@ -20,8 +20,8 @@ public class TestFaceUpPermitCardArea {
 		
 		for(PermitCard permitCard: arrayPermitCard){
 			
-			City[] arrayCity = new City[permitCard.getArrayCityWhereBuild().length];
-			arrayCity = permitCard.getArrayCityWhereBuild();
+			City[] arrayCity = new City[permitCard.getArrayBuildableCities().length];
+			arrayCity = permitCard.getArrayBuildableCities();
 			for(City city: arrayCity){
 				System.out.print(city.getCityName() +" ");
 			}

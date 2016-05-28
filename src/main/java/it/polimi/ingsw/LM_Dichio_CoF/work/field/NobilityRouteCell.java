@@ -2,9 +2,11 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 public class NobilityRouteCell {
 	
-	Bonus [] arrayBonus;
+	private Bonus [] arrayBonus;
 	int i;
-	
+
+	/* The constructor creates the NobilityRouteCell assigning it bonus
+	   according to its index, specified as parameter*/
 	public NobilityRouteCell(int index){
 		this.i=index;
 		
@@ -62,11 +64,8 @@ public class NobilityRouteCell {
 
 	}
 
-	public boolean hasBonus(){
-		if (arrayBonus== null)
-			return false;
-		return true;
-	}
+	/* This method checks if a cell has bonus*/
+	public boolean hasBonus(){ return arrayBonus != null; }
 	
 	public Bonus[] getArrayBonus() {
 		return arrayBonus;

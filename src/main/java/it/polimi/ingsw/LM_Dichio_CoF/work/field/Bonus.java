@@ -14,7 +14,9 @@ public class Bonus {
 	}
 	
 	public Bonus(){}
-	
+
+	/* If String in input corresponds to a bonusName, then it creates the corresponding bonus
+	  with specified increment */
 	public Bonus(String bonusName, int increment){
 		
 		if(BonusName.containString(bonusName)){
@@ -24,10 +26,7 @@ public class Bonus {
 		
 	}
 	
-	
-	/*
-	 * This method verify if the BonusName of the bonus that calls it is present in the arrayBonus (parameter)
-	 */
+	/* This method checks if BonusName of calling bonus is present in arrayBonus (parameter) */
 	public boolean bonusNameIsIn(Bonus[] arrayBonus){
 		
 		for(int i=0; i<arrayBonus.length; i++){
