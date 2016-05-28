@@ -83,13 +83,13 @@ public class Field {
 
 			for(int itCity=0; itCity<numberCitiesPerRegion; itCity++){
 
-				NameCity nameCity = NameCity.getNameCity(itCity + itRegion*numberCitiesPerRegion);
+				CityName cityName = CityName.getNameCity(itCity + itRegion*numberCitiesPerRegion);
 
-				if (nameCity.equals(Constant.INITIAL_KING_CITY)) {
-					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, nameCity, nameRegion, CityColor.Purple);
+				if (cityName.equals(Constant.INITIAL_KING_CITY)) {
+					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, cityName, nameRegion, CityColor.Purple);
 				}
 				else {
-					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, nameCity, nameRegion, arrayCityColor[itColor]);
+					arrayCity[itCity + itRegion * numberCitiesPerRegion] = new City(config, cityName, nameRegion, arrayCityColor[itColor]);
 					itColor++;
 				}
 				arrayCityPerRegion[itCity] = arrayCity[itRegion*numberCitiesPerRegion];

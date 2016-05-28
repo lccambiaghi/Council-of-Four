@@ -1,7 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.CityColor;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.NameCity;
+import it.polimi.ingsw.LM_Dichio_CoF.work.field.CityName;
 
 public class Constant {
 	
@@ -22,7 +22,7 @@ public class Constant {
 	public static final int MAX_NOBILITY=21;
 	public static final int MAX_VICTORY=100;
 	
-	public static final NameCity INITIAL_KING_CITY= NameCity.J;
+	public static final CityName INITIAL_KING_CITY= CityName.J;
 
 	public static final CityColor[][] CITIES_COLOR = {
 			{CityColor.Blue, CityColor.Blue, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold},

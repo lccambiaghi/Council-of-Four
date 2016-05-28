@@ -1,13 +1,8 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
-import static org.junit.Assert.*;
-
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
 
 public class TestPermitCard {
 
@@ -30,7 +25,7 @@ public class TestPermitCard {
 			City[] arrayCityWhereBuild = p.getArrayCityWhereBuild();
 			
 			for(City c: arrayCityWhereBuild){
-				System.out.print(c.getNameCity().toString());
+				System.out.print(c.getCityName().toString());
 			}
 			
 			System.out.println();

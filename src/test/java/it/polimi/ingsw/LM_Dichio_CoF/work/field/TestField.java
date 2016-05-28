@@ -1,7 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
@@ -20,12 +18,12 @@ public class TestField {
 		for(City city: arrayCity){
 			
 			System.out.println("Region: " + city.getNameRegion());
-			System.out.println("City: " + city.getNameCity());
+			System.out.println("City: " + city.getCityName());
 			System.out.println("Color: " + city.getCityColor());
 			
 			City[] arrayCityConnected = city.getNearbyCity();
 			for(City cityConnected: arrayCityConnected){
-				System.out.println("City connected: " + cityConnected.getNameCity());
+				System.out.println("City connected: " + cityConnected.getCityName());
 			}	
 			
 			if(city.hasBonus()){

@@ -1,10 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
@@ -19,7 +14,7 @@ public class TestCity {
 		City[] arrayCity = testCases.arrayCity();
 		
 		for(City city: arrayCity){
-			System.out.println(city.getNameCity());
+			System.out.println(city.getCityName());
 			if(city.hasBonus()){
 				Bonus[] arrayBonus = city.getArrayBonus();
 				

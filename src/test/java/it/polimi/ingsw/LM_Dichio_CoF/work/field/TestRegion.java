@@ -1,7 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
@@ -18,7 +16,7 @@ public class TestRegion {
 		City[] arrayCity = region.getArrayCity();
 		
 		for(City city: arrayCity){
-			System.out.println(city.getNameCity().toString());
+			System.out.println(city.getCityName().toString());
 		}
 		
 	}

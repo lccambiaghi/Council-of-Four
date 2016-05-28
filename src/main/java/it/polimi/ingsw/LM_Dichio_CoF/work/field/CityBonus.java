@@ -2,9 +2,9 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import java.util.Random;
 
-public class BonusCity extends Bonus{
+public class CityBonus extends Bonus{
 
-	public BonusCity(){
+	public CityBonus(){
 		
 		Random random = new Random();
 		
@@ -27,7 +27,7 @@ public class BonusCity extends Bonus{
 		
 		for(int i=0; i < differentBonus; i++){
 			do 
-				bonus = new BonusCity();
+				bonus = new CityBonus();
 			while(bonus.bonusNameIsIn(arrayBonus));
 			arrayBonus[i]=bonus;
 		}

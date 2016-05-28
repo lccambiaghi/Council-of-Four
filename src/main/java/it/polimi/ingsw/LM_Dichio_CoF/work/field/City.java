@@ -11,7 +11,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 public class City {
 
-	private NameCity nameCity;
+	private CityName cityName;
 	private NameRegion nameRegion;
 	private Bonus[] arrayBonus;
 	private City[] nearbyCity;
@@ -24,24 +24,24 @@ public class City {
 	 * The constructor receives the configurations, the name of the city given by the Region
 	 * and the name of the region itself
 	 */
-	public City(Configurations config, NameCity nameCity, NameRegion nameRegion, CityColor cityColor){
+	public City(Configurations config, CityName cityName, NameRegion nameRegion, CityColor cityColor){
 		int numberBonus;
 		Random random = new Random();
 		
-		this.nameCity=nameCity;
+		this.cityName = cityName;
 		this.nameRegion=nameRegion;
 		this.cityColor=cityColor;
 		
 		/* 
 		 * This "if" refers to the city of the king: it doesn't have to have bonuses
 		 */
-		if(!nameCity.equals(Constant.INITIAL_KING_CITY)){
+		if(!cityName.equals(Constant.INITIAL_KING_CITY)){
 			numberBonus= random.nextInt(config.getCityBonusNumberMax()-
 					config.getCityBonusNumberMin()+1) +
 					config.getCityBonusNumberMin();
 			
 			if(numberBonus!=0){
-				arrayBonus = BonusCity.getArrayBonusCity(numberBonus);
+				arrayBonus = CityBonus.getArrayBonusCity(numberBonus);
 			}
 		}	
 	}	
@@ -55,8 +55,8 @@ public class City {
 	 * che riceve la stringa e l'incremento, dopo di che aggiunge il bonus all'arrayList
 	 * di Bonus della città
 	 */
-	public City (Map <String, Integer> bonusMap, NameCity nameCity, NameRegion nameRegion, CityColor cityColor){
-		this.nameCity=nameCity;
+	public City (Map <String, Integer> bonusMap, CityName cityName, NameRegion nameRegion, CityColor cityColor){
+		this.cityName = cityName;
 		this.nameRegion=nameRegion;
 		this.cityColor=cityColor;
 					
@@ -77,12 +77,12 @@ public class City {
 		
 
 	
-	public NameCity getNameCity() {
-		return nameCity;
+	public CityName getCityName() {
+		return cityName;
 	}
 
-	public void setNameCity(NameCity nameCity) {
-		this.nameCity = nameCity;
+	public void setCityName(CityName cityName) {
+		this.cityName = cityName;
 	}
 	
 	public NameRegion getNameRegion() {

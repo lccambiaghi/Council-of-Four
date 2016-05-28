@@ -1,21 +1,12 @@
 package it.polimi.ingsw.LM_Dichio_CoF;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.security.auth.login.AppConfigurationEntry;
-import javax.security.auth.login.Configuration;
-
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
-
-import org.junit.Test;
-
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 
 public class TestCases {
 	
@@ -45,8 +36,8 @@ public class TestCases {
 		City[] arrayCity = new City[n];
 		for(int i=0; i<n; i++){
 			
-			//arrayCity[i] = new City(config, NameCity.getNameCity(i), NameRegion.Sea, CityColor.Blue);
-			arrayCity[i] = new City(bonusMap, NameCity.getNameCity(i), NameRegion.Sea, CityColor.Blue);
+			//arrayCity[i] = new City(config, CityName.getCityName(i), NameRegion.Sea, CityColor.Blue);
+			arrayCity[i] = new City(bonusMap, CityName.getNameCity(i), NameRegion.Sea, CityColor.Blue);
 		}
 		
 		return arrayCity;
