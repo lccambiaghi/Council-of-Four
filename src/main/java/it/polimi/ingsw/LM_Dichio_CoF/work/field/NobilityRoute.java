@@ -25,7 +25,7 @@ public class NobilityRoute implements Route{
 		for (int i = 0; i<Constant.NOBILITY_MAX; i++){
 			arrayNobilityRouteCell[i] = new NobilityRouteCell(i); 
 		}
-		Collections.shuffle(Arrays.asList(arrayNobilityRouteCell));
+		//Collections.shuffle(Arrays.asList(arrayNobilityRouteCell));
 	}
 
 	/* This method increases/decreases the specified player's nobilityMap of the increment specified */
