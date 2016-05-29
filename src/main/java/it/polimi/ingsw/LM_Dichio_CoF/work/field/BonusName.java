@@ -13,7 +13,7 @@ public enum BonusName {
     BuiltCityBonus(1),
     FaceUpPermitCard(1),
     OwnedPermitCardBonus(1),
-    TwoBuiltDifferentBonus(1);
+    TwoBuiltCitiesDifferentBonus(1);
 
     private int maxIncrement;
 
