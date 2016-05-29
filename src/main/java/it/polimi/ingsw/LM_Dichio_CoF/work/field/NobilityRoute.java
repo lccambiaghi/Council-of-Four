@@ -22,8 +22,15 @@ public class NobilityRoute implements Route{
 			nobilityMap.put(anArrayListPlayer, 0);
 		}
 		
-		for (int i = 0; i<Constant.NOBILITY_MAX; i++){
-			arrayNobilityRouteCell[i] = new NobilityRouteCell(i); 
+		for (int indexNobility = 0, indexBonuses = 0; indexNobility<Constant.NOBILITY_MAX; indexNobility++){
+			
+			Bonus[] arrayBonus=null;
+			if(((indexNobility%2==0)&&(indexNobility!=0)) || (indexNobility==19)){
+				arrayBonus=Constant.NOBILITY_CELL_BONUSES[indexBonuses];
+				indexBonuses++;
+			}
+		
+			arrayNobilityRouteCell[indexNobility] = new NobilityRouteCell(indexNobility, arrayBonus); 
 		}
 		//Collections.shuffle(Arrays.asList(arrayNobilityRouteCell));
 	}
@@ -39,6 +46,10 @@ public class NobilityRoute implements Route{
 	
 	public int getPosition(Player player){
 		return nobilityMap.get(player);
+	}
+	
+	public NobilityRouteCell[] getArrayNobilityRouteCell(){
+		return arrayNobilityRouteCell;
 	}
 
 }
