@@ -28,6 +28,7 @@ public class TestNobilityRoute {
 		assertEquals(3, arrayListPlayer.size());
 	}
 
+	@Test
 	public void movePlayer() {
 
 		TestCases testCases = new TestCases();
@@ -52,6 +53,35 @@ public class TestNobilityRoute {
 		}
 
 		assertArrayEquals(arrayPosition, new int[]{10,18,20});
+	}
+	
+	@Test
+	public void standardBonuses(){
+		
+		TestCases testCases = new TestCases();
+		ArrayList <Player> arrayListPlayer =testCases.arrayListPlayer();
+		NobilityRoute nobilityRoute = new NobilityRoute(arrayListPlayer);
+		
+		NobilityRouteCell[] arrayNobilityRouteCell = nobilityRoute.getArrayNobilityRouteCell();
+		
+		for (NobilityRouteCell a : arrayNobilityRouteCell){
+			if (a.hasBonus()){
+				for(Bonus bonus : a.getArrayBonus()){
+					System.out.print(bonus.getBonusName()+" "+bonus.getIncrement()+" ");
+				}
+				System.out.println();
+				System.out.println();
+			}
+			else {
+				System.out.println(0);
+				System.out.println();
+			}
+		}
+
+		
+		
+		
+		
 	}
 
 }
