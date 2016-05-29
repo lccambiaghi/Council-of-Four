@@ -10,6 +10,7 @@ public class Configurations {
 	private int PermitCardBonusNumberMax;
 	
 	boolean nobilityBonusRandom;
+
 	int nobilityBonusNumber; //how many bonus the user wants on the nobilityRoute
 
 	boolean cityLinksPreconfigured;
@@ -80,5 +81,13 @@ public class Configurations {
 
 	public void setPermitCardBonusNumberMax(int permitCardBonusNumberMax) {
 		this.PermitCardBonusNumberMax = permitCardBonusNumberMax;
+	}
+	
+	public boolean isNobilityBonusRandom() {
+		return nobilityBonusRandom;
+	}
+
+	public int getNobilityBonusNumber() {
+		return nobilityBonusNumber;
 	}
 }
