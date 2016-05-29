@@ -21,4 +21,8 @@ public class NobilityRouteCell {
 		return arrayBonus;
 	}
 	
+	public void setIndex(int index){
+		this.index=index;
+	}
+	
 }

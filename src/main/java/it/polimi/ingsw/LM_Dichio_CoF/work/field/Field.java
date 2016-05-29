@@ -14,12 +14,17 @@ public class Field {
 
 	private Configurations config;
 	private City[] arrayCity;
-	Route route;
+	private ArrayList<Player> arrayListPlayer;
+	private Route richnessRoute;
+	private Route victoryRoute;
+	private Route nobilityRoute;
+	
 	King king;
 	
 	public Field(Configurations config, ArrayList<Player> arrayListPlayer) {
 		
 		this.config=config;
+		this.arrayListPlayer = arrayListPlayer;
 		
 		createCitiesAndRegions();
 		
@@ -29,7 +34,7 @@ public class Field {
 		createBalconies();
 		
 		//GESTIONE PERCORSI
-		
+		createRoutes();
 		
 	}
 
@@ -176,7 +181,19 @@ public class Field {
 		arrayBalcony[2] = new Balcony (availableCouncillor, RegionName.Mountain.toString()+"Balcony");
 		arrayBalcony[3] = new KingBalcony (availableCouncillor, "KingBalcony");
 	}
-
+	
+	private void createRoutes(){
+		
+		this.richnessRoute = new RichnessRoute(arrayListPlayer);
+		this.victoryRoute = new VictoryRoute(arrayListPlayer);
+		if(config.isNobilityBonusRandom()){
+			this.nobilityRoute = new NobilityRoute(arrayListPlayer, config.getNobilityBonusNumber());
+		}else{
+			this.nobilityRoute = new NobilityRoute(arrayListPlayer);
+		}
+		
+	}
+	
 	public City[] getArrayCity(){
 		return arrayCity;
 	}

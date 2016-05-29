@@ -14,7 +14,7 @@ public class NobilityRoute implements Route{
 	private Map <Player,Integer> nobilityMap = new HashMap<>();
 	private NobilityRouteCell [] arrayNobilityRouteCell = new NobilityRouteCell[Constant.NOBILITY_MAX+1];
 
-	/* The constructor assigns creates nobilityMap with every player
+	/* The constructor (1) assigns creates nobilityMap with every player
 	   starting at 0. Then it creates arrayNobilityRouteCell */
 	public NobilityRoute(ArrayList<Player> arrayListPlayer){
 
@@ -32,8 +32,49 @@ public class NobilityRoute implements Route{
 		
 			arrayNobilityRouteCell[indexNobility] = new NobilityRouteCell(indexNobility, arrayBonus); 
 		}
-		//Collections.shuffle(Arrays.asList(arrayNobilityRouteCell));
+	
 	}
+	
+	/* The constructor (2) assigns creates nobilityMap with every player
+	   starting at 0. Then it creates arrayNobilityRouteCell.
+	   This last process is different from the first constructor.
+	   It takes nobilityBonusNumber bonuses from the Constant randomly
+	   and puts them in a random order in arrayNobilityRouteCell.
+	   Actually it uses the temporary arrayList arrayListNobilityRouteCell */
+	public NobilityRoute(ArrayList<Player> arrayListPlayer, int nobilityBonusNumber){
+		
+		for (Player anArrayListPlayer : arrayListPlayer) {
+			nobilityMap.put(anArrayListPlayer, 0);
+		}
+		
+		
+		Bonus[][] matrixNobilityRouteCellBonus = Constant.NOBILITY_CELL_BONUSES.clone();
+		Collections.shuffle(Arrays.asList(matrixNobilityRouteCellBonus));
+		
+		ArrayList<NobilityRouteCell> arrayListNobilityRouteCell = new ArrayList<>();
+		
+		for (int indexNobility = 0, indexBonuses = 0; indexNobility<Constant.NOBILITY_MAX; indexNobility++){
+			
+			Bonus[] arrayBonus=null;
+			if(indexBonuses<nobilityBonusNumber){
+				arrayBonus=matrixNobilityRouteCellBonus[indexBonuses];
+				indexBonuses++;
+			}
+			arrayListNobilityRouteCell.add( new NobilityRouteCell(0, arrayBonus)); 
+		}
+		Collections.shuffle(arrayListNobilityRouteCell);
+		
+		/*	The first cell cannot (in any way) have bonuses */
+		arrayListNobilityRouteCell.add(0, new NobilityRouteCell(0, null));
+		
+		arrayNobilityRouteCell = arrayListNobilityRouteCell.toArray(arrayNobilityRouteCell);
+		
+		for (int indexNobility = 0;  indexNobility<Constant.NOBILITY_MAX+1; indexNobility++){
+			arrayNobilityRouteCell[indexNobility].setIndex(indexNobility);
+		}
+		
+	}
+	
 
 	/* This method increases/decreases the specified player's nobilityMap of the increment specified */
 	public void movePlayer(int increment, Player player){

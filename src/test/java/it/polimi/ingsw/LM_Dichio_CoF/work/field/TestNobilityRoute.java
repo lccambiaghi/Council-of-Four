@@ -77,11 +77,33 @@ public class TestNobilityRoute {
 				System.out.println();
 			}
 		}
-
 		
-		
-		
-		
+		System.out.println("\n\n\n");
+	
 	}
 
+	@Test
+	public void randomBonuses(){
+		
+		TestCases testCases = new TestCases();
+		ArrayList <Player> arrayListPlayer =testCases.arrayListPlayer();
+		NobilityRoute nobilityRoute = new NobilityRoute(arrayListPlayer, 5);
+		
+		NobilityRouteCell[] arrayNobilityRouteCell = nobilityRoute.getArrayNobilityRouteCell();
+		
+		for (NobilityRouteCell a : arrayNobilityRouteCell){
+			if (a.hasBonus()){
+				for(Bonus bonus : a.getArrayBonus()){
+					System.out.print(bonus.getBonusName()+" "+bonus.getIncrement()+" ");
+				}
+				System.out.println();
+				System.out.println();
+			}
+			else {
+				System.out.println(0);
+				System.out.println();
+			}
+		}
+	
+	}
 }
