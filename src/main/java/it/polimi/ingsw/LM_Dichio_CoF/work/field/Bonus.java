@@ -14,8 +14,15 @@ public class Bonus {
 	}
 	
 	public Bonus(){}
+	
+	/* The constructor (1) assigns the specified bonusName and increment to the newly created bonus*/
+	public Bonus(BonusName bonusName, int increment){
+			this.bonusName=bonusName;
+			this.increment=increment;
+	}
 
-	/* If String in input corresponds to a bonusName, then it creates the corresponding bonus
+	/* The constructor (2)
+	  If String in input corresponds to a bonusName, then it creates the corresponding bonus
 	  with specified increment */
 	public Bonus(String bonusName, int increment){
 		
