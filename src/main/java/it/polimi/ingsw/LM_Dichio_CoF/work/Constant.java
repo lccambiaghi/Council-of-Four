@@ -1,9 +1,9 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.field.Bonus;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.BonusName;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.CityColor;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.CityName;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.NobilityCellBonus;
 
 public class Constant {
 	
@@ -32,18 +32,18 @@ public class Constant {
 			{CityColor.Red, CityColor.Red, CityColor.Blue, CityColor.Blue, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold},
 	};
 
-	public static final NobilityCellBonus[][] NOBILITY_CELL_BONUSES = {
-			   {new NobilityCellBonus(BonusName.Richness, 2), new NobilityCellBonus(BonusName.Victory, 2)},
-			   {new NobilityCellBonus(BonusName.BuiltCityBonus, 1)},
-			   {new NobilityCellBonus(BonusName.MainMove, 1)},
-			   {new NobilityCellBonus(BonusName.Victory, 3), new NobilityCellBonus(BonusName.Cards, 1)},
-			   {new NobilityCellBonus(BonusName.FaceUpPermitCard, 1)},
-			   {new NobilityCellBonus(BonusName.Victory, 5), new NobilityCellBonus(BonusName.Assistant, 1)},
-			   {new NobilityCellBonus(BonusName.OwnedPermitCardBonus, 1)},
-			   {new NobilityCellBonus(BonusName.TwoBuiltDifferentBonus, 1)},
-			   {new NobilityCellBonus(BonusName.Victory, 8)},
-			   {new NobilityCellBonus(BonusName.Victory, 2)},
-			   {new NobilityCellBonus(BonusName.Victory, 3)},
+	public static final Bonus[][] NOBILITY_CELL_BONUSES = {
+			   {new Bonus(BonusName.Richness, 2), new Bonus(BonusName.Victory, 2)},
+			   {new Bonus(BonusName.BuiltCityBonus, 1)},
+			   {new Bonus(BonusName.MainMove, 1)},
+			   {new Bonus(BonusName.Victory, 3), new Bonus(BonusName.Cards, 1)},
+			   {new Bonus(BonusName.FaceUpPermitCard, 1)},
+			   {new Bonus(BonusName.Victory, 5), new Bonus(BonusName.Assistant, 1)},
+			   {new Bonus(BonusName.OwnedPermitCardBonus, 1)},
+			   {new Bonus(BonusName.TwoBuiltCitiesDifferentBonus, 1)},
+			   {new Bonus(BonusName.Victory, 8)},
+			   {new Bonus(BonusName.Victory, 2)},
+			   {new Bonus(BonusName.Victory, 3)},
 			 };
 	
 	public static final int CITIES_NUMBER_LOW = 15;
