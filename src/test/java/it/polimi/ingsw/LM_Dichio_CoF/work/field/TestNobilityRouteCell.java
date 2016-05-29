@@ -17,11 +17,11 @@ public class TestNobilityRouteCell {
 		for (int i = 0; i<Constant.NOBILITY_MAX; i++){
 			arrayNobilityRouteCell[i] = new NobilityRouteCell(i); 
 		}
-		Collections.shuffle(Arrays.asList(arrayNobilityRouteCell));
+		//Collections.shuffle(Arrays.asList(arrayNobilityRouteCell));
 		for (NobilityRouteCell a : arrayNobilityRouteCell){
 			if (a.hasBonus()){
 				for(Bonus bonus : a.getArrayBonus()){
-					System.out.print(bonus.getBonusName()+" "+bonus.getIncrement());
+					System.out.print(bonus.getBonusName()+" "+bonus.getIncrement()+" ");
 				}
 				System.out.println();
 				System.out.println();
