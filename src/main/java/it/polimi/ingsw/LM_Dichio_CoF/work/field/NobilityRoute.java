@@ -12,7 +12,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 public class NobilityRoute implements Route{
 
 	private Map <Player,Integer> nobilityMap = new HashMap<>();
-	private NobilityRouteCell [] arrayNobilityRouteCell = new NobilityRouteCell[Constant.NOBILITY_MAX];
+	private NobilityRouteCell [] arrayNobilityRouteCell = new NobilityRouteCell[Constant.NOBILITY_MAX+1];
 
 	/* The constructor assigns creates nobilityMap with every player
 	   starting at 0. Then it creates arrayNobilityRouteCell */
@@ -22,7 +22,7 @@ public class NobilityRoute implements Route{
 			nobilityMap.put(anArrayListPlayer, 0);
 		}
 		
-		for (int indexNobility = 0, indexBonuses = 0; indexNobility<Constant.NOBILITY_MAX; indexNobility++){
+		for (int indexNobility = 0, indexBonuses = 0; indexNobility<Constant.NOBILITY_MAX+1; indexNobility++){
 			
 			Bonus[] arrayBonus=null;
 			if(((indexNobility%2==0)&&(indexNobility!=0)) || (indexNobility==19)){
