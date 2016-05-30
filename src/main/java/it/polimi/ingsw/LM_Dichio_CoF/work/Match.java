@@ -38,14 +38,15 @@ public class Match {
 	public Match(ArrayList<Player> arrayListPlayer) {
 		
 		this.arrayListPlayer = arrayListPlayer;
-		
 		this.numberPlayers=arrayListPlayer.size();
 		
 		Collections.shuffle(arrayListPlayer);
 		
 		readFileConfigurations();
 		
-		this.field = new Field(config, arrayListPlayer);
+		giveInitialCards();
+		
+		//this.field = new Field(config, arrayListPlayer);
 		
 		startGame();
 		
@@ -84,6 +85,12 @@ public class Match {
 		
 	}
 		
-	
+	private void giveInitialCards(){	
+		for(int itPlayer=0; itPlayer<arrayListPlayer.size(); itPlayer++){
+			for(int itCard=0; itCard<Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++){
+				arrayListPlayer.get(itPlayer).addPoliticCard(new PoliticCard());
+			}
+		}
+	}
 	
 }
