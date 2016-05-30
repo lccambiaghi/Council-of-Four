@@ -3,8 +3,10 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.PoliticCard;
+
 import org.junit.Test;
+
+import it.polimi.ingsw.LM_Dichio_CoF.work.PoliticCard;
 
 public class TestPoliticCard {
 
