@@ -129,7 +129,6 @@ public class TestCases {
 		
 		config.setCityBonusRandom(true);
 		if(config.isCityBonusRandom()==false){
-			
 			//da implementare, ma essendo un esempio non ha senso farlo ora (l'array di mappe)
 		}else{
 			config.setCityBonusNumberMin(2);
