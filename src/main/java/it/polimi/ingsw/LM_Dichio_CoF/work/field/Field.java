@@ -104,10 +104,19 @@ public class Field {
 	}
 
 	/* This method assigns to every city in arrayCity the cities that are connected to it
-	  according to the matrix imported from .txt file */
+	  according to (cases):
+	  A. the matrix contained in "config" (case config.isCityLinksPreconfigured()=false)  
+	  B. the matrix contained in the .txt file (selected through difficulty and number of cities)
+	  This second case is managed in "importCityLinksMatrix"
+	  */
 	private void assignNearbyCities(){
 		
-		int[][] cityLinksMatrix = importCityLinksMatrix(config.getDifficulty(), arrayCity.length);
+		int[][] cityLinksMatrix;
+		if(config.isCityLinksPreconfigured()){
+			cityLinksMatrix = importCityLinksMatrix(config.getDifficulty(), arrayCity.length);
+		}else{
+			cityLinksMatrix = config.getCityLinksMatrix();
+		}
 		
 		for(int row=0; row<arrayCity.length; row++){
 			
