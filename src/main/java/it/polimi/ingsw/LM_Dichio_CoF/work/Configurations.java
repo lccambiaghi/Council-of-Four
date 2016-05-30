@@ -1,13 +1,18 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Scanner;
 
-public class Configurations {
+public class Configurations implements Serializable{
 
-	private int numberCities;
+	private int citiesNumber;
 
-	private int PermitCardBonusNumberMin;
-	private int PermitCardBonusNumberMax;
+	private int permitCardBonusNumberMin;
+	private int permitCardBonusNumberMax;
 	
 	boolean nobilityBonusRandom;
 
@@ -20,20 +25,9 @@ public class Configurations {
 	boolean cityBonusRandom;
 	private int cityBonusNumberMin;
 	private int cityBonusNumberMax;
-	HashMap<String,Integer> cityBonusArray[];
+	HashMap<String,Integer> cityBonusArrayMaps[];
 
-	/* The constructor assigns the parameter to the newly created config object */
-	public Configurations(int numberCities, char difficulty, int cityBonusNumberMin,
-						  int cityBonusNumberMax, int PermitCardBonusNumberMin, int PermitCardBonusNumberMax){
-		
-		this.numberCities=numberCities;
-		this.difficulty=difficulty;
-		this.cityBonusNumberMin = cityBonusNumberMin;
-		this.cityBonusNumberMax = cityBonusNumberMax;
-		this.PermitCardBonusNumberMin = PermitCardBonusNumberMin;
-		this.PermitCardBonusNumberMax = PermitCardBonusNumberMax;
-		
-	}
+	public Configurations(){}
 
 	public char getDifficulty() {
 		return difficulty;
@@ -60,27 +54,27 @@ public class Configurations {
 	}
 
 	public int getNumberCities() {
-		return numberCities;
+		return citiesNumber;
 	}
 
-	public void setNumberCities(int numberCities) {
-		this.numberCities = numberCities;
+	public void setCitiesNumber(int numberCities) {
+		this.citiesNumber = numberCities;
 	}
 	
 	public int getPermitCardBonusNumberMin() {
-		return PermitCardBonusNumberMin;
+		return permitCardBonusNumberMin;
 	}
 
 	public void setPermitCardBonusNumberMin(int permitCardBonusNumberMin) {
-		this.PermitCardBonusNumberMin = permitCardBonusNumberMin;
+		this.permitCardBonusNumberMin = permitCardBonusNumberMin;
 	}
 
 	public int getPermitCardBonusNumberMax() {
-		return PermitCardBonusNumberMax;
+		return permitCardBonusNumberMax;
 	}
 
 	public void setPermitCardBonusNumberMax(int permitCardBonusNumberMax) {
-		this.PermitCardBonusNumberMax = permitCardBonusNumberMax;
+		this.permitCardBonusNumberMax = permitCardBonusNumberMax;
 	}
 	
 	public boolean isNobilityBonusRandom() {
@@ -90,4 +84,50 @@ public class Configurations {
 	public int getNobilityBonusNumber() {
 		return nobilityBonusNumber;
 	}
+
+	public boolean isCityLinksPreconfigured() {
+		return cityLinksPreconfigured;
+	}
+
+	public void setCityLinksPreconfigured(boolean cityLinksPreconfigured) {
+		this.cityLinksPreconfigured = cityLinksPreconfigured;
+	}
+
+	public int[][] getCityLinksMatrix() {
+		return cityLinksMatrix;
+	}
+
+	public void setCityLinksMatrix(int[][] cityLinksMatrix) {
+		this.cityLinksMatrix = cityLinksMatrix;
+	}
+
+	public boolean isCityBonusRandom() {
+		return cityBonusRandom;
+	}
+
+	public void setCityBonusRandom(boolean cityBonusRandom) {
+		this.cityBonusRandom = cityBonusRandom;
+	}
+
+	public HashMap<String, Integer>[] getCityBonusArrayMaps() {
+		return cityBonusArrayMaps;
+	}
+
+	public void setCityBonusArrayMaps(HashMap<String, Integer>[] cityBonusArrayMaps) {
+		this.cityBonusArrayMaps = cityBonusArrayMaps;
+	}
+
+	public int getCitiesNumber() {
+		return citiesNumber;
+	}
+
+	public void setNobilityBonusRandom(boolean nobilityBonusRandom) {
+		this.nobilityBonusRandom = nobilityBonusRandom;
+	}
+
+	public void setNobilityBonusNumber(int nobilityBonusNumber) {
+		this.nobilityBonusNumber = nobilityBonusNumber;
+	}
+	
+	
 }
