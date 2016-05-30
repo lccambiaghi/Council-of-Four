@@ -1,5 +1,10 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,28 +35,21 @@ public class Match {
 	 *  Lancia il gioco tramite il metodo startGame()
 	 *  
 	 */
-	public Match(Configurations config, ArrayList<Player> arrayListPlayer) {
-
-		this.config = config;
+	public Match(ArrayList<Player> arrayListPlayer) {
+		
 		this.arrayListPlayer = arrayListPlayer;
 		
-		numberPlayers=arrayListPlayer.size();
+		this.numberPlayers=arrayListPlayer.size();
 		
 		Collections.shuffle(arrayListPlayer);
 		
+		readFileConfigurations();
 		
-		/*
-		 *  Bisogna implementare l'accettazione di parametro "config" nel campo
-		 */
-		//field = new Field(config, arrayListPlayer);
+		this.field = new Field(config, arrayListPlayer);
 		
 		startGame();
 		
 	}
-	
-	
-	
-	
 	
 	
 	private void startGame() {	
@@ -61,6 +59,30 @@ public class Match {
 		
 	}
 
+	private void readFileConfigurations(){
+		
+		FileInputStream fileInputStream;
+		
+		try {
+			
+			//il salvataggio per ora è in locale, dovrà essere inviato al server quando ci sarà la connessione
+			fileInputStream = new FileInputStream("./src/configurations/config");
+			
+			// create an ObjectInputStream for the file we created before
+	         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+	         this.config = (Configurations) objectInputStream.readObject();
+	         
+	         fileInputStream.close();
+	         
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 		
 	
 	
