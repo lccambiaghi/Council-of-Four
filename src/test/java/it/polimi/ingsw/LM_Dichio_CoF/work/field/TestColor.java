@@ -1,10 +1,12 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import static org.junit.Assert.*;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Color;
+
 import java.util.ArrayList;
 
 import org.junit.Test;
+
+import it.polimi.ingsw.LM_Dichio_CoF.work.Color;
 
 public class TestColor {
 

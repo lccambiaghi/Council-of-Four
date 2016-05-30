@@ -3,6 +3,7 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.Color;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 public class AvailableCouncillor {

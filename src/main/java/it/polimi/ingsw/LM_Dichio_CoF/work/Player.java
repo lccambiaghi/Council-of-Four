@@ -12,37 +12,23 @@ public class Player {
 	
 	private char CLIorGUI;
 
+	// variables of the game
+	private int richness;
+	private int assistant;
+	
 	/* The constructor assigns to the player the type of connection */
 	public Player(String typeOfConnection){ this.typeOfConnection=typeOfConnection.charAt(0); }
 
-	public Socket getPlayerSocket() {
-		return playerSocket;
-	}
-
+	public Socket getPlayerSocket() {return playerSocket;}
 	public void setPlayerSocket(Socket playerSocket) { this.playerSocket = playerSocket; }
 	
-	public char getCLIorGUI() {
-		return CLIorGUI;
-	}
+	public char getCLIorGUI() {return CLIorGUI;}
+	public void setCLIorGUI(char cLIorGUI) {CLIorGUI = cLIorGUI;}	
 
-	public void setCLIorGUI(char cLIorGUI) {
-		CLIorGUI = cLIorGUI;
-	}	
+	public String getNickname() {return nickname;}
+	public void setNickname(String nickname) {this.nickname = nickname;}
 
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public char getTypeOfConnection() {
-		return typeOfConnection;
-	}
-
-	public void setTypeOfConnection(char typeOfConnection) {
-		this.typeOfConnection = typeOfConnection;
-	}
+	public char getTypeOfConnection() {return typeOfConnection;}
+	public void setTypeOfConnection(char typeOfConnection) {this.typeOfConnection = typeOfConnection;}
 	
 }

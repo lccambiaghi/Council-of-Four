@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.Color;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 import java.util.ArrayList;
