@@ -129,9 +129,15 @@ public class TestCases {
 		}
 		
 		config.setCityBonusRandom(false);
-		if(config.isCityBonusRandom()==false){
-			// to be implemented
-		}else{
+        if(config.isCityBonusRandom()==false){
+            Map cityBonusArrayMap [] = new HashMap [config.getCitiesNumber()];
+            for(int i=0; i<config.getCitiesNumber(); i++){
+                Map <String, Integer> bonusMap =new HashMap <> ();
+                bonusMap.put("Assistant", 2);
+                bonusMap.put("Nobility", 1);
+                cityBonusArrayMap[i]=bonusMap;
+            }
+        }else{
 			config.setCityBonusNumberMin(2);
 			config.setCityBonusNumberMax(3);
 		}
