@@ -18,7 +18,8 @@ import it.polimi.ingsw.LM_Dichio_CoF.connection.Connection;
 public class GameSide {
 
 	Connection handleConnections;
-	static ArrayList <Player> arrayListPlayer;
+	static ArrayList <Player> arrayListAvailablePlayer;
+	static ArrayList <Player> arrayListPlayingPlayer;
 	
 	public GameSide() throws IOException{
 		
@@ -26,18 +27,23 @@ public class GameSide {
 		 *	Lancia Connection per gestire le connessioni
 		 *	Passaggio alla parte di Connessione
 		 */
-		arrayListPlayer = new ArrayList <Player>();
+		arrayListAvailablePlayer = new ArrayList <Player>();
 		handleConnections = new Connection();
 		
 	}
 	
 	public static void handlePlayer(Player player){
 		
-		arrayListPlayer.add(player);
+		arrayListAvailablePlayer.add(player);
 		
 		System.out.println("I am managing a player through a thread");
 		
-		System.out.println(arrayListPlayer.size());
+		/* If the player is the first one not playing yet */
+		if(player.equals(arrayListAvailablePlayer.get(0))){
+			
+		}
+		
+		System.out.println(arrayListAvailablePlayer.size());
 		
 		
 	}
