@@ -128,9 +128,9 @@ public class TestCases {
 			config.setDifficulty("n".charAt(0));
 		}
 		
-		config.setCityBonusRandom(true);
+		config.setCityBonusRandom(false);
 		if(config.isCityBonusRandom()==false){
-			//da implementare, ma essendo un esempio non ha senso farlo ora (l'array di mappe)
+			// to be implemented
 		}else{
 			config.setCityBonusNumberMin(2);
 			config.setCityBonusNumberMax(3);
