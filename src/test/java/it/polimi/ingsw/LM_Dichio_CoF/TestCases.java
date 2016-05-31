@@ -12,6 +12,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
+import it.polimi.ingsw.LM_Dichio_CoF.work.Match;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
 
@@ -35,7 +36,7 @@ public class TestCases {
 
 		return config;
 	}
-
+	
 	public City[] arrayCity(){
 		
 		config = configurations();
@@ -139,7 +140,7 @@ public class TestCases {
 	
 	private void createFileConfigurations(){
 		
-		FileOutputStream fileOutputStream;
+		FileOutputStream fileOutputStream = null;
 		
 		try {
 			
@@ -149,19 +150,25 @@ public class TestCases {
 
 			// write something in the file
 			objectOutputStream.writeObject(config);
-
-			// close the stream
-			fileOutputStream.close();
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+		}finally{
+			// close the stream
+			try {
+				fileOutputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	private void readFileConfigurations(){
 		
-		FileInputStream fileInputStream;
+		FileInputStream fileInputStream = null;
 		
 		try {
 			
@@ -171,8 +178,6 @@ public class TestCases {
 			// create an ObjectInputStream for the file we created before
 	         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 	         this.config = (Configurations) objectInputStream.readObject();
-	         
-	         fileInputStream.close();
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -180,6 +185,14 @@ public class TestCases {
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			// close the stream
+			try {
+				fileInputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

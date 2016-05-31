@@ -21,6 +21,8 @@ public class PlayerSide {
 		createConfigurations();
 		createFileConfigurations();
 		
+		System.out.println("File created");	
+		
 		//connectToServer();
 	
 	}
@@ -109,7 +111,7 @@ public class PlayerSide {
 	
 	private void createFileConfigurations(){
 		
-		FileOutputStream fileOutputStream;
+		FileOutputStream fileOutputStream = null;
 		
 		try {
 			
@@ -119,14 +121,19 @@ public class PlayerSide {
 
 			// write something in the file
 			objectOutputStream.writeObject(config);
-
-			// close the stream
-			fileOutputStream.close();
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+		// close the stream
+			try {
+				fileOutputStream.close();
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+				e.printStackTrace();
 		}
+	}
 	}
 	
 }

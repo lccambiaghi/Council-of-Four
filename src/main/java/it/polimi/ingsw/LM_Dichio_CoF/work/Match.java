@@ -32,13 +32,13 @@ public class Match {
 		
 		readFileConfigurations();
 		
-		giveInitialCards();
+		giveInitialPoliticCards();
 		
 		giveInitialAssistants();
 		
 		//this.field = new Field(config, arrayListPlayer);
 		
-		startGame();
+		//startGame();
 		
 	}
 	
@@ -57,7 +57,7 @@ public class Match {
 
 	private void readFileConfigurations(){
 		
-		FileInputStream fileInputStream;
+		FileInputStream fileInputStream = null;
 		
 		try {
 			
@@ -68,19 +68,25 @@ public class Match {
 	         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 	         this.config = (Configurations) objectInputStream.readObject();
 	         
-	         fileInputStream.close();
-	         
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			// close the stream
+			try {
+				fileInputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}
 		
-	private void giveInitialCards(){	
+	private void giveInitialPoliticCards(){	
 		for(int itPlayer=0; itPlayer<arrayListPlayer.size(); itPlayer++){
 			for(int itCard=0; itCard<Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++){
 				arrayListPlayer.get(itPlayer).addPoliticCard(new PoliticCard());

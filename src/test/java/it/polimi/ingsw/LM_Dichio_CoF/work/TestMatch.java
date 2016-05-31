@@ -12,9 +12,11 @@ import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
 public class TestMatch {
 
 	@Test
-	public void giveInitialCards() {
+	public void giveInitialPoliticCards() {
 		
 		TestCases testCases = new TestCases();
+		
+		testCases.configurations();
 		
 		ArrayList <Player> arrayListPlayer = testCases.arrayListPlayer();
 	
