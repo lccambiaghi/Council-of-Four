@@ -41,12 +41,12 @@ public class TestCases {
 		
 		config = configurations();
 		Map <String, Integer> bonusMap =new HashMap <> ();
-		
-		
+
+
 		bonusMap.put("Assistant", 2);
 		bonusMap.put("Nobility", 1);
 		bonusMap.put("Richness", 0);
-		
+
 		
 		int n = config.getNumberCities()/3;
 		City[] arrayCity = new City[n];
@@ -130,13 +130,14 @@ public class TestCases {
 		
 		config.setCityBonusRandom(false);
         if(config.isCityBonusRandom()==false){
-            Map cityBonusArrayMap [] = new HashMap [config.getCitiesNumber()];
+			HashMap[] cityBonusArrayMap = new HashMap[config.getCitiesNumber()];
             for(int i=0; i<config.getCitiesNumber(); i++){
-                Map <String, Integer> bonusMap =new HashMap <> ();
+                HashMap <String, Integer> bonusMap =new HashMap <> ();
                 bonusMap.put("Assistant", 2);
                 bonusMap.put("Nobility", 1);
                 cityBonusArrayMap[i]=bonusMap;
             }
+			config.setCityBonusArrayMaps(cityBonusArrayMap);
         }else{
 			config.setCityBonusNumberMin(2);
 			config.setCityBonusNumberMax(3);

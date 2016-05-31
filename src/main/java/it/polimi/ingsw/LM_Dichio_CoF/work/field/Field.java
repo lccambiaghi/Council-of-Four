@@ -3,10 +3,8 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
+
 import it.polimi.ingsw.LM_Dichio_CoF.work.*;
 
 /* The constructor creates cities, assign them to regions */
@@ -43,7 +41,6 @@ public class Field {
 	private void createCitiesAndRegions(){
 
 		int numberCities = config.getNumberCities();
-
 		arrayCity = new City[numberCities];
 		Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
 
@@ -52,6 +49,8 @@ public class Field {
 
 		CityColor[] arrayCityColor = createArrayCityColor(numberCities);
 
+		// ristruttura ciclo: king fuori e guarda design patter proxy
+		// proxy: crea city prima e inizializza i parametri nel ciclo(??)
 		for(int itRegion = 0, itColor=0; itRegion<Constant.REGIONS_NUMBER; itRegion++){
 
 			RegionName regionName = RegionName.getRegionNameFromIndex(itRegion);
@@ -63,10 +62,16 @@ public class Field {
 				CityName cityName = CityName.getCityNameFromIndex(cityIndex);
 
 				if (cityName.equals(Constant.KING_CITY_INITIAL)) {
-					arrayCity[cityIndex] = new City(config, cityName, regionName, CityColor.Purple);
+					if (config.isCityBonusRandom())
+						arrayCity[cityIndex] = new City(config, cityName, regionName, CityColor.Purple);
+					else
+						arrayCity[cityIndex] = new City(config.getCityBonusArrayMaps()[cityIndex], cityName, regionName, CityColor.Purple);
 				}
 				else {
-					arrayCity[cityIndex] = new City(config, cityName, regionName, arrayCityColor[itColor]);
+					if (config.isCityBonusRandom())
+						arrayCity[cityIndex] = new City(config, cityName, regionName, arrayCityColor[itColor]);
+					else
+						arrayCity[cityIndex] = new City(config.getCityBonusArrayMaps()[cityIndex], cityName, regionName, arrayCityColor[itColor]);
 					itColor++;
 				}
 				arrayCityPerRegion[itCityPerRegion] = arrayCity[cityIndex];

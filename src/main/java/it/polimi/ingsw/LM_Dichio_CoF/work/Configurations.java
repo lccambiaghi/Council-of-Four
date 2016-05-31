@@ -14,18 +14,18 @@ public class Configurations implements Serializable{
 	private int permitCardBonusNumberMin;
 	private int permitCardBonusNumberMax;
 	
-	boolean nobilityBonusRandom;
+	private boolean nobilityBonusRandom;
 
-	int nobilityBonusNumber; //how many bonus the user wants on the nobilityRoute
+	private int nobilityBonusNumber; //how many bonus the user wants on the nobilityRoute
 
-	boolean cityLinksPreconfigured;
+	private boolean cityLinksPreconfigured;
 	private char difficulty; // e, n, h
-	int cityLinksMatrix[][];
+	private int cityLinksMatrix[][];
 
-	boolean cityBonusRandom;
+	private boolean cityBonusRandom;
 	private int cityBonusNumberMin;
 	private int cityBonusNumberMax;
-	HashMap<String,Integer> cityBonusArrayMaps[];
+	private HashMap<String,Integer> cityBonusArrayMaps[];
 
 	public Configurations(){}
 
