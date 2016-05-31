@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
+
 public class PlayerSide {
 
 	private  Socket mySocket;
@@ -53,8 +55,12 @@ public class PlayerSide {
 	
 	private void createConfigurations(){
 		
-		config = new Configurations();
+config = new Configurations();
 		
+		/*
+		 * Do not change this parameter and the difficulty one until we haven't create 
+		 * new maps for those combination missing
+		 */
 		config.setCitiesNumber(15);
 		
 		config.setPermitCardBonusNumberMin(2);
