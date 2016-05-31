@@ -18,9 +18,10 @@ public class Match {
 	private ArrayList<Player> arrayListPlayer;
 	private int numberPlayers;
 	
+	private Player playerTurn;
+	
 	private Field field;
 	private Market market;
-	private Integer orderPlayers[];
 	
 	
 	/*
@@ -57,6 +58,11 @@ public class Match {
 	
 	private void startGame() {	
 		
+		int turn=0;
+		playerTurn = arrayListPlayer.get(turn);
+		
+		/* Draw a card */
+		playerTurn.addPoliticCard(new PoliticCard());
 		
 		
 		
