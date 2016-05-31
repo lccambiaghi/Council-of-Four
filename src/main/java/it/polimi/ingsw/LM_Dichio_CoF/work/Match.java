@@ -23,19 +23,6 @@ public class Match {
 	private Field field;
 	private Market market;
 	
-	
-	/*
-	 *  Costruttore della partita.
-	 *  
-	 *  I parametri d'ingresso sono le configurazioni e i giocatori presenti
-	 *  
-	 *  Inizializza il campo, passandogli
-	 *  come parametro le configurazioni
-	 *  Inizializza l'ordine dei giocatori
-	 *  
-	 *  Lancia il gioco tramite il metodo startGame()
-	 *  
-	 */
 	public Match(ArrayList<Player> arrayListPlayer) {
 		
 		this.arrayListPlayer = arrayListPlayer;
