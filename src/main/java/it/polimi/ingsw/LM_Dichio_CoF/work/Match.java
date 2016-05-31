@@ -46,6 +46,8 @@ public class Match {
 		
 		giveInitialCards();
 		
+		giveInitialAssistants();
+		
 		//this.field = new Field(config, arrayListPlayer);
 		
 		startGame();
@@ -93,4 +95,9 @@ public class Match {
 		}
 	}
 	
+	private void giveInitialAssistants(){
+		for(int itPlayer=0, numberAssistants=1; itPlayer<arrayListPlayer.size(); itPlayer++, numberAssistants++){
+			arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
+		}
+	}
 }

@@ -29,5 +29,19 @@ public class TestMatch {
 		}
 		
 	}
+	
+	@Test
+	public void giveInitialAssistants() {
+		TestCases testCases = new TestCases();
+		
+		ArrayList <Player> arrayListPlayer = testCases.arrayListPlayer();
+	
+		Match match = new Match(arrayListPlayer);
+		
+		for(int itPlayer=0; itPlayer<arrayListPlayer.size(); itPlayer++){
+			System.out.println(arrayListPlayer.get(itPlayer).getAssistant());
+			System.out.println();
+		}
+	}
 
 }
