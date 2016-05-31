@@ -1,51 +1,45 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
-
-import it.polimi.ingsw.LM_Dichio_CoF.connection.Connection;
-
-/* 
- * 	Questa classe rappresenta il nucleo del lato gioco, da qui si inizializzano
- *  le variabili ecc
- *  
- *  
- *  
- *  
- */
-
 
 public class GameSide {
 
-	Connection handleConnections;
-	static ArrayList <Player> arrayListAvailablePlayer;
-	static ArrayList <Player> arrayListPlayingPlayer;
+	ArrayList <Player> arrayListAvailablePlayer;
+	ArrayList <Player> arrayListPlayingPlayer;
+	ServerSocket serverSocket;
 	
-	public GameSide() throws IOException{
+	public GameSide() {
 		
-		/*
-		 *	Lancia Connection per gestire le connessioni
-		 *	Passaggio alla parte di Connessione
-		 */
 		arrayListAvailablePlayer = new ArrayList <Player>();
-		handleConnections = new Connection();
+		
+		try {
+			serverSocket = new ServerSocket(Constant.SOCKET_PORT);
+			while(true){
+				Socket clientSocket = serverSocket.accept();
+				new SocketConnectionWithClient(clientSocket, this);		
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
-	public static void handlePlayer(Player player){
+	
+	public void handlePlayer(Player player){
 		
 		arrayListAvailablePlayer.add(player);
-		
+	
 		System.out.println("I am managing a player through a thread");
 		
-		/* If the player is the first one not playing yet */
-		if(player.equals(arrayListAvailablePlayer.get(0))){
-			
+		player.send("ciao");
+		
+		if(arrayListAvailablePlayer.size()==1){
+			//method that asks for configurations
 		}
-		
-		System.out.println(arrayListAvailablePlayer.size());
-		
-		
+			
 	}
 	
 	

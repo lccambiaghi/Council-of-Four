@@ -4,7 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 
@@ -12,21 +14,20 @@ public class PlayerSide {
 
 	private  Socket mySocket;
 	private final static String address="localhost";
+	
+	private Scanner input;
+	private PrintWriter output;
+	
 	private Configurations config;
 	
 	public PlayerSide() {
 		
 		System.out.println("I am alive");	
 		
+		connectToServer();
 		
-		// questi due metodi andranno dopo la connessione
-		createConfigurations();
-		createFileConfigurations();
 		
-		System.out.println("File created");	
 		
-		//connectToServer();
-	
 	}
 
 	private void connectToServer(){
@@ -35,13 +36,20 @@ public class PlayerSide {
 
 			mySocket = new Socket(address,3000);
 			
+			try {
+				output = new PrintWriter(mySocket.getOutputStream());
+				input = new Scanner(mySocket.getInputStream());
+			} catch (IOException e) {
+				System.out.println("Cannot open channels of communication");
+				e.printStackTrace();
+			}
 			System.out.println("I am connected to the Server");
 			
-			
+			System.out.println(input.nextLine());
 			
 			
 		} catch (IOException e) {
-			
+			System.out.println("Cannot connect to the Server");
 			e.printStackTrace();
 		}
 
@@ -51,11 +59,12 @@ public class PlayerSide {
 		
 		new PlayerSide();
 		
-	}
+	}	
+	
 	
 	private void createConfigurations(){
 		
-config = new Configurations();
+		config = new Configurations();
 		
 		/*
 		 * Do not change this parameter and the difficulty one until we haven't create 
