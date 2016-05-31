@@ -11,8 +11,9 @@ public class SocketConnectionWithClient extends Thread {
 		
 		this.gameSide=gameSide;
 		
-		this.player = new Player("s".charAt(0));
+		player = new Player("s".charAt(0));
 		player.setPlayerSocket(clientSocket);
+		player.openSocketStream();
 		
 		start();
 		
