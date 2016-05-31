@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF_PlayerSide;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,20 +14,23 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 public class PlayerSide {
 
 	private  Socket mySocket;
-	private final static String address="localhost";
+	private final static String ADDRESS = "localhost";
+	private final static int SOCKET_PORT = 3000;
 	
-	private Scanner input;
-	private PrintWriter output;
+	private Scanner inCLI;
 	
-	private Configurations config;
+	private Scanner inSocket;
+	private PrintWriter outSocket;
 	
 	public PlayerSide() {
 		
 		System.out.println("I am alive");	
 		
+		inCLI = new Scanner(System.in);
+		
 		connectToServer();
 		
-		
+		communicateWithServer();
 		
 	}
 
@@ -34,19 +38,16 @@ public class PlayerSide {
 		
 		try {
 
-			mySocket = new Socket(address,3000);
+			mySocket = new Socket(ADDRESS, SOCKET_PORT);
 			
 			try {
-				output = new PrintWriter(mySocket.getOutputStream());
-				input = new Scanner(mySocket.getInputStream());
+				inSocket = new Scanner(mySocket.getInputStream());
+				outSocket = new PrintWriter(mySocket.getOutputStream());
 			} catch (IOException e) {
 				System.out.println("Cannot open channels of communication");
 				e.printStackTrace();
 			}
 			System.out.println("I am connected to the Server");
-			
-			System.out.println(input.nextLine());
-			
 			
 		} catch (IOException e) {
 			System.out.println("Cannot connect to the Server");
@@ -61,10 +62,40 @@ public class PlayerSide {
 		
 	}	
 	
-	
-	private void createConfigurations(){
+	private void communicateWithServer(){
 		
-		config = new Configurations();
+		while(true){
+			
+			String message=inSocket.nextLine();
+			if(message.equals("configRequest")){
+				
+				//per ora così
+				Configurations config = createConfigurations();
+				
+				ObjectOutputStream objectOutputStream = null;
+				try {
+					objectOutputStream = new ObjectOutputStream(mySocket.getOutputStream());
+					objectOutputStream.writeObject(config);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			
+			}else{
+				System.out.println(message);
+			}
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	private Configurations createConfigurations(){
+		
+		Configurations config = new Configurations();
 		
 		/*
 		 * Do not change this parameter and the difficulty one until we haven't create 
@@ -122,7 +153,11 @@ public class PlayerSide {
 			config.setCityBonusNumberMax(3);
 		}
 		
+		return config;
 	}
+	
+	
+	/*
 	
 	private void createFileConfigurations(){
 		
@@ -150,5 +185,5 @@ public class PlayerSide {
 		}
 	}
 	}
-	
+	*/
 }
