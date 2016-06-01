@@ -31,6 +31,11 @@ public class GameSide {
 	
 	public void handleClient(Client client){
 		
+		login(client);
+		
+		
+		
+		
 		arrayListClient.add(client);
 	
 		System.out.println("I am managing a player through a thread");
@@ -43,6 +48,24 @@ public class GameSide {
 		}
 			
 	}
+	
+	private void login(Client client){
+		
+		boolean logged = false;
+		while(!logged){
+			String message = client.receiveString();
+			if(message.equals("login")){
+				String nickname = client.receiveString();
+				String password = client.receiveString();
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	
 	
 	private synchronized/*??*/ void askForConfigurations(Client client){
 		
