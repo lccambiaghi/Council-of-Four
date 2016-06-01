@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Client {
 
 	private String nickname;
-	private String password;
 	
 	private char typeOfConnection;
 	private Socket playerSocket;
@@ -46,9 +45,6 @@ public class Client {
 	public String getNickname() {return nickname;}
 	public void setNickname(String nickname) {this.nickname = nickname;}
 	
-	public String getPassword()	{return password;}
-	public void setPassword(String password) {this.password = password;}
-
 	public char getTypeOfConnection() {return typeOfConnection;}
 	public void setTypeOfConnection(char typeOfConnection) {this.typeOfConnection = typeOfConnection;}
 	
