@@ -42,9 +42,9 @@ public class GameSide {
 		
 		
 		if(arrayListClient.size()==1){
-			//askForConfigurations(client);
+			askForConfigurations(client);
 		}else{
-			//client.sendString("Sei arrivato tardi");
+			client.sendString("wait");
 		}
 			
 	}
@@ -81,7 +81,7 @@ public class GameSide {
 	
 	private synchronized/*??*/ void askForConfigurations(Client client){
 		
-		client.sendString("configRequest");
+		client.sendString("config");
 		
 		Object object = client.receiveObject();
 		FileOutputStream fileOutputStream = null;
