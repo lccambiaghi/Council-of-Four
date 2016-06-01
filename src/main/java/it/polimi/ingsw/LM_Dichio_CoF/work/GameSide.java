@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class GameSide {
 
 	ArrayList <Client> arrayListClient;
+	
 	ServerSocket serverSocket;
 	
 	public GameSide() {
@@ -31,20 +32,19 @@ public class GameSide {
 	
 	public void handleClient(Client client){
 		
+		System.out.println("I am managing a player through a thread");
+		
 		login(client);
 		
-		
-		
+		System.out.println("The client has successfully connected with nickname: "+client.getNickname());
 		
 		arrayListClient.add(client);
-	
-		System.out.println("I am managing a player through a thread");
 		
 		
 		if(arrayListClient.size()==1){
-			askForConfigurations(client);
+			//askForConfigurations(client);
 		}else{
-			client.sendString("Sei arrivato tardi");
+			//client.sendString("Sei arrivato tardi");
 		}
 			
 	}
@@ -56,13 +56,25 @@ public class GameSide {
 			String message = client.receiveString();
 			if(message.equals("login")){
 				String nickname = client.receiveString();
-				String password = client.receiveString();
+				if(isNicknameInUse(nickname)){
+					client.sendString("false");
+				}else{
+					client.setNickname(nickname);
+					client.sendString("true");
+					logged=true;
+				}
 			}
 		}
 		
 	}
 	
-	
+	private boolean isNicknameInUse(String nickname){
+		for(Client client: arrayListClient){
+			if(client.getNickname().equals(nickname))
+				return true;
+		}
+		return false;
+	}
 	
 	
 	
