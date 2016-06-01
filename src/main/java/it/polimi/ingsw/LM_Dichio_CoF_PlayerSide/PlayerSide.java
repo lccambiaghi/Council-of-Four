@@ -79,14 +79,11 @@ public class PlayerSide {
 		while(!logged){
 			System.out.println("Enter a valid nickname");
 			String nickname = inCLI.nextLine();
-			System.out.println("Enter a password");
-			String password = inCLI.nextLine();
 			sendStringTS("login");
 			sendStringTS(nickname);
-			sendStringTS(password);
 			logged = Boolean.valueOf(receiveStringFS());
 			if(!logged){
-				System.out.println("Combination nickname/password not valid or nickname already in use");
+				System.out.println("Nickname already in use");
 			}
 		}	
 	}
