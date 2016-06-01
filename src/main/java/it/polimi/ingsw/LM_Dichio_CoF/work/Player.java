@@ -23,7 +23,4 @@ public class Player extends Client{
 	public void addPoliticCard(PoliticCard politicCard) {this.arrayListPoliticCard.add(politicCard);}
 	
 	
-	
-	
-	
 }
