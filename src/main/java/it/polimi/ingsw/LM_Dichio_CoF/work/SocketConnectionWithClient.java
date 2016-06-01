@@ -5,15 +5,15 @@ import java.net.Socket;
 public class SocketConnectionWithClient extends Thread {
 	
 	GameSide gameSide;
-	Player player;
+	Client client;
 	
 	SocketConnectionWithClient(Socket clientSocket, GameSide gameSide){
 		
 		this.gameSide=gameSide;
 		
-		player = new Player("s".charAt(0));
-		player.setPlayerSocket(clientSocket);
-		player.openSocketStream();
+		client = new Client("s".charAt(0));
+		client.setPlayerSocket(clientSocket);
+		client.openSocketStream();
 		
 		start();
 		
@@ -22,7 +22,7 @@ public class SocketConnectionWithClient extends Thread {
 	@Override
 	public void run(){
 		
-		gameSide.handlePlayer(player);
+		gameSide.handleClient(client);
 		
 	}
 }

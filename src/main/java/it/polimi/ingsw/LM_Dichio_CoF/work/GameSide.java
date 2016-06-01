@@ -9,13 +9,12 @@ import java.util.ArrayList;
 
 public class GameSide {
 
-	ArrayList <Player> arrayListAvailablePlayer;
-	ArrayList <Player> arrayListPlayingPlayer;
+	ArrayList <Client> arrayListClient;
 	ServerSocket serverSocket;
 	
 	public GameSide() {
 		
-		arrayListAvailablePlayer = new ArrayList <Player>();
+		arrayListClient = new ArrayList <Client>();
 		
 		try {
 			serverSocket = new ServerSocket(Constant.SOCKET_PORT);
@@ -30,25 +29,26 @@ public class GameSide {
 	}
 	
 	
-	public void handlePlayer(Player player){
+	public void handleClient(Client client){
 		
-		arrayListAvailablePlayer.add(player);
+		arrayListClient.add(client);
 	
 		System.out.println("I am managing a player through a thread");
 		
-		if(arrayListAvailablePlayer.size()==1){
-			askForConfigurations(player);
+		
+		if(arrayListClient.size()==1){
+			askForConfigurations(client);
 		}else{
-			player.sendString("Sei arrivato tardi");
+			client.sendString("Sei arrivato tardi");
 		}
 			
 	}
 	
-	private synchronized/*??*/ void askForConfigurations(Player player){
+	private synchronized/*??*/ void askForConfigurations(Client client){
 		
-		player.sendString("configRequest");
+		client.sendString("configRequest");
 		
-		Object object = player.receiveObject();
+		Object object = client.receiveObject();
 		FileOutputStream fileOutputStream = null;
 		try {
 			fileOutputStream = new FileOutputStream("./src/configurations/config");
