@@ -13,6 +13,13 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 
 public class PlayerSide {
 
+	
+	public static void main (String[] args){
+		new PlayerSide();
+	}
+	
+	
+	
 	private  Socket mySocket;
 	private final static String ADDRESS = "localhost";
 	private final static int SOCKET_PORT = 3000;
@@ -54,43 +61,62 @@ public class PlayerSide {
 			e.printStackTrace();
 		}
 
-	}
-	
-	public static void main (String[] args){
-		
-		new PlayerSide();
-		
 	}	
 	
 	private void communicateWithServer(){
 		
-		while(true){
-			
-			String message=inSocket.nextLine();
-			if(message.equals("configRequest")){
-				
-				//per ora così
-				Configurations config = createConfigurations();
-				
-				ObjectOutputStream objectOutputStream = null;
-				try {
-					objectOutputStream = new ObjectOutputStream(mySocket.getOutputStream());
-					objectOutputStream.writeObject(config);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			
-			}else{
-				System.out.println(message);
-			}
-			
-		}
+		login();
 		
 	}
 	
+	// TS= To Server, FS= From Server
+	private void sendStringTS(String string){ outSocket.println(string); outSocket.flush();}
+	private String receiveStringFS(){ String string = inSocket.nextLine(); return string; }
 	
 	
+	private void login(){
+		boolean logged = false;
+		while(!logged){
+			System.out.println("Enter a valid nickname");
+			String nickname = inCLI.nextLine();
+			System.out.println("Enter a password");
+			String password = inCLI.nextLine();
+			sendStringTS("login");
+			sendStringTS(nickname);
+			sendStringTS(password);
+			logged = Boolean.valueOf(receiveStringFS());
+			if(!logged){
+				System.out.println("Combination nickname/password not valid or nickname already in use");
+			}
+		}	
+	}
 	
+		
+		
+		
+		
+		
+		
+		
+	
+		/* TO SEND THE CONFIGURATIONS 
+		if(message.equals("configRequest")){
+			
+			//per ora così
+			Configurations config = createConfigurations();
+			
+			ObjectOutputStream objectOutputStream = null;
+			try {
+				objectOutputStream = new ObjectOutputStream(mySocket.getOutputStream());
+				objectOutputStream.writeObject(config);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+		}else{
+			System.out.println(message);
+		}
+		*/
 	
 	
 	private Configurations createConfigurations(){
@@ -156,34 +182,4 @@ public class PlayerSide {
 		return config;
 	}
 	
-	
-	/*
-	
-	private void createFileConfigurations(){
-		
-		FileOutputStream fileOutputStream = null;
-		
-		try {
-			
-			//il salvataggio per ora è in locale, dovrà essere inviato al server quando ci sarà la connessione
-			fileOutputStream = new FileOutputStream("./src/configurations/config");
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-			// write something in the file
-			objectOutputStream.writeObject(config);
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
-		// close the stream
-			try {
-				fileOutputStream.close();
-			} catch (IOException e) {
-			// TODO Auto-generated catch block
-				e.printStackTrace();
-		}
-	}
-	}
-	*/
 }
