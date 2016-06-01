@@ -8,6 +8,18 @@ import java.util.Scanner;
 
 public class Client {
 
+	private String nickname;
+	private String password;
+	
+	private char typeOfConnection;
+	private Socket playerSocket;
+	
+	private char CLIorGUI;
+	
+	private Scanner input;
+	private PrintWriter output;	
+	
+	
 	/* The constructor assigns to the player the type of connection */
 	public Client(char typeOfConnection){
 		this.typeOfConnection=typeOfConnection; 	
@@ -33,6 +45,9 @@ public class Client {
 
 	public String getNickname() {return nickname;}
 	public void setNickname(String nickname) {this.nickname = nickname;}
+	
+	public String getPassword()	{return password;}
+	public void setPassword(String password) {this.password = password;}
 
 	public char getTypeOfConnection() {return typeOfConnection;}
 	public void setTypeOfConnection(char typeOfConnection) {this.typeOfConnection = typeOfConnection;}
@@ -51,18 +66,5 @@ public class Client {
 		}
 		return object;
 	}
-	
-	
-	private String nickname;
-	
-	private char typeOfConnection;
-	private Socket playerSocket;
-	
-	private char CLIorGUI;
-	
-	private Scanner input;
-	private PrintWriter output;	
-	
-	
 	
 }
