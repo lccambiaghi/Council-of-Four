@@ -67,6 +67,10 @@ public class PlayerSide {
 		
 		login();
 		
+		String message = receiveStringFS();
+		if(message.equals("config")){
+			createConfigurations();
+		}
 	}
 	
 	// TS= To Server, FS= From Server
@@ -117,6 +121,21 @@ public class PlayerSide {
 	
 	
 	private Configurations createConfigurations(){
+		
+		System.out.println("You are the first player");
+		System.out.println("You have to create the configurations of a match\n");
+		
+		boolean repeat = true;
+		System.out.println("First of all, enter the max number of players you want (min 2, max 8)");
+		while(repeat){
+			if(inCLI.hasNextInt()){
+				int playersNumber = inCLI.nextInt();
+				if(2<=playersNumber&&playersNumber<=8){
+					repeat = false;
+				}
+			}
+		}
+		
 		
 		Configurations config = new Configurations();
 		
