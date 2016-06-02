@@ -11,15 +11,13 @@ public class Player {
 	private Socket playerSocket;
 	
 	private char CLIorGUI;
-
-	
 	
 	// variables of the game
 	private int richness;
 	private int assistant;
 	private ArrayList <PoliticCard> arrayListPoliticCard= new ArrayList<>();
 	
-	
+	private int mainActionsLeft;
 	
 	/* The constructor assigns to the player the type of connection */
 	public Player(String typeOfConnection){ this.typeOfConnection=typeOfConnection.charAt(0); }
@@ -35,8 +33,6 @@ public class Player {
 
 	public char getTypeOfConnection() {return typeOfConnection;}
 	public void setTypeOfConnection(char typeOfConnection) {this.typeOfConnection = typeOfConnection;}
-
-	
 	
 	public int getRichness() {return richness;}
 	public void setRichness(int richness) {this.richness = richness;}
@@ -47,9 +43,13 @@ public class Player {
 
 	public ArrayList<PoliticCard> getArrayListPoliticCard() {return arrayListPoliticCard;}
 	public void addPoliticCard(PoliticCard politicCard) {this.arrayListPoliticCard.add(politicCard);}
-	
-	
-	
-	
-	
+
+
+	public int getMainActionsLeft() {
+		return mainActionsLeft;
+	}
+
+	public void setMainActionsLeft(int mainActionsLeft) {
+		this.mainActionsLeft = mainActionsLeft;
+	}
 }
