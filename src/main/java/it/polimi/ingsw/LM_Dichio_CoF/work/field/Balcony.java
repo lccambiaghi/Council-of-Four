@@ -24,12 +24,20 @@ public class Balcony {
 		
 		for(int i = 0; i< Constant.COUNCILLORS_PER_BALCONY_NUMBER; i++){
 			
-			Councillor councillor = availableCouncillors.removeCouncilor();
+			Councillor councillor = availableCouncillors.removeAvailableCouncillor();
 			arrayListCouncillor.add(councillor);
 		}
 		
 	}
-	
+
+	/* This method puts the councillor passed as parameter on the leftmost
+	   position, slides the other councillors on the balcony,
+	   adds the fallen councillor to available councillors */
+	public void electCouncillor(Councillor councillor, AvailableCouncillors availableCouncillors) {
+		arrayListCouncillor.add(0,councillor);
+		availableCouncillors.addAvailableCouncillor(arrayListCouncillor.remove(arrayListCouncillor.size()));
+	}
+
 	public ArrayList<Councillor> getArrayListCouncillor(){
 		return arrayListCouncillor;
 	}
@@ -38,5 +46,4 @@ public class Balcony {
 		return nameBalcony;
 	}
 
-	
 }
