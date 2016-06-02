@@ -15,8 +15,7 @@ public class Balcony {
 		
 		this.nameBalcony=nameBalcony;
 		
-		/*
-		 * This for cycle permits to remove a councilor from availableCouncillors
+		/*This for cycle permits to remove a councilor from availableCouncillors
 		 * and put it into arrayListCouncillor.
 		 * It is random, because during the creation of AvailableCouncillors (which cointains
 		 * all councillors initially - in the game 24) the arrayList is shuffled
