@@ -12,6 +12,8 @@ public class Field {
 
 	private Configurations config;
 	private City[] arrayCity;
+	private Balcony[] arrayBalcony;
+	private AvailableCouncillors availableCouncillors;
 	private ArrayList<Player> arrayListPlayer;
 	private Route richnessRoute;
 	private Route victoryRoute;
@@ -28,10 +30,8 @@ public class Field {
 		
 		assignNearbyCities();
 
-
 		createBalconies();
-		
-		//GESTIONE PERCORSI
+
 		createRoutes();
 		
 	}
@@ -185,17 +185,18 @@ public class Field {
 
 	/* This method creates four balconies and fills them with councillors */
 	private void createBalconies() {
-		//Create one (AND ONLY FOR ALL THE GAME) instance for the Available Councillor
-		AvailableCouncillor availableCouncillor = new AvailableCouncillor();
+		//Create one (AND ONLY FOR ALL THE GAME) instance of AvailableCouncillors
+		availableCouncillors = new AvailableCouncillors();
 
-		Balcony[] arrayBalcony = new Balcony[Constant.BALCONIES_NUMBER];
+		arrayBalcony = new Balcony[Constant.BALCONIES_NUMBER];
 
-		arrayBalcony[0] = new Balcony (availableCouncillor, RegionName.Sea.toString()+"Balcony");
-		arrayBalcony[1] = new Balcony (availableCouncillor, RegionName.Hill.toString()+"Balcony");
-		arrayBalcony[2] = new Balcony (availableCouncillor, RegionName.Mountain.toString()+"Balcony");
-		arrayBalcony[3] = new KingBalcony (availableCouncillor, "KingBalcony");
+		arrayBalcony[0] = new Balcony (availableCouncillors, RegionName.Sea.toString()+"Balcony");
+		arrayBalcony[1] = new Balcony (availableCouncillors, RegionName.Hill.toString()+"Balcony");
+		arrayBalcony[2] = new Balcony (availableCouncillors, RegionName.Mountain.toString()+"Balcony");
+		arrayBalcony[3] = new KingBalcony (availableCouncillors, "KingBalcony");
 	}
 	
+	/* This method creates the three routes and assign them to the field's variables*/
 	private void createRoutes(){
 		
 		this.richnessRoute = new RichnessRoute(arrayListPlayer);
@@ -211,5 +212,14 @@ public class Field {
 	public City[] getArrayCity(){
 		return arrayCity;
 	}
-	
+
+	public Balcony[] getArrayBalcony() {return arrayBalcony;}
+
+	public Balcony getBalconyFromIndex(int index){return getArrayBalcony()[index];}
+
+	public AvailableCouncillors getAvailableCouncillors() {return availableCouncillors; }
+
+
+	public Route getRichnessRoute() {return richnessRoute;}
+
 }
