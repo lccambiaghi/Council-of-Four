@@ -11,7 +11,7 @@ public class Constant {
 	public static final int COUNCILLORS_PER_BALCONY_NUMBER =4;
 	public static final int BALCONIES_NUMBER=4;
 	public static final int COLORS_NUMBER =6; // COUNCILORS
-	public static final int COUNCILORS_NUMBER_TOTAL =24; //IT HAS TO BE A MULTIPLE OF THREE
+	public static final int COUNCILLORS_NUMBER_TOTAL =24; //IT HAS TO BE A MULTIPLE OF THREE
 	public static final int POLITIC_CARDS_INITIAL_NUMBER =6;
 	public static final int RICHNESS_INITIAL_FIRST_PLAYER =10;
 	public static final int REGIONS_NUMBER =3;
