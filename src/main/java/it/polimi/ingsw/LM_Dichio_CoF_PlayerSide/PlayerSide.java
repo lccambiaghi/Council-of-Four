@@ -1,13 +1,16 @@
 package it.polimi.ingsw.LM_Dichio_CoF_PlayerSide;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.Timer;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 
@@ -28,6 +31,11 @@ public class PlayerSide {
 	
 	private Scanner inSocket;
 	private PrintWriter outSocket;
+	
+	String message;
+	
+	private int playersNumber;
+	private Configurations config;
 	
 	public PlayerSide() {
 		
@@ -67,16 +75,44 @@ public class PlayerSide {
 		
 		login();
 		
-		String message = receiveStringFS();
+		message = receiveStringFS();
 		if(message.equals("config")){
-			createConfigurations();
-		}
+			
+			boolean standardConfig = false;
+			/* 
+			 * It starts a thread to manage the creation of configurations
+			 * This way server says that the time is over the thread will stop
+			 * The timer is not fixed to 20 seconds, this is a server's problem
+			 * I have to implement another timer:
+			 * when the second player arrives a new timer starts (for example 1 minute)
+			 * so that the other players don't have to wait to much for a new match, whose config
+			 * are created by the first player.
+			 * If the player can't set them on time then he will send a standard configuration
+			 */
+			CreateConfigurations createConfigurations = new CreateConfigurations(this);
+			Thread threadCreateConfigurations = new Thread(createConfigurations);
+			threadCreateConfigurations.start();
+			
+			//Case: client can't make the config on time
+			///// Here I need a method to stop the thread
+			System.out.println("Too late, standard configurations will be used");
+			standardConfig = true;
+			
+			if(standardConfig){
+				setStandardConfigurations();
+			}
+			sendPlayerMaxNumberConfigurations();
+			
+		}else
+			System.out.println(message);
+		
+		
+		
 	}
 	
 	// TS= To Server, FS= From Server
 	private void sendStringTS(String string){ outSocket.println(string); outSocket.flush();}
 	private String receiveStringFS(){ String string = inSocket.nextLine(); return string; }
-	
 	
 	private void login(){
 		boolean logged = false;
@@ -92,110 +128,51 @@ public class PlayerSide {
 		}	
 	}
 	
+	public void setPlayersNumber(int playersNumber){ this.playersNumber= playersNumber; }
+	public void setConfigurations(Configurations config){ this.config = config; }
 		
 		
 		
 		
+	private void setStandardConfigurations(){
 		
+		FileInputStream fileInputStream = null;
+		try {
+
+			fileInputStream = new FileInputStream("./src/playerConfigurations/config");
+	        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+	        this.config = (Configurations) objectInputStream.readObject();
 		
-		
-	
-		/* TO SEND THE CONFIGURATIONS 
-		if(message.equals("configRequest")){
-			
-			//per ora così
-			Configurations config = createConfigurations();
-			
-			ObjectOutputStream objectOutputStream = null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			// close the stream
 			try {
-				objectOutputStream = new ObjectOutputStream(mySocket.getOutputStream());
-				objectOutputStream.writeObject(config);
+				fileInputStream.close();
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
-		}else{
-			System.out.println(message);
 		}
-		*/
-	
-	
-	private Configurations createConfigurations(){
-		
-		System.out.println("You are the first player");
-		System.out.println("You have to create the configurations of a match\n");
-		
-		boolean repeat = true;
-		System.out.println("First of all, enter the max number of players you want (min 2, max 8)");
-		while(repeat){
-			if(inCLI.hasNextInt()){
-				int playersNumber = inCLI.nextInt();
-				if(2<=playersNumber&&playersNumber<=8){
-					repeat = false;
-				}
-			}
-		}
-		
-		
-		Configurations config = new Configurations();
-		
-		/*
-		 * Do not change this parameter and the difficulty one until we haven't create 
-		 * new maps for those combination missing
-		 */
-		config.setCitiesNumber(15);
-		
-		config.setPermitCardBonusNumberMin(2);
-		config.setPermitCardBonusNumberMax(3);
-		
-		config.setNobilityBonusRandom(false);
-		if(config.isNobilityBonusRandom()==false){
-			config.setNobilityBonusNumber(7);
-		}
-		
-		config.setCityLinksPreconfigured(false);
-		if(config.isCityLinksPreconfigured()==false){
-			int[][]cityLinksMatrix =  new int[][]{
-				{0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-				{0,	0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	1,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	1,	0,	1,	0,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	1,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0}
-			};
-			/*
-    		 * This fir cycle is for making the matrix specular,
-    		 * because in the txt file it is only upper triangular set
-    		 */
-			for(int i=0; i<config.getCitiesNumber(); i++){
-				for(int j=i; j<config.getCitiesNumber();j++){
-					cityLinksMatrix[j][i]=cityLinksMatrix[i][j];
-				}
-			}
-			config.setCityLinksMatrix(cityLinksMatrix);
-			
-		}else{
-			config.setDifficulty("n".charAt(0));
-		}
-		
-		config.setCityBonusRandom(true);
-		if(config.isCityBonusRandom()==false){
-			//da implementare, ma essendo un esempio non ha senso farlo ora (l'array di mappe)
-		}else{
-			config.setCityBonusNumberMin(2);
-			config.setCityBonusNumberMax(3);
-		}
-		
-		return config;
 	}
+		
+	
+	private void sendPlayerMaxNumberConfigurations(){
+		
+		ObjectOutputStream objectOutputStream = null;
+		try {
+			//sendStringTS("4");
+			objectOutputStream = new ObjectOutputStream(mySocket.getOutputStream());
+			objectOutputStream.writeObject(config);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 }
