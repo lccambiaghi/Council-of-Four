@@ -34,7 +34,7 @@ public class PlayerSide {
 	
 	String message;
 	
-	private int playersNumber;
+	private int playersMaxNumber;
 	private Configurations config;
 	
 	public PlayerSide() {
@@ -89,23 +89,27 @@ public class PlayerSide {
 			 * are created by the first player.
 			 * If the player can't set them on time then he will send a standard configuration
 			 */
-			CreateConfigurations createConfigurations = new CreateConfigurations(this);
-			Thread threadCreateConfigurations = new Thread(createConfigurations);
-			threadCreateConfigurations.start();
+			//CreateConfigurations createConfigurations = new CreateConfigurations(this);
+			//Thread threadCreateConfigurations = new Thread(createConfigurations);
+			//threadCreateConfigurations.start();
 			
 			//Case: client can't make the config on time
 			///// Here I need a method to stop the thread
-			System.out.println("Too late, standard configurations will be used");
+			System.out.println(/*"Too late,"*/" standard configurations will be used");
 			standardConfig = true;
-			
 			if(standardConfig){
+				setStandardPlayersNumber();
 				setStandardConfigurations();
 			}
-			sendPlayerMaxNumberConfigurations();
+			sendPlayersMaxNumberAndConfigurations();
 			
-		}else
-			System.out.println(message);
-		
+		}else if(message.equals("wait")){
+			System.out.println("You are waiting for a match to be configured");
+			message = receiveStringFS();
+			if(message.equals("startingMatch")){
+				System.out.println("You are waiting for a match to start");
+			}
+		}	
 		
 		
 	}
@@ -128,11 +132,11 @@ public class PlayerSide {
 		}	
 	}
 	
-	public void setPlayersNumber(int playersNumber){ this.playersNumber= playersNumber; }
+	public void setPlayersNumber(int playersMaxNumber){ this.playersMaxNumber= playersMaxNumber; }
 	public void setConfigurations(Configurations config){ this.config = config; }
 		
 		
-		
+	public void setStandardPlayersNumber(){ this.playersMaxNumber= 4;}
 		
 	private void setStandardConfigurations(){
 		
@@ -159,13 +163,13 @@ public class PlayerSide {
 			}
 		}
 	}
-		
 	
-	private void sendPlayerMaxNumberConfigurations(){
+	
+	private void sendPlayersMaxNumberAndConfigurations(){
 		
 		ObjectOutputStream objectOutputStream = null;
 		try {
-			//sendStringTS("4");
+			sendStringTS(""+playersMaxNumber);
 			objectOutputStream = new ObjectOutputStream(mySocket.getOutputStream());
 			objectOutputStream.writeObject(config);
 		} catch (IOException e) {
