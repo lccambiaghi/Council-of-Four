@@ -5,23 +5,26 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.Naming;
 import java.util.ArrayList;
 
 public class GameSide {
 
-	ArrayList <Client> arrayListClient;
+	private ArrayList <Player> arrayListPlayer;
 	
-	ServerSocket serverSocket;
+	private ServerSocket serverSocket;
+	
+	boolean matchStarterGoingOn;
 	
 	public GameSide() {
 		
-		arrayListClient = new ArrayList <Client>();
+		arrayListPlayer = new ArrayList <Player>();
 		
 		try {
 			serverSocket = new ServerSocket(Constant.SOCKET_PORT);
 			while(true){
 				Socket socket = serverSocket.accept();
-				new SocketConnectionWithClient(socket, this);		
+				new SocketConnectionWithPlayer(socket, this);		
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -30,38 +33,45 @@ public class GameSide {
 	}
 	
 	
-	public void handleClient(Client client){
+	public void handlePlayer(Player player){
 		
 		System.out.println("I am managing a player through a thread");
 		
-		login(client);
+		login(player);
 		
-		System.out.println("The client has successfully connected with nickname: "+client.getNickname());
+		System.out.println("The player has successfully connected with nickname: "+player.getNickname());
 		
-		arrayListClient.add(client);
+		arrayListPlayer.add(player);
 		
+		matchStarterGoingOn = false;
 		
-		if(arrayListClient.size()==1){
-			client.sendString("config");
-			setConfigurations(client);
+		if(arrayListPlayer.size()==1&&!matchStarterGoingOn){
+			matchStarterGoingOn=true;
+			player.sendString("config");
+			int playersMaxNumber = getPlayersMaxNumberFromPlayer(player);
+			setConfigurationsFromPlayer(player);
+			new MatchStarter(this, playersMaxNumber);
 		}else{
-			client.sendString("wait");
+			player.sendString("wait");
 		}
 			
 	}
 	
-	private void login(Client client){
+	public ArrayList<Player> getArrayListPlayer() {return arrayListPlayer;}
+
+
+	private void login(Player player){
 		
 		boolean logged = false;
 		while(!logged){
-			String message = client.receiveString();
+			String message = player.receiveString();
 			if(message.equals("login")){
-				String nickname = client.receiveString();
+				String nickname = player.receiveString();
 				if(isNicknameInUse(nickname)){
-					client.sendString("false");
+					player.sendString("false");
 				}else{
-					client.setNickname(nickname);
-					client.sendString("true");
+					player.setNickname(nickname);
+					player.sendString("true");
 					logged=true;
 				}
 			}
@@ -70,19 +80,23 @@ public class GameSide {
 	}
 	
 	private boolean isNicknameInUse(String nickname){
-		for(Client client: arrayListClient){
-			if(client.getNickname().equals(nickname))
+		for(Player player: arrayListPlayer){
+			if(player.getNickname().equals(nickname))
 				return true;
 		}
 		return false;
 	}
 	
 	
+	private int getPlayersMaxNumberFromPlayer(Player player){
+		int playersMaxNumber;
+		playersMaxNumber = Integer.parseInt(player.receiveString());
+		return playersMaxNumber;
+	}
 	
-	
-	private synchronized/*??*/ void setConfigurations(Client client){
+	private void setConfigurationsFromPlayer(Player player){
 		
-		Object object = client.receiveObject();
+		Object object = player.receiveObject();
 		FileOutputStream fileOutputStream = null;
 		try {
 			fileOutputStream = new FileOutputStream("./src/configurations/config");
@@ -99,5 +113,6 @@ public class GameSide {
 		}
 	}
 	
+	public void canCreateNewMatch(){ boolean matchStarterGoingOn = false; }
 	
 }
