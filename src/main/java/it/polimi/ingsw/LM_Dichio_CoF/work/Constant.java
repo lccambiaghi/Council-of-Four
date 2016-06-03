@@ -8,6 +8,9 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.field.CityName;
 public class Constant {
 	
 	public static final int SOCKET_PORT =3000;
+	public static final int TIMER_SECONDS_NEW_MATCH = 20;
+	public static final int PLAYERS_MIN_NUMBER = 2;
+	
 	public static final int COUNCILLORS_PER_BALCONY_NUMBER =4;
 	public static final int BALCONIES_NUMBER=4;
 	public static final int COLORS_NUMBER =6; // COUNCILORS
