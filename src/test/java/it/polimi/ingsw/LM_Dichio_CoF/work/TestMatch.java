@@ -49,7 +49,7 @@ public class TestMatch {
 		}
 	}
 
-	@Ignore
+	@Test
 	public void electCouncillor(){
 
 		testCases.configurations();
@@ -65,7 +65,7 @@ public class TestMatch {
 
 		// asks which color : 1=White
 
-		assertEquals(4, arrayListPlayer.get(0).getRichness());
+		assertEquals(14, arrayListPlayer.get(0).getRichness());
 	}
 
 }
