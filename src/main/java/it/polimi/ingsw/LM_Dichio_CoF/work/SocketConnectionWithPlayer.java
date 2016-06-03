@@ -2,18 +2,18 @@ package it.polimi.ingsw.LM_Dichio_CoF.work;
 
 import java.net.Socket;
 
-public class SocketConnectionWithClient extends Thread {
+public class SocketConnectionWithPlayer extends Thread {
 	
 	GameSide gameSide;
-	Client client;
+	Player player;
 	
-	SocketConnectionWithClient(Socket clientSocket, GameSide gameSide){
+	SocketConnectionWithPlayer(Socket clientSocket, GameSide gameSide){
 		
 		this.gameSide=gameSide;
 		
-		client = new Client("s".charAt(0));
-		client.setPlayerSocket(clientSocket);
-		client.openSocketStream();
+		player = new Player("s".charAt(0));
+		player.setPlayerSocket(clientSocket);
+		player.openSocketStream();
 		
 		start();
 		
@@ -22,7 +22,7 @@ public class SocketConnectionWithClient extends Thread {
 	@Override
 	public void run(){
 		
-		gameSide.handleClient(client);
+		gameSide.handlePlayer(player);
 		
 	}
 }
