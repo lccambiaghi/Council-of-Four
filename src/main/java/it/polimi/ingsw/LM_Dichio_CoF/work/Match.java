@@ -136,7 +136,7 @@ public class Match {
 			number=in.nextInt();
 			in.nextLine();
 		} while(number<lowerBound && number>upperBound);
-		in.close();
+		//in.close();
 
 		return number;
 
@@ -183,7 +183,7 @@ public class Match {
 		System.out.println("3. Mountain Balcony");
 		System.out.println("4. King Balcony");
 
-		Balcony chosenBalcony = field.getBalconyFromIndex(inputNumber(1, 4));
+		Balcony chosenBalcony = field.getBalconyFromIndex(inputNumber(1, 4)-1);
 
 		System.out.println("What color would you like the new councillor to be?");
 		System.out.println("1. White");
