@@ -34,7 +34,7 @@ public class Balcony {
 	   adds the fallen councillor to available councillors */
 	public void electCouncillor(Councillor councillor, AvailableCouncillors availableCouncillors) {
 		arrayListCouncillor.add(0,councillor);
-		availableCouncillors.addAvailableCouncillor(arrayListCouncillor.remove(arrayListCouncillor.size()));
+		availableCouncillors.addAvailableCouncillor(arrayListCouncillor.remove(arrayListCouncillor.size()-1));
 	}
 
 	public ArrayList<Councillor> getArrayListCouncillor(){
