@@ -401,7 +401,7 @@ public class Match {
 		System.out.println("Which Permit Card do you want take, 1 or 2?");
 		PermitCard chosenPermitCard = faceUpPermitCardOfRegion.takePermitCard(inputNumber(1, 2)-1);
 		
-		//playerTurn.arrayListPermitCard.add(chosenPermitCard);
+		playerTurn.acquirePermitCard(chosenPermitCard);
 	}
 	
 	/*
