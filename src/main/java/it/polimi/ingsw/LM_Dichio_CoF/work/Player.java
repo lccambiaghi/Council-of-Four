@@ -46,7 +46,8 @@ public class Player {
 	public int getAssistant() {	return assistant;}
 	public void setAssistant(int assistant) {this.assistant = assistant;}
 	public void addAssistant(int increment)	{assistant +=increment;}
-
+	public void decrementAssistant(int decrement)	{assistant -=decrement;}
+	
 	public ArrayList<PoliticCard> getArrayListPoliticCard() {return arrayListPoliticCard;}
 	public void addPoliticCard(PoliticCard politicCard) {arrayListPoliticCard.add(politicCard);}
 
