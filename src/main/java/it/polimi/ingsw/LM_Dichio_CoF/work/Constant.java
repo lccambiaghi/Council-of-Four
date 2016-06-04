@@ -51,4 +51,6 @@ public class Constant {
 	public static final int CITIES_NUMBER_HIGH = 21;
 
 	public static final int ELECTION_RICHNESS_INCREMENT = 4;
+	public static final int ELECTON_COUNCILLOR_WITH_RICHNESS_DECREMENT = 3;
+	public static final int COST_OF_COUNCILLOR = 1;
 }
