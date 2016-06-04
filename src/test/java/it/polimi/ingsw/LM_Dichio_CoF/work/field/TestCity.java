@@ -6,7 +6,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
 
 public class TestCity {
 	
-	TestCases testCases = new TestCases();
+	private TestCases testCases = new TestCases();
 	
 	@Test
 	public void bonus() {

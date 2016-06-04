@@ -10,15 +10,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
+import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
 
 public class TestCases {
 
-	public Configurations configTest = configurations();
-	public ArrayList <Player> arrayListPlayerTest= arrayListPlayer();
-	public City[] arrayCityTest = arrayCity();
-	
+	private Configurations config = new Configurations();
+	private City[] arrayCity;
+	private ArrayList <Player> arrayListPlayer = new ArrayList<>();
+
 	/* Cities of Sea Region */
 	public City[] arrayCity(){
 
@@ -28,8 +29,10 @@ public class TestCases {
 		bonusMap.put("Nobility", 1);
 		bonusMap.put("Richness", 0);
 
-		int n = configTest.getNumberCities()/3;
-		City[] arrayCity = new City[n];
+		Configurations config=configurations();
+
+		int n = config.getNumberCities()/3;
+		arrayCity= new City[config.getNumberCities()/3];
 		for(int i=0; i<n; i++){
 			
 			//arrayCity[i] = new City(configTest, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
@@ -41,14 +44,13 @@ public class TestCases {
 	}
 	
 	public ArrayList <Player> arrayListPlayer() {
-	
-		ArrayList <Player> arrayListPlayer = new ArrayList <Player> ();
 
 		Player player = new Player("s");
 		player.setNickname("A");
 
-		City[] arrayCity = arrayCityTest;
-		player.acquirePermitCard(new PermitCard(arrayCityTest, configTest));
+		City[] arrayCity = arrayCity();
+		Configurations config = configurations();
+		player.acquirePermitCard(new PermitCard(arrayCity, config));
 
 		arrayListPlayer.add(player);
 		Player player2 = new Player("s");
@@ -75,29 +77,27 @@ public class TestCases {
 		createFileConfigurations();
 		readFileConfigurations();
 
-		return configTest;
+		return config;
 	}
 
 	private void createConfigurations(){
-		
-		configTest = new Configurations();
-		
+
 		/*
 		 * Do not change this parameter and the difficulty one until we haven't create 
 		 * new maps for those combination missing
 		 */
-		configTest.setCitiesNumber(15);
+		config.setCitiesNumber(15);
 		
-		configTest.setPermitCardBonusNumberMin(2);
-		configTest.setPermitCardBonusNumberMax(3);
+		config.setPermitCardBonusNumberMin(2);
+		config.setPermitCardBonusNumberMax(3);
 		
-		configTest.setNobilityBonusRandom(false);
-		if(configTest.isNobilityBonusRandom()==false){
-			configTest.setNobilityBonusNumber(7);
+		config.setNobilityBonusRandom(false);
+		if(config.isNobilityBonusRandom()==false){
+			config.setNobilityBonusNumber(7);
 		}
 		
-		configTest.setCityLinksPreconfigured(false);
-		if(configTest.isCityLinksPreconfigured()==false){
+		config.setCityLinksPreconfigured(false);
+		if(config.isCityLinksPreconfigured()==false){
 			int[][]cityLinksMatrix =  new int[][]{
 				{0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
 				{0,	0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
@@ -119,30 +119,30 @@ public class TestCases {
     		 * This fir cycle is for making the matrix specular,
     		 * because in the txt file it is only upper triangular set
     		 */
-			for(int i = 0; i< configTest.getCitiesNumber(); i++){
-				for(int j = i; j< configTest.getCitiesNumber(); j++){
+			for(int i = 0; i< config.getCitiesNumber(); i++){
+				for(int j = i; j< config.getCitiesNumber(); j++){
 					cityLinksMatrix[j][i]=cityLinksMatrix[i][j];
 				}
 			}
-			configTest.setCityLinksMatrix(cityLinksMatrix);
+			config.setCityLinksMatrix(cityLinksMatrix);
 			
 		}else{
-			configTest.setDifficulty("n".charAt(0));
+			config.setDifficulty("n".charAt(0));
 		}
 		
-		configTest.setCityBonusRandom(false);
-        if(configTest.isCityBonusRandom()==false){
-			HashMap[] cityBonusArrayMap = new HashMap[configTest.getCitiesNumber()];
-            for(int i = 0; i< configTest.getCitiesNumber(); i++){
+		config.setCityBonusRandom(false);
+        if(config.isCityBonusRandom()==false){
+			HashMap[] cityBonusArrayMap = new HashMap[config.getCitiesNumber()];
+            for(int i = 0; i< config.getCitiesNumber(); i++){
                 HashMap <String, Integer> bonusMap =new HashMap <> ();
                 bonusMap.put("Assistant", 2);
                 bonusMap.put("Nobility", 1);
                 cityBonusArrayMap[i]=bonusMap;
             }
-			configTest.setCityBonusArrayMaps(cityBonusArrayMap);
+			config.setCityBonusArrayMaps(cityBonusArrayMap);
         }else{
-			configTest.setCityBonusNumberMin(2);
-			configTest.setCityBonusNumberMax(3);
+			config.setCityBonusNumberMin(2);
+			config.setCityBonusNumberMax(3);
 		}
 		
 	}
@@ -158,7 +158,7 @@ public class TestCases {
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
 			// write something in the file
-			objectOutputStream.writeObject(configTest);
+			objectOutputStream.writeObject(config);
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -186,7 +186,7 @@ public class TestCases {
 			
 			// create an ObjectInputStream for the file we created before
 	         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-	         this.configTest = (Configurations) objectInputStream.readObject();
+	         this.config = (Configurations) objectInputStream.readObject();
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
