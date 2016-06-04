@@ -68,4 +68,13 @@ public class TestMatch {
 		assertEquals(14, arrayListPlayer.get(0).getRichness());
 	}
 
+	@Test
+	public void engageAnAssistant(){
+
+		testCases.configurations();
+		ArrayList<Player> arrayListPlayer = testCases.arrayListPlayer();
+
+		Match match = new Match(arrayListPlayer);
+		assertEquals(7, arrayListPlayer.get(0).getRichness());
+	}
 }
