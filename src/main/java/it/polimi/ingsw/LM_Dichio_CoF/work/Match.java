@@ -161,7 +161,7 @@ public class Match {
 				electCouncillor(playerTurn);
 				break;
 			case 2:
-				//acquirePermitCard(playerTurn);
+				acquirePermitCard(playerTurn);
 				break;
 			case 3:
 				//buildEmporiumWithPermitCard(playerTurn);
@@ -228,4 +228,132 @@ public class Match {
 		richnessRoute.movePlayer(Constant.ELECTION_RICHNESS_INCREMENT, playerTurn);
 
 	}
+	private void acquirePermitCard(Player playerTurn){
+		System.out.println("Which balcony would you like to satisfy?");
+		System.out.println("1. Sea Balcony");
+		System.out.println("2. Hill Balcony");
+		System.out.println("3. Mountain Balcony");
+		
+		int inputBalcony = inputNumber(1, 3) -1;
+		Balcony chosenBalcony = field.getBalconyFromIndex(inputBalcony);
+		
+		ArrayList<Councillor> councillorOfBalcony = chosenBalcony.getArrayListCouncillor();
+		ArrayList<Color> colorOfCouncillors = new ArrayList <> ();
+		for (Councillor councillor : councillorOfBalcony){
+			System.out.print(councillor.getColor() + " ");
+			colorOfCouncillors.add(councillor.getColor());
+		}//aggiungo i colori dei consiglieri della balconata in un arraylist predefinito
+		
+		ArrayList<PoliticCard> playerHand = playerTurn.getArrayListPoliticCard();
+		ArrayList<Color> colorOfCards = new ArrayList <> ();
+
+		System.out.println("Insert one or more cards that you want use");
+		System.out.println("Your Cards:");
+		
+		PoliticCard politicCard;
+		for (int i=0; i<playerHand.size(); i++){
+			politicCard=playerHand.get(i);
+			System.out.println(i+1 + ". " + politicCard.getCardColor());
+			colorOfCards.add(politicCard.getCardColor());
+		}//aggiungo i colori delle carte del giocatore in un arraylist predefinito
+		
+		
+		/*
+		 * leggo da cli le carte che il giocatore vuole usare per soddisfare il consiglio
+		 */
+		
+		ArrayList <PoliticCard> usableCards = new ArrayList <>();
+		usableCards= inputStringToPermitCard(playerHand);
+		
+		Color cardColor;
+		ArrayList <Color> colorOfUsableCards = new ArrayList <> ();
+		boolean usedMulticolor = false;
+		
+		/*
+		 * Controllo che effettivamente l'input corrisponda alle carte che il giocatore
+		 * possiede, altrimenti richiedo di inserirle
+		 */
+		if(playerHand.containsAll(usableCards)){	
+			for (PoliticCard card : usableCards){
+				cardColor=card.getCardColor();
+				if (cardColor==Color.getColorFromIndex(6)) //multicolor
+					usedMulticolor = true;
+				colorOfUsableCards.add(cardColor);
+			}// creo l'arraylist di colori delle carte scelte da usare, includo il multicolor
+		}
+		else  {
+			System.out.println("You don't have these cards in your hand. Select an other set");
+			acquirePermitCard(playerTurn);
+		}
+			
+		
+		int totalUsedCards;
+		int payed=10;
+		
+		/*
+		 * la condizione dell'if è che l'arrayList di carte usate sia contenuto interamente 
+		 * in quello del consiglio da voler soddisfare. 
+		 */
+		
+		if(colorOfCouncillors.containsAll(colorOfUsableCards)){
+			 totalUsedCards=colorOfUsableCards.size();
+			 if(totalUsedCards==1)
+				 payed=10;
+			 else{ //calcola costo per soddisfare il consiglio
+				 while (totalUsedCards>0){
+					 payed = payed - totalUsedCards;
+					 totalUsedCards--;
+				}
+			}
+			if(usedMulticolor)
+				payed++;
+			
+			Route richnessRoute = field.getRichnessRoute();
+			int playerPosition = richnessRoute.getPosition(playerTurn);
+			if(playerPosition>payed)
+				richnessRoute.movePlayer(-payed, playerTurn);
+			else{
+				System.out.println("You don't have enough money. Which Main Action would you like to do?");
+				mainAction(playerTurn);
+			}
+		}
+		else{
+				System.out.println("You don't have enough money. Which Main Action would you like to do?");
+				mainAction(playerTurn);
+		}
+		Region regionOfBalcony = field.getRegionFromIndex(inputBalcony);
+		FaceUpPermitCardArea faceUpPermitCardOfRegion = regionOfBalcony.getFaceUpPermitCardArea();
+		
+		System.out.println("Which Permit Card do you want take, 1 or 2?");
+		PermitCard chosenPermitCard = faceUpPermitCardOfRegion.takePermitCard(inputNumber(1, 2)-1);
+		
+		//playerTurn.arrayListPermitCard.add(chosenPermitCard);
+	}
+	
+	/*
+	 * This method works on an arraylist of politicCard. It read from command line a string 
+	 * with the colors of the cards that a player want to use, then it convert the string
+	 * into a PoliticCard type and add it into a new arraylist.	 * 
+	 */
+		
+	public ArrayList <PoliticCard> inputStringToPermitCard(ArrayList <PoliticCard> playerHand){
+		Scanner in = new Scanner(System.in);
+		String colorIn;
+		ArrayList <PoliticCard> usableCards = new ArrayList <> ();
+
+		do {
+			colorIn=in.next();
+			
+			for(PoliticCard politicCard: playerHand){
+				if (politicCard.getCardColor().toString().equals(colorIn)){
+					usableCards.add(politicCard);
+				}
+			}
+		} while(in.hasNextLine());
+		in.close();
+		return usableCards;
+	}
+	
+	
+	
 }
