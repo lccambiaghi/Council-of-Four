@@ -24,12 +24,10 @@ public class TestCases {
 
 		Map <String, Integer> bonusMap =new HashMap <> ();
 
-
 		bonusMap.put("Assistant", 2);
 		bonusMap.put("Nobility", 1);
 		bonusMap.put("Richness", 0);
 
-		
 		int n = configTest.getNumberCities()/3;
 		City[] arrayCity = new City[n];
 		for(int i=0; i<n; i++){
@@ -49,9 +47,8 @@ public class TestCases {
 		Player player = new Player("s");
 		player.setNickname("A");
 
-		TestCases testCases = new TestCases();
-		City[] arrayCity = testCases.arrayCity();
-		player.acquirePermitCard(new PermitCard(arrayCity, configTest));
+		City[] arrayCity = arrayCityTest;
+		player.acquirePermitCard(new PermitCard(arrayCityTest, configTest));
 
 		arrayListPlayer.add(player);
 		Player player2 = new Player("s");
