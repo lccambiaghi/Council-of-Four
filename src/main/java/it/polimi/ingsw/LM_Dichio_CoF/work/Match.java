@@ -64,7 +64,7 @@ public class Match {
 	}
 
 	private void readFileConfigurations(){
-		
+
 		FileInputStream fileInputStream = null;
 		
 		try {
@@ -116,14 +116,14 @@ public class Match {
 		switch (choice) {
 			case 1:
 				return true;
-			case 2:
+			default:
 				return false;
 		}
 
-		return false; // non so perchè me lo fa inserire, dovrebbe essere superfluo
+		//return false; // non so perchè me lo fa inserire, dovrebbe essere superfluo
 	}
 
-	private int inputNumber (int lowerBound, int upperBound){ //TODO throws RemoteException
+	private int inputNumber (int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
 
 		Scanner in = new Scanner(System.in);
 		int number;
@@ -164,7 +164,7 @@ public class Match {
 				acquirePermitCard(playerTurn);
 				break;
 			case 3:
-				//buildEmporiumWithPermitCard(playerTurn);
+				buildEmporiumWithPermitCard(playerTurn);
 				break;
 			case 4:
 				//buildEmporiumWithKing(playerTurn);
@@ -172,6 +172,80 @@ public class Match {
 		}
 
 		playerTurn.setMainActionsLeft(playerTurn.getMainActionsLeft() - 1);
+
+	}
+
+	private void buildEmporiumWithPermitCard(Player playerTurn) {
+
+/*		try{		}
+		catch(ArrayIndexOutOfBoundException noPermitCards){		}
+		catch(NullPointerException emporiumAlreadyPresent){		}
+		catch(NegativeAssistantNumber){		}*/
+
+		/*  This loop creates an arrayList of usablePermitCards setting actualBuildableCities.
+		   It moves these permitCards in the front of the player's hand to make them
+		   easily removable once the player selects it  */
+		ArrayList <PermitCard> usablePermitCards = new ArrayList<>();
+		ArrayList<PermitCard> playerPermitCard = playerTurn.getArrayListPermitCard();
+
+		for (int i = 0; i < playerPermitCard.size(); i++) {
+
+			PermitCard permitCard = playerPermitCard.get(i);
+
+			ArrayList <City> actualBuildableCities = new ArrayList<>();
+			for (City buildableCity : permitCard.getArrayBuildableCities()) {
+				if (!buildableCity.isEmporiumAlreadyBuilt(playerTurn))
+					actualBuildableCities.add(buildableCity);
+			}
+
+			if (actualBuildableCities.size() > 0) {
+				Collections.swap(playerPermitCard,i,usablePermitCards.size());
+				usablePermitCards.add(permitCard);
+				permitCard.setArrayBuildableCities(actualBuildableCities);
+			}
+		}
+
+		if (usablePermitCards.size()<1){
+			System.out.println("You have no usable Business Permit Tiles. Choose another Main Move.");
+			mainAction(playerTurn);
+		}
+
+		System.out.println("Which of your Business Permit Tiles would you like to use?");
+
+		for(int i=0; i<usablePermitCards.size();i++) {
+
+			PermitCard usablePermitCard = usablePermitCards.get(i); // ArrayIndexOutOfBoundException?
+
+			System.out.println(i + 1 + ". ");
+			System.out.println("Buildable Cities:");
+
+			City[] arrayBuildableCities = usablePermitCard.getArrayBuildableCities();
+			for (City buildableCity : arrayBuildableCities)
+				System.out.print(buildableCity.getCityName() + " ");
+
+			System.out.println("Bonus:");
+			Bonus[] arrayBonus = usablePermitCard.getArrayBonus();
+			for (Bonus bonus : arrayBonus)
+				System.out.print(bonus.getBonusName() + " ");
+		}
+
+		int choicePermitCard = inputNumber(1, usablePermitCards.size())-1; // -1 for array positioning
+
+		PermitCard chosenPermitCard = usablePermitCards.get(choicePermitCard);
+
+		System.out.println("Which city would you like to build your emporium in?");
+		City[] actualBuildableCities = chosenPermitCard.getArrayBuildableCities();
+		for (int i = 0; i < actualBuildableCities.length; i++) {
+			City buildableCity = actualBuildableCities[i];
+			System.out.println(i + 1 + ". " + buildableCity.getCityName());
+		}
+
+		int choiceBuildableCity = inputNumber(1, actualBuildableCities.length)-1; // -1 for array positioning
+		City[] arrayCity = field.getArrayCity();
+		arrayCity[choiceBuildableCity].buildEmporium(playerTurn);
+		playerTurn.usePermitCard(playerPermitCard.get(choicePermitCard));
+
+		//implementazione bonus a città vicine
 
 	}
 
@@ -215,7 +289,7 @@ public class Match {
 		boolean colorAvailable = availableCouncillors.checkIfColorAvailable(chosenCouncillorColor);
 
 		while(!colorAvailable) {
-			System.out.println("Color not available! Choose another one.");
+			System.out.println("Color not available! Choose another one."); //TODO e se il giocatore volesse annullare la mossa?
 			chosenCouncillorColor = Color.getColorFromIndex(inputNumber(1, 4));
 			colorAvailable = availableCouncillors.checkIfColorAvailable(chosenCouncillorColor);
 		}
