@@ -47,17 +47,23 @@ public class TestCases {
 
 		Player player = new Player("s");
 		player.setNickname("A");
-
-		City[] arrayCity = arrayCity();
-		Configurations config = configurations();
-		player.acquirePermitCard(new PermitCard(arrayCity, config));
+		player.setAssistant(3);
+		player.setRichness(10);
+		//City[] arrayCity = arrayCity();
+		//Configurations config = configurations();
+		//player.acquirePermitCard(new PermitCard(arrayCity, config));
 
 		arrayListPlayer.add(player);
 		Player player2 = new Player("s");
 		player2.setNickname("B");
+		player.setAssistant(3);
+		player.setRichness(10);
 		arrayListPlayer.add(player2);
+
 		Player player3 = new Player("s");
 		player3.setNickname("C");
+		player.setAssistant(3);
+		player.setRichness(10);
 		arrayListPlayer.add(player3);
 		
 		return arrayListPlayer;
