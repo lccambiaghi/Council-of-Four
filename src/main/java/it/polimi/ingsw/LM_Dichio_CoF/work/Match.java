@@ -182,33 +182,7 @@ public class Match {
 		catch(NullPointerException emporiumAlreadyPresent){		}
 		catch(NegativeAssistantNumber){		}*/
 
-		/*  This loop creates an arrayList of usablePermitCards setting actualBuildableCities.
-		   It moves these permitCards in the front of the player's hand to make them
-		   easily removable once the player selects it  */
-		ArrayList <PermitCard> usablePermitCards = new ArrayList<>();
-		ArrayList<PermitCard> playerPermitCard = playerTurn.getArrayListPermitCard();
-
-		for (int i = 0; i < playerPermitCard.size(); i++) {
-
-			PermitCard permitCard = playerPermitCard.get(i);
-
-			ArrayList <City> actualBuildableCities = new ArrayList<>();
-			for (City buildableCity : permitCard.getArrayBuildableCities()) {
-				if (!buildableCity.isEmporiumAlreadyBuilt(playerTurn))
-					actualBuildableCities.add(buildableCity);
-			}
-
-			if (actualBuildableCities.size() > 0) {
-				Collections.swap(playerPermitCard,i,usablePermitCards.size());
-				usablePermitCards.add(permitCard);
-				permitCard.setArrayBuildableCities(actualBuildableCities);
-			}
-		}
-
-		if (usablePermitCards.size()<1){
-			System.out.println("You have no usable Business Permit Tiles. Choose another Main Move.");
-			mainAction(playerTurn);
-		}
+		ArrayList <PermitCard> usablePermitCards = getUsablePermitCards(playerTurn);
 
 		System.out.println("Which of your Business Permit Tiles would you like to use?");
 
@@ -229,9 +203,9 @@ public class Match {
 				System.out.print(bonus.getBonusName() + " ");
 		}
 
-		int choicePermitCard = inputNumber(1, usablePermitCards.size())-1; // -1 for array positioning
+		int indexPermitCard = inputNumber(1, usablePermitCards.size())-1; // -1 for array positioning
 
-		PermitCard chosenPermitCard = usablePermitCards.get(choicePermitCard);
+		PermitCard chosenPermitCard = usablePermitCards.get(indexPermitCard);
 
 		System.out.println("Which city would you like to build your emporium in?");
 		City[] actualBuildableCities = chosenPermitCard.getArrayBuildableCities();
@@ -243,9 +217,45 @@ public class Match {
 		int choiceBuildableCity = inputNumber(1, actualBuildableCities.length)-1; // -1 for array positioning
 		City[] arrayCity = field.getArrayCity();
 		arrayCity[choiceBuildableCity].buildEmporium(playerTurn);
-		playerTurn.usePermitCard(playerPermitCard.get(choicePermitCard));
+		playerTurn.usePermitCard(playerTurn.getArrayListPermitCard().get(indexPermitCard));
 
 		//implementazione bonus a città vicine
+
+	}
+
+	/*  This method creates an arrayList of usablePermitCards setting actualBuildableCities.
+		   It moves these permitCards in the front of the player's hand to make them
+		   easily removable once the player selects one of them  */
+	private ArrayList<PermitCard> getUsablePermitCards(Player playerTurn) {
+
+		ArrayList <PermitCard> usablePermitCards= new ArrayList<>();
+
+		ArrayList<PermitCard> playerPermitCards = playerTurn.getArrayListPermitCard();
+		for (int i = 0; i < playerPermitCards.size(); i++) {
+
+			PermitCard permitCard = playerPermitCards.get(i);
+
+			ArrayList <City> actualBuildableCities = new ArrayList<>();
+			for (City buildableCity : permitCard.getArrayBuildableCities()) {
+				if (!buildableCity.isEmporiumAlreadyBuilt(playerTurn))
+					actualBuildableCities.add(buildableCity);
+			}
+
+			if (actualBuildableCities.size() > 0) {
+				Collections.swap(playerPermitCards,i,usablePermitCards.size());
+				usablePermitCards.add(permitCard);
+				permitCard.setArrayBuildableCities(actualBuildableCities);
+			}
+		}
+
+		if (usablePermitCards.size()<1){
+			System.out.println("You either have no Business Permit Tiles" +
+					" or you have already built in every city they avail you to" +
+					". Choose another Main Move.");
+			mainAction(playerTurn);
+		}
+
+		return usablePermitCards;
 
 	}
 
