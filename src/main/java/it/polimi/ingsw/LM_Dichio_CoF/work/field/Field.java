@@ -18,6 +18,8 @@ public class Field {
 	private Route richnessRoute;
 	private Route victoryRoute;
 	private Route nobilityRoute;
+	private Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
+
 	
 	King king;
 	
@@ -42,8 +44,7 @@ public class Field {
 
 		int numberCities = config.getNumberCities();
 		arrayCity = new City[numberCities];
-		Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
-
+		
 		int numberCitiesPerRegion = numberCities/Constant.REGIONS_NUMBER;
 		City[] arrayCityPerRegion = new City[numberCitiesPerRegion];
 
@@ -222,4 +223,7 @@ public class Field {
 
 	public Route getRichnessRoute() {return richnessRoute;}
 
+	public Region getRegionFromIndex (int index){
+		return arrayRegion[index];
+	}
 }
