@@ -9,37 +9,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Match;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
 
 public class TestCases {
-	
-	Configurations config;
-	
-	public Configurations configurations(){
-		
-		/*
-		 * These 3 methods permit to create the configurations, write them in a file 
-		 * and read them. They substitute the action of the player (player side),
-		 * that creates the file, and the
-		 * class "Match" that reads the file
-		 * If someone wants to change the configurations to see the different test cases
-		 * he can do it in the method "createConfigurations"
-		 */
-		createConfigurations();
-		createFileConfigurations();
-		readFileConfigurations();
 
-		return config;
-	}
+	public Configurations configTest = configurations();
+	public ArrayList <Player> arrayListPlayerTest= arrayListPlayer();
+	public City[] arrayCityTest = arrayCity();
 	
+	/* Cities of Sea Region */
 	public City[] arrayCity(){
-		
-		config = configurations();
+
 		Map <String, Integer> bonusMap =new HashMap <> ();
 
 
@@ -48,12 +30,13 @@ public class TestCases {
 		bonusMap.put("Richness", 0);
 
 		
-		int n = config.getNumberCities()/3;
+		int n = configTest.getNumberCities()/3;
 		City[] arrayCity = new City[n];
 		for(int i=0; i<n; i++){
 			
-			//arrayCity[i] = new City(config, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
+			//arrayCity[i] = new City(configTest, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
 			arrayCity[i] = new City(bonusMap, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
+
 		}
 		System.out.println();
 		return arrayCity;
@@ -65,6 +48,11 @@ public class TestCases {
 
 		Player player = new Player("s");
 		player.setNickname("A");
+
+		TestCases testCases = new TestCases();
+		City[] arrayCity = testCases.arrayCity();
+		player.acquirePermitCard(new PermitCard(arrayCity, configTest));
+
 		arrayListPlayer.add(player);
 		Player player2 = new Player("s");
 		player2.setNickname("B");
@@ -75,27 +63,44 @@ public class TestCases {
 		
 		return arrayListPlayer;
 	}
-	
+
+	public Configurations configurations(){
+
+		/*
+		 * These 3 methods permit to create the configurations, write them in a file
+		 * and read them. They substitute the action of the player (player side),
+		 * that creates the file, and the
+		 * class "Match" that reads the file
+		 * If someone wants to change the configurations to see the different test cases
+		 * he can do it in the method "createConfigurations"
+		 */
+		createConfigurations();
+		createFileConfigurations();
+		readFileConfigurations();
+
+		return configTest;
+	}
+
 	private void createConfigurations(){
 		
-		config = new Configurations();
+		configTest = new Configurations();
 		
 		/*
 		 * Do not change this parameter and the difficulty one until we haven't create 
 		 * new maps for those combination missing
 		 */
-		config.setCitiesNumber(15);
+		configTest.setCitiesNumber(15);
 		
-		config.setPermitCardBonusNumberMin(2);
-		config.setPermitCardBonusNumberMax(3);
+		configTest.setPermitCardBonusNumberMin(2);
+		configTest.setPermitCardBonusNumberMax(3);
 		
-		config.setNobilityBonusRandom(false);
-		if(config.isNobilityBonusRandom()==false){
-			config.setNobilityBonusNumber(7);
+		configTest.setNobilityBonusRandom(false);
+		if(configTest.isNobilityBonusRandom()==false){
+			configTest.setNobilityBonusNumber(7);
 		}
 		
-		config.setCityLinksPreconfigured(false);
-		if(config.isCityLinksPreconfigured()==false){
+		configTest.setCityLinksPreconfigured(false);
+		if(configTest.isCityLinksPreconfigured()==false){
 			int[][]cityLinksMatrix =  new int[][]{
 				{0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
 				{0,	0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
@@ -117,30 +122,30 @@ public class TestCases {
     		 * This fir cycle is for making the matrix specular,
     		 * because in the txt file it is only upper triangular set
     		 */
-			for(int i=0; i<config.getCitiesNumber(); i++){
-				for(int j=i; j<config.getCitiesNumber();j++){
+			for(int i = 0; i< configTest.getCitiesNumber(); i++){
+				for(int j = i; j< configTest.getCitiesNumber(); j++){
 					cityLinksMatrix[j][i]=cityLinksMatrix[i][j];
 				}
 			}
-			config.setCityLinksMatrix(cityLinksMatrix);
+			configTest.setCityLinksMatrix(cityLinksMatrix);
 			
 		}else{
-			config.setDifficulty("n".charAt(0));
+			configTest.setDifficulty("n".charAt(0));
 		}
 		
-		config.setCityBonusRandom(false);
-        if(config.isCityBonusRandom()==false){
-			HashMap[] cityBonusArrayMap = new HashMap[config.getCitiesNumber()];
-            for(int i=0; i<config.getCitiesNumber(); i++){
+		configTest.setCityBonusRandom(false);
+        if(configTest.isCityBonusRandom()==false){
+			HashMap[] cityBonusArrayMap = new HashMap[configTest.getCitiesNumber()];
+            for(int i = 0; i< configTest.getCitiesNumber(); i++){
                 HashMap <String, Integer> bonusMap =new HashMap <> ();
                 bonusMap.put("Assistant", 2);
                 bonusMap.put("Nobility", 1);
                 cityBonusArrayMap[i]=bonusMap;
             }
-			config.setCityBonusArrayMaps(cityBonusArrayMap);
+			configTest.setCityBonusArrayMaps(cityBonusArrayMap);
         }else{
-			config.setCityBonusNumberMin(2);
-			config.setCityBonusNumberMax(3);
+			configTest.setCityBonusNumberMin(2);
+			configTest.setCityBonusNumberMax(3);
 		}
 		
 	}
@@ -152,11 +157,11 @@ public class TestCases {
 		try {
 			
 			//il salvataggio per ora è in locale, dovrà essere inviato al server quando ci sarà la connessione
-			fileOutputStream = new FileOutputStream("./src/configurations/config");
+			fileOutputStream = new FileOutputStream("./src/configurations/configTest");
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
 			// write something in the file
-			objectOutputStream.writeObject(config);
+			objectOutputStream.writeObject(configTest);
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -180,11 +185,11 @@ public class TestCases {
 		try {
 			
 			//il salvataggio per ora è in locale, dovrà essere inviato al server quando ci sarà la connessione
-			fileInputStream = new FileInputStream("./src/configurations/config");
+			fileInputStream = new FileInputStream("./src/configurations/configTest");
 			
 			// create an ObjectInputStream for the file we created before
 	         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-	         this.config = (Configurations) objectInputStream.readObject();
+	         this.configTest = (Configurations) objectInputStream.readObject();
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
