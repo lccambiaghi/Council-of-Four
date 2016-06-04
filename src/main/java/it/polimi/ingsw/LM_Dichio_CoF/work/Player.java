@@ -1,5 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.field.PermitCard;
+
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -15,8 +17,12 @@ public class Player {
 	// variables of the game
 	private int richness;
 	private int assistant;
+
 	private ArrayList <PoliticCard> arrayListPoliticCard= new ArrayList<>();
-	
+
+	private ArrayList <PermitCard> arrayListPermitCard = new ArrayList<>();
+	private ArrayList <PermitCard> arrayListUsedPermitCard = new ArrayList<>();
+
 	private int mainActionsLeft;
 	
 	/* The constructor assigns to the player the type of connection */
@@ -39,11 +45,17 @@ public class Player {
 
 	public int getAssistant() {	return assistant;}
 	public void setAssistant(int assistant) {this.assistant = assistant;}
-	public void addAssistant(int increment)	{this.assistant +=increment;}
+	public void addAssistant(int increment)	{assistant +=increment;}
 
 	public ArrayList<PoliticCard> getArrayListPoliticCard() {return arrayListPoliticCard;}
-	public void addPoliticCard(PoliticCard politicCard) {this.arrayListPoliticCard.add(politicCard);}
+	public void addPoliticCard(PoliticCard politicCard) {arrayListPoliticCard.add(politicCard);}
 
+	public ArrayList<PermitCard> getArrayListPermitCard(){return arrayListPermitCard;}
+	public void acquirePermitCard(PermitCard permitCard){arrayListPermitCard.add(permitCard);}
+	public void usePermitCard (PermitCard permitCard){
+		int i=arrayListPermitCard.indexOf(permitCard);
+		arrayListUsedPermitCard.add(arrayListPermitCard.remove(i));
+	}
 
 	public int getMainActionsLeft() {
 		return mainActionsLeft;
@@ -52,4 +64,5 @@ public class Player {
 	public void setMainActionsLeft(int mainActionsLeft) {
 		this.mainActionsLeft = mainActionsLeft;
 	}
+
 }
