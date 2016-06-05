@@ -2,67 +2,104 @@ package it.polimi.ingsw.LM_Dichio_CoF.work;
 
 import java.util.ArrayList;
 
-public class MatchStarter {
+public class MatchStarter extends Thread{
 
 	GameSide gameSide;
-	ArrayList<Player> arrayListPlayerMatch = new ArrayList<>();
-	ArrayList<Player> arrayListPlayer = new ArrayList<>();
+	int playersMaxNumber;
 	
-	boolean timeToPlay = true;
+	int indexNextPlayer=0;
+	
+	boolean timeToPlay = false;
+	
+	ArrayList<Player> arrayListPlayerMatch = new ArrayList<>();
+	ArrayList<Player> arrayListPlayerGameSide = new ArrayList<>();
 	
 	public MatchStarter(GameSide gameSide, int playersMaxNumber){
-		
 		this.gameSide=gameSide;
+		this.playersMaxNumber=playersMaxNumber;
+	}
 
-		arrayListPlayer = gameSide.getArrayListPlayer();
-		int availablePlayers = arrayListPlayer.size();
-		for(int i=0; i<availablePlayers && i<playersMaxNumber; i++){
-			arrayListPlayerMatch.add(arrayListPlayer.remove(0));
-			(arrayListPlayerMatch.get(i)).sendString("startingMatch");
+	public void run(){
+
+		arrayListPlayerGameSide = gameSide.getArrayListPlayer();
+		
+		System.out.println("giocatori disponibili: " +arrayListPlayerGameSide.size());
+		
+		for(; indexNextPlayer<arrayListPlayerGameSide.size() && indexNextPlayer<playersMaxNumber; indexNextPlayer++){
+			addPlayerToMatch(arrayListPlayerGameSide.get(indexNextPlayer));
 		}
 		
-		while(arrayListPlayerMatch.size()<Constant.PLAYERS_MIN_NUMBER){
-			;
+		AddOnePlayerIfPresent threadWaitingForAPlayer;
+		
+		if(indexNextPlayer<Constant.PLAYERS_MIN_NUMBER){
+			threadWaitingForAPlayer = new AddOnePlayerIfPresent();
+			while(threadWaitingForAPlayer.isAlive()){
+				;
+			}
+			indexNextPlayer++;
+			System.out.println("Ci sono " + indexNextPlayer + " giocatori");
 		}
 		
-		if(arrayListPlayerMatch.size()<playersMaxNumber){
-			timeToPlay=false;
+		if(indexNextPlayer==playersMaxNumber){
+			timeToPlay=true;
 		}
 		
 		if(!timeToPlay){
 			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
+			System.out.println("Countdown iniziato");
+			threadWaitingForAPlayer = new AddOnePlayerIfPresent();
 			while(!timeToPlay){
-				if(countDown.isTimeFinished()||arrayListPlayerMatch.size()==playersMaxNumber){
-					timeToPlay=true;
-				}else{
-					new AddPlayerIfPresent();
+				if(!threadWaitingForAPlayer.isAlive()){
+					System.out.println("Ci sono " + indexNextPlayer + " giocatori");
+					indexNextPlayer++;
+					threadWaitingForAPlayer = new AddOnePlayerIfPresent();
 				}
-					
-			}
+				if(countDown.isTimeFinished()||indexNextPlayer==playersMaxNumber){
+					timeToPlay=true;
+				}
+			}		
 		}
 		
-		gameSide.canCreateNewMatch();
-		new Match(arrayListPlayerMatch);
+		gameSide.removeArrayListPlayer(arrayListPlayerMatch.size());
+		
+		System.out.println("FINE");
+		
+		System.out.println("Si gioca in " + arrayListPlayerMatch.size() +" giocatori");
+		for(Player player: arrayListPlayerMatch){
+			System.out.println(player.getNickname());
+		}
+		//new Match(arrayListPlayerMatch);
 		
 		
 	}
 	
-	class AddPlayerIfPresent extends Thread{
+	private void addPlayerToMatch(Player player){
+		arrayListPlayerMatch.add(player);
+		player.sendString("startingMatch");
+	}
+	
+	class AddOnePlayerIfPresent extends Thread{
 		
-		public AddPlayerIfPresent(){
+		boolean added = false;
+		
+		private AddOnePlayerIfPresent(){
 			start();
 		}
 		
 		public void run(){
-			boolean added= false;
+			
+			System.out.println("Ciao, sguardo se si aggiunge un giocatore");
 			while(!added&&!timeToPlay){
-				arrayListPlayer=gameSide.getArrayListPlayer();
-				if(arrayListPlayer!=null){
-					arrayListPlayerMatch.add((Player) arrayListPlayer.remove(0));
+				arrayListPlayerGameSide=gameSide.getArrayListPlayer();
+				if(arrayListPlayerGameSide.size()>indexNextPlayer){
+					Player player = arrayListPlayerGameSide.get(indexNextPlayer);
+					addPlayerToMatch(player);
+					System.out.println("Si è aggiunto uno!");
 					added=true;
 				}
 			}
 		}
+		
 	}
 	
 		
