@@ -14,7 +14,7 @@ public class GameSide {
 	
 	private ServerSocket serverSocket;
 	
-	boolean matchStarterGoingOn;
+	private final Object lockArrayListPlayer = new Object();
 	
 	public GameSide() {
 		
@@ -41,23 +41,40 @@ public class GameSide {
 		
 		System.out.println("The player has successfully connected with nickname: "+player.getNickname());
 		
-		arrayListPlayer.add(player);
+		addPlayerToArrayList(player);
 		
-		matchStarterGoingOn = false;
-		
-		if(arrayListPlayer.size()==1&&!matchStarterGoingOn){
-			matchStarterGoingOn=true;
+		/* If it is the first player */
+		if(arrayListPlayer.size()==1){
 			player.sendString("config");
 			int playersMaxNumber = getPlayersMaxNumberFromPlayer(player);
 			setConfigurationsFromPlayer(player);
-			new MatchStarter(this, playersMaxNumber);
+			MatchStarter matchStarter = new MatchStarter(this, playersMaxNumber);
+			matchStarter.start();
 		}else{
 			player.sendString("wait");
 		}
-			
+	
 	}
 	
-	public ArrayList<Player> getArrayListPlayer() {return arrayListPlayer;}
+	private void addPlayerToArrayList(Player player){
+		synchronized(lockArrayListPlayer){
+			arrayListPlayer.add(player);
+		}
+	}
+	
+	public ArrayList<Player> getArrayListPlayer() {
+		synchronized(lockArrayListPlayer){
+			return arrayListPlayer;
+		}
+	}
+	
+	public void removeArrayListPlayer(int playersNumber){
+		synchronized (lockArrayListPlayer) {
+			for(int i=0; i<playersNumber; i++){
+				arrayListPlayer.remove(0);
+			}
+		}
+	}
 
 
 	private void login(Player player){
@@ -112,7 +129,5 @@ public class GameSide {
 			}
 		}
 	}
-	
-	public void canCreateNewMatch(){ boolean matchStarterGoingOn = false; }
-	
+
 }
