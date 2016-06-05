@@ -37,7 +37,7 @@ public class Player{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public char getCLIorGUI() {return CLIorGUI;}
 	public void setCLIorGUI(char cLIorGUI) {CLIorGUI = cLIorGUI;}	
 
