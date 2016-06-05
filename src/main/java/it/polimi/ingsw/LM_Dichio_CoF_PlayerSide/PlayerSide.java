@@ -21,16 +21,10 @@ public class PlayerSide {
 		new PlayerSide();
 	}
 	
-	
-	
-	private  Socket mySocket;
-	private final static String ADDRESS = "localhost";
-	private final static int SOCKET_PORT = 3000;
+	char connection;
+	SocketConnection socketConnection;
 	
 	private Scanner inCLI;
-	
-	private Scanner inSocket;
-	private PrintWriter outSocket;
 	
 	String message;
 	
@@ -43,38 +37,20 @@ public class PlayerSide {
 		
 		inCLI = new Scanner(System.in);
 		
-		connectToServer();
+		chooseConnection();
 		
+		if(connection=='s'){
+			socketConnection = new SocketConnection(this);
+		}
 		communicateWithServer();
 		
 	}
-
-	private void connectToServer(){
-		
-		try {
-
-			mySocket = new Socket(ADDRESS, SOCKET_PORT);
-			
-			try {
-				inSocket = new Scanner(mySocket.getInputStream());
-				outSocket = new PrintWriter(mySocket.getOutputStream());
-			} catch (IOException e) {
-				System.out.println("Cannot open channels of communication");
-				e.printStackTrace();
-			}
-			System.out.println("I am connected to the Server");
-			
-		} catch (IOException e) {
-			System.out.println("Cannot connect to the Server");
-			e.printStackTrace();
-		}
-
-	}	
+	
+	
 	
 	private void communicateWithServer(){
 		
 		login();
-		
 		
 		while(true){
 			message = receiveStringFS();
@@ -104,7 +80,8 @@ public class PlayerSide {
 						setStandardPlayersNumber();
 						setStandardConfigurations();
 					}
-					sendPlayersMaxNumberAndConfigurations();
+					sendStringTS(""+playersMaxNumber);
+					sendObjectTS(config);
 					break;
 				
 				case 	"wait":
@@ -123,9 +100,38 @@ public class PlayerSide {
 		}
 	}
 	
+	public void chooseConnection(){
+		boolean chosen = false;
+		while(!chosen){
+			System.out.println("Choose connection: 's' (Socket) or 'r' (RMI)");
+			String in = inCLI.nextLine();
+			if(in.equals("s")||in.equals("r")){
+				this.connection=in.charAt(0);
+				chosen=true;
+			}
+		}
+	}
+	
+	
 	// TS= To Server, FS= From Server
-	private void sendStringTS(String string){ outSocket.println(string); outSocket.flush();}
-	private String receiveStringFS(){ String string = inSocket.nextLine(); return string; }
+	private void sendStringTS(String string){
+		if(connection=='s'){
+			socketConnection.sendStringTS(string);
+		}
+	}
+	private String receiveStringFS(){
+		if(connection=='s'){
+			return socketConnection.receiveStringFS();
+		}
+		else
+			return "error";
+	}
+	
+	private void sendObjectTS(Object object){
+		if(connection=='s'){
+			socketConnection.sendObjectTS(object);;
+		}
+	}
 	
 	private void login(){
 		boolean logged = false;
@@ -143,7 +149,6 @@ public class PlayerSide {
 	
 	public void setPlayersNumber(int playersMaxNumber){ this.playersMaxNumber= playersMaxNumber; }
 	public void setConfigurations(Configurations config){ this.config = config; }
-		
 		
 	public void setStandardPlayersNumber(){ this.playersMaxNumber= 4;}
 		
@@ -172,20 +177,5 @@ public class PlayerSide {
 			}
 		}
 	}
-	
-	
-	private void sendPlayersMaxNumberAndConfigurations(){
-		
-		ObjectOutputStream objectOutputStream = null;
-		try {
-			sendStringTS(""+playersMaxNumber);
-			objectOutputStream = new ObjectOutputStream(mySocket.getOutputStream());
-			objectOutputStream.writeObject(config);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
 	
 }
