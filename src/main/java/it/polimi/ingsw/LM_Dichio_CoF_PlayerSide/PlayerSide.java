@@ -75,43 +75,52 @@ public class PlayerSide {
 		
 		login();
 		
-		message = receiveStringFS();
-		if(message.equals("config")){
-			
-			boolean standardConfig = false;
-			/* 
-			 * It starts a thread to manage the creation of configurations
-			 * This way server says that the time is over the thread will stop
-			 * The timer is not fixed to 20 seconds, this is a server's problem
-			 * I have to implement another timer:
-			 * when the second player arrives a new timer starts (for example 1 minute)
-			 * so that the other players don't have to wait to much for a new match, whose config
-			 * are created by the first player.
-			 * If the player can't set them on time then he will send a standard configuration
-			 */
-			//CreateConfigurations createConfigurations = new CreateConfigurations(this);
-			//Thread threadCreateConfigurations = new Thread(createConfigurations);
-			//threadCreateConfigurations.start();
-			
-			//Case: client can't make the config on time
-			///// Here I need a method to stop the thread
-			System.out.println(/*"Too late,"*/" standard configurations will be used");
-			standardConfig = true;
-			if(standardConfig){
-				setStandardPlayersNumber();
-				setStandardConfigurations();
-			}
-			sendPlayersMaxNumberAndConfigurations();
-			
-		}else if(message.equals("wait")){
-			System.out.println("You are waiting for a match to be configured");
+		
+		while(true){
 			message = receiveStringFS();
-			if(message.equals("startingMatch")){
-				System.out.println("You are waiting for a match to start");
+			switch(message){
+				case 	"config":
+					
+					boolean standardConfig = false;
+					/* 
+					 * It starts a thread to manage the creation of configurations
+					 * This way server says that the time is over the thread will stop
+					 * The timer is not fixed to 20 seconds, this is a server's problem
+					 * I have to implement another timer:
+					 * when the second player arrives a new timer starts (for example 1 minute)
+					 * so that the other players don't have to wait to much for a new match, whose config
+					 * are created by the first player.
+					 * If the player can't set them on time then he will send a standard configuration
+					 */
+					//CreateConfigurations createConfigurations = new CreateConfigurations(this);
+					//Thread threadCreateConfigurations = new Thread(createConfigurations);
+					//threadCreateConfigurations.start();
+					
+					//Case: client can't make the config on time
+					///// Here I need a method to stop the thread
+					System.out.println(/*"Too late,"*/" standard configurations will be used");
+					standardConfig = true;
+					if(standardConfig){
+						setStandardPlayersNumber();
+						setStandardConfigurations();
+					}
+					sendPlayersMaxNumberAndConfigurations();
+					break;
+				
+				case 	"wait":
+					System.out.println("Just wait a moment");
+					break;
+				
+				case 	"startingMatch":
+					System.out.println("You are waiting for a match to start");
+					break;
+					
+				default	:
+					System.out.println("error");
+					break;
+					
 			}
-		}	
-		
-		
+		}
 	}
 	
 	// TS= To Server, FS= From Server
