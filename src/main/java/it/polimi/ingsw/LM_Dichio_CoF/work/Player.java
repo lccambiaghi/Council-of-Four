@@ -14,6 +14,7 @@ public class Player{
 	
 	private char typeOfConnection;
 	private Socket playerSocket;
+	private String host;
 	
 	private char CLIorGUI;
 	
@@ -36,6 +37,14 @@ public class Player{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public String getHost() {return host;}
+	public void setHost(String host) {this.host = host;}
+	
+	public void setRMIStream(){
+		//output = 
+		//input = new Scanner(r)
 	}
 
 	public char getCLIorGUI() {return CLIorGUI;}
