@@ -1,17 +1,20 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.connection;
 
 import java.net.Socket;
+
+import it.polimi.ingsw.LM_Dichio_CoF.work.GameSide;
+import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 
 public class SocketConnectionWithPlayer extends Thread {
 	
 	GameSide gameSide;
 	Player player;
 	
-	SocketConnectionWithPlayer(Socket clientSocket, GameSide gameSide){
+	public SocketConnectionWithPlayer(Socket clientSocket, GameSide gameSide){
 		
 		this.gameSide=gameSide;
 		
-		player = new Player("s".charAt(0));
+		player = new Player('s');
 		player.setPlayerSocket(clientSocket);
 		player.openSocketStream();
 		
