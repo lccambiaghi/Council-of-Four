@@ -11,6 +11,8 @@ public class MatchStarter extends Thread{
 	
 	boolean timeToPlay = false;
 	
+	private final Object lockIndexNextPlayer = new Object();
+	
 	ArrayList<Player> arrayListPlayerMatch = new ArrayList<>();
 	ArrayList<Player> arrayListPlayerGameSide = new ArrayList<>();
 	
@@ -20,10 +22,10 @@ public class MatchStarter extends Thread{
 	}
 
 	public void run(){
+		
+		System.out.println("I am the match starter, i wait for players (if needed) and start the match");
 
 		arrayListPlayerGameSide = gameSide.getArrayListPlayer();
-		
-		System.out.println("giocatori disponibili: " +arrayListPlayerGameSide.size());
 		
 		for(; indexNextPlayer<arrayListPlayerGameSide.size() && indexNextPlayer<playersMaxNumber; indexNextPlayer++){
 			addPlayerToMatch(arrayListPlayerGameSide.get(indexNextPlayer));
@@ -36,7 +38,6 @@ public class MatchStarter extends Thread{
 			while(threadWaitingForAPlayer.isAlive()){
 				;
 			}
-			indexNextPlayer++;
 			System.out.println("Ci sono " + indexNextPlayer + " giocatori");
 		}
 		
@@ -45,22 +46,31 @@ public class MatchStarter extends Thread{
 		}
 		
 		if(!timeToPlay){
-			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
+			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH+15);
 			System.out.println("Countdown iniziato");
 			threadWaitingForAPlayer = new AddOnePlayerIfPresent();
 			while(!timeToPlay){
 				if(!threadWaitingForAPlayer.isAlive()){
 					System.out.println("Ci sono " + indexNextPlayer + " giocatori");
-					indexNextPlayer++;
 					threadWaitingForAPlayer = new AddOnePlayerIfPresent();
 				}
-				if(countDown.isTimeFinished()||indexNextPlayer==playersMaxNumber){
-					timeToPlay=true;
+				synchronized (lockIndexNextPlayer) {
+					if(countDown.isTimeFinished()||indexNextPlayer==playersMaxNumber){
+						timeToPlay=true;
+					}
 				}
 			}		
 		}
 		
 		gameSide.removeArrayListPlayer(arrayListPlayerMatch.size());
+		
+		synchronized (GameSide.lockArrayListPlayer) {
+			if (gameSide.getArrayListPlayer().size()==0){
+				gameSide.setFirstAvailablePlayer(true);
+			}else{
+				new HandlerArrayListPlayer(gameSide).start();
+			}
+		}
 		
 		System.out.println("FINE");
 		
@@ -68,6 +78,7 @@ public class MatchStarter extends Thread{
 		for(Player player: arrayListPlayerMatch){
 			System.out.println(player.getNickname());
 		}
+		
 		//new Match(arrayListPlayerMatch);
 		
 		
@@ -92,10 +103,13 @@ public class MatchStarter extends Thread{
 			while(!added&&!timeToPlay){
 				arrayListPlayerGameSide=gameSide.getArrayListPlayer();
 				if(arrayListPlayerGameSide.size()>indexNextPlayer){
-					Player player = arrayListPlayerGameSide.get(indexNextPlayer);
-					addPlayerToMatch(player);
-					System.out.println("Si è aggiunto uno!");
-					added=true;
+					synchronized (lockIndexNextPlayer) {
+						Player player = arrayListPlayerGameSide.get(indexNextPlayer);
+						addPlayerToMatch(player);
+						indexNextPlayer++;
+						System.out.println("Si è aggiunto uno!");
+						added=true;
+					}
 				}
 			}
 		}
