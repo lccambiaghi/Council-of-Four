@@ -63,13 +63,13 @@ public class TestCases {
 	
 		ArrayList <Player> arrayListPlayer = new ArrayList <Player> ();
 
-		Player player = new Player("s");
+		Player player = new Player('s');
 		player.setNickname("A");
 		arrayListPlayer.add(player);
-		Player player2 = new Player("s");
+		Player player2 = new Player('s');
 		player2.setNickname("B");
 		arrayListPlayer.add(player2);
-		Player player3 = new Player("s");
+		Player player3 = new Player('s');
 		player3.setNickname("C");
 		arrayListPlayer.add(player3);
 		
