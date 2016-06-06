@@ -21,7 +21,7 @@ public class PlayerSide {
 		new PlayerSide();
 	}
 	
-	char connection;
+	char typeOfConnection;
 	SocketConnection socketConnection;
 	
 	private Scanner inCLI;
@@ -39,7 +39,7 @@ public class PlayerSide {
 		
 		chooseConnection();
 		
-		if(connection=='s'){
+		if(typeOfConnection=='s'){
 			socketConnection = new SocketConnection(this);
 		}
 		communicateWithServer();
@@ -106,7 +106,7 @@ public class PlayerSide {
 			System.out.println("Choose connection: 's' (Socket) or 'r' (RMI)");
 			String in = inCLI.nextLine();
 			if(in.equals("s")||in.equals("r")){
-				this.connection=in.charAt(0);
+				this.typeOfConnection=in.charAt(0);
 				chosen=true;
 			}
 		}
@@ -115,12 +115,12 @@ public class PlayerSide {
 	
 	// TS= To Server, FS= From Server
 	private void sendStringTS(String string){
-		if(connection=='s'){
+		if(typeOfConnection=='s'){
 			socketConnection.sendStringTS(string);
 		}
 	}
 	private String receiveStringFS(){
-		if(connection=='s'){
+		if(typeOfConnection=='s'){
 			return socketConnection.receiveStringFS();
 		}
 		else
@@ -128,7 +128,7 @@ public class PlayerSide {
 	}
 	
 	private void sendObjectTS(Object object){
-		if(connection=='s'){
+		if(typeOfConnection=='s'){
 			socketConnection.sendObjectTS(object);;
 		}
 	}
