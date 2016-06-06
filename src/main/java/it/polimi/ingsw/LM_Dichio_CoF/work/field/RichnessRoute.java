@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class RichnessRoute implements Route {
 
-    private static Map<Player, Integer> richnessMap = new HashMap<>();
+    private Map<Player, Integer> richnessMap = new HashMap<>();
     //private HashMap<Player, Integer> richnessMap;
 
     /* The constructor creates richnessMap assigning initial richness to every player */
