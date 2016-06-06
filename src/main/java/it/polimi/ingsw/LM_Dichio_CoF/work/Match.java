@@ -13,16 +13,15 @@ public class Match {
 	private Configurations config;
 	private ArrayList<Player> arrayListPlayer;
 	private int numberPlayers;
-	private Balcony chosenBalcony;
 	private Field field;
 	private Market market;
 	
 	public Match(ArrayList<Player> arrayListPlayer) {
 		
 		this.arrayListPlayer = arrayListPlayer;
-		this.numberPlayers=arrayListPlayer.size();
+		numberPlayers=arrayListPlayer.size();
 		
-		Collections.shuffle(arrayListPlayer);
+		//Collections.shuffle(arrayListPlayer); //per adesso testiamo solo il primo giocatore
 		
 		readFileConfigurations();
 		
@@ -30,7 +29,7 @@ public class Match {
 		
 		giveInitialAssistants();
 		
-		this.field = new Field(config, arrayListPlayer);
+		field = new Field(config, arrayListPlayer);
 		
 		startGame();
 		
@@ -40,7 +39,8 @@ public class Match {
 		
 		int turn=0;
 
-		// gestisci con try catch: quando ci sono le condizioni viene sollevata l'eccezione partita finita
+		/* try{}
+		   catch(LastEmporiumBuiltException e){}*/
 
 		Player playerTurn = arrayListPlayer.get(turn);
 
@@ -111,16 +111,13 @@ public class Match {
 		System.out.println("1. Yes");
 		System.out.println("2. No");
 
-		int choice=inputNumber(1,2);
-
-		switch (choice) {
+		switch (inputNumber(1,2)) {
 			case 1:
 				return true;
-			default:
+			default: //case 2:
 				return false;
 		}
 
-		//return false; // non so perchè me lo fa inserire, dovrebbe essere superfluo
 	}
 
 	private int inputNumber (int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
@@ -145,16 +142,16 @@ public class Match {
 	private void quickAction(Player playerTurn) { 
 		System.out.println("Which Quick Action would you like to do?");
 		System.out.println("1. Engage an Assistant");
-		System.out.println("2. Change Building Permit Tile");
+		System.out.println("2. Change Building Permit Tiles for a Region");
 		System.out.println("3. Send an Assistant to Elect a Councillor");
 		System.out.println("4. Perform an additional Main Action");
 
 		switch (inputNumber(1,4)) {
 			case 1:
-				engageAnAssistant(playerTurn);
+				engageAssistant(playerTurn);
 				break;
 			case 2:
-				changeBuildingPermitCard(playerTurn);
+				replacePermitCards(playerTurn);
 				break;
 			case 3:
 				electCouncillorWithAssistant(playerTurn);
@@ -165,55 +162,146 @@ public class Match {
 		}
 	}
 
-	private void engageAnAssistant(Player playerTurn){
-		if(!verifyRichnessAndDecrement(playerTurn, Constant.ELECTON_COUNCILLOR_WITH_RICHNESS_DECREMENT)){
-			System.out.println("You don't have enough money. Which Quick Action would you like to do?");
+	private void engageAssistant(Player playerTurn){
+
+		/* try{}
+		   catch(NotEnoughRichnessException e)*/
+
+		Route richnessRoute = field.getRichnessRoute();
+
+		if(richnessRoute.getPosition(playerTurn)<Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST){
+			System.out.println("You don't have enough richness to perform this action." +
+					" Choose another Quick Action.");
 			quickAction(playerTurn);
 		}
 		else {
-			verifyRichnessAndDecrement(playerTurn, Constant.ELECTON_COUNCILLOR_WITH_RICHNESS_DECREMENT);
+			richnessRoute.movePlayer(-(Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST),playerTurn); //eccezione lanciata qui
 			playerTurn.addAssistant(1);
 		}
 	}
-	
-	private void changeBuildingPermitCard (Player playerTurn){
-		int assistantsNumber = playerTurn.getAssistant();
-		int indexOfRegion;
-		if (assistantsNumber<1){			
-			System.out.println("You don't have enough assistants. Which Quick Action would you like to do?");
+
+	private void replacePermitCards(Player playerTurn){
+
+		/* try{}
+		   catch(NotEnoughAssistantsException e)*/
+
+		if (playerTurn.getAssistant()<Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST){
+			System.out.println("You don't have enough assistants to perform this Action. " +
+					"Choose another one.");
 			quickAction(playerTurn);
 		}
 		else{
-			indexOfRegion = inputNumber(1,3) - 1;
-			Region region = field.getRegionFromIndex(indexOfRegion);
-			region.getFaceUpPermitCardArea().takePermitCard(0);
-			region.getFaceUpPermitCardArea().takePermitCard(1);
+			Region chosenRegion = chooseRegion();
+			FaceUpPermitCardArea chosenArea=chosenRegion.getFaceUpPermitCardArea();
+			PermitCard[] arrayPermitCard = chosenArea.getArrayPermitCard();
+
+			for (int i = 0; i < arrayPermitCard.length; i++) {
+				chosenArea.changePermitCard(i);
+			}
+
+			playerTurn.decrementAssistant(-(Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST));
+
 		}
 	}
-	
+
+	private Region chooseRegion() {
+
+		System.out.println("In which region would you like to change Building Permit Tiles?");
+		System.out.println("1. Sea");
+		System.out.println("2. Hill");
+		System.out.println("3. Mountain");
+
+		return field.getRegionFromIndex(inputNumber(1,3) - 1); // -1 for array positioning
+	}
+
 	private void electCouncillorWithAssistant(Player playerTurn){
-		int assistantsNumber = playerTurn.getAssistant();
-		if (assistantsNumber<1){			
-			System.out.println("You don't have enough assistants. Which Quick Action would you like to do?");
+
+		/* try{}
+		   catch(NotEnoughAssistantsException e)*/
+
+		if (playerTurn.getAssistant()<Constant.ELECTION_ASSISTANT_COST){
+			System.out.println("You don't have enough assistants to perform this Action. " +
+					"Choose another one.");
 			quickAction(playerTurn);
 		}
 		else {
-			playerTurn.decrementAssistant(Constant.COST_OF_COUNCILLOR);
-			System.out.println("Chouse a Balcony where would change the councillor");
-			chosenBalcony = choseABalcony();
-			System.out.println("Chouse a councillor color");
-			choseAColor();			
+
+			Balcony chosenBalcony = chooseBalcony();
+			Color chosenCouncillorColor=chooseCouncillorColor();
+			electCouncillor(chosenBalcony, chosenCouncillorColor);
+
+			playerTurn.decrementAssistant(-(Constant.ELECTION_ASSISTANT_COST));
 		}
 	}
-	
+
+	private Balcony chooseBalcony(){
+
+		System.out.println("In which balcony would you like to elect a new councillor?");
+		System.out.println("1. Sea Balcony");
+		System.out.println("2. Hill Balcony");
+		System.out.println("3. Mountain Balcony");
+		System.out.println("4. King Balcony");
+
+		return field.getBalconyFromIndex(inputNumber(1, 4)-1); //-1 for array positioning
+
+	}
+
+	private Color chooseCouncillorColor(){
+
+		System.out.println("What color would you like the new councillor to be?");
+		System.out.println("1. White");
+		System.out.println("2. Black");
+		System.out.println("3. Cyan");
+		System.out.println("4. Orange");
+		System.out.println("5. Pink");
+		System.out.println("6. Purple");
+
+		// Se implementiamo questo, dobbiamo cambiare l'implementazione di removeAvailableCouncillor
+		// inserendo checkIfColorAvailable
+/*		Color chosenCouncillorColor;
+		Councillor chosenCouncillor;
+		AvailableCouncillors availableCouncillors = field.getAvailableCouncillors();
+		boolean electionSuccessful=false;
+		do {
+			try {
+				chosenCouncillorColor = Color.getColorFromIndex(inputNumber(1, 4));
+				chosenCouncillor = availableCouncillors.removeAvailableCouncillor(chosenCouncillorColor); // qui l'eccezione
+				chosenBalcony.electCouncillor(chosenCouncillor,availableCouncillors);
+				electionSuccessful=true;
+			} catch (NullPointerException e) {
+				System.out.println("Color not available! Choose another one.");
+			}
+		} while (!electionSuccessful);*/
+
+		Color chosenCouncillorColor= Color.getColorFromIndex(inputNumber(1, 4));
+		AvailableCouncillors availableCouncillors = field.getAvailableCouncillors();
+		boolean colorAvailable = availableCouncillors.checkIfColorAvailable(chosenCouncillorColor);
+
+		while(!colorAvailable) {
+			System.out.println("Color not available! Choose another one."); //TODO e se il giocatore volesse annullare la mossa?
+			chosenCouncillorColor = Color.getColorFromIndex(inputNumber(1, 4));
+			colorAvailable = availableCouncillors.checkIfColorAvailable(chosenCouncillorColor);
+		}
+
+		return chosenCouncillorColor;
+
+	}
+
+	private void electCouncillor(Balcony chosenBalcony, Color chosenCouncillorColor) {
+		AvailableCouncillors availableCouncillors = field.getAvailableCouncillors();
+		Councillor chosenCouncillor = availableCouncillors.removeAvailableCouncillor(chosenCouncillorColor); //NullPointerException?
+		chosenBalcony.electCouncillor(chosenCouncillor,availableCouncillors);
+	}
+
 	private void performAdditionalMainAction(Player playerTurn){
-		int assistantsNumber = playerTurn.getAssistant();
-		if (assistantsNumber<3){			
-			System.out.println("You don't have enough assistants. Which Quick Action would you like to do?");
+		if (playerTurn.getAssistant()<Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST){
+			System.out.println("You don't have enough assistants to perform this Action. " +
+					"Choose another one.");
 			quickAction(playerTurn);
 		}
 		else{
 			playerTurn.setMainActionsLeft(playerTurn.getMainActionsLeft() + 1);
+			playerTurn.decrementAssistant(-(Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST));
 		}
 	}
 	
@@ -246,51 +334,60 @@ public class Match {
 
 	}
 
+	private void electCouncillor(Player playerTurn) {
+
+		Balcony chosenBalcony = chooseBalcony();
+
+		Color chosenCouncillorColor=chooseCouncillorColor();
+
+		electCouncillor(chosenBalcony,chosenCouncillorColor);
+
+		Route richnessRoute = field.getRichnessRoute();
+		richnessRoute.movePlayer(Constant.ELECTION_RICHNESS_INCREMENT, playerTurn);
+
+	}
+
 	private void buildEmporiumWithPermitCard(Player playerTurn) {
 
 /*		try{		}
-		catch(ArrayIndexOutOfBoundException noPermitCards){		}
+		catch(ArrayIndexOutOfBoundException noUsablePermitCards){		}
 		catch(NullPointerException emporiumAlreadyPresent){		}
-		catch(NegativeAssistantNumber){		}*/
+		catch(NotEnoughAssistantException notEnoughAssistant){		}*/
 
 		ArrayList <PermitCard> usablePermitCards = getUsablePermitCards(playerTurn);
 
-		System.out.println("Which of your Business Permit Tiles would you like to use?");
+		if (usablePermitCards.size()<1){
+			System.out.println("You either have no Business Permit Tiles" +
+					" or you have already built in every city they avail you to" +
+					". Choose another Main Move.");
+			mainAction(playerTurn);
+		}
+		else {
+			int indexChosenPermitCard = choosePermitCard(usablePermitCards);
 
-		for(int i=0; i<usablePermitCards.size();i++) {
+			PermitCard chosenPermitCard = usablePermitCards.get(indexChosenPermitCard);
+			int indexChosenCity = chooseBuildableCity(chosenPermitCard);
 
-			PermitCard usablePermitCard = usablePermitCards.get(i); // ArrayIndexOutOfBoundException?
+			City[] arrayCity = field.getArrayCity();
+			arrayCity[indexChosenCity].buildEmporium(playerTurn);
+			playerTurn.usePermitCard(playerTurn.getArrayListPermitCard().get(indexChosenPermitCard));
 
-			System.out.println(i + 1 + ". ");
-			System.out.println("Buildable Cities:");
-
-			City[] arrayBuildableCities = usablePermitCard.getArrayBuildableCities();
-			for (City buildableCity : arrayBuildableCities)
-				System.out.print(buildableCity.getCityName() + " ");
-
-			System.out.println("Bonus:");
-			Bonus[] arrayBonus = usablePermitCard.getArrayBonus();
-			for (Bonus bonus : arrayBonus)
-				System.out.print(bonus.getBonusName() + " ");
+			//implementazione bonus a città vicine
 		}
 
-		int indexPermitCard = inputNumber(1, usablePermitCards.size())-1; // -1 for array positioning
+	}
 
-		PermitCard chosenPermitCard = usablePermitCards.get(indexPermitCard);
+	private int chooseBuildableCity(PermitCard chosenPermitCard) {
 
 		System.out.println("Which city would you like to build your emporium in?");
+
 		City[] actualBuildableCities = chosenPermitCard.getArrayBuildableCities();
 		for (int i = 0; i < actualBuildableCities.length; i++) {
 			City buildableCity = actualBuildableCities[i];
 			System.out.println(i + 1 + ". " + buildableCity.getCityName());
 		}
 
-		int choiceBuildableCity = inputNumber(1, actualBuildableCities.length)-1; // -1 for array positioning
-		City[] arrayCity = field.getArrayCity();
-		arrayCity[choiceBuildableCity].buildEmporium(playerTurn);
-		playerTurn.usePermitCard(playerTurn.getArrayListPermitCard().get(indexPermitCard));
-
-		//implementazione bonus a città vicine
+		return inputNumber(1, actualBuildableCities.length) - 1; // -1 for array positioning
 
 	}
 
@@ -319,83 +416,33 @@ public class Match {
 			}
 		}
 
-		if (usablePermitCards.size()<1){
-			System.out.println("You either have no Business Permit Tiles" +
-					" or you have already built in every city they avail you to" +
-					". Choose another Main Move.");
-			mainAction(playerTurn);
-		}
-
 		return usablePermitCards;
 
 	}
-	
-	
-	private void electCouncillor(Player playerTurn) {
 
-		System.out.println("Which balcony would you like to operate on?");
-		System.out.println("1. Sea Balcony");
-		System.out.println("2. Hill Balcony");
-		System.out.println("3. Mountain Balcony");
-		System.out.println("4. King Balcony");
+	private int choosePermitCard(ArrayList<PermitCard> usablePermitCards) {
 
-		chosenBalcony = choseABalcony();
+		System.out.println("Which of your Business Permit Tiles would you like to use?");
 
-		System.out.println("What color would you like the new councillor to be?");
-		System.out.println("1. White");
-		System.out.println("2. Black");
-		System.out.println("3. Cyan");
-		System.out.println("4. Orange");
-		System.out.println("5. Pink");
-		System.out.println("6. Purple");
+		for(int i=0; i<usablePermitCards.size();i++) {
 
-		// Se implementiamo questo, dobbiamo cambiare l'implementazione di removeAvailableCouncillor
-		// inserendo checkIfColorAvailable
-/*		Color chosenCouncillorColor;
-		Councillor chosenCouncillor;
-		AvailableCouncillors availableCouncillors = field.getAvailableCouncillors();
-		boolean electionSuccessful=false;
-		do {
-			try {
-				chosenCouncillorColor = Color.getColorFromIndex(inputNumber(1, 4));
-				chosenCouncillor = availableCouncillors.removeAvailableCouncillor(chosenCouncillorColor); // qui l'eccezione
-				chosenBalcony.electCouncillor(chosenCouncillor,availableCouncillors);
-				electionSuccessful=true;
-			} catch (NullPointerException e) {
-				System.out.println("Color not available! Choose another one.");
-			}
-		} while (!electionSuccessful);*/
+			PermitCard usablePermitCard = usablePermitCards.get(i); // ArrayIndexOutOfBoundException?
 
-		choseAColor();
-		incrementRichness(playerTurn);
-		
+			System.out.println(i + 1 + ". ");
+			System.out.println("Buildable Cities:");
 
-	}
-	
-	private Balcony choseABalcony (){
-		Balcony chosenBalcony = field.getBalconyFromIndex(inputNumber(1, 4)-1);
-		return chosenBalcony;
-	}
-	private void choseAColor (){
-		Color chosenCouncillorColor = Color.getColorFromIndex(inputNumber(1, 4));
-		AvailableCouncillors availableCouncillors = field.getAvailableCouncillors();
-		boolean colorAvailable = availableCouncillors.checkIfColorAvailable(chosenCouncillorColor);
+			City[] arrayBuildableCities = usablePermitCard.getArrayBuildableCities();
+			for (City buildableCity : arrayBuildableCities)
+				System.out.print(buildableCity.getCityName() + " ");
 
-		while(!colorAvailable) {
-			System.out.println("Color not available! Choose another one."); //TODO e se il giocatore volesse annullare la mossa?
-			chosenCouncillorColor = Color.getColorFromIndex(inputNumber(1, 4));
-			colorAvailable = availableCouncillors.checkIfColorAvailable(chosenCouncillorColor);
+			System.out.println("Bonus:");
+			Bonus[] arrayBonus = usablePermitCard.getArrayBonus();
+			for (Bonus bonus : arrayBonus)
+				System.out.print(bonus.getBonusName() + " ");
 		}
 
-		Councillor chosenCouncillor = availableCouncillors.removeAvailableCouncillor(chosenCouncillorColor); //TODO NullPointerException?
-		chosenBalcony.electCouncillor(chosenCouncillor,availableCouncillors);
-	}	
-	private void incrementRichness(Player playerTurn){
-		Route richnessRoute = field.getRichnessRoute();
-
-		richnessRoute.movePlayer(Constant.ELECTION_RICHNESS_INCREMENT, playerTurn);
+		return inputNumber(1, usablePermitCards.size())-1; // -1 for array positioning
 	}
-	
 	
 	private void acquirePermitCard(Player playerTurn){
 		System.out.println("Which balcony would you like to satisfy?");
@@ -477,7 +524,7 @@ public class Match {
 			if(usedMulticolor)
 				payed++;
 			
-			if(!verifyRichnessAndDecrement(playerTurn, payed)){
+			if(!checkIfEnoughRichness(playerTurn, payed)){
 				System.out.println("You don't have enough money. Which Main Action would you like to do?");
 				mainAction(playerTurn);
 			}			
@@ -490,9 +537,19 @@ public class Match {
 		FaceUpPermitCardArea faceUpPermitCardOfRegion = regionOfBalcony.getFaceUpPermitCardArea();
 		
 		System.out.println("Which Permit Card do you want take, 1 or 2?");
-		PermitCard chosenPermitCard = faceUpPermitCardOfRegion.takePermitCard(inputNumber(1, 2)-1);
+		PermitCard chosenPermitCard = faceUpPermitCardOfRegion.acquirePermitCard(inputNumber(1, 2)-1);
 		
 		playerTurn.acquirePermitCard(chosenPermitCard);
+	}
+
+	private boolean checkIfEnoughRichness(Player playerTurn, int payed) {
+		Route richnessRoute = field.getRichnessRoute();
+
+		if (richnessRoute.getPosition(playerTurn)<payed)
+			return false;
+		else
+			return true;
+
 	}
 	
 	/*
@@ -501,7 +558,7 @@ public class Match {
 	 * into a PoliticCard type and add it into a new arraylist.	 * 
 	 */
 		
-	public ArrayList <PoliticCard> inputStringToPermitCard(ArrayList <PoliticCard> playerHand){
+	private ArrayList <PoliticCard> inputStringToPermitCard(ArrayList<PoliticCard> playerHand){
 		Scanner in = new Scanner(System.in);
 		String colorIn;
 		ArrayList <PoliticCard> usableCards = new ArrayList <> ();
@@ -518,16 +575,5 @@ public class Match {
 		in.close();
 		return usableCards;
 	}
-	private boolean verifyRichnessAndDecrement(Player playerTurn, int pay){
-		Route richnessRoute = field.getRichnessRoute();
-		int playerPosition = richnessRoute.getPosition(playerTurn);
-		if(playerPosition>pay){
-			richnessRoute.movePlayer(-pay, playerTurn);
-			playerTurn.setRichness(playerTurn.getRichness()-pay);
-			return true;
-		}
-		return false;
-	}
-	
 	
 }
