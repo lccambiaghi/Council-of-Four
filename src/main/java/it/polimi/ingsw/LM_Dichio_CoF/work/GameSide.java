@@ -1,12 +1,14 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.Naming;
 import java.util.ArrayList;
+
+import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIConnectionWithPlayer;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.SocketConnectionWithPlayer;
+import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIConnection;
 
 public class GameSide {
 
@@ -14,13 +16,17 @@ public class GameSide {
 	
 	private ServerSocket serverSocket;
 	
-	private final Object lockArrayListPlayer = new Object();
+	public static final Object lockArrayListPlayer = new Object();
+
+
+	private boolean firstAvailablePlayer=true;
 	
 	public GameSide() {
 		
 		arrayListPlayer = new ArrayList <Player>();
 		
 		try {
+			//new RMIConnectionWithPlayer(this);
 			serverSocket = new ServerSocket(Constant.SOCKET_PORT);
 			while(true){
 				Socket socket = serverSocket.accept();
@@ -36,24 +42,17 @@ public class GameSide {
 	public void handlePlayer(Player player){
 		
 		System.out.println("I am managing a player through a thread");
-		
 		login(player);
-		
 		System.out.println("The player has successfully connected with nickname: "+player.getNickname());
 		
 		addPlayerToArrayList(player);
 		
-		/* If it is the first player */
-		if(arrayListPlayer.size()==1){
-			player.sendString("config");
-			int playersMaxNumber = getPlayersMaxNumberFromPlayer(player);
-			setConfigurationsFromPlayer(player);
-			MatchStarter matchStarter = new MatchStarter(this, playersMaxNumber);
-			matchStarter.start();
+		if(firstAvailablePlayer){
+			firstAvailablePlayer=false;
+			new HandlerArrayListPlayer(this).start();
 		}else{
 			player.sendString("wait");
 		}
-	
 	}
 	
 	private void addPlayerToArrayList(Player player){
@@ -68,6 +67,7 @@ public class GameSide {
 		}
 	}
 	
+	
 	public void removeArrayListPlayer(int playersNumber){
 		synchronized (lockArrayListPlayer) {
 			for(int i=0; i<playersNumber; i++){
@@ -75,7 +75,12 @@ public class GameSide {
 			}
 		}
 	}
-
+	
+	public Player getFirstPlayer(){
+		synchronized (lockArrayListPlayer) {
+			return(arrayListPlayer.get(0));
+		}
+	}
 
 	private void login(Player player){
 		
@@ -104,30 +109,7 @@ public class GameSide {
 		return false;
 	}
 	
+	public void setFirstAvailablePlayer(boolean firstAvailablePlayer) {this.firstAvailablePlayer = firstAvailablePlayer;}
 	
-	private int getPlayersMaxNumberFromPlayer(Player player){
-		int playersMaxNumber;
-		playersMaxNumber = Integer.parseInt(player.receiveString());
-		return playersMaxNumber;
-	}
-	
-	private void setConfigurationsFromPlayer(Player player){
-		
-		Object object = player.receiveObject();
-		FileOutputStream fileOutputStream = null;
-		try {
-			fileOutputStream = new FileOutputStream("./src/configurations/config");
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-			objectOutputStream.writeObject(object);
-		} catch (IOException e) {
-			e.printStackTrace();	
-		}finally{
-			try {
-				fileOutputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 
 }
