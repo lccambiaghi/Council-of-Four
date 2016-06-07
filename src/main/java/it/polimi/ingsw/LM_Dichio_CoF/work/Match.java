@@ -199,7 +199,7 @@ public class Match {
 				chosenArea.changePermitCard(i);
 			}
 
-			playerTurn.decrementAssistant(-(Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST));
+			playerTurn.decrementAssistant(Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST);
 
 		}
 	}
@@ -230,7 +230,7 @@ public class Match {
 			Color chosenCouncillorColor=chooseCouncillorColor();
 			electCouncillor(chosenBalcony, chosenCouncillorColor);
 
-			playerTurn.decrementAssistant(-(Constant.ELECTION_ASSISTANT_COST));
+			playerTurn.decrementAssistant(Constant.ELECTION_ASSISTANT_COST);
 		}
 	}
 
@@ -273,13 +273,13 @@ public class Match {
 			}
 		} while (!electionSuccessful);*/
 
-		Color chosenCouncillorColor= Color.getColorFromIndex(inputNumber(1, 4));
+		Color chosenCouncillorColor= Color.getColorFromIndex(inputNumber(1, 6));
 		AvailableCouncillors availableCouncillors = field.getAvailableCouncillors();
 		boolean colorAvailable = availableCouncillors.checkIfColorAvailable(chosenCouncillorColor);
 
 		while(!colorAvailable) {
 			System.out.println("Color not available! Choose another one."); //TODO e se il giocatore volesse annullare la mossa?
-			chosenCouncillorColor = Color.getColorFromIndex(inputNumber(1, 4));
+			chosenCouncillorColor = Color.getColorFromIndex(inputNumber(1,6));
 			colorAvailable = availableCouncillors.checkIfColorAvailable(chosenCouncillorColor);
 		}
 
@@ -301,7 +301,7 @@ public class Match {
 		}
 		else{
 			playerTurn.setMainActionsLeft(playerTurn.getMainActionsLeft() + 1);
-			playerTurn.decrementAssistant(-(Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST));
+			playerTurn.decrementAssistant(Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST);
 		}
 	}
 	
@@ -478,8 +478,7 @@ public class Match {
 		 * leggo da cli le carte che il giocatore vuole usare per soddisfare il consiglio
 		 */
 		
-		ArrayList <PoliticCard> usableCards = new ArrayList <>();
-		usableCards= inputStringToPermitCard(playerHand);
+		ArrayList <PoliticCard> usableCards= inputStringToPermitCard(playerHand);
 		
 		Color cardColor;
 		ArrayList <Color> colorOfUsableCards = new ArrayList <> ();
@@ -516,7 +515,7 @@ public class Match {
 			 if(totalUsedCards==1)
 				 payed=10;
 			 else{ //calcola costo per soddisfare il consiglio
-				 while (totalUsedCards>0){
+				 while (totalUsedCards>1){
 					 payed = payed - totalUsedCards;
 					 totalUsedCards--;
 				}
@@ -527,19 +526,22 @@ public class Match {
 			if(!checkIfEnoughRichness(playerTurn, payed)){
 				System.out.println("You don't have enough money. Which Main Action would you like to do?");
 				mainAction(playerTurn);
-			}			
+			}
+			else {
+				Region regionOfBalcony = field.getRegionFromIndex(inputBalcony);
+				FaceUpPermitCardArea faceUpPermitCardOfRegion = regionOfBalcony.getFaceUpPermitCardArea();
+
+				System.out.println("Which Permit Card do you want take, 1 or 2?");
+				PermitCard chosenPermitCard = faceUpPermitCardOfRegion.acquirePermitCard(inputNumber(1, 2)-1);
+
+				playerTurn.acquirePermitCard(chosenPermitCard);
+			}
 		}
 		else{
 				System.out.println("You don't have enough money. Which Main Action would you like to do?");
 				mainAction(playerTurn);
 		}
-		Region regionOfBalcony = field.getRegionFromIndex(inputBalcony);
-		FaceUpPermitCardArea faceUpPermitCardOfRegion = regionOfBalcony.getFaceUpPermitCardArea();
-		
-		System.out.println("Which Permit Card do you want take, 1 or 2?");
-		PermitCard chosenPermitCard = faceUpPermitCardOfRegion.acquirePermitCard(inputNumber(1, 2)-1);
-		
-		playerTurn.acquirePermitCard(chosenPermitCard);
+
 	}
 
 	private boolean checkIfEnoughRichness(Player playerTurn, int payed) {
