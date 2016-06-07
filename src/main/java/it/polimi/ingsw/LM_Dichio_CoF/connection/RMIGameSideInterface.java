@@ -1,16 +1,17 @@
 package it.polimi.ingsw.LM_Dichio_CoF.connection;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+import java.rmi.*;
+
+import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIPlayerSideInterface;
 
 public interface RMIGameSideInterface extends Remote{
 
-	public boolean connectToServer() throws RemoteException;
+	public void connectToServer(RMIPlayerSideInterface playerSide) throws RemoteException;
 	
-	public void sendStringTS(String string) throws RemoteException;
+	//public void sendStringTS(String string) throws RemoteException;
 	
 	//public String receiveStringFS() throws RemoteException;
 	
-	public void sendObjectTS(Object object) throws RemoteException;
+	//public void sendObjectTS(Object object) throws RemoteException;
 	
 }
