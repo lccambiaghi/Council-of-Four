@@ -6,9 +6,10 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.PermitCard;
-
+import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIPlayerSideInterface;
 
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ public class Player{
 	
 	private char typeOfConnection;
 	private Socket playerSocket;
-	private String host;
+	private RMIPlayerSideInterface playerSide;
 	
 	private char CLIorGUI;
 
@@ -56,8 +57,8 @@ public class Player{
 		}
 	}
 	
-	public String getHost() {return host;}
-	public void setHost(String host) {this.host = host;}
+	public RMIPlayerSideInterface getPlayerSide() {return playerSide;}
+	public void setPlayerSide(RMIPlayerSideInterface playerSide) {this.playerSide=playerSide;}
 
 	public char getCLIorGUI() {return CLIorGUI;}
 	public void setCLIorGUI(char cLIorGUI) {CLIorGUI = cLIorGUI;}	
@@ -73,10 +74,25 @@ public class Player{
 			output.println(string);
 			output.flush();
 		}else{
-			
+			try {
+				playerSide.sendString(string);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	public String receiveString(){ return input.nextLine();}
+	
+	public String receiveString(){ 
+		if(typeOfConnection=='s'){
+			return input.nextLine();
+		}else{
+			try {
+				return playerSide.receiveString();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}return "ERROR"; // mi serve davvero?
+	}
 	
 	public Object receiveObject(){ 
 		Object object = null;
