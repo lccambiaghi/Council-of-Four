@@ -14,7 +14,6 @@ public class RMIGameSide extends UnicastRemoteObject implements RMIGameSideInter
 		Player player = new Player('r');
 		try {
 			player.setHost(getClientHost());
-			player.setRMIStream();
 			
 			
 			return true;

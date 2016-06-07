@@ -9,7 +9,9 @@ public class RMIConnectionWithPlayer extends Thread{
 	Player player;
 	
 	public RMIConnectionWithPlayer(GameSide gameSide){
+		
 		this.gameSide=gameSide;
+		
 		
 		while(true){
 			

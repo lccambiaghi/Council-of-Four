@@ -41,11 +41,6 @@ public class Player{
 	
 	public String getHost() {return host;}
 	public void setHost(String host) {this.host = host;}
-	
-	public void setRMIStream(){
-		//output = 
-		//input = new Scanner(r)
-	}
 
 	public char getCLIorGUI() {return CLIorGUI;}
 	public void setCLIorGUI(char cLIorGUI) {CLIorGUI = cLIorGUI;}	
@@ -56,7 +51,14 @@ public class Player{
 	public char getTypeOfConnection() {return typeOfConnection;}
 	public void setTypeOfConnection(char typeOfConnection) {this.typeOfConnection = typeOfConnection;}
 	
-	public void sendString(String string){ output.println(string); output.flush();}
+	public void sendString(String string){
+		if(typeOfConnection=='s'){
+			output.println(string);
+			output.flush();
+		}else{
+			
+		}
+	}
 	public String receiveString(){ return input.nextLine();}
 	
 	public Object receiveObject(){ 

@@ -12,7 +12,7 @@ import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIConnection;
 
 public class GameSide {
 
-	private ArrayList <Player> arrayListPlayer;
+	private static ArrayList <Player> arrayListPlayer;
 	
 	private ServerSocket serverSocket;
 	

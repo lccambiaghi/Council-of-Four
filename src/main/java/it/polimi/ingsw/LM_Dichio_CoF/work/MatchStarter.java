@@ -46,7 +46,7 @@ public class MatchStarter extends Thread{
 		}
 		
 		if(!timeToPlay){
-			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH+15);
+			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
 			System.out.println("Countdown iniziato");
 			threadWaitingForAPlayer = new AddOnePlayerIfPresent();
 			while(!timeToPlay){
