@@ -68,7 +68,7 @@ public class TestMatch {
 		assertEquals(14, arrayListPlayer.get(0).getRichness());
 	}
 
-	@Ignore
+	@Test
 	public void engageAnAssistant(){
 
 		testCases.configurations();
