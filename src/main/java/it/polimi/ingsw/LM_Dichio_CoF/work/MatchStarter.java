@@ -46,7 +46,7 @@ public class MatchStarter extends Thread{
 		}
 		
 		if(!timeToPlay){
-			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
+			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH-18);
 			System.out.println("Countdown iniziato");
 			threadWaitingForAPlayer = new AddOnePlayerIfPresent();
 			while(!timeToPlay){
@@ -79,7 +79,7 @@ public class MatchStarter extends Thread{
 			System.out.println(player.getNickname());
 		}
 		
-		//new Match(arrayListPlayerMatch);
+		new Match(arrayListPlayerMatch);
 		
 		
 	}
