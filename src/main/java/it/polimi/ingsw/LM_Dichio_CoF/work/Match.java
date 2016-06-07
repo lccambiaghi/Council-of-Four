@@ -453,28 +453,14 @@ public class Match {
 		int inputBalcony = inputNumber(1, 3) -1;
 		Balcony chosenBalcony = field.getBalconyFromIndex(inputBalcony);
 		
-		ArrayList<Councillor> councillorOfBalcony = chosenBalcony.getArrayListCouncillor();
-		ArrayList<Color> colorOfCouncillors = new ArrayList <> ();
-		for (Councillor councillor : councillorOfBalcony){
-			System.out.print(councillor.getColor() + " ");
-			colorOfCouncillors.add(councillor.getColor());
-		}//aggiungo i colori dei consiglieri della balconata in un arraylist predefinito
+		ArrayList <Color> colorOfCouncillors = getColorOfCouncillor (chosenBalcony);
 		
-		ArrayList<PoliticCard> playerHand = playerTurn.getArrayListPoliticCard();
-		ArrayList<Color> colorOfCards = new ArrayList <> ();
-
 		System.out.println("Insert one or more cards that you want use");
 		System.out.println("Your Cards:");
-		
-		PoliticCard politicCard;
-		for (int i=0; i<playerHand.size(); i++){
-			politicCard=playerHand.get(i);
-			System.out.println(i+1 + ". " + politicCard.getCardColor());
-			colorOfCards.add(politicCard.getCardColor());
-		}//aggiungo i colori delle carte del giocatore in un arraylist predefinito
-		
-		
-		/*
+		ArrayList<PoliticCard> playerHand = playerTurn.getArrayListPoliticCard();
+		ArrayList<Color> colorOfCards = getColorOfCards(playerTurn.getArrayListPoliticCard());
+
+				/*
 		 * leggo da cli le carte che il giocatore vuole usare per soddisfare il consiglio
 		 */
 		
@@ -491,7 +477,7 @@ public class Match {
 		 * Controllo che effettivamente l'input corrisponda alle carte che il giocatore
 		 * possiede, altrimenti richiedo di inserirle
 		 */
-		if(playerHand.containsAll(usableCards)){	
+		if(colorOfCards.containsAll(usableCards)){	
 			for (PoliticCard card : usableCards){
 				cardColor=card.getCardColor();
 				if (cardColor==Color.getColorFromIndex(6)){ //multicolor
@@ -504,25 +490,20 @@ public class Match {
 		else  {
 			System.out.println("You don't have these cards in your hand. Select an other set");
 			acquirePermitCard(playerTurn);
-		}
-			
-		
-		int totalUsedCards;
-		int payed=10;
-		
+		}	
 		/*
 		 * la condizione dell'if è che l'arrayList di carte usate sia contenuto interamente 
 		 * in quello del consiglio da voler soddisfare. 
 		 */
-		
+		int payed=Constant.MAXIMUM_COST_TO_BUY_PERMIT_TILES;
 		if(colorOfCouncillors.containsAll(colorOfUsableCards)){
-			 totalUsedCards=colorOfUsableCards.size();
-			 if(totalUsedCards==1)
-				 payed=10;
+			 numberOfCardsUsed=colorOfUsableCards.size();
+			 if(numberOfCardsUsed==1)
+				 payed=Constant.MAXIMUM_COST_TO_BUY_PERMIT_TILES;
 			 else{ //calcola costo per soddisfare il consiglio
-				 while (totalUsedCards>1){
-					 payed = payed - totalUsedCards;
-					 totalUsedCards--;
+				 while (numberOfCardsUsed>1){
+					 payed = payed - numberOfCardsUsed;
+					 numberOfCardsUsed--;
 				}
 			}
 			if(usedMulticolor)
@@ -551,7 +532,29 @@ public class Match {
 		}
 
 	}
+	
+	private ArrayList <Color> getColorOfCards (ArrayList <PoliticCard> playerHand){
+		PoliticCard politicCard;
+		ArrayList <Color> colorOfCards = new ArrayList <> ();
+		
+		for (int i=0; i<playerHand.size(); i++){
+			politicCard=playerHand.get(i);
+			System.out.println(i+1 + ". " + politicCard.getCardColor());
+			colorOfCards.add(politicCard.getCardColor());
+		}//aggiungo i colori delle carte del giocatore in un arraylist predefinito
+		return colorOfCards;
+	}
 
+	private ArrayList <Color> getColorOfCouncillor (Balcony chosenBalcony){
+		ArrayList<Councillor> councillorOfBalcony = chosenBalcony.getArrayListCouncillor();
+		ArrayList<Color> colorOfCouncillors = new ArrayList <> ();
+		for (Councillor councillor : councillorOfBalcony){
+			System.out.print(councillor.getColor() + " ");
+			colorOfCouncillors.add(councillor.getColor());
+		}//aggiungo i colori dei consiglieri della balconata in un arraylist predefinito
+		return colorOfCouncillors;
+	}
+	
 	private boolean checkIfEnoughRichness(Player playerTurn, int payed) {
 		Route richnessRoute = field.getRichnessRoute();
 
