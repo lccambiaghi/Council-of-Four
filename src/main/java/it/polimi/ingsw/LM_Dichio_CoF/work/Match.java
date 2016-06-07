@@ -478,12 +478,15 @@ public class Match {
 		 * leggo da cli le carte che il giocatore vuole usare per soddisfare il consiglio
 		 */
 		
-		ArrayList <PoliticCard> usableCards= inputStringToPermitCard(playerHand);
+		System.out.println("How many cards do you want to use?");
+		int numberOfCardsUsed = inputNumber (1,4);
+		
+		ArrayList <PoliticCard> usableCards= inputStringToPermitCard(playerHand, numberOfCardsUsed);
 		
 		Color cardColor;
 		ArrayList <Color> colorOfUsableCards = new ArrayList <> ();
 		boolean usedMulticolor = false;
-		
+		int numberOfMulticolor = 0;
 		/*
 		 * Controllo che effettivamente l'input corrisponda alle carte che il giocatore
 		 * possiede, altrimenti richiedo di inserirle
@@ -491,8 +494,10 @@ public class Match {
 		if(playerHand.containsAll(usableCards)){	
 			for (PoliticCard card : usableCards){
 				cardColor=card.getCardColor();
-				if (cardColor==Color.getColorFromIndex(6)) //multicolor
+				if (cardColor==Color.getColorFromIndex(6)){ //multicolor
 					usedMulticolor = true;
+					numberOfMulticolor++;
+				}
 				colorOfUsableCards.add(cardColor);
 			}// creo l'arraylist di colori delle carte scelte da usare, includo il multicolor
 		}
@@ -521,13 +526,16 @@ public class Match {
 				}
 			}
 			if(usedMulticolor)
-				payed++;
+				payed=payed + numberOfMulticolor;
 			
 			if(!checkIfEnoughRichness(playerTurn, payed)){
 				System.out.println("You don't have enough money. Which Main Action would you like to do?");
 				mainAction(playerTurn);
 			}
 			else {
+				Route richnessRoute = field.getRichnessRoute();
+				richnessRoute.movePlayer(payed, playerTurn);
+				
 				Region regionOfBalcony = field.getRegionFromIndex(inputBalcony);
 				FaceUpPermitCardArea faceUpPermitCardOfRegion = regionOfBalcony.getFaceUpPermitCardArea();
 
@@ -560,21 +568,23 @@ public class Match {
 	 * into a PoliticCard type and add it into a new arraylist.	 * 
 	 */
 		
-	private ArrayList <PoliticCard> inputStringToPermitCard(ArrayList<PoliticCard> playerHand){
+	private ArrayList <PoliticCard> inputStringToPermitCard(ArrayList<PoliticCard> playerHand, int numberOfCards){
 		Scanner in = new Scanner(System.in);
 		String colorIn;
+		int counter=0;
 		ArrayList <PoliticCard> usableCards = new ArrayList <> ();
 
 		do {
-			colorIn=in.next();
+			colorIn=in.nextLine();
 			
 			for(PoliticCard politicCard: playerHand){
 				if (politicCard.getCardColor().toString().equals(colorIn)){
 					usableCards.add(politicCard);
 				}
 			}
-		} while(in.hasNextLine());
-		in.close();
+			counter++;
+		} while(counter<numberOfCards);
+		//in.close();
 		return usableCards;
 	}
 	
