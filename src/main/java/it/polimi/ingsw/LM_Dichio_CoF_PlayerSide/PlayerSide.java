@@ -9,20 +9,28 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.Timer;
 
+import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
+import it.polimi.ingsw.LM_Dichio_CoF.work.GameSide;
 
 public class PlayerSide {
 
+	RMIGameSideInterface gameSide;
 	
 	public static void main (String[] args){
 		new PlayerSide();
 	}
 	
 	char typeOfConnection;
+	
 	SocketConnection socketConnection;
+	
+	RMIConnection rmiConnection;
+	RMIPlayerSideInterface rmiPlayerSide;
 	
 	private Scanner inCLI;
 	
@@ -37,11 +45,26 @@ public class PlayerSide {
 		
 		inCLI = new Scanner(System.in);
 		
+		/*
+		 * Method of the client
+		 * It already controls the input, that can only be "s" or "r"
+		 */
 		chooseConnection();
 		
 		if(typeOfConnection=='s'){
-			socketConnection = new SocketConnection(this);
+			//socketConnection = new SocketConnection(this);
+		}else{
+			rmiConnection = new RMIConnection(this);
+			gameSide=rmiConnection.getGameSide();
+			System.out.println("I got the RMI");
+			
+			try {
+				rmiPlayerSide = new RMIPlayerSide();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
+		
 		communicateWithServer();
 		
 	}
@@ -49,6 +72,12 @@ public class PlayerSide {
 	
 	
 	private void communicateWithServer(){
+		
+		try {
+			gameSide.connectToServer(rmiPlayerSide);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		
 		login();
 		
