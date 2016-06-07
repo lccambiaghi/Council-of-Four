@@ -1,29 +1,26 @@
 package it.polimi.ingsw.LM_Dichio_CoF.connection;
 
-import java.rmi.RemoteException;
+import java.rmi.*;
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.work.GameSide;
+import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIPlayerSideInterface;
 
 public class RMIGameSide extends UnicastRemoteObject implements RMIGameSideInterface{
 	
-	public RMIGameSide() throws RemoteException{}
+	GameSide gameSide;
 	
-	public boolean connectToServer() throws RemoteException{
-		Player player = new Player('r');
-		try {
-			player.setHost(getClientHost());
-			
-			
-			return true;
-		} catch (ServerNotActiveException e) {
-			e.printStackTrace();
-			return false;
-		}
+	public RMIGameSide(GameSide gameSide) throws RemoteException{
+		this.gameSide=gameSide;
 	}
 	
-	public void sendStringTS(String string) throws RemoteException{
+	public void connectToServer(RMIPlayerSideInterface playerSide) throws RemoteException{
+		System.out.println("A new player has connected");
+		new RMIConnectionWithPlayer(playerSide, gameSide);
+	}
+	
+	/*public void sendStringTS(String string) throws RemoteException{
 		
 	}
 	
@@ -31,8 +28,8 @@ public class RMIGameSide extends UnicastRemoteObject implements RMIGameSideInter
 		Mi sa che questo metodo vada nello skeleton del client
 	}*/
 	
-	public void sendObjectTS(Object object) throws RemoteException{
+	/*public void sendObjectTS(Object object) throws RemoteException{
 		
-	}
+	}*/
 	
 }
