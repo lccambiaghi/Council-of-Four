@@ -46,6 +46,7 @@ public class Constant {
 	public static final int ASSISTANT_ENGAGEMENT_RICHNESS_COST = 3;
 	public static final int ELECTION_ASSISTANT_COST = 1;
 	public static final int ADDITIONAL_MAIN_MOVE_ASSISTANT_COST = 3;
+	public static final int MAXIMUM_COST_TO_BUY_PERMIT_TILES = 10;
 
 	//color distributions
 	public static final CityColor[][] CITIES_COLOR = {
