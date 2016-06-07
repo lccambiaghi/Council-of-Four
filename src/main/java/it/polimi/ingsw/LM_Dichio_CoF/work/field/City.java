@@ -7,6 +7,7 @@ import java.util.Random;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 
 public class City {
 
@@ -15,6 +16,7 @@ public class City {
 	private Bonus[] arrayBonus;
 	private City[] nearbyCity;
 	private CityColor cityColor;
+	private ArrayList<Player> arrayListEmporium;
 
 	/* Random bonus constructor: it receives the configurations, the name of the city given by the Region
 	 * and the name of the region itself */
@@ -23,6 +25,7 @@ public class City {
 		this.cityName = cityName;
 		this.regionName = regionName;
 		this.cityColor=cityColor;
+		arrayListEmporium = new ArrayList<>();
 
 		int numberBonus;
 		Random random = new Random();
@@ -67,6 +70,28 @@ public class City {
 		
 		this.arrayBonus=arrayListBonusCity.toArray(new Bonus[arrayListBonusCity.size()]);
 				
+	}
+
+	public int buildEmporium (Player player){
+
+		if(isEmporiumAlreadyBuilt(player)) {
+			arrayListEmporium.add(player);
+			return arrayListEmporium.size();
+		}
+		else
+			return -1; //emporium already built
+
+	}
+
+	public boolean isEmporiumAlreadyBuilt(Player player){
+
+		for (int i=0; i< arrayListEmporium.size()-1;i++)
+			if (arrayListEmporium.get(i)==player)
+				return true;
+
+		return false;
+		// throw EmporiumAlreadyBuiltException??
+
 	}
 
 	/* This methods checks if the city has bonus */

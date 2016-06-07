@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
@@ -69,5 +70,9 @@ public class PermitCard {
 	public Bonus[] getArrayBonus() {
 		return arrayBonus;
 	}
-	
+
+	public void setArrayBuildableCities(ArrayList<City> arrayListBuildableCities){
+		arrayListBuildableCities.toArray(arrayBuildableCities);
+	}
+
 }

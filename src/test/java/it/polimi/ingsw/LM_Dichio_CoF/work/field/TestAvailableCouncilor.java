@@ -14,9 +14,9 @@ public class TestAvailableCouncilor {
 		 * This test controls the correct implementation of the singleton and the 
 		 * list of councilers that are created the first time
 		 */
-		AvailableCouncillor availableCouncillor = new AvailableCouncillor();
+		AvailableCouncillors availableCouncillors = new AvailableCouncillors();
 		
-		ArrayList<Councillor> a = availableCouncillor.getArrayListCouncillor();
+		ArrayList<Councillor> a = availableCouncillors.getArrayListCouncillor();
 		
 		for(Councillor c: a){
 			System.out.println(c.getColor());

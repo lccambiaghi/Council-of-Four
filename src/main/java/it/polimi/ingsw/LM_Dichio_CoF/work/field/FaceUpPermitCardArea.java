@@ -27,21 +27,19 @@ public class FaceUpPermitCardArea {
 
 	/* This method is to take a permit card from the area.
 	 * It takes as parameters the index of the permit card
-	 * ("1" for arrayPermitCard[0] and so on)
+	 * ("0" for arrayPermitCard[0] and so on)
 	 * It returns the wanted permit card, creating a new one in the place of the
 	 * taken one */
-	public PermitCard takePermitCard(int index){
-		PermitCard permitCardTmp = arrayPermitCard[index-1];
-		arrayPermitCard[index-1]=new PermitCard(arrayCity, config);
-		return permitCardTmp;
+	public PermitCard acquirePermitCard(int index){
+		PermitCard chosenPermitCard = arrayPermitCard[index];
+		changePermitCard(index);
+		return chosenPermitCard;
 	}
-	
-	/* This method returns the permit card at the specified index
-	  (("1" for arrayPermitCard[0] and so on)) */
-	public PermitCard getPermitCardFromIndex(int index) {
-		return arrayPermitCard[index-1];
+
+	public void changePermitCard (int index){
+		arrayPermitCard[index]=new PermitCard(arrayCity, config);
 	}
-	
+
 	public PermitCard[] getArrayPermitCard(){
 		return arrayPermitCard;
 	}

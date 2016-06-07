@@ -13,10 +13,10 @@ public class TestKingBalcony {
 	@Test
 	public void councilorsInKingBalcony() {
 		
-		AvailableCouncillor availableCouncillor = new AvailableCouncillor();
+		AvailableCouncillors availableCouncillors = new AvailableCouncillors();
 		
 		// Polymorphism
-		Balcony kingBalcony = new KingBalcony (availableCouncillor,"KingBalcony");
+		Balcony kingBalcony = new KingBalcony (availableCouncillors,"KingBalcony");
 		
 		ArrayList<Councillor> arrayListCouncillor = kingBalcony.getArrayListCouncillor();
 		
