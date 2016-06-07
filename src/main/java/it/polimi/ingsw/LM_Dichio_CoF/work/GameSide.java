@@ -4,15 +4,21 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIConnectionWithPlayer;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSide;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.SocketConnectionWithPlayer;
 import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIConnection;
 
 public class GameSide {
 
 	private static ArrayList <Player> arrayListPlayer;
+	
+	RMIGameSideInterface rmiGameSide;
 	
 	private ServerSocket serverSocket;
 	
@@ -25,17 +31,40 @@ public class GameSide {
 		
 		arrayListPlayer = new ArrayList <Player>();
 		
+		/*
+		 * Initialize and locate the RMI registry
+		 */
+		initializeRMI();
+		
 		try {
-			//new RMIConnectionWithPlayer(this);
 			serverSocket = new ServerSocket(Constant.SOCKET_PORT);
-			while(true){
-				Socket socket = serverSocket.accept();
-				new SocketConnectionWithPlayer(socket, this);		
-			}
+			//while(true){
+				//Socket socket = serverSocket.accept();
+				//new SocketConnectionWithPlayer(socket, this);		
+			//}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private void initializeRMI(){
+		try {
+		
+			System.out.println("Creating RMI registry...");
+			java.rmi.registry.LocateRegistry.createRegistry(1099);
+			
+			System.out.println("Implementing RMIGameSide...");
+			rmiGameSide=new RMIGameSide(this);
+			
+			System.out.println("Rebinding...");
+			Naming.rebind("rmi://127.0.0.1:1099/CoF", rmiGameSide);
+			
+			System.out.println("RMI initialized!");
+
+		}catch (Exception e) {
+				System.out.println("RMI failed " + e);
+		}
 	}
 	
 	
@@ -85,17 +114,14 @@ public class GameSide {
 	private void login(Player player){
 		
 		boolean logged = false;
+		player.sendString("Enter a nickname");
 		while(!logged){
-			String message = player.receiveString();
-			if(message.equals("login")){
-				String nickname = player.receiveString();
-				if(isNicknameInUse(nickname)){
-					player.sendString("false");
-				}else{
-					player.setNickname(nickname);
-					player.sendString("true");
-					logged=true;
-				}
+			String nickname = player.receiveString();
+			if(!isNicknameInUse(nickname)){
+				logged=true;
+				player.sendString("Logged");
+			}else{
+				player.sendString("Nickname already in use, enter another one");
 			}
 		}
 		
