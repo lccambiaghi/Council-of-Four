@@ -27,5 +27,5 @@ public class Region {
 	public FaceUpPermitCardArea getFaceUpPermitCardArea(){
 		return faceUpPermitCardArea;
 	}
-
+	
 }

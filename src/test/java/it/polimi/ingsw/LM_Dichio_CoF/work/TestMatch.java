@@ -1,49 +1,80 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
 import static org.junit.Assert.*;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.jar.Attributes.Name;
 
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
 
 public class TestMatch {
 
-	@Test
+	private TestCases testCases = new TestCases();
+
+	@Ignore
 	public void giveInitialPoliticCards() {
-		
-		TestCases testCases = new TestCases();
-		
-		testCases.configurations();
 		
 		ArrayList <Player> arrayListPlayer = testCases.arrayListPlayer();
 	
 		Match match = new Match(arrayListPlayer);
-		
-		for(int itPlayer=0; itPlayer<arrayListPlayer.size(); itPlayer++){
-			ArrayList<PoliticCard> arrayListPoliticCard = arrayListPlayer.get(itPlayer).getArrayListPoliticCard();
-			for(int itCard=0; itCard<arrayListPoliticCard.size(); itCard++){
-				System.out.println(arrayListPoliticCard.get(itCard).getCardColor().toString());
+
+		for (Player anArrayListPlayer : arrayListPlayer) {
+			ArrayList<PoliticCard> arrayListPoliticCard = anArrayListPlayer.getArrayListPoliticCard();
+			for (PoliticCard anArrayListPoliticCard : arrayListPoliticCard) {
+				System.out.println(anArrayListPoliticCard.getCardColor().toString());
 			}
 			System.out.println();
 		}
 		
 	}
 	
-	@Test
+	@Ignore
 	public void giveInitialAssistants() {
-		TestCases testCases = new TestCases();
 		
 		ArrayList <Player> arrayListPlayer = testCases.arrayListPlayer();
 	
 		Match match = new Match(arrayListPlayer);
-		
-		for(int itPlayer=0; itPlayer<arrayListPlayer.size(); itPlayer++){
-			System.out.println(arrayListPlayer.get(itPlayer).getAssistant());
+
+		for (Player anArrayListPlayer : arrayListPlayer) {
+			System.out.println(anArrayListPlayer.getAssistant());
 			System.out.println();
 		}
 	}
 
+	@Ignore
+	public void electCouncillor(){
+
+		testCases.configurations();
+		ArrayList<Player> arrayListPlayer = testCases.arrayListPlayer();
+
+		Match match = new Match(arrayListPlayer);
+
+		// asks if quick action : 2=no
+
+		// asks which main action : 1=Election
+
+		// asks which balcony : 1=Sea
+
+		// asks which color : 1=White
+
+		assertEquals(14, arrayListPlayer.get(0).getRichness());
+	}
+
+	@Ignore
+	public void engageAnAssistant(){
+
+		testCases.configurations();
+		ArrayList<Player> arrayListPlayer = testCases.arrayListPlayer();
+
+		Match match = new Match(arrayListPlayer);
+		assertEquals(7, arrayListPlayer.get(0).getRichness());
+	}
 }

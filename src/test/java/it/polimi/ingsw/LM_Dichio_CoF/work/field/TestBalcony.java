@@ -13,9 +13,9 @@ public class TestBalcony {
 	@Test
 	public void councilorsInBalcony() {
 		
-		AvailableCouncillor availableCouncillor = new AvailableCouncillor();
+		AvailableCouncillors availableCouncillors = new AvailableCouncillors();
 		
-		Balcony balcony = new Balcony (availableCouncillor, RegionName.Sea.toString()+"Balcony");
+		Balcony balcony = new Balcony (availableCouncillors, RegionName.Sea.toString()+"Balcony");
 		
 		ArrayList<Councillor> arrayListCouncillor = balcony.getArrayListCouncillor();
 		
