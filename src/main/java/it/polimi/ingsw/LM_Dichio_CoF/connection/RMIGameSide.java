@@ -20,4 +20,8 @@ public class RMIGameSide extends UnicastRemoteObject implements RMIGameSideInter
 		new RMIConnectionWithPlayer(rmiPlayerSide, gameSide);
 	}
 	
+	public boolean isNicknameInUse(String nickname) throws RemoteException{
+		return gameSide.isNicknameInUse(nickname);
+	}
+	
 }
