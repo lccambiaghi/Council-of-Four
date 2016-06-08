@@ -9,7 +9,7 @@ public class CityBonus extends Bonus{
 		
 		Random random = new Random();
 		
-		this.bonusName = BonusName.getRandomBonusNameWithoutMainMove();
+		this.bonusName = BonusName.getRandomCityBonusName();
 		
 		int maxIncrement = bonusName.getMaxIncrement(bonusName);
 		
