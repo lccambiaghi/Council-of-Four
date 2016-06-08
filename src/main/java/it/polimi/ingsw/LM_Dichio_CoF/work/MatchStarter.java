@@ -78,6 +78,15 @@ public class MatchStarter extends Thread{
 		System.out.println("Si gioca in " + arrayListPlayerMatch.size() +" giocatori");
 		for(Player player: arrayListPlayerMatch){
 			System.out.println(player.getNickname());
+			if(player.getTypeOfConnection()=='s'){
+				player.sendString("SOCKETplayMatch");
+			}else{
+				try {
+					player.getRmiPlayerSide().playMatch();
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		

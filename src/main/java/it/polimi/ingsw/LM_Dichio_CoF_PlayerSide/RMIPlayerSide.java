@@ -52,4 +52,8 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 		playerSide.startingMatch();
 	}
 	
+	public void playMatch(){
+		playerSide.playMatch();
+	}
+	
 }

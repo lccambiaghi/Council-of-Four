@@ -103,6 +103,10 @@ public class PlayerSide {
 					startingMatch();
 					break;
 					
+				case	"SOCKETplayMatch":
+					playMatch();
+					break;
+					
 				default	:
 					System.out.println("error");
 					break;
@@ -201,6 +205,10 @@ public class PlayerSide {
 	
 	public void startingMatch(){
 		printString("You have been selected for a match, wait a moment...");
+	}
+	
+	public void playMatch(){
+		printString("Match started!");
 	}
 	
 	

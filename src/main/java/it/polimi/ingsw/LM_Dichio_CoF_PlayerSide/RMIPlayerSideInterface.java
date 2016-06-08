@@ -23,4 +23,6 @@ public interface RMIPlayerSideInterface extends Remote {
 	
 	public void startingMatch() throws RemoteException;
 	
+	public void playMatch() throws RemoteException;
+	
 }
