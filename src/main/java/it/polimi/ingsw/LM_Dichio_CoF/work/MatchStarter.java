@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class MatchStarter extends Thread{
@@ -38,7 +39,7 @@ public class MatchStarter extends Thread{
 			while(threadWaitingForAPlayer.isAlive()){
 				;
 			}
-			System.out.println("Ci sono " + indexNextPlayer + " giocatori");
+			System.out.println("There are " + indexNextPlayer + " players");
 		}
 		
 		if(indexNextPlayer==playersMaxNumber){
@@ -46,7 +47,7 @@ public class MatchStarter extends Thread{
 		}
 		
 		if(!timeToPlay){
-			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH-18);
+			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
 			System.out.println("Countdown iniziato");
 			threadWaitingForAPlayer = new AddOnePlayerIfPresent();
 			while(!timeToPlay){
@@ -79,6 +80,8 @@ public class MatchStarter extends Thread{
 			System.out.println(player.getNickname());
 		}
 		
+		
+		
 		new Match(arrayListPlayerMatch);
 		
 		
@@ -86,7 +89,15 @@ public class MatchStarter extends Thread{
 	
 	private void addPlayerToMatch(Player player){
 		arrayListPlayerMatch.add(player);
-		player.sendString("startingMatch");
+		if(player.getTypeOfConnection()=='s'){
+			player.sendString("SOCKETstartingMatch");
+		}else{
+			try {
+				player.getRmiPlayerSide().startingMatch();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	class AddOnePlayerIfPresent extends Thread{
