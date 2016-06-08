@@ -123,12 +123,12 @@ public class GameSide {
 	}
 
 	private void login(Player player){
-		
+		String nickname= null;
 		if(player.getTypeOfConnection()=='s'){
 			player.sendString("SOCKETlogin");
 			boolean logged = false;
 			while(!logged){
-				String nickname = player.receiveString();
+				nickname = player.receiveString();
 				if(!isNicknameInUse(nickname)){
 					player.setNickname(nickname);
 					player.sendString("true");
@@ -139,23 +139,18 @@ public class GameSide {
 			}
 
 		}else{
-			boolean logged = false;
-			player.sendString("Enter your nickname");
-			while(!logged){
-				String nickname = player.receiveString();
-				if(!isNicknameInUse(nickname)){
-					player.setNickname(nickname);
-					player.sendString("Logged");
-					logged=true;
-				}else{
-					player.sendString("Nickname already in use, enter another one");
-				}
-			}	
+			try {
+				player.getRmiPlayerSide().login();
+				nickname = player.getRmiPlayerSide().getNickname();
+				player.setNickname(nickname);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
 	
-	private boolean isNicknameInUse(String nickname){
+	public boolean isNicknameInUse(String nickname){
 		for(Player player: arrayListPlayer){
 			if(player.getNickname().equals(nickname))
 				return true;
