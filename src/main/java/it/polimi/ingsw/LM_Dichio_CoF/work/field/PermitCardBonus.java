@@ -9,7 +9,7 @@ public class PermitCardBonus extends Bonus{
 		
 		Random random = new Random();
 		
-		this.bonusName = BonusName.getRandomBonusName();
+		this.bonusName = BonusName.getRandomPermitCardBonusName();
 		
 		int maxIncrement = bonusName.getMaxIncrement(bonusName);
 		
