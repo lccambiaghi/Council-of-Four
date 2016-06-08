@@ -9,4 +9,14 @@ public interface RMIPlayerSideInterface extends Remote {
 	
 	public String receiveString () throws RemoteException;
 	
+	public void waitForServer() throws RemoteException;
+	
+	public void configure() throws RemoteException;
+	
+	public int getConfigurationsPlayersNumber() throws RemoteException;
+	
+	public Object getConfigurationsAsObject() throws RemoteException;
+	
+	public void startingMatch() throws RemoteException;
+	
 }
