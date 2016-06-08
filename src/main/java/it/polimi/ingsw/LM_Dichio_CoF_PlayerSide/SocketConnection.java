@@ -41,7 +41,6 @@ public class SocketConnection {
 			System.out.println("Cannot connect to the Server");
 			e.printStackTrace();
 		}
-
 	}	
 	
 	
@@ -51,7 +50,7 @@ public class SocketConnection {
 	}
 	
 	public String receiveStringFS(){
-		String string = inSocket.nextLine(); 
+		String string = inSocket.nextLine();
 		return string; 
 	}
 	
