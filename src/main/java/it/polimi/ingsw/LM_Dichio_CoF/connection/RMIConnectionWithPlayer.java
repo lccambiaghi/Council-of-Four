@@ -9,12 +9,12 @@ public class RMIConnectionWithPlayer extends Thread{
 	GameSide gameSide;
 	Player player;
 	
-	public RMIConnectionWithPlayer(RMIPlayerSideInterface playerSide, GameSide gameSide){
+	public RMIConnectionWithPlayer(RMIPlayerSideInterface rmiPlayerSide, GameSide gameSide){
 	
 		this.gameSide=gameSide;
 		
 		player = new Player('r');
-		player.setPlayerSide(playerSide);
+		player.setRmiPlayerSide(rmiPlayerSide);
 		
 		start();
 		

@@ -15,21 +15,9 @@ public class RMIGameSide extends UnicastRemoteObject implements RMIGameSideInter
 		this.gameSide=gameSide;
 	}
 	
-	public void connectToServer(RMIPlayerSideInterface playerSide) throws RemoteException{
+	public void connectToServer(RMIPlayerSideInterface rmiPlayerSide) throws RemoteException{
 		System.out.println("A new player has connected");
-		new RMIConnectionWithPlayer(playerSide, gameSide);
+		new RMIConnectionWithPlayer(rmiPlayerSide, gameSide);
 	}
-	
-	/*public void sendStringTS(String string) throws RemoteException{
-		
-	}
-	
-	/*public String receiveStringFS() throws RemoteException{
-		Mi sa che questo metodo vada nello skeleton del client
-	}*/
-	
-	/*public void sendObjectTS(Object object) throws RemoteException{
-		
-	}*/
 	
 }
