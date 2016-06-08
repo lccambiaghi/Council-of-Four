@@ -1,5 +1,8 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.work.PoliticCard;
+
 public class Bonus {
 
 	BonusName bonusName;
@@ -51,5 +54,26 @@ public class Bonus {
 	public void setIncrement(int increment) {
 		this.increment = increment;
 	}
-	
+
+	public void applyBonus(Player player, Field field) {
+		Route richnessRoute;
+		Route nobilityRoute;
+
+		switch (bonusName){
+			case Assistant:
+				player.addAssistant(increment);
+				break;
+			case Richness:
+				richnessRoute = field.getRichnessRoute();
+				richnessRoute.movePlayer(increment,player);
+				break;
+			case Nobility:
+				nobilityRoute = field.getNobilityRoute();
+				nobilityRoute.movePlayer(increment, player);
+			case Cards:
+				for (int i=0; i<increment; i++)
+					player.addPoliticCard(new PoliticCard());
+		}
+
+	}
 }
