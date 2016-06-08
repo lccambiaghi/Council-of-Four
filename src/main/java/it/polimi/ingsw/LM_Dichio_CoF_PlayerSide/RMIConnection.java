@@ -12,18 +12,20 @@ import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
 public class RMIConnection {
 
 	PlayerSide playerSide;
-	RMIGameSideInterface gameSide;
+	
+	RMIGameSideInterface rmiGameSide;
+	RMIPlayerSideInterface rmiPlayerSide;
 	
 	public RMIConnection(PlayerSide playerSide){
 		this.playerSide=playerSide;
 		lookUpForRegistry();
+		connectToServer();
 	}
 	
 	private void lookUpForRegistry(){
 		try {
 			System.out.println("I'm looking up for the registry...");
-			Registry registry= LocateRegistry.getRegistry();
-			gameSide = (RMIGameSideInterface)Naming.lookup("rmi://127.0.0.1:1099/CoF");
+			rmiGameSide = (RMIGameSideInterface)Naming.lookup("rmi://127.0.0.1:1099/CoF");
 			System.out.println("Done!");
 		} catch (RemoteException e) {
 			System.out.println("Error in RMI connection " + e);
@@ -34,8 +36,21 @@ public class RMIConnection {
 		}
 	}
 	
-	public RMIGameSideInterface getGameSide() {
-		return gameSide;
+	private void connectToServer(){
+		try {
+			rmiPlayerSide = new RMIPlayerSide(playerSide);
+			rmiGameSide.connectToServer(rmiPlayerSide);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public RMIGameSideInterface getRmiGameSide() {
+		return rmiGameSide;
+	}
+	
+	public RMIPlayerSideInterface getRMIPlayerSide(){
+		return rmiPlayerSide;
 	}
 	
 }
