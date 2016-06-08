@@ -8,6 +8,7 @@ import java.util.Random;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.work.PoliticCard;
 
 public class City {
 
@@ -72,9 +73,10 @@ public class City {
 				
 	}
 
+	/* Return int to throw GameOverException */
 	public int buildEmporium (Player player){
 
-		if(isEmporiumAlreadyBuilt(player)) {
+		if(!isEmporiumAlreadyBuilt(player)) {
 			arrayListEmporium.add(player);
 			return arrayListEmporium.size();
 		}
@@ -96,11 +98,13 @@ public class City {
 
 	/* This methods checks if the city has bonus */
 	public boolean hasBonus(){ return arrayBonus != null; }
+	public Bonus[] getArrayBonus() {
+		return arrayBonus;
+	}
 	
 	public CityName getCityName() {
 		return cityName;
 	}
-
 	public void setCityName(CityName cityName) {
 		this.cityName = cityName;
 	}
@@ -108,19 +112,13 @@ public class City {
 	public RegionName getRegionName() {
 		return regionName;
 	}
-
 	public void setRegionName(RegionName regionName) {
 		this.regionName = regionName;
-	}
-
-	public Bonus[] getArrayBonus() {
-		return arrayBonus;
 	}
 	
 	public City[] getNearbyCity() {
 		return nearbyCity;
 	}
-
 	public void setNearbyCity(City[] nearbyCity) {
 		this.nearbyCity = nearbyCity;
 	}
