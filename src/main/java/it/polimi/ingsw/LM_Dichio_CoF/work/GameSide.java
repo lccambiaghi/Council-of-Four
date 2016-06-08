@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -38,10 +39,10 @@ public class GameSide {
 		
 		try {
 			serverSocket = new ServerSocket(Constant.SOCKET_PORT);
-			//while(true){
-				//Socket socket = serverSocket.accept();
-				//new SocketConnectionWithPlayer(socket, this);		
-			//}
+			while(true){
+				Socket socket = serverSocket.accept();
+				new SocketConnectionWithPlayer(socket, this);		
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -71,7 +72,9 @@ public class GameSide {
 	public void handlePlayer(Player player){
 		
 		System.out.println("I am managing a player through a thread");
+		
 		login(player);
+		
 		System.out.println("The player has successfully connected with nickname: "+player.getNickname());
 		
 		addPlayerToArrayList(player);
@@ -80,7 +83,15 @@ public class GameSide {
 			firstAvailablePlayer=false;
 			new HandlerArrayListPlayer(this).start();
 		}else{
-			player.sendString("wait");
+			if(player.getTypeOfConnection()=='s'){
+				player.sendString("SOCKETwaitForServer");
+			}else{
+				try {
+					player.getRmiPlayerSide().waitForServer();
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
@@ -113,16 +124,33 @@ public class GameSide {
 
 	private void login(Player player){
 		
-		boolean logged = false;
-		player.sendString("Enter a nickname");
-		while(!logged){
-			String nickname = player.receiveString();
-			if(!isNicknameInUse(nickname)){
-				logged=true;
-				player.sendString("Logged");
-			}else{
-				player.sendString("Nickname already in use, enter another one");
+		if(player.getTypeOfConnection()=='s'){
+			player.sendString("SOCKETlogin");
+			boolean logged = false;
+			while(!logged){
+				String nickname = player.receiveString();
+				if(!isNicknameInUse(nickname)){
+					player.setNickname(nickname);
+					player.sendString("true");
+					logged=true;
+				}else{
+					player.sendString("false");
+				}
 			}
+
+		}else{
+			boolean logged = false;
+			player.sendString("Enter your nickname");
+			while(!logged){
+				String nickname = player.receiveString();
+				if(!isNicknameInUse(nickname)){
+					player.setNickname(nickname);
+					player.sendString("Logged");
+					logged=true;
+				}else{
+					player.sendString("Nickname already in use, enter another one");
+				}
+			}	
 		}
 		
 	}
