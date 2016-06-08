@@ -24,12 +24,12 @@ public enum BonusName {
     public static BonusName getBonusName (int index){return values()[index];}
      */
 
-    public static BonusName getRandomBonusName(){
+    public static BonusName getRandomPermitCardBonusName(){
     	Random random = new Random();
     	return values()[random.nextInt(values().length-4)];
     }
     
-    public static BonusName getRandomBonusNameWithoutMainMove(){
+    public static BonusName getRandomCityBonusName(){
     	Random random = new Random();
     	return values()[random.nextInt(values().length-5)];
     }
