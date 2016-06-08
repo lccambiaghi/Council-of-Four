@@ -4,6 +4,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface RMIPlayerSideInterface extends Remote {
+	
+	public void login() throws RemoteException;
+	
+	public String getNickname() throws RemoteException;
 
 	public void sendString( String string) throws RemoteException;
 	

@@ -12,6 +12,14 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 		this.playerSide=playerSide;
 	}
 
+	public void login(){
+		playerSide.login();
+	}
+	
+	public String getNickname(){
+		return playerSide.getNickname();
+	}
+	
 	public void sendString(String string){
 		System.out.println(string);
 	}
