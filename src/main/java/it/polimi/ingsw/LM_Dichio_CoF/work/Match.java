@@ -51,14 +51,14 @@ public class Match {
 
 		System.out.println("Would you like to perform Quick Action first?");
 
-		if (askIfQuickAction(playerTurn)) {
+		if (askYesOrNo()) {
 			quickAction(playerTurn);
 			mainAction(playerTurn);
 		}
 		else{
 			mainAction(playerTurn);
 			System.out.println("Would you like to perform Quick Action?");
-			if (askIfQuickAction(playerTurn))
+			if (askYesOrNo())
 				quickAction(playerTurn);
 		}
 	}
@@ -106,7 +106,7 @@ public class Match {
 		}
 	}
 
-	private boolean askIfQuickAction(Player playerTurn){ //TODO test e socket con playerTurn
+	private boolean askYesOrNo(){ //TODO test e socket con playerTurn
 
 		System.out.println("1. Yes");
 		System.out.println("2. No");
@@ -326,11 +326,44 @@ public class Match {
 				buildEmporiumWithPermitCard(playerTurn);
 				break;
 			case 4:
-				//buildEmporiumWithKing(playerTurn);
+				buildEmporiumWithKing(playerTurn);
 				break;
 		}
 
 		playerTurn.setMainActionsLeft(playerTurn.getMainActionsLeft() - 1);
+
+	}
+
+	private void buildEmporiumWithKing(Player playerTurn) {
+
+		/* try{}
+		   catch(NoUsablePoliticCardsException){}
+		   catch(NotEnoughRichness){}*/
+
+		ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards(playerTurn, 3); // King's index
+
+		System.out.println("Which cards would you like to use to satisfy King's council?");
+
+
+	}
+
+	private ArrayList<PoliticCard> getUsablePoliticCards(Player playerTurn, int indexChosenBalcony) {
+
+		Balcony chosenBalcony = field.getBalconyFromIndex(indexChosenBalcony);
+		ArrayList <PoliticCard> playerHand = playerTurn.getArrayListPoliticCard();
+		ArrayList <PoliticCard> usableCards = new ArrayList<>();
+
+		for (Councillor councillor : chosenBalcony.getArrayListCouncillor()) {
+			for (PoliticCard politicCard: playerHand) {
+				if (councillor.getColor() == politicCard.getCardColor() ||
+						politicCard.getCardColor()==Color.Multicolor) {
+					usableCards.add(politicCard);
+					playerHand.remove(politicCard);
+				}
+			}
+		}
+
+		return usableCards;
 
 	}
 
@@ -364,30 +397,21 @@ public class Match {
 		}
 		else {
 			int indexChosenPermitCard = choosePermitCard(usablePermitCards);
-
 			PermitCard chosenPermitCard = usablePermitCards.get(indexChosenPermitCard);
-			int indexChosenCity = chooseBuildableCity(chosenPermitCard);
 
+			int indexChosenCity = chooseBuildableCity(chosenPermitCard);
 			City[] arrayCity = field.getArrayCity();
 			arrayCity[indexChosenCity].buildEmporium(playerTurn);
 			playerTurn.usePermitCard(playerTurn.getArrayListPermitCard().get(indexChosenPermitCard));
 
-			//implementazione bonus a città vicine
+			// applying bonuses
+			ArrayList<City> nearbyBuiltCities = getAdjacentBuiltCities(playerTurn, indexChosenCity);
+
+			for (City city: nearbyBuiltCities)
+				for (Bonus bonus : city.getArrayBonus())
+					bonus.applyBonus(playerTurn, field);
+
 		}
-
-	}
-
-	private int chooseBuildableCity(PermitCard chosenPermitCard) {
-
-		System.out.println("Which city would you like to build your emporium in?");
-
-		City[] actualBuildableCities = chosenPermitCard.getArrayBuildableCities();
-		for (int i = 0; i < actualBuildableCities.length; i++) {
-			City buildableCity = actualBuildableCities[i];
-			System.out.println(i + 1 + ". " + buildableCity.getCityName());
-		}
-
-		return inputNumber(1, actualBuildableCities.length) - 1; // -1 for array positioning
 
 	}
 
@@ -443,7 +467,51 @@ public class Match {
 
 		return inputNumber(1, usablePermitCards.size())-1; // -1 for array positioning
 	}
-	
+
+	private int chooseBuildableCity(PermitCard chosenPermitCard) {
+
+		System.out.println("Which city would you like to build your emporium in?");
+
+		City[] actualBuildableCities = chosenPermitCard.getArrayBuildableCities();
+		for (int i = 0; i < actualBuildableCities.length; i++) {
+			City buildableCity = actualBuildableCities[i];
+			System.out.println(i + 1 + ". " + buildableCity.getCityName());
+		}
+
+		return inputNumber(1, actualBuildableCities.length) - 1; // -1 for array positioning
+
+	}
+
+	/* Queue of adjacent built cities. It starts only with chosenCity.
+		Elements of queue are removed and analysed one at a time.
+		If a city is linked to the analysed element of the queue and emporium is present,
+		the city is also added to the queue */
+	private ArrayList<City> getAdjacentBuiltCities(Player playerTurn, int indexChosenCity) {
+
+		List<Integer>[] arrayCityLinks = field.getArrayCityLinks();
+		boolean[] visitedCities = new boolean[arrayCityLinks.length];
+		Queue<Integer> toVisitQueue = new LinkedList<>();
+
+		toVisitQueue.add(indexChosenCity);
+		visitedCities[indexChosenCity] = true;
+
+		ArrayList<City> nearbyBuiltCities = new ArrayList<>();
+		City[] arrayCity=field.getArrayCity();
+		while (!toVisitQueue.isEmpty()) {
+			int visitingCity = toVisitQueue.remove();
+			nearbyBuiltCities.add(arrayCity[visitingCity]);
+			for (Integer adjCity : arrayCityLinks[visitingCity]) {
+				if (arrayCity[adjCity].isEmporiumAlreadyBuilt(playerTurn) && !visitedCities[adjCity]) {
+					toVisitQueue.add(adjCity);
+					visitedCities[adjCity] = true;
+				}
+			}
+		}
+
+		return nearbyBuiltCities;
+
+	}
+
 	private void acquirePermitCard(Player playerTurn){
 		System.out.println("Which balcony would you like to satisfy?");
 		System.out.println("1. Sea Balcony");
