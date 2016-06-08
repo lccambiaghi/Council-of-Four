@@ -20,7 +20,7 @@ public class Player{
 	
 	private char typeOfConnection;
 	private Socket playerSocket;
-	private RMIPlayerSideInterface playerSide;
+	private RMIPlayerSideInterface rmiPlayerSide;
 	
 	private char CLIorGUI;
 
@@ -57,8 +57,8 @@ public class Player{
 		}
 	}
 	
-	public RMIPlayerSideInterface getPlayerSide() {return playerSide;}
-	public void setPlayerSide(RMIPlayerSideInterface playerSide) {this.playerSide=playerSide;}
+	public RMIPlayerSideInterface getRmiPlayerSide() {return rmiPlayerSide;}
+	public void setRmiPlayerSide(RMIPlayerSideInterface rmiPlayerSide) {this.rmiPlayerSide=rmiPlayerSide;}
 
 	public char getCLIorGUI() {return CLIorGUI;}
 	public void setCLIorGUI(char cLIorGUI) {CLIorGUI = cLIorGUI;}	
@@ -75,7 +75,7 @@ public class Player{
 			output.flush();
 		}else{
 			try {
-				playerSide.sendString(string);
+				rmiPlayerSide.sendString(string);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -87,7 +87,7 @@ public class Player{
 			return input.nextLine();
 		}else{
 			try {
-				return playerSide.receiveString();
+				return rmiPlayerSide.receiveString();
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
