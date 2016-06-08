@@ -26,18 +26,21 @@ public class PlayerSide {
 	
 	public void printString(String string) { System.out.println(string); }
 	
-	RMIGameSideInterface rmiGameSide;
+	private String nickname;
+	
+	private RMIGameSideInterface rmiGameSide;
 	
 	char typeOfConnection;
 	
-	SocketConnection socketConnection;
+	private SocketConnection socketConnection;
 	
-	RMIConnection rmiConnection;
-	RMIPlayerSideInterface rmiPlayerSide;
+	private RMIConnection rmiConnection;
 	
 	private Scanner inCLI;
 	
-	String message;
+	
+	
+	private String message;
 	
 	private int playersMaxNumber;
 	private Configurations config;
@@ -77,7 +80,7 @@ public class PlayerSide {
 				switch(message){
 				
 				case	"SOCKETlogin":
-					SOCKETlogin();
+					login();
 					break;
 				
 				case	"SOCKETwaitForServer":
@@ -145,19 +148,34 @@ public class PlayerSide {
 		socketConnection.sendObjectTS(object);
 	}
 	
-	private void SOCKETlogin(){
+	public void login(){
 		boolean logged = false;
+		String nickname = null;
 		while(!logged){
 			printString("Enter your nickname");
-			String nickname = inCLI.nextLine();
-			sendStringTS(nickname);
-			String received = receiveStringFS();
-			logged = Boolean.valueOf(received);
+			nickname = inCLI.nextLine();
+			if(typeOfConnection=='s'){
+				sendStringTS(nickname);
+				String received = receiveStringFS();
+				logged = Boolean.valueOf(received);
+			}else{
+				try {
+					boolean usedNickname = rmiGameSide.isNicknameInUse(nickname);
+					logged = !usedNickname;
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
 			if(!logged){
 				printString("Nickname already in use, enter another one");
 			}
 		}
+		this.nickname=nickname;
 		printString("Logged!");
+	}
+	
+	public String getNickname(){
+		return nickname;
 	}
 	
 	
