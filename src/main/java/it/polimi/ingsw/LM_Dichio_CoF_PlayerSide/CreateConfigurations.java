@@ -15,7 +15,7 @@ public class CreateConfigurations extends Thread{
 		System.out.println("You are the first player");
 		System.out.println("You have to create the configurations of a match\n");
 		
-		int playersNumber = 0;
+		int playersMaxNumber = 0;
 		boolean repeat = true;
 		System.out.println("First of all, enter the max number of players you want (min 2, max 8)");
 		do {
@@ -23,8 +23,8 @@ public class CreateConfigurations extends Thread{
 	        	System.out.println("Enter a number!");
 	        	inCLI.next();
 	        }
-	        playersNumber= inCLI.nextInt();
-	        if(2<=playersNumber&&playersNumber<=8){
+	        playersMaxNumber= inCLI.nextInt();
+	        if(2<=playersMaxNumber&&playersMaxNumber<=8){
 				repeat = false;
 			}else System.out.println("min 2, max 8!");
 	    } while (repeat);
@@ -87,7 +87,7 @@ public class CreateConfigurations extends Thread{
 			config.setCityBonusNumberMax(3);
 		}
 		
-		playerSide.setPlayersNumber(playersNumber);
+		playerSide.setPlayersMaxNumber(playersMaxNumber);
 		playerSide.setConfigurations(config);
 		
 	}
