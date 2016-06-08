@@ -12,6 +12,7 @@ public class Field {
 
 	private Configurations config;
 	private City[] arrayCity;
+	private List<Integer>[] arrayCityLinks;// array of Integer Lists
 	private Balcony[] arrayBalcony;
 	private AvailableCouncillors availableCouncillors;
 	private ArrayList<Player> arrayListPlayer;
@@ -123,25 +124,26 @@ public class Field {
 		}else{
 			cityLinksMatrix = config.getCityLinksMatrix();
 		}
-		
+
 		for(int row=0; row<arrayCity.length; row++){
 			
         	ArrayList<City> arrayListCityConnected = new ArrayList<>();
 			for (int column=0; column<arrayCity.length; column++){
         		if(cityLinksMatrix[row][column]==1){
         			arrayListCityConnected.add(arrayCity[column]);
+					arrayCityLinks[row].add(column);
         		}	
         	}
 
-			/* ArrayList to simplify the procedure*/
+			 //ArrayList to simplify the procedure
 			City[] arrayCityConnected = new City[arrayListCityConnected.size()];
 			arrayListCityConnected.toArray(arrayCityConnected);
 			arrayCity[row].setNearbyCity(arrayCityConnected);
 			
-		}  
+		}
 
 	}
-	
+
 	/* This method imports cityLinksMatrix from the respective .txt file according to parameters passed:
 	  "difficulty" is the first letter of the file, "numberCities" the second one */
 	private int[][] importCityLinksMatrix(char difficulty , int numberCities){
@@ -213,17 +215,19 @@ public class Field {
 	public City[] getArrayCity(){
 		return arrayCity;
 	}
-
-	public Balcony[] getArrayBalcony() {return arrayBalcony;}
-
-	public Balcony getBalconyFromIndex(int index){return getArrayBalcony()[index];}
-
-	public AvailableCouncillors getAvailableCouncillors() {return availableCouncillors; }
-
-
-	public Route getRichnessRoute() {return richnessRoute;}
+	public List[] getArrayCityLinks() {return arrayCityLinks;}
 
 	public Region getRegionFromIndex (int index){
 		return arrayRegion[index];
 	}
+
+	public Balcony[] getArrayBalcony() {return arrayBalcony;}
+	public Balcony getBalconyFromIndex(int index){return getArrayBalcony()[index];}
+
+	public AvailableCouncillors getAvailableCouncillors() {return availableCouncillors; }
+
+	public Route getRichnessRoute() {return richnessRoute;}
+	public Route getNobilityRoute() {return nobilityRoute;}
+	public Route getVictoryRoute() {return victoryRoute;}
+
 }
