@@ -20,9 +20,8 @@ public class Field {
 	private Route victoryRoute;
 	private Route nobilityRoute;
 	private Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
-
 	
-	King king;
+	private King king;
 	
 	public Field(Configurations config, ArrayList<Player> arrayListPlayer) {
 		
@@ -229,5 +228,7 @@ public class Field {
 	public Route getRichnessRoute() {return richnessRoute;}
 	public Route getNobilityRoute() {return nobilityRoute;}
 	public Route getVictoryRoute() {return victoryRoute;}
+
+	public King getKing(){return king;}
 
 }
