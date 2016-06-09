@@ -2,15 +2,18 @@ package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 public class King {
 
-	private City actualCity;
+	private City currentCity;
 
 	/* The constructor assigns the king to its initial city */
-	public King(City actualCity){
-		this.actualCity=actualCity;
+	public King(City currentCity){
+		this.currentCity = currentCity;
 	}
 
-	public City getActualCity() {
-		return actualCity;
+	public City getCurrentCity() {
+		return currentCity;
 	}
-	
+	public void setCurrentCity(City newCity) {
+		currentCity =newCity;
+	}
+
 }
