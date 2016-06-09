@@ -95,4 +95,15 @@ public class SellingObject {
 		return number;
 
 	}
+
+	
+	public int getPrice() {
+		return price;
+	}
+
+	public Object getObject() {
+		return object;
+	}
+
+
 }
