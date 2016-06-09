@@ -119,8 +119,8 @@ public class Player{
 	public void decrementAssistant(int decrement)	{assistant -=decrement;}
 	
 	public ArrayList<PoliticCard> getArrayListPoliticCard() {return arrayListPoliticCard;}
-
 	public void addPoliticCard(PoliticCard politicCard) {arrayListPoliticCard.add(politicCard);}
+	public void discardPoliticCard(PoliticCard politicCard){arrayListPoliticCard.remove(politicCard);}
 
 	public ArrayList<PermitCard> getArrayListPermitCard(){return arrayListPermitCard;}
 	public void acquirePermitCard(PermitCard permitCard){arrayListPermitCard.add(permitCard);}
