@@ -35,4 +35,6 @@ public interface RMIPlayerSideInterface extends Remote {
 	 */
 	public void waitTurn() throws RemoteException;
 	
+	public void play() throws RemoteException;
+	
 }
