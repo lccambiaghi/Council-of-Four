@@ -31,6 +31,8 @@ public class Match {
 		
 		field = new Field(config, arrayListPlayer);
 		
+		market = new Market (arrayListPlayer);
+		
 		startGame();
 		
 	}
@@ -61,6 +63,8 @@ public class Match {
 			if (askYesOrNo())
 				quickAction(playerTurn);
 		}
+		
+		market.startMarket();
 	}
 
 	private void readFileConfigurations(){
