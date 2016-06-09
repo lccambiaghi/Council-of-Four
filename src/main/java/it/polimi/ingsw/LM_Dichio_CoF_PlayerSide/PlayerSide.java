@@ -38,7 +38,7 @@ public class PlayerSide {
 	
 	private Scanner inCLI;
 	
-	
+	PlayMatch playMatch;
 	
 	private String message;
 	
@@ -140,17 +140,25 @@ public class PlayerSide {
 	 * Methods only used by the connection SOCKET
 	 */
 	// TS= To Server, FS= From Server
-	private void sendStringTS(String string){
+	protected void sendStringTS(String string){
 		socketConnection.sendStringTS(string);
 	}
 		
-	private String receiveStringFS(){
+	protected String receiveStringFS(){
 		return socketConnection.receiveStringFS();
 	}
 	
-	private void sendObjectTS(Object object){
+	protected void sendObjectTS(Object object){
 		socketConnection.sendObjectTS(object);
 	}
+	
+	
+	protected char getTypeOfConnection() {
+		return typeOfConnection;
+	}
+	
+	
+	
 	
 	public void login(){
 		boolean logged = false;
@@ -209,6 +217,12 @@ public class PlayerSide {
 	
 	public void playMatch(){
 		printString("Match started!");
+		playMatch = new PlayMatch(this,rmiGameSide);
+		playMatch.startPlayMatch();
+	}
+	
+	public PlayMatch getPlayMatch() {
+		return playMatch;
 	}
 	
 	
