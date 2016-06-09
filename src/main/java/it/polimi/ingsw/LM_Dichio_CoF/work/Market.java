@@ -15,13 +15,12 @@ import java.util.Map.Entry;
 public class Market {
 
 	SellingObject sellingObject;
-	ArrayList <Player> arrayListPlayer= new ArrayList<>();
+	ArrayList <Player> arrayListPlayer;
 	Map <SellingObject, Player> mapSellingObjects = new HashMap<>()	;
 	Field field;
 	
-	Market (ArrayList <Player> arrayListPlayer){
-		this.arrayListPlayer=arrayListPlayer;
-		
+	Market (ArrayList<Player> arrayListPlayer){
+		this.arrayListPlayer = new ArrayList<Player>(arrayListPlayer);		
 	}
 	
 	public void startMarket (){
@@ -44,35 +43,49 @@ public class Market {
 		for (Entry<SellingObject, Player> sellingOBjectPlayerEntry : mapSellingObjects.entrySet()) {
 			Entry entry = (Entry) sellingOBjectPlayerEntry;
 			SellingObject sellingObject = (SellingObject) entry.getKey();
-			Player player = (Player) entry.getValue();
+			Player sellingPlayer = (Player) entry.getValue();
 			
 			int accordingToBuy = wantBuy(1,2);
-			String name;
 			
 			if(accordingToBuy==1){	
 				Object object = sellingObject.getObject();
-				name=sellingObject.getObject().getClass().toString();
+				
+				String name=sellingObject.getObject().getClass().toString();
+				int price = sellingObject.getPrice();
+				
 				switch (name){
 					case "PermitCard": 
-						playerTurn.getArrayListPermitCard().add((PermitCard)object);
+						if(canBuy(price,playerTurn,sellingPlayer)){
+							playerTurn.getArrayListPermitCard().add((PermitCard)object);
+						}
 						break;
 					case "PoliticCard": 
-						playerTurn.getArrayListPoliticCard().add((PoliticCard)object);
+						if(canBuy(price,playerTurn,sellingPlayer)){
+							playerTurn.getArrayListPoliticCard().add((PoliticCard)object);
+						}
 						break;
 					case "Assistants":
-						playerTurn.addAssistant((int)object);
+						if(canBuy(price,playerTurn,sellingPlayer)){
+							playerTurn.addAssistant((int)object);
+						}
 						break;
-				}
-				int price = sellingObject.getPrice();
-				Route richnessRoute = field.getRichnessRoute();
-				if(checkIfEnoughRichness(playerTurn, price)){
-					richnessRoute.movePlayer(price, player);
-					richnessRoute.movePlayer(-price, playerTurn);
-					mapSellingObjects.remove(sellingObject);
 				}
 			}
 		}
 		
+	}
+	
+	
+	private boolean canBuy(int price, Player playerTurn, Player sellingPlayer){
+		Route richnessRoute = field.getRichnessRoute();
+		if(checkIfEnoughRichness(playerTurn, price)){
+			richnessRoute.movePlayer(price, sellingPlayer);
+			richnessRoute.movePlayer(-price, playerTurn);
+			mapSellingObjects.remove(sellingObject);
+			return true;
+		}
+		System.out.println("You can't buy this object!");
+		return false;
 	}
 	
 	private boolean checkIfEnoughRichness(Player playerTurn, int payed) {
