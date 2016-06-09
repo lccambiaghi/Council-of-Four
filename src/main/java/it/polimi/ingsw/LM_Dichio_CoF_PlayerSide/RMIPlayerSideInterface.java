@@ -5,6 +5,10 @@ import java.rmi.RemoteException;
 
 public interface RMIPlayerSideInterface extends Remote {
 	
+	
+	/*
+	 * Methods used to connect to the server and to get into a match
+	 */
 	public void login() throws RemoteException;
 	
 	public String getNickname() throws RemoteException;
@@ -24,5 +28,11 @@ public interface RMIPlayerSideInterface extends Remote {
 	public void startingMatch() throws RemoteException;
 	
 	public void playMatch() throws RemoteException;
+	
+	
+	/*
+	 * Methods of the match
+	 */
+	public void waitTurn() throws RemoteException;
 	
 }
