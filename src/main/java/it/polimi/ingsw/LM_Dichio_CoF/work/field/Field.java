@@ -124,6 +124,10 @@ public class Field {
 			cityLinksMatrix = config.getCityLinksMatrix();
 		}
 
+		arrayCityLinks= new List[arrayCity.length];
+		for (int i=0; i<arrayCityLinks.length; i++)
+			arrayCityLinks[i]= new LinkedList<>();
+
 		for(int row=0; row<arrayCity.length; row++){
 			
         	ArrayList<City> arrayListCityConnected = new ArrayList<>();
