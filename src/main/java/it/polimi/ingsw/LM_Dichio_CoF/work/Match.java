@@ -3,6 +3,7 @@ package it.polimi.ingsw.LM_Dichio_CoF.work;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.lang.reflect.Array;
 import java.util.*;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
@@ -37,7 +38,7 @@ public class Match {
 		
 	}
 	
-	private void startGame() {	
+	public void startGame() {
 		
 		int turn=0;
 
@@ -231,7 +232,10 @@ public class Match {
 		else {
 
 			Balcony chosenBalcony = chooseBalcony();
-			Color chosenCouncillorColor=chooseCouncillorColor();
+
+			ArrayList<Color> choosableColors = getChoosableColors(field);
+			Color chosenCouncillorColor=chooseCouncillorColor(choosableColors);
+
 			electCouncillor(chosenBalcony, chosenCouncillorColor);
 
 			playerTurn.decrementAssistant(Constant.ELECTION_ASSISTANT_COST);
@@ -250,44 +254,28 @@ public class Match {
 
 	}
 
-	private Color chooseCouncillorColor(){
+	private ArrayList<Color> getChoosableColors(Field field) {
+
+		ArrayList<Councillor> availableCouncillors = field.getAvailableCouncillors().getArrayListCouncillor();
+		boolean[] seen = new boolean[Constant.COLORS_NUMBER];
+
+		ArrayList<Color> choosableColors = new ArrayList<>();
+		for (Councillor councillor: availableCouncillors)
+			if (!seen[Color.valueOf(councillor.getColor().toString()).ordinal()]) {
+				choosableColors.add(councillor.getColor());
+				seen[Color.valueOf(councillor.getColor().toString()).ordinal()]=true;
+			}
+
+		return choosableColors;
+	}
+
+	private Color chooseCouncillorColor(ArrayList<Color> choosableColors){
 
 		System.out.println("What color would you like the new councillor to be?");
-		System.out.println("1. White");
-		System.out.println("2. Black");
-		System.out.println("3. Cyan");
-		System.out.println("4. Orange");
-		System.out.println("5. Pink");
-		System.out.println("6. Purple");
+		for (int i=0; i<choosableColors.size(); i++)
+			System.out.println(i+1 + ". " + choosableColors.get(i));
 
-		// Se implementiamo questo, dobbiamo cambiare l'implementazione di removeAvailableCouncillor
-		// inserendo checkIfColorAvailable
-/*		Color chosenCouncillorColor;
-		Councillor chosenCouncillor;
-		AvailableCouncillors availableCouncillors = field.getAvailableCouncillors();
-		boolean electionSuccessful=false;
-		do {
-			try {
-				chosenCouncillorColor = Color.getColorFromIndex(inputNumber(1, 4));
-				chosenCouncillor = availableCouncillors.removeAvailableCouncillor(chosenCouncillorColor); // qui l'eccezione
-				chosenBalcony.electCouncillor(chosenCouncillor,availableCouncillors);
-				electionSuccessful=true;
-			} catch (NullPointerException e) {
-				System.out.println("Color not available! Choose another one.");
-			}
-		} while (!electionSuccessful);*/
-
-		Color chosenCouncillorColor= Color.getColorFromIndex(inputNumber(1, 6));
-		AvailableCouncillors availableCouncillors = field.getAvailableCouncillors();
-		boolean colorAvailable = availableCouncillors.checkIfColorAvailable(chosenCouncillorColor);
-
-		while(!colorAvailable) {
-			System.out.println("Color not available! Choose another one."); //TODO e se il giocatore volesse annullare la mossa?
-			chosenCouncillorColor = Color.getColorFromIndex(inputNumber(1,6));
-			colorAvailable = availableCouncillors.checkIfColorAvailable(chosenCouncillorColor);
-		}
-
-		return chosenCouncillorColor;
+		return choosableColors.get(inputNumber(1, choosableColors.size()));
 
 	}
 
@@ -342,7 +330,9 @@ public class Match {
 
 		Balcony chosenBalcony = chooseBalcony();
 
-		Color chosenCouncillorColor=chooseCouncillorColor();
+		ArrayList<Color> choosableColors = getChoosableColors(field);
+
+		Color chosenCouncillorColor=chooseCouncillorColor(choosableColors);
 
 		electCouncillor(chosenBalcony,chosenCouncillorColor);
 
