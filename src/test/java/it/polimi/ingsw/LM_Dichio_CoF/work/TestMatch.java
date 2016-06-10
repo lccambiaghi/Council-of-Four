@@ -1,6 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -14,17 +15,22 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
+import org.mockito.Mockito;
 
 public class TestMatch {
 
 	private TestCases testCases = new TestCases();
 
+
 	@Ignore
 	public void giveInitialPoliticCards() {
 		
 		ArrayList <Player> arrayListPlayer = testCases.arrayListPlayer();
-	
-		Match match = new Match(arrayListPlayer);
+
+		Match match = Mockito.mock(Match.class);
+		doNothing().when(match).startGame();
+
+		match = new Match(arrayListPlayer);
 
 		for (Player anArrayListPlayer : arrayListPlayer) {
 			ArrayList<PoliticCard> arrayListPoliticCard = anArrayListPlayer.getArrayListPoliticCard();
@@ -55,7 +61,9 @@ public class TestMatch {
 		testCases.configurations();
 		ArrayList<Player> arrayListPlayer = testCases.arrayListPlayer();
 
-		Match match = new Match(arrayListPlayer);
+		/*Match match = Mockito.mock(Match.class);
+		when(match.inputNumber(anyInt(), anyInt())).thenReturn(2).thenReturn(1).thenReturn(1).thenReturn(1);
+		match = new Match(arrayListPlayer);*/
 
 		// asks if quick action : 2=no
 
