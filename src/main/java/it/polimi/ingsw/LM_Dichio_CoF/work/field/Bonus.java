@@ -70,9 +70,15 @@ public class Bonus {
 			case Nobility:
 				nobilityRoute = field.getNobilityRoute();
 				nobilityRoute.movePlayer(increment, player);
+				break;
+			case Victory:
+				nobilityRoute = field.getNobilityRoute();
+				nobilityRoute.movePlayer(increment, player);
+				break;
 			case Cards:
 				for (int i=0; i<increment; i++)
 					player.addPoliticCard(new PoliticCard());
+				break;
 		}
 
 	}

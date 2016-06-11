@@ -29,6 +29,7 @@ public class Constant {
 
 	//easily changeable
 	public static final int POLITIC_CARDS_INITIAL_NUMBER =6;
+	public static final int ASSISTANT_INITIAL_FIRST_PLAYER = 1;
 	public static final int RICHNESS_INITIAL_FIRST_PLAYER =10;
 	public static final int RICHNESS_MAX =20;
 	public static final int NOBILITY_MAX =20;

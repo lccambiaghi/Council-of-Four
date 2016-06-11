@@ -104,17 +104,15 @@ public class Match {
 	}
 		
 	public void giveInitialPoliticCards(ArrayList<Player> arrayListPlayer){
-		for (Player player : arrayListPlayer) {
-			for (int itCard = 0; itCard < Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++) {
+		for (Player player : arrayListPlayer)
+			for (int itCard = 0; itCard < Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++)
 				player.addPoliticCard(new PoliticCard());
-			}
-		}
 	}
 	
 	public void giveInitialAssistants(ArrayList<Player> arrayListPlayer){
-		for(int itPlayer=0, numberAssistants=1; itPlayer<arrayListPlayer.size(); itPlayer++, numberAssistants++){
-			arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
-		}
+		for(int itPlayer = 0, numberAssistants = Constant.ASSISTANT_INITIAL_FIRST_PLAYER;
+			itPlayer<arrayListPlayer.size(); itPlayer++, numberAssistants++)
+				arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
 	}
 
 	private boolean askYesOrNo(){ //TODO test e socket con playerTurn
@@ -143,7 +141,7 @@ public class Match {
 			}
 			number=in.nextInt();
 			in.nextLine();
-		} while(number<lowerBound && number>upperBound);
+		} while(number<lowerBound || number>upperBound);
 		//in.close();
 
 		return number;
