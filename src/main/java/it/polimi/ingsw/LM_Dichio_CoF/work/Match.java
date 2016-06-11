@@ -3,7 +3,6 @@ package it.polimi.ingsw.LM_Dichio_CoF.work;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.lang.reflect.Array;
 import java.util.*;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
@@ -11,7 +10,6 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
 
 public class Match {
 
-	private Configurations config;
 	private ArrayList<Player> arrayListPlayer;
 	private int numberPlayers;
 	private Field field;
@@ -23,12 +21,12 @@ public class Match {
 		numberPlayers=arrayListPlayer.size();
 		
 		//Collections.shuffle(arrayListPlayer); //per adesso testiamo solo il primo giocatore
+
+		Configurations config = readFileConfigurations();
 		
-		readFileConfigurations();
+		giveInitialPoliticCards(this.arrayListPlayer);
 		
-		giveInitialPoliticCards();
-		
-		giveInitialAssistants();
+		giveInitialAssistants(this.arrayListPlayer);
 		
 		field = new Field(config, arrayListPlayer);
 		
@@ -37,7 +35,10 @@ public class Match {
 		startGame();
 		
 	}
-	
+
+	// MatchMock
+	public Match(){};
+
 	public void startGame() {
 		
 		int turn=0;
@@ -68,7 +69,7 @@ public class Match {
 		market.startMarket();
 	}
 
-	private void readFileConfigurations(){
+	public Configurations readFileConfigurations(){
 
 		FileInputStream fileInputStream = null;
 		
@@ -79,7 +80,7 @@ public class Match {
 			
 			// create an ObjectInputStream for the file we created before
 	         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-	         this.config = (Configurations) objectInputStream.readObject();
+	         return (Configurations) objectInputStream.readObject();
 	         
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -94,18 +95,19 @@ public class Match {
 				e.printStackTrace();
 			}
 		}
-		
+
+		return null;
 	}
 		
-	private void giveInitialPoliticCards(){
-		for (Player anArrayListPlayer : arrayListPlayer) {
+	public void giveInitialPoliticCards(ArrayList<Player> arrayListPlayer){
+		for (Player player : arrayListPlayer) {
 			for (int itCard = 0; itCard < Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++) {
-				anArrayListPlayer.addPoliticCard(new PoliticCard());
+				player.addPoliticCard(new PoliticCard());
 			}
 		}
 	}
 	
-	private void giveInitialAssistants(){
+	public void giveInitialAssistants(ArrayList<Player> arrayListPlayer){
 		for(int itPlayer=0, numberAssistants=1; itPlayer<arrayListPlayer.size(); itPlayer++, numberAssistants++){
 			arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
 		}
@@ -125,7 +127,7 @@ public class Match {
 
 	}
 
-	private int inputNumber (int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
+	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
 
 		Scanner in = new Scanner(System.in);
 		int number;
@@ -642,7 +644,7 @@ public class Match {
 
 				boolean eligibleSet=false;
 				int cost;
-				ArrayList<PoliticCard> chosenPoliticCards= new ArrayList<>();
+				ArrayList<PoliticCard> chosenPoliticCards;
 				do {
 					chosenPoliticCards = choosePoliticCards(usablePoliticCards);
 					cost=eligibleMove(chosenPoliticCards, playerRichness);
@@ -777,8 +779,6 @@ public class Match {
 		Map<City, Integer> movableCities= new LinkedHashMap<>();
 		int levelCost=0;
 		movableCities.put(arrayCity[indexCurrentCity], levelCost);
-
-		ArrayList<City> nearbyBuiltCities = new ArrayList<>();
 
 		while (playerTurn.getRichness()>levelCost) {
 			while(!visitingLevelQueue.isEmpty()) {
