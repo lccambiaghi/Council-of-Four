@@ -218,7 +218,7 @@ public class Field {
 	public City[] getArrayCity(){
 		return arrayCity;
 	}
-	public List[] getArrayCityLinks() {return arrayCityLinks;}
+	public List<Integer>[] getArrayCityLinks() {return arrayCityLinks;}
 
 	public Region getRegionFromIndex (int index){
 		return arrayRegion[index];
