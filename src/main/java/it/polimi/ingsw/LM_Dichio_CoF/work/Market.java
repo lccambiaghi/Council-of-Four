@@ -16,7 +16,7 @@ public class Market {
 
 	SellingObject sellingObject;
 	ArrayList <Player> arrayListPlayer;
-	Map <SellingObject, Player> mapSellingObjects = new HashMap<>()	;
+	ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
 	Field field;
 	
 	Market (ArrayList<Player> arrayListPlayer){
@@ -25,47 +25,100 @@ public class Market {
 	
 	public void startMarket (){
 		int turn = 0;
-		
+		int choose;
+		int counter=1;
+		boolean [] selleable = new boolean [3] ;
 		Player playerTurn=arrayListPlayer.get(turn);
+		int numberPermitCard=playerTurn.getArrayListPermitCard().size();
+		int numberPoliticCard=playerTurn.getArrayListPoliticCard().size();
+		int numberAssistants=playerTurn.getAssistant();
+		int [] stock = new int [3];
+		stock[0]=numberPermitCard;
+		stock[1]=numberPoliticCard;
+		stock[2]=numberAssistants;
+		Map <Integer, String> itemsMenu = new HashMap<>();
 		
-		SellingObject sellingObject = new SellingObject(playerTurn);
-		mapSellingObjects.put(sellingObject, playerTurn);
 		
-		startBuying(mapSellingObjects);
+		if (numberPermitCard>0 || numberPoliticCard>0 || numberAssistants>0){
+			System.out.println("Would you like to sell something? 1. Yes 2. No");
+			if(inputNumber(1,2)==1){
+				System.out.println("Which object would you like to sell?");
+				for(int i=0; i<stock.length; i++){
+					if(stock[i]>0)
+						selleable[i]=true;
+				}
+				for(int i=0; i<selleable.length;i++){
+					switch(i){
+					case 0: 
+						if(selleable[i]){
+							System.out.println(counter +"." + "Permit Card");
+							itemsMenu.put(counter, "PermitCard");
+							counter++; 
+							}
+						break;
+					case 1: 
+						if(selleable[i]){
+							System.out.println(counter +"." + "Politic Card");
+							itemsMenu.put(counter, "PoliticCard");
+							counter++; 
+							}
+						break;
+					case 2: 
+						if(selleable[i]){
+							System.out.println(counter +"." + "Assistants");
+							itemsMenu.put(counter, "Assistants");
+						}
+						break;
+					}
+				}
+				choose= inputNumber(1, counter);
+				sellingObject = new SellingObject (playerTurn, itemsMenu.get(choose));
+			}
+			else
+				turn++;	
+		}else{
+			System.out.println("You can't sell nothing");
+			turn++;
+		}
+		
+		
+		
+		
+			//prossimo giocatore
+		
+		startBuying(arrayListSellingObjects);
 		
 	}
-	private void startBuying(Map <SellingObject, Player> mapSellingObjects){
+	private void startBuying(ArrayList <SellingObject> arrayListSelingObjects){
 		Collections.shuffle(arrayListPlayer);
 		int turn=0;
 		
 		Player playerTurn=arrayListPlayer.get(turn);
 		
-		for (Entry<SellingObject, Player> sellingOBjectPlayerEntry : mapSellingObjects.entrySet()) {
-			Entry entry = (Entry) sellingOBjectPlayerEntry;
-			SellingObject sellingObject = (SellingObject) entry.getKey();
-			Player sellingPlayer = (Player) entry.getValue();
-			
-			int accordingToBuy = wantBuy(1,2);
+		for (SellingObject sellingObject : arrayListSelingObjects){
+			System.out.println("Would you like to buy this object? 1. Yes 2. No");
+			int accordingToBuy = inputNumber(1,2);
 			
 			if(accordingToBuy==1){	
 				Object object = sellingObject.getObject();
 				
 				String name=sellingObject.getObject().getClass().toString();
 				int price = sellingObject.getPrice();
+				Player owner = sellingObject.getOwner();
 				
 				switch (name){
 					case "PermitCard": 
-						if(canBuy(price,playerTurn,sellingPlayer)){
+						if(canBuy(price,playerTurn,owner)){
 							playerTurn.getArrayListPermitCard().add((PermitCard)object);
 						}
 						break;
 					case "PoliticCard": 
-						if(canBuy(price,playerTurn,sellingPlayer)){
+						if(canBuy(price,playerTurn,owner)){
 							playerTurn.getArrayListPoliticCard().add((PoliticCard)object);
 						}
 						break;
 					case "Assistants":
-						if(canBuy(price,playerTurn,sellingPlayer)){
+						if(canBuy(price,playerTurn,owner)){
 							playerTurn.addAssistant((int)object);
 						}
 						break;
@@ -75,13 +128,12 @@ public class Market {
 		
 	}
 	
-	
 	private boolean canBuy(int price, Player playerTurn, Player sellingPlayer){
 		Route richnessRoute = field.getRichnessRoute();
 		if(checkIfEnoughRichness(playerTurn, price)){
 			richnessRoute.movePlayer(price, sellingPlayer);
 			richnessRoute.movePlayer(-price, playerTurn);
-			mapSellingObjects.remove(sellingObject);
+			arrayListSellingObjects.remove(sellingObject);
 			return true;
 		}
 		System.out.println("You can't buy this object!");
@@ -98,24 +150,30 @@ public class Market {
 
 	}
 	
-	private int wantBuy (int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
-
-			Scanner in = new Scanner(System.in);
-			int number;
-
-			do {
-				while(!in.hasNextInt()){
-					System.out.println("Insert a valid input!");
-					in.nextInt();
-				}
-				number=in.nextInt();
-				in.nextLine();
-			} while(number<lowerBound && number>upperBound);
-			//in.close();
-
-			return number;
-
-		}
+	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
+		 
+        Scanner in = new Scanner(System.in);
+        int inputNumber;
+        boolean eligibleInput=false;
+ 
+        do {
+            while(!in.hasNextInt()){
+                System.out.println("Insert an integer value!");
+                in.nextInt();
+            }
+            inputNumber=in.nextInt();
+            in.nextLine();
+ 
+            if(inputNumber>=lowerBound && inputNumber<=upperBound)
+                eligibleInput=true;
+            else
+                System.out.println("Insert a value between "+ lowerBound
+                                    + " and " + upperBound);
+        } while(!eligibleInput);
+ 
+        return inputNumber;
+ 
+    }
 	
 	
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work.field;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
@@ -9,39 +10,31 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.PoliticCard;
 public class SellingObject {
 	int price;
 	Object object;
+	Player owner;
 	
-	public SellingObject (Player player){
+	public SellingObject (Player player, String string){
 		
-		switch(askForType()){
-			case 1: {
+		switch(string){
+			case "PermitCard": {
 				this.object=askPermitCard(player);
 			}
-			case 2: {
+			case "PoliticCard": {
 				this.object=askPoliticCard(player);
 			}
-			case 3: {
+			case "Assints": {
 				this.object=askAssistant(player);			
 			}
 		}
 		this.price=askPrice(player);
-		
+		this.owner=player;
 	}
-	
-	private int askForType (){
-		int choice;
-		System.out.println("Which object do you would to sell?");
-		System.out.println("1. Business Permit Tile");
-		System.out.println("2. Politic Tile");
-		System.out.println("3. Assistant");
-		choice=inputNumber(1,3);
-		return choice;
-		
-	}
+
 	
 	private PermitCard askPermitCard (Player player){
 		ArrayList <PermitCard> playerPermitCards = player.getArrayListPermitCard();
 		System.out.println("Which card do you would to sell?");
 		System.out.println("Your Cards");
+	
 		for (int i=0; i<playerPermitCards.size(); i++){
 			System.out.println(i+1);
 		}
@@ -77,24 +70,30 @@ public class SellingObject {
 		return price;
 	}
 	
-	private int inputNumber (int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
-
-		Scanner in = new Scanner(System.in);
-		int number;
-
-		do {
-			while(!in.hasNextInt()){
-				System.out.println("Insert a valid input!");
-				in.nextInt();
-			}
-			number=in.nextInt();
-			in.nextLine();
-		} while(number<lowerBound && number>upperBound);
-		//in.close();
-
-		return number;
-
-	}
+	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
+		 
+        Scanner in = new Scanner(System.in);
+        int inputNumber;
+        boolean eligibleInput=false;
+ 
+        do {
+            while(!in.hasNextInt()){
+                System.out.println("Insert an integer value!");
+                in.nextInt();
+            }
+            inputNumber=in.nextInt();
+            in.nextLine();
+ 
+            if(inputNumber>=lowerBound && inputNumber<=upperBound)
+                eligibleInput=true;
+            else
+                System.out.println("Insert a value between "+ lowerBound
+                                    + " and " + upperBound);
+        } while(!eligibleInput);
+ 
+        return inputNumber;
+ 
+    }
 
 	
 	public int getPrice() {
@@ -105,5 +104,9 @@ public class SellingObject {
 		return object;
 	}
 
+	public Player getOwner() {
+		return owner;
+	}
 
+	
 }
