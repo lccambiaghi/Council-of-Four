@@ -98,14 +98,6 @@ public class Match {
 
 		return null;
 	}
-	
-	public Field getField(){
-		return field;
-	}
-	
-	public ArrayList<Player> getArrayListPlayer(){
-		return arrayListPlayer;
-	}
 		
 	public void giveInitialPoliticCards(ArrayList<Player> arrayListPlayer){
 		for (Player player : arrayListPlayer)
@@ -119,7 +111,7 @@ public class Match {
 				arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
 	}
 
-	private boolean askYesOrNo(){ //TODO test e socket con playerTurn
+	public boolean askYesOrNo(){ //TODO test e socket con playerTurn
 
 		System.out.println("1. Yes");
 		System.out.println("2. No");
@@ -142,7 +134,7 @@ public class Match {
 		do {
 			while(!in.hasNextInt()){
 				System.out.println("Insert an integer value!");
-				in.nextInt();
+				in.nextLine();
 			}
 			inputNumber=in.nextInt();
 			in.nextLine();
@@ -831,5 +823,11 @@ public class Match {
 
 		return null;
 	}
+
+	public Field getField(){
+		return field;
+	}
+
+	public ArrayList<Player> getArrayListPlayer(){return arrayListPlayer;}
 
 }
