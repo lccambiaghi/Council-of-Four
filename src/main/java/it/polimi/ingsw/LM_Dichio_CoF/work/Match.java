@@ -102,6 +102,10 @@ public class Match {
 	public Field getField(){
 		return field;
 	}
+	
+	public ArrayList<Player> getArrayListPlayer(){
+		return arrayListPlayer;
+	}
 		
 	public void giveInitialPoliticCards(ArrayList<Player> arrayListPlayer){
 		for (Player player : arrayListPlayer)
