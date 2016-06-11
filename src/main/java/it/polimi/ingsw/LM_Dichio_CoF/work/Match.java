@@ -98,6 +98,10 @@ public class Match {
 
 		return null;
 	}
+	
+	public Field getField(){
+		return field;
+	}
 		
 	public void giveInitialPoliticCards(ArrayList<Player> arrayListPlayer){
 		for (Player player : arrayListPlayer) {
