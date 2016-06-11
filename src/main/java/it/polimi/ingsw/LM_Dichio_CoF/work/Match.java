@@ -102,19 +102,21 @@ public class Match {
 	public Field getField(){
 		return field;
 	}
+	
+	public ArrayList<Player> getArrayListPlayer(){
+		return arrayListPlayer;
+	}
 		
 	public void giveInitialPoliticCards(ArrayList<Player> arrayListPlayer){
-		for (Player player : arrayListPlayer) {
-			for (int itCard = 0; itCard < Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++) {
+		for (Player player : arrayListPlayer)
+			for (int itCard = 0; itCard < Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++)
 				player.addPoliticCard(new PoliticCard());
-			}
-		}
 	}
 	
 	public void giveInitialAssistants(ArrayList<Player> arrayListPlayer){
-		for(int itPlayer=0, numberAssistants=1; itPlayer<arrayListPlayer.size(); itPlayer++, numberAssistants++){
-			arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
-		}
+		for(int itPlayer = 0, numberAssistants = Constant.ASSISTANT_INITIAL_FIRST_PLAYER;
+			itPlayer<arrayListPlayer.size(); itPlayer++, numberAssistants++)
+				arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
 	}
 
 	private boolean askYesOrNo(){ //TODO test e socket con playerTurn
@@ -134,19 +136,25 @@ public class Match {
 	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
 
 		Scanner in = new Scanner(System.in);
-		int number;
+		int inputNumber;
+		boolean eligibleInput=false;
 
 		do {
 			while(!in.hasNextInt()){
-				System.out.println("Insert a valid input!");
+				System.out.println("Insert an integer value!");
 				in.nextInt();
 			}
-			number=in.nextInt();
+			inputNumber=in.nextInt();
 			in.nextLine();
-		} while(number<lowerBound && number>upperBound);
-		//in.close();
 
-		return number;
+			if(inputNumber>=lowerBound && inputNumber<=upperBound)
+				eligibleInput=true;
+			else
+				System.out.println("Insert a value between "+ lowerBound
+									+ " and " + upperBound);
+		} while(!eligibleInput);
+
+		return inputNumber;
 
 	}
 
