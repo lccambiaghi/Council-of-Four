@@ -4,17 +4,13 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.io.*;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 public class TestMatchMock {
 
@@ -49,14 +45,25 @@ public class TestMatchMock {
     @Test
     public void inputNumber() {
 
-        ByteArrayInputStream in=new ByteArrayInputStream("1\n".getBytes());
-        System.setIn(in);
+		ByteArrayInputStream in;
 
+		in=new ByteArrayInputStream("1\n".getBytes());
+        System.setIn(in);
         assertEquals(1,match.inputNumber(1,2));
 
-		in=new ByteArrayInputStream("0\n".getBytes());
+		in=new ByteArrayInputStream("a\nb\n2\n".getBytes());
+		System.setIn(in);
+		int output=match.inputNumber(1,2);
+		assertEquals("Insert an integer value!\nInsert an integer value!\n", outContent.toString());
+		assertEquals(2,output);
+		outContent.reset();
 
-		assertEquals("", outContent.toString());
+		in=new ByteArrayInputStream("4\n0\n3\n".getBytes());
+		System.setIn(in);
+		output=match.inputNumber(1,3);
+		assertEquals("Insert a value between 1 and 3\n" +
+					"Insert a value between 1 and 3\n", outContent.toString());
+		assertEquals(3,output);
 
 		//cleanup input stream
         System.setIn(System.in);
