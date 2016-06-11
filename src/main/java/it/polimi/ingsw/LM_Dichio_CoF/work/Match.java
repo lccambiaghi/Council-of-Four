@@ -132,19 +132,25 @@ public class Match {
 	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
 
 		Scanner in = new Scanner(System.in);
-		int number;
+		int inputNumber;
+		boolean eligibleInput=false;
 
 		do {
 			while(!in.hasNextInt()){
-				System.out.println("Insert a valid input!");
+				System.out.println("Insert an integer value!");
 				in.nextInt();
 			}
-			number=in.nextInt();
+			inputNumber=in.nextInt();
 			in.nextLine();
-		} while(number<lowerBound || number>upperBound);
-		//in.close();
 
-		return number;
+			if(inputNumber>=lowerBound && inputNumber<=upperBound)
+				eligibleInput=true;
+			else
+				System.out.println("Insert a value between "+ lowerBound
+									+ " and " + upperBound);
+		} while(!eligibleInput);
+
+		return inputNumber;
 
 	}
 
