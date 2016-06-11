@@ -7,10 +7,12 @@ import java.util.Scanner;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.work.PoliticCard;
 
+import static it.polimi.ingsw.LM_Dichio_CoF.work.Match.inputNumber;
+
 public class SellingObject {
-	int price;
-	Object object;
-	Player owner;
+	private int price;
+	private Object object;
+	private Player owner;
 	
 	public SellingObject (Player player, String string){
 		
@@ -25,14 +27,14 @@ public class SellingObject {
 				this.object=askAssistant(player);			
 			}
 		}
-		this.price=askPrice(player);
+		this.price=askPrice();
 		this.owner=player;
 	}
 
 	
 	private PermitCard askPermitCard (Player player){
 		ArrayList <PermitCard> playerPermitCards = player.getArrayListPermitCard();
-		System.out.println("Which card do you would to sell?");
+		System.out.println("Which Business Permit Tile would you like to sell?");
 		System.out.println("Your Cards");
 	
 		for (int i=0; i<playerPermitCards.size(); i++){
@@ -46,8 +48,9 @@ public class SellingObject {
 	
 	private PoliticCard askPoliticCard (Player player) {
 		ArrayList <PoliticCard> playerPoliticCards = player.getArrayListPoliticCard();
-		System.out.println("Which card do you would to sell?");
-		System.out.println("Your Cards");
+		System.out.println("Which Business Permit Tile would you like to sell?");
+
+		//TODO implementa stampa
 		for (int i=0; i<playerPoliticCards.size(); i++){
 			System.out.println(i+1 + playerPoliticCards.get(i).getCardColor().toString());
 		}
@@ -64,37 +67,10 @@ public class SellingObject {
 		return numberAssistants;
 	}
 	
-	private int askPrice(Player player){
-		System.out.println("Which price do you would to set for the object?");
-		int price = inputNumber(1, 20);
-		return price;
+	private int askPrice(){
+		System.out.println("Which price would you like to sell it for?");
+		return inputNumber(1, 20);
 	}
-	
-	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
-		 
-        Scanner in = new Scanner(System.in);
-        int inputNumber;
-        boolean eligibleInput=false;
- 
-        do {
-            while(!in.hasNextInt()){
-                System.out.println("Insert an integer value!");
-                in.nextInt();
-            }
-            inputNumber=in.nextInt();
-            in.nextLine();
- 
-            if(inputNumber>=lowerBound && inputNumber<=upperBound)
-                eligibleInput=true;
-            else
-                System.out.println("Insert a value between "+ lowerBound
-                                    + " and " + upperBound);
-        } while(!eligibleInput);
- 
-        return inputNumber;
- 
-    }
-
 	
 	public int getPrice() {
 		return price;

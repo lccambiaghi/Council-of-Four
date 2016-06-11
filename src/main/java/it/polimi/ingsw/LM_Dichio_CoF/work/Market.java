@@ -12,22 +12,24 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
+import static it.polimi.ingsw.LM_Dichio_CoF.work.Match.inputNumber;
+
 public class Market {
 
-	SellingObject sellingObject;
-	ArrayList <Player> arrayListPlayer;
-	ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
-	Field field;
-	
+	private SellingObject sellingObject;
+	private ArrayList <Player> arrayListPlayer;
+	private ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
+	private Field field;
+
 	Market (ArrayList<Player> arrayListPlayer){
 		this.arrayListPlayer = new ArrayList<Player>(arrayListPlayer);		
 	}
 	
 	public void startMarket (){
 		int turn = 0;
-		int choose;
-		int counter=1;
-		boolean [] selleable = new boolean [3] ;
+		int choice;
+
+		boolean [] sellable = new boolean [3] ;
 		Player playerTurn=arrayListPlayer.get(turn);
 		int numberPermitCard=playerTurn.getArrayListPermitCard().size();
 		int numberPoliticCard=playerTurn.getArrayListPoliticCard().size();
@@ -37,42 +39,43 @@ public class Market {
 		stock[1]=numberPoliticCard;
 		stock[2]=numberAssistants;
 		Map <Integer, String> itemsMenu = new HashMap<>();
-		
-		
+
+		int counter=1;
 		if (numberPermitCard>0 || numberPoliticCard>0 || numberAssistants>0){
 			System.out.println("Would you like to sell something? 1. Yes 2. No");
 			if(inputNumber(1,2)==1){
 				System.out.println("Which object would you like to sell?");
 				for(int i=0; i<stock.length; i++){
 					if(stock[i]>0)
-						selleable[i]=true;
+						sellable[i]=true;
 				}
-				for(int i=0; i<selleable.length;i++){
+				for(int i=0; i<sellable.length;i++){
 					switch(i){
-					case 0: 
-						if(selleable[i]){
-							System.out.println(counter +"." + "Permit Card");
-							itemsMenu.put(counter, "PermitCard");
-							counter++; 
+						case 0:
+							if(sellable[i]){
+								System.out.println(counter +". " + "Permit Card");
+								itemsMenu.put(counter, "PermitCard");
+								counter++;
 							}
-						break;
-					case 1: 
-						if(selleable[i]){
-							System.out.println(counter +"." + "Politic Card");
-							itemsMenu.put(counter, "PoliticCard");
-							counter++; 
+							break;
+						case 1:
+							if(sellable[i]){
+								System.out.println(counter +". " + "Politic Card");
+								itemsMenu.put(counter, "PoliticCard");
+								counter++;
 							}
-						break;
-					case 2: 
-						if(selleable[i]){
-							System.out.println(counter +"." + "Assistants");
-							itemsMenu.put(counter, "Assistants");
-						}
-						break;
+							break;
+						case 2:
+							if(sellable[i]){
+								System.out.println(counter +". " + "Assistants");
+								itemsMenu.put(counter, "Assistants");
+							}
+							break;
 					}
 				}
-				choose= inputNumber(1, counter);
-				sellingObject = new SellingObject (playerTurn, itemsMenu.get(choose));
+				choice= inputNumber(1, counter);
+				sellingObject = new SellingObject (playerTurn, itemsMenu.get(choice));
+				arrayListSellingObjects.add(sellingObject);
 			}
 			else
 				turn++;	
@@ -149,32 +152,5 @@ public class Market {
 			return true;
 
 	}
-	
-	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
-		 
-        Scanner in = new Scanner(System.in);
-        int inputNumber;
-        boolean eligibleInput=false;
- 
-        do {
-            while(!in.hasNextInt()){
-                System.out.println("Insert an integer value!");
-                in.nextInt();
-            }
-            inputNumber=in.nextInt();
-            in.nextLine();
- 
-            if(inputNumber>=lowerBound && inputNumber<=upperBound)
-                eligibleInput=true;
-            else
-                System.out.println("Insert a value between "+ lowerBound
-                                    + " and " + upperBound);
-        } while(!eligibleInput);
- 
-        return inputNumber;
- 
-    }
-	
-	
 
 }
