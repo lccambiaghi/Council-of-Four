@@ -117,7 +117,7 @@ public class PlayerSide {
 			/*
 			 * If RMI is chosen
 			 */
-			rmiGameSide=rmiConnection.getRmiGameSide();
+			//rmiGameSide=rmiConnection.getRmiGameSide();
 		
 		}
 	

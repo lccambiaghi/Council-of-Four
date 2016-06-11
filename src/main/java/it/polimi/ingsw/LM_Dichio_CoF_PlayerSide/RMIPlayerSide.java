@@ -22,7 +22,7 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 	}
 	
 	public void sendString(String string){
-		System.out.println(string);
+		playerSide.printString(string);
 	}
 	
 	public String receiveString (){
