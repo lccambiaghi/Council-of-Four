@@ -73,15 +73,12 @@ public class City {
 				
 	}
 
-	/* Return int to throw GameOverException */
-	public int buildEmporium (Player player){
+	public void buildEmporium (Player player){
 
 		if(!isEmporiumAlreadyBuilt(player)) {
 			arrayListEmporium.add(player);
-			return arrayListEmporium.size();
+			player.addCityEmporiumBuilt(this);
 		}
-		else
-			return -1; //emporium already built
 
 	}
 
