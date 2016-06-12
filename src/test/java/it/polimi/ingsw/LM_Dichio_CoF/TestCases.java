@@ -11,6 +11,7 @@ import java.util.Map;
 
 import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.work.MatchMock;
 import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
 
@@ -41,6 +42,12 @@ public class TestCases {
 		}
 		System.out.println();
 		return arrayCity;
+	}
+	
+	
+	public MatchMock matchMock(){
+		MatchMock matchMock = new MatchMock(arrayListPlayer());
+		return matchMock;
 	}
 	
 	public ArrayList <Player> arrayListPlayer() {
