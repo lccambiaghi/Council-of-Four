@@ -105,11 +105,10 @@ public class Market {
 			if(accordingToBuy==1){	
 				Object object = sellingObject.getObject();
 				
-				String name=sellingObject.getObject().getClass().toString();
 				int price = sellingObject.getPrice();
 				Player owner = sellingObject.getOwner();
 				
-				switch (name){
+				switch (object.getClass().getSimpleName()){
 					case "PermitCard": 
 						if(canBuy(price,playerTurn,owner)){
 							playerTurn.getArrayListPermitCard().add((PermitCard)object);
@@ -120,7 +119,7 @@ public class Market {
 							playerTurn.getArrayListPoliticCard().add((PoliticCard)object);
 						}
 						break;
-					case "Assistants":
+					case "Integer":
 						if(canBuy(price,playerTurn,owner)){
 							playerTurn.addAssistant((int)object);
 						}
