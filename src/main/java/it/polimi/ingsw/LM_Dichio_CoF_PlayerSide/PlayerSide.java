@@ -24,13 +24,11 @@ public class PlayerSide {
 		new PlayerSide();
 	}
 	
-	public void printString(String string) { System.out.println(string); }
-	
 	private String nickname;
 	
 	private RMIGameSideInterface rmiGameSide;
 	
-	char typeOfConnection;
+	private char typeOfConnection;
 	
 	private SocketConnection socketConnection;
 	
@@ -38,16 +36,14 @@ public class PlayerSide {
 	
 	private Scanner inCLI;
 	
-	PlayMatch playMatch;
-	
-	private String message;
+	private SocketListener socketListener;
 	
 	private int playersMaxNumber;
 	private Configurations config;
 	
 	public PlayerSide() {
 		
-		printString("I am alive");	
+		System.out.println("I am alive");	
 		
 		inCLI = new Scanner(System.in);
 		
@@ -59,66 +55,9 @@ public class PlayerSide {
 		
 		if(typeOfConnection=='s'){
 			socketConnection = new SocketConnection(this);
+			socketListener = new SocketListener(this, socketConnection);
 		}else{
 			rmiConnection = new RMIConnection(this);
-		}
-		
-		communicateWithServer();
-		
-	}
-	
-	
-	
-	private void communicateWithServer(){
-		
-		if(typeOfConnection=='s'){
-			/*
-			 * If SOCKET is chosen
-			 */
-			while(true){
-				message = receiveStringFS();
-				switch(message){
-				
-				case	"SOCKETlogin":
-					login();
-					break;
-				
-				case	"SOCKETwaitForServer":
-					waitForServer();
-					break;
-					
-				case 	"SOCKETconfigure":
-					configure();
-					break;
-					
-				case	"SOCKETgetConfigurationsPlayersMaxNumber":
-					sendStringTS(String.valueOf(getConfigurationsPlayersMaxNumber()));
-					break;
-					
-				case	"SOCKETgetConfigurationsAsObject":
-					sendObjectTS(getConfigurationsAsObject());
-					break;
-				
-				case 	"SOCKETstartingMatch":
-					startingMatch();
-					break;
-					
-				case	"SOCKETplayMatch":
-					playMatch();
-					break;
-					
-				default	:
-					System.out.println("error");
-					break;
-				}
-			}
-			
-		}else{
-			/*
-			 * If RMI is chosen
-			 */
-			//rmiGameSide=rmiConnection.getRmiGameSide();
-		
 		}
 	
 	}
@@ -127,7 +66,7 @@ public class PlayerSide {
 	private void chooseConnection(){
 		boolean chosen = false;
 		while(!chosen){
-			printString("Choose connection: 's' (Socket) or 'r' (RMI)");
+			System.out.println("Choose connection: 's' (Socket) or 'r' (RMI)");
 			String in = inCLI.nextLine();
 			if(in.equals("s")||in.equals("r")){
 				this.typeOfConnection=in.charAt(0);
@@ -140,50 +79,35 @@ public class PlayerSide {
 	 * Methods only used by the connection SOCKET
 	 */
 	// TS= To Server, FS= From Server
-	protected void sendStringTS(String string){
-		socketConnection.sendStringTS(string);
-	}
-		
-	protected String receiveStringFS(){
-		return socketConnection.receiveStringFS();
-	}
-	
-	protected void sendObjectTS(Object object){
-		socketConnection.sendObjectTS(object);
-	}
-	
 	
 	protected char getTypeOfConnection() {
 		return typeOfConnection;
 	}
 	
-	
-	
-	
 	public void login(){
 		boolean logged = false;
 		String nickname = null;
 		while(!logged){
-			printString("Enter your nickname");
+			System.out.println("Enter your nickname");
 			nickname = inCLI.nextLine();
 			if(typeOfConnection=='s'){
-				sendStringTS(nickname);
-				String received = receiveStringFS();
+				socketConnection.sendStringTS(nickname);
+				String received = socketConnection.receiveStringFS();
 				logged = Boolean.valueOf(received);
 			}else{
 				try {
-					boolean usedNickname = rmiGameSide.isNicknameInUse(nickname);
+					boolean usedNickname = rmiConnection.getRmiGameSide().isNicknameInUse(nickname);
 					logged = !usedNickname;
 				} catch (RemoteException e) {
 					e.printStackTrace();
 				}
 			}
 			if(!logged){
-				printString("Nickname already in use, enter another one");
+				System.out.println("Nickname already in use, enter another one");
 			}
 		}
 		this.nickname=nickname;
-		printString("Logged!");
+		System.out.println("Logged!");
 	}
 	
 	public String getNickname(){
@@ -192,37 +116,39 @@ public class PlayerSide {
 	
 	
 	public void waitForServer(){
-		printString("Just wait a moment...");
+		System.out.println("Just wait a moment...");
 	}
 	
 	public void configure(){
-		printString("You are the first player, standard configurations will be used (FOR THE MOMENT)");
+		System.out.println("You are the first player, standard configurations will be used (FOR THE MOMENT)");
 	}	
 	
 	public int getConfigurationsPlayersMaxNumber(){
-		printString("(FOR THE MOMENT) the standard players number will be used");
+		System.out.println("(FOR THE MOMENT) the standard players number will be used");
 		setStandardPlayersMaxNumber();
 		return playersMaxNumber;
 	}
 	
 	public Object getConfigurationsAsObject(){
-		printString("(FOR THE MOMENT) the standard configurations will be used");
+		System.out.println("(FOR THE MOMENT) the standard configurations will be used");
 		setStandardConfigurations();
 		return config;
 	}
 	
 	public void startingMatch(){
-		printString("You have been selected for a match, wait a moment...");
+		System.out.println("You have been selected for a match, wait a moment...");
 	}
 	
-	public void playMatch(){
-		printString("Match started!");
-		playMatch = new PlayMatch(this,rmiGameSide);
-		playMatch.startPlayMatch();
+	public void matchStarted(){
+		System.out.println("You are playing in a match!");
 	}
 	
-	public PlayMatch getPlayMatch() {
-		return playMatch;
+	public void waitTurn(){
+		System.out.println("It's not your turn yet, wait...");
+	}
+	
+	public void play(){
+		System.out.println("IT'S YOUR TURN!");
 	}
 	
 	
@@ -285,7 +211,7 @@ public class PlayerSide {
 	
 	//Case: client can't make the config on time
 	///// Here I need a method to stop the thread
-	//printString(/*"Too late,"*/"standard configurations will be used");
+	//System.out.println(/*"Too late,"*/"standard configurations will be used");
 	/*standardConfig = true;
 	if(standardConfig){
 		setStandardPlayersNumber();
