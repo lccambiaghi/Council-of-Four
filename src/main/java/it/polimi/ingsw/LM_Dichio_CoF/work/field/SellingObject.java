@@ -23,7 +23,7 @@ public class SellingObject {
 			case "PoliticCard": {
 				this.object=askPoliticCard(player);
 			}
-			case "Assints": {
+			case "Assistants": {
 				this.object=askAssistant(player);			
 			}
 		}
@@ -48,15 +48,15 @@ public class SellingObject {
 	
 	private PoliticCard askPoliticCard (Player player) {
 		ArrayList <PoliticCard> playerPoliticCards = player.getArrayListPoliticCard();
-		System.out.println("Which Business Permit Tile would you like to sell?");
+		System.out.println("Which Politics Tile would you like to sell?");
 
 		//TODO implementa stampa
 		for (int i=0; i<playerPoliticCards.size(); i++){
-			System.out.println(i+1 + playerPoliticCards.get(i).getCardColor().toString());
+			System.out.println(i+1+". "+ playerPoliticCards.get(i).getCardColor().toString());
 		}
-		int choicePoliticCard = inputNumber (1, playerPoliticCards.size());
-		PoliticCard sellingPoliticCard = player.getArrayListPoliticCard().get(choicePoliticCard-1);
-		player.getArrayListPermitCard().remove(choicePoliticCard-1);
+		int choicePoliticCard = inputNumber (1, playerPoliticCards.size())-1;
+		PoliticCard sellingPoliticCard = player.getArrayListPoliticCard().get(choicePoliticCard);
+		player.getArrayListPermitCard().remove(choicePoliticCard);
 		return sellingPoliticCard;
 	}
 	
