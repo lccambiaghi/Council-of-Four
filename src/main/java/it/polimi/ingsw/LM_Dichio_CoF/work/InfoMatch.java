@@ -6,7 +6,9 @@ import java.util.List;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
 
 public class InfoMatch {
-
+	
+	
+	
 	Match match;
 	Field field;
 	
@@ -47,16 +49,27 @@ public class InfoMatch {
 		this.arrayCityLinks = field.getArrayCityLinks();	
 	}
 	
-	public void printInfoField(Player player){
+	public void printInfoField(/*Player player/*/){
+		
+		//this.player=player;
+		
+		printCities();
+		printCityLinks();
+		printBalconies();
+		printAvailableCouncillors();
+		printPlayersInRoutes();
+		
+	}
+	
+	public void printInfoPlayer(/*Player player*/){
 		
 		this.player=player;
 		
-		printCities();
-		//printBalconies();
-		//printAvailableCouncillors();
+		//To be implemeted
 	}
 	
 	private void printCities(){
+		
 		int[] positions;
 		
 		switch(arrayCity.length){
@@ -79,20 +92,79 @@ public class InfoMatch {
 		for(int pos: positions){
 			switch(pos){
 			case	0:
-				System.out.print(" ");
+				System.out.print("  ");
+				break;
 			case	-1:
 			case	-2:
 				System.out.println();
 				break;
 			case 	-3:
-				System.out.print("|");
+				System.out.print("| ");
+				break;
 			default:
-				System.out.print(arrayCity[pos-1] + "  ");
+				System.out.print(arrayCity[pos-1].getCityName().toString() +" ");
 			}
 		}
 		
+		printRegions();
+		System.out.println();
 		
 	}
+	
+	private void printRegions(){
+		System.out.println(" " + RegionName.Sea + "    " + RegionName.Hill + "   " + RegionName.Mountain);
+	}
+	
+	
+	private void printCityLinks(){
+		List<Integer>[] arrayCityLinks = field.getArrayCityLinks();
+		for(int i=0; i<arrayCityLinks.length; i++){
+			System.out.print(arrayCity[i].getCityName() + ": ");
+			for(int j=0;j<arrayCityLinks[i].size();j++){
+			    System.out.print(arrayCity[arrayCityLinks[i].get(j)].getCityName());
+			    if(j!=arrayCityLinks[i].size()-1)
+			    	System.out.print(", ");
+			} 
+			System.out.println();
+		}
 		
+		System.out.println();
+	}
+	
+	private void printBalconies(){
+		Balcony[] arrayBalconies = field.getArrayBalcony();
+		for(Balcony balcony: arrayBalconies){
+			System.out.println( balcony.getNameBalcony() + ":");
+			ArrayList<Councillor> arrayListCouncillor = balcony.getArrayListCouncillor();
+			for(Councillor councillor: arrayListCouncillor){
+				System.out.print("-> " + councillor.getColor() + "  ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+			
+	}
+	
+	private void printAvailableCouncillors(){
+		ArrayList<Councillor> arrayListCouncillor = field.getAvailableCouncillors().getArrayListCouncillor();
+		System.out.println("Available councillors:");
+		for(Councillor councillor: arrayListCouncillor){
+			System.out.print(councillor.getColor() + "  ");
+		}
+		System.out.println();
+		System.out.println();
+	}
+	
+	private void printPlayersInRoutes(){
+		System.out.println("Players status:");
+		for(Player player: arrayListplayer){
+			System.out.println(player.getNickname() + ": " + 
+					"Richness [" + field.getRichnessRoute().getPosition(player) + "], "+
+					"Victory [" + field.getVictoryRoute().getPosition(player) + "], " +
+					"Nobility [" +field.getNobilityRoute().getPosition(player) + "]");
+		}
+	}
+	
+	
 
 }
