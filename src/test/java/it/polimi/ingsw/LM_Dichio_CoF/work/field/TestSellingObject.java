@@ -21,8 +21,8 @@ public class TestSellingObject {
     @Test
 	public void constructor() {
 
-		ByteArrayInputStream in=new ByteArrayInputStream("1\n5\n".getBytes());
-		System.setIn(in);
+		//ByteArrayInputStream in=new ByteArrayInputStream("1\n5\n".getBytes());
+		//System.setIn(in);
 
 		assertEquals(Constant.POLITIC_CARDS_INITIAL_NUMBER, arrayListPlayer.get(0).getArrayListPoliticCard().size());
 
