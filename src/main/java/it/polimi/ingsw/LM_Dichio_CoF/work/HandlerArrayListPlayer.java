@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 
-import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.BrokerGameSide;
 
 public class HandlerArrayListPlayer extends Thread {
 
@@ -26,9 +26,9 @@ public class HandlerArrayListPlayer extends Thread {
 		
 		Player player = gameSide.getFirstPlayer();
 		
-		Broker.askToConfigure(player);
-		playersMaxNumber = Broker.getPlayersMaxNumber(player);
-		config = Broker.getConfigurations(player);
+		BrokerGameSide.askToConfigure(player);
+		playersMaxNumber = BrokerGameSide.getPlayersMaxNumber(player);
+		config = BrokerGameSide.getConfigurations(player);
 		
 		saveFileConfigurations(config);
 		
