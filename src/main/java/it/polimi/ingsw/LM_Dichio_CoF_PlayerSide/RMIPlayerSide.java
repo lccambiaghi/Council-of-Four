@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideInterface {
 
 	PlayerSide playerSide;
-	PlayMatch playMatch;
 	
 	public RMIPlayerSide(PlayerSide playerSide) throws RemoteException {
 		this.playerSide=playerSide;
@@ -22,7 +21,7 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 	}
 	
 	public void sendString(String string){
-		playerSide.printString(string);
+		System.out.println(string);
 	}
 	
 	public String receiveString (){
@@ -53,17 +52,28 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 		playerSide.startingMatch();
 	}
 	
-	public void playMatch(){
-		playerSide.playMatch();
-		playMatch = playerSide.getPlayMatch();
+	public void matchStarted(){
+		playerSide.matchStarted();
 	}
 	
 	public void waitTurn(){
-		playMatch.waitTurn();
+		playerSide.waitTurn();
 	}
 	
 	public void play(){
-		playMatch.play();
+		playerSide.play();
+	}
+	
+	public void print(String string){
+		System.out.print(string);
+	}
+	
+	public void println(String string){
+		System.out.println(string);
+	}
+	
+	public int inputNumber(int lowerBound, int upperBound){
+		return InputHandler.inputNumber(lowerBound, upperBound);
 	}
 	
 	

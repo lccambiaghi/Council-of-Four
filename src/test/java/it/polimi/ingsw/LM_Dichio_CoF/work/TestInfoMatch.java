@@ -18,7 +18,7 @@ public class TestInfoMatch {
 	
 	@Test
 	public void infoField() {
-		infoMatch.printInfoField();
+		infoMatch.printInfoField(arrayListPlayer.get(0));
 	}
 	
 	@Test

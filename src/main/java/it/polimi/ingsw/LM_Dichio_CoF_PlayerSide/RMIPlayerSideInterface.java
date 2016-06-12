@@ -27,8 +27,13 @@ public interface RMIPlayerSideInterface extends Remote {
 	
 	public void startingMatch() throws RemoteException;
 	
-	public void playMatch() throws RemoteException;
+	public void matchStarted() throws RemoteException;
 	
+	public int inputNumber(int lowerBound, int upperBound) throws RemoteException;
+	
+	public void print(String string) throws RemoteException;
+	
+	public void println(String string) throws RemoteException;
 	
 	/*
 	 * Methods of the match
