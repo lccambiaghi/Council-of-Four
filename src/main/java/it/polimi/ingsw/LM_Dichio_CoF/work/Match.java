@@ -125,7 +125,7 @@ public class Match {
 
 	}
 
-	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
+	public static int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
 
 		Scanner in = new Scanner(System.in);
 		int inputNumber;
