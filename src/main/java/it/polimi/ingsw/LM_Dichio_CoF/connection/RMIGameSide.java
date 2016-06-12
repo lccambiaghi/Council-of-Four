@@ -21,7 +21,7 @@ public class RMIGameSide extends UnicastRemoteObject implements RMIGameSideInter
 	}
 	
 	public boolean isNicknameInUse(String nickname) throws RemoteException{
-		return gameSide.isNicknameInUse(nickname);
+		return Broker.isNicknameInUse(nickname, gameSide);
 	}
 	
 }

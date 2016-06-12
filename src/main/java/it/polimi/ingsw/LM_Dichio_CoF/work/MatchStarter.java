@@ -3,6 +3,8 @@ package it.polimi.ingsw.LM_Dichio_CoF.work;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+
 public class MatchStarter extends Thread{
 
 	GameSide gameSide;
@@ -48,7 +50,7 @@ public class MatchStarter extends Thread{
 		
 		if(!timeToPlay){
 			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
-			System.out.println("Countdown iniziato");
+			System.out.println("Countdown started");
 			threadWaitingForAPlayer = new AddOnePlayerIfPresent();
 			while(!timeToPlay){
 				if(!threadWaitingForAPlayer.isAlive()){
@@ -73,20 +75,12 @@ public class MatchStarter extends Thread{
 			}
 		}
 		
-		System.out.println("FINE");
+		System.out.println("End.");
 		
-		System.out.println("Si gioca in " + arrayListPlayerMatch.size() +" giocatori");
+		System.out.println("The match has" + arrayListPlayerMatch.size() +" players");
 		for(Player player: arrayListPlayerMatch){
 			System.out.println(player.getNickname());
-			if(player.getTypeOfConnection()=='s'){
-				player.sendString("SOCKETplayMatch");
-			}else{
-				try {
-					player.getRmiPlayerSide().playMatch();
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
-			}
+			Broker.sayMatchHasStarted(player);
 		}
 		
 		
@@ -98,15 +92,7 @@ public class MatchStarter extends Thread{
 	
 	private void addPlayerToMatch(Player player){
 		arrayListPlayerMatch.add(player);
-		if(player.getTypeOfConnection()=='s'){
-			player.sendString("SOCKETstartingMatch");
-		}else{
-			try {
-				player.getRmiPlayerSide().startingMatch();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
+		Broker.sayMatchIsStarting(player);
 	}
 	
 	class AddOnePlayerIfPresent extends Thread{
@@ -119,7 +105,6 @@ public class MatchStarter extends Thread{
 		
 		public void run(){
 			
-			System.out.println("Ciao, sguardo se si aggiunge un giocatore");
 			while(!added&&!timeToPlay){
 				arrayListPlayerGameSide=gameSide.getArrayListPlayer();
 				if(arrayListPlayerGameSide.size()>indexNextPlayer){
@@ -127,7 +112,7 @@ public class MatchStarter extends Thread{
 						Player player = arrayListPlayerGameSide.get(indexNextPlayer);
 						addPlayerToMatch(player);
 						indexNextPlayer++;
-						System.out.println("Si è aggiunto uno!");
+						System.out.println("A new player has joined the match!");
 						added=true;
 					}
 				}

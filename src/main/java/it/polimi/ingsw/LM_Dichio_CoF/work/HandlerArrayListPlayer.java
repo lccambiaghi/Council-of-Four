@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 
+import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+
 public class HandlerArrayListPlayer extends Thread {
 
 	GameSide gameSide;
@@ -24,35 +26,13 @@ public class HandlerArrayListPlayer extends Thread {
 		
 		Player player = gameSide.getFirstPlayer();
 		
-		if(player.getTypeOfConnection()=='s'){
-			player.sendString("SOCKETconfigure");
-			player.sendString("SOCKETgetConfigurationsPlayersMaxNumber");
-			playersMaxNumber = getPlayersMaxNumberFromPlayer(player);
-			player.sendString("SOCKETgetConfigurationsAsObject");
-			config = getConfigurationsFromPlayer(player);
-		}else{
-			try {
-				player.getRmiPlayerSide().configure();
-				playersMaxNumber = player.getRmiPlayerSide().getConfigurationsPlayersNumber();
-				config = (Configurations)player.getRmiPlayerSide().getConfigurationsAsObject();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
+		Broker.askToConfigure(player);
+		playersMaxNumber = Broker.getPlayersMaxNumber(player);
+		config = Broker.getConfigurations(player);
 		
 		saveFileConfigurations(config);
 		
 		new MatchStarter(gameSide, playersMaxNumber).start();
-	}
-	
-	private int getPlayersMaxNumberFromPlayer(Player player){
-		int playersMaxNumber;
-		playersMaxNumber = Integer.parseInt(player.receiveString());
-		return playersMaxNumber;
-	}
-	
-	private Configurations getConfigurationsFromPlayer(Player player){
-		return (Configurations)player.receiveObject();
 	}
 		
 	private void saveFileConfigurations(Configurations config){

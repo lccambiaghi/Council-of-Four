@@ -9,6 +9,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIConnectionWithPlayer;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSide;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
@@ -17,35 +18,26 @@ import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIConnection;
 
 public class GameSide {
 
-	private static ArrayList <Player> arrayListPlayer;
+	private static ArrayList <Player> arrayListPlayer = new ArrayList <Player>();
 	
-	RMIGameSideInterface rmiGameSide;
-	
+	private RMIGameSideInterface rmiGameSide;
 	private ServerSocket serverSocket;
 	
 	public static final Object lockArrayListPlayer = new Object();
-
-
+	
 	private boolean firstAvailablePlayer=true;
 	
 	public GameSide() {
 		
-		arrayListPlayer = new ArrayList <Player>();
-		
-		/*
+		/**
 		 * Initialize and locate the RMI registry
 		 */
 		initializeRMI();
 		
-		try {
-			serverSocket = new ServerSocket(Constant.SOCKET_PORT);
-			while(true){
-				Socket socket = serverSocket.accept();
-				new SocketConnectionWithPlayer(socket, this);		
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		/**
+		 * Start listening with Socket
+		 */
+		listenSocket();
 		
 	}
 	
@@ -69,11 +61,26 @@ public class GameSide {
 	}
 	
 	
+	private void listenSocket(){
+		try {
+			serverSocket = new ServerSocket(Constant.SOCKET_PORT);
+			while(true){
+				Socket socket = serverSocket.accept();
+				new SocketConnectionWithPlayer(socket, this);		
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
 	public void handlePlayer(Player player){
 		
 		System.out.println("I am managing a player through a thread");
 		
-		login(player);
+		Broker.login(player, this);
 		
 		System.out.println("The player has successfully connected with nickname: "+player.getNickname());
 		
@@ -83,15 +90,7 @@ public class GameSide {
 			firstAvailablePlayer=false;
 			new HandlerArrayListPlayer(this).start();
 		}else{
-			if(player.getTypeOfConnection()=='s'){
-				player.sendString("SOCKETwaitForServer");
-			}else{
-				try {
-					player.getRmiPlayerSide().waitForServer();
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
-			}
+			Broker.waitForServer(player);
 		}
 	}
 	
@@ -120,42 +119,6 @@ public class GameSide {
 		synchronized (lockArrayListPlayer) {
 			return(arrayListPlayer.get(0));
 		}
-	}
-
-	private void login(Player player){
-		String nickname= null;
-		if(player.getTypeOfConnection()=='s'){
-			player.sendString("SOCKETlogin");
-			boolean logged = false;
-			while(!logged){
-				nickname = player.receiveString();
-				if(!isNicknameInUse(nickname)){
-					player.setNickname(nickname);
-					player.sendString("true");
-					logged=true;
-				}else{
-					player.sendString("false");
-				}
-			}
-
-		}else{
-			try {
-				player.getRmiPlayerSide().login();
-				nickname = player.getRmiPlayerSide().getNickname();
-				player.setNickname(nickname);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
-	
-	public boolean isNicknameInUse(String nickname){
-		for(Player player: arrayListPlayer){
-			if(player.getNickname().equals(nickname))
-				return true;
-		}
-		return false;
 	}
 	
 	public void setFirstAvailablePlayer(boolean firstAvailablePlayer) {this.firstAvailablePlayer = firstAvailablePlayer;}

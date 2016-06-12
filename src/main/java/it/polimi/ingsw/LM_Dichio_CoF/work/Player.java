@@ -26,8 +26,8 @@ public class Player{
 	private char CLIorGUI;
 
 	
-	private Scanner input;
-	private PrintWriter output;	
+	private Scanner inputSocket;
+	private PrintWriter outputSocket;	
 	
 	// variables of the game
 	private int richness;
@@ -53,8 +53,8 @@ public class Player{
 	
 	public void openSocketStream(){
 		try {
-			output = new PrintWriter(playerSocket.getOutputStream());
-			input = new Scanner(playerSocket.getInputStream());
+			outputSocket = new PrintWriter(playerSocket.getOutputStream());
+			inputSocket = new Scanner(playerSocket.getInputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -72,46 +72,8 @@ public class Player{
 	public char getTypeOfConnection() {return typeOfConnection;}
 	public void setTypeOfConnection(char typeOfConnection) {this.typeOfConnection = typeOfConnection;}
 	
-	public void sendString(String string){
-		if(typeOfConnection=='s'){
-			output.println(string);
-			output.flush();
-		}else{
-			try {
-				rmiPlayerSide.sendString(string);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public String receiveString(){ 
-		if(typeOfConnection=='s'){
-			return input.nextLine();
-		}else{
-			try {
-				return rmiPlayerSide.receiveString();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}return "ERROR"; // mi serve davvero?
-	}
-	
-	public Object receiveObject(){ 
-		Object object = null;
-		ObjectInputStream objectInputStream = null;
-		try {
-			objectInputStream = new ObjectInputStream(playerSocket.getInputStream());
-			object = objectInputStream.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return object;
-	}
-	
-	
-	
-
+	public Scanner getInputSocket() {return inputSocket;}
+	public PrintWriter getOutputSocket() {return outputSocket;}	
 	
 	public int getRichness() {return richness;}
 	public void setRichness(int richness) {this.richness = richness;}
