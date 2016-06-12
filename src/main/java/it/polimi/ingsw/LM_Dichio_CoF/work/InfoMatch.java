@@ -61,11 +61,17 @@ public class InfoMatch {
 		
 	}
 	
-	public void printInfoPlayer(/*Player player*/){
+	public void printInfoPlayer(Player player){
 		
 		this.player=player;
 		
-		//To be implemeted
+		System.out.println("You have...");
+		printPolitcCards();
+		printAssistantNumber();
+		printPermitCards();
+		printYourCities();
+		System.out.println();
+		
 	}
 	
 	private void printCities(){
@@ -163,6 +169,39 @@ public class InfoMatch {
 					"Victory [" + field.getVictoryRoute().getPosition(player) + "], " +
 					"Nobility [" +field.getNobilityRoute().getPosition(player) + "]");
 		}
+	}
+	
+	private void printPolitcCards(){
+		System.out.print("- Politic cards: ");
+		for(PoliticCard politicCard: player.getArrayListPoliticCard()){
+			System.out.print(politicCard.getCardColor() + " ");
+		}
+		System.out.println();
+	}
+	
+	private void printAssistantNumber(){
+		System.out.println("- Number of assistants: " + player.getAssistant());
+	}
+	
+	private void printPermitCards(){
+		System.out.print("- Permit cards: ");
+		ArrayList<PermitCard> arrayListPermitCard = player.getArrayListPermitCard();
+		if(arrayListPermitCard.size()==0)
+			System.out.println("none");
+		else{
+			System.out.println();
+			for(int i=0; i<arrayListPermitCard.size(); i++){
+				PermitCard permitCard =  arrayListPermitCard.get(i);
+				System.out.print(i+1 + ". Buildable Cities: ");
+				for(City city: permitCard.getArrayBuildableCities())
+					System.out.print(city.getCityName() + " ");
+				System.out.println();
+			}
+		}
+	}
+	
+	private void printYourCities(){
+		//to be implemented
 	}
 	
 	
