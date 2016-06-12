@@ -17,15 +17,15 @@ public class SellingObject {
 	public SellingObject (Player player, String string){
 		
 		switch(string){
-			case "PermitCard": {
+			case "PermitCard":
 				this.object=askPermitCard(player);
-			}
-			case "PoliticCard": {
+				break;
+			case "PoliticCard":
 				this.object=askPoliticCard(player);
-			}
-			case "Assistants": {
-				this.object=askAssistant(player);			
-			}
+				break;
+			case "Assistants":
+				this.object=askAssistant(player);
+				break;
 		}
 		this.price=askPrice();
 		this.owner=player;
@@ -56,7 +56,7 @@ public class SellingObject {
 		}
 		int choicePoliticCard = inputNumber (1, playerPoliticCards.size())-1;
 		PoliticCard sellingPoliticCard = player.getArrayListPoliticCard().get(choicePoliticCard);
-		player.getArrayListPermitCard().remove(choicePoliticCard);
+		player.getArrayListPoliticCard().remove(choicePoliticCard);
 		return sellingPoliticCard;
 	}
 	
