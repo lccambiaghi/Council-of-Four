@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.field.City;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.PermitCard;
 import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIPlayerSideInterface;
 
@@ -38,6 +39,8 @@ public class Player{
 	private ArrayList <PermitCard> arrayListUsedPermitCard = new ArrayList<>();
 
 	private int mainActionsLeft;
+	
+	private ArrayList <City>  arrayListEmporiumBuilt = new ArrayList<>();
 
 	
 	/* The constructor assigns to the player the type of connection */
@@ -128,6 +131,9 @@ public class Player{
 		int i=arrayListPermitCard.indexOf(permitCard);
 		arrayListUsedPermitCard.add(arrayListPermitCard.remove(i));
 	}
+	
+	public ArrayList<City> getArrayListEmporiumBuilt(){return arrayListEmporiumBuilt;}
+	public void addCityEmporiumBuilt (City city){arrayListEmporiumBuilt.add(city);}
 
 	public int getMainActionsLeft() {
 		return mainActionsLeft;
