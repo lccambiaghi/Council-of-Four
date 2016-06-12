@@ -187,7 +187,7 @@ public class InfoMatch {
 		System.out.print("- Permit cards: ");
 		ArrayList<PermitCard> arrayListPermitCard = player.getArrayListPermitCard();
 		if(arrayListPermitCard.size()==0)
-			System.out.println("none");
+			System.out.println("-- none --");
 		else{
 			System.out.println();
 			for(int i=0; i<arrayListPermitCard.size(); i++){
@@ -201,7 +201,16 @@ public class InfoMatch {
 	}
 	
 	private void printYourCities(){
-		//to be implemented
+		System.out.print("- Emporium built in these cities: ");
+		ArrayList<City> arrayListEmporiumBuilt = player.getArrayListEmporiumBuilt();
+		if(arrayListEmporiumBuilt.size()==0)
+			System.out.println("-- none --");
+		else{
+			for(City city: player.getArrayListEmporiumBuilt()){
+				System.out.print(city.getCityName() + " ");
+			}
+			System.out.println();
+		}
 	}
 	
 	
