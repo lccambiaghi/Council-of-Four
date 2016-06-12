@@ -50,7 +50,16 @@ public class Match {
 
 		/* Draw a card */
 		playerTurn.addPoliticCard(new PoliticCard());
+		
+		
+		
+		//JUST TO TEST THE INFO WITH THE PLAYERS
+		InfoMatch infoMatch = new InfoMatch(this);
+		infoMatch.printInfoField(playerTurn);
+		infoMatch.printInfoPlayer(playerTurn);
 
+		
+		
 		playerTurn.setMainActionsLeft(1);
 
 		System.out.println("Would you like to perform Quick Action first?");
