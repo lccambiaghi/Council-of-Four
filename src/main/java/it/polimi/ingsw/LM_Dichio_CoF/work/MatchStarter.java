@@ -3,7 +3,7 @@ package it.polimi.ingsw.LM_Dichio_CoF.work;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import it.polimi.ingsw.LM_Dichio_CoF.connection.BrokerGameSide;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 
 public class MatchStarter extends Thread{
 
@@ -80,7 +80,7 @@ public class MatchStarter extends Thread{
 		System.out.println("The match has" + arrayListPlayerMatch.size() +" players");
 		for(Player player: arrayListPlayerMatch){
 			System.out.println(player.getNickname());
-			BrokerGameSide.sayMatchHasStarted(player);
+			Broker.sayMatchHasStarted(player);
 		}
 		
 		
@@ -92,7 +92,7 @@ public class MatchStarter extends Thread{
 	
 	private void addPlayerToMatch(Player player){
 		arrayListPlayerMatch.add(player);
-		BrokerGameSide.sayMatchIsStarting(player);
+		Broker.sayMatchIsStarting(player);
 	}
 	
 	class AddOnePlayerIfPresent extends Thread{

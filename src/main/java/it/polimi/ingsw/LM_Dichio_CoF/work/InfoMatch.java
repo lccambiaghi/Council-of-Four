@@ -3,6 +3,7 @@ package it.polimi.ingsw.LM_Dichio_CoF.work;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
 
 public class InfoMatch {
@@ -40,6 +41,18 @@ public class InfoMatch {
 			3,	0,	7,	-3,	10,	0,	14,	-3,	17,	0,	21,	-2};
 	
 	
+	private void print(String string){
+		Broker.print(string, player);
+	}
+	
+	private void println(){
+		Broker.println("", player);
+	}
+	
+	private void println(String string){
+		Broker.println(string, player);
+	}
+	
 	
 	public InfoMatch(Match match){
 		this.match = match;
@@ -49,9 +62,13 @@ public class InfoMatch {
 		this.arrayCityLinks = field.getArrayCityLinks();	
 	}
 	
-	public void printInfoField(/*Player player/*/){
+	public void printInfoField(Player player){
 		
-		//this.player=player;
+		this.player=player;
+		
+		println();
+		println("Info of the field...");
+		println();
 		
 		printCities();
 		printCityLinks();
@@ -65,12 +82,16 @@ public class InfoMatch {
 		
 		this.player=player;
 		
-		System.out.println("You have...");
+		println();
+		println("Info of your goods...");
+		println();
+		
+		println("You have...");
 		printPolitcCards();
 		printAssistantNumber();
 		printPermitCards();
 		printYourCities();
-		System.out.println();
+		println();
 		
 	}
 	
@@ -89,7 +110,7 @@ public class InfoMatch {
 			positions=posHigh;
 			break;
 		default:{
-			System.out.println("ERROR");
+			println("ERROR");
 			positions=null;
 		}
 		}
@@ -98,73 +119,73 @@ public class InfoMatch {
 		for(int pos: positions){
 			switch(pos){
 			case	0:
-				System.out.print("  ");
+				print("  ");
 				break;
 			case	-1:
 			case	-2:
-				System.out.println();
+				println();
 				break;
 			case 	-3:
-				System.out.print("| ");
+				print("| ");
 				break;
 			default:
-				System.out.print(arrayCity[pos-1].getCityName().toString() +" ");
+				print(arrayCity[pos-1].getCityName().toString() +" ");
 			}
 		}
 		
 		printRegions();
-		System.out.println();
+		println();
 		
 	}
 	
 	private void printRegions(){
-		System.out.println(" " + RegionName.Sea + "    " + RegionName.Hill + "   " + RegionName.Mountain);
+		println(" " + RegionName.Sea + "    " + RegionName.Hill + "   " + RegionName.Mountain);
 	}
 	
 	
 	private void printCityLinks(){
 		List<Integer>[] arrayCityLinks = field.getArrayCityLinks();
 		for(int i=0; i<arrayCityLinks.length; i++){
-			System.out.print(arrayCity[i].getCityName() + ": ");
+			print(arrayCity[i].getCityName() + ": ");
 			for(int j=0;j<arrayCityLinks[i].size();j++){
-			    System.out.print(arrayCity[arrayCityLinks[i].get(j)].getCityName());
+			    print(arrayCity[arrayCityLinks[i].get(j)].getCityName().toString());
 			    if(j!=arrayCityLinks[i].size()-1)
-			    	System.out.print(", ");
+			    	print(", ");
 			} 
-			System.out.println();
+			println();
 		}
 		
-		System.out.println();
+		println();
 	}
 	
 	private void printBalconies(){
 		Balcony[] arrayBalconies = field.getArrayBalcony();
 		for(Balcony balcony: arrayBalconies){
-			System.out.println( balcony.getNameBalcony() + ":");
+			println( balcony.getNameBalcony() + ":");
 			ArrayList<Councillor> arrayListCouncillor = balcony.getArrayListCouncillor();
 			for(Councillor councillor: arrayListCouncillor){
-				System.out.print("-> " + councillor.getColor() + "  ");
+				print("-> " + councillor.getColor() + "  ");
 			}
-			System.out.println();
+			println();
 		}
-		System.out.println();
+		println();
 			
 	}
 	
 	private void printAvailableCouncillors(){
 		ArrayList<Councillor> arrayListCouncillor = field.getAvailableCouncillors().getArrayListCouncillor();
-		System.out.println("Available councillors:");
+		println("Available councillors:");
 		for(Councillor councillor: arrayListCouncillor){
-			System.out.print(councillor.getColor() + "  ");
+			print(councillor.getColor() + "  ");
 		}
-		System.out.println();
-		System.out.println();
+		println();
+		println();
 	}
 	
 	private void printPlayersInRoutes(){
-		System.out.println("Players status:");
+		println("Players status:");
 		for(Player player: arrayListplayer){
-			System.out.println(player.getNickname() + ": " + 
+			println(player.getNickname() + ": " + 
 					"Richness [" + field.getRichnessRoute().getPosition(player) + "], "+
 					"Victory [" + field.getVictoryRoute().getPosition(player) + "], " +
 					"Nobility [" +field.getNobilityRoute().getPosition(player) + "]");
@@ -172,44 +193,44 @@ public class InfoMatch {
 	}
 	
 	private void printPolitcCards(){
-		System.out.print("- Politic cards: ");
+		print("- Politic cards: ");
 		for(PoliticCard politicCard: player.getArrayListPoliticCard()){
-			System.out.print(politicCard.getCardColor() + " ");
+			print(politicCard.getCardColor() + " ");
 		}
-		System.out.println();
+		println();
 	}
 	
 	private void printAssistantNumber(){
-		System.out.println("- Number of assistants: " + player.getAssistant());
+		println("- Number of assistants: " + player.getAssistant());
 	}
 	
 	private void printPermitCards(){
-		System.out.print("- Permit cards: ");
+		print("- Permit cards: ");
 		ArrayList<PermitCard> arrayListPermitCard = player.getArrayListPermitCard();
 		if(arrayListPermitCard.size()==0)
-			System.out.println("-- none --");
+			println("-- none --");
 		else{
-			System.out.println();
+			println();
 			for(int i=0; i<arrayListPermitCard.size(); i++){
 				PermitCard permitCard =  arrayListPermitCard.get(i);
-				System.out.print(i+1 + ". Buildable Cities: ");
+				print(i+1 + ". Buildable Cities: ");
 				for(City city: permitCard.getArrayBuildableCities())
-					System.out.print(city.getCityName() + " ");
-				System.out.println();
+					print(city.getCityName() + " ");
+				println();
 			}
 		}
 	}
 	
 	private void printYourCities(){
-		System.out.print("- Emporium built in these cities: ");
+		print("- Emporium built in these cities: ");
 		ArrayList<City> arrayListEmporiumBuilt = player.getArrayListEmporiumBuilt();
 		if(arrayListEmporiumBuilt.size()==0)
-			System.out.println("-- none --");
+			println("-- none --");
 		else{
 			for(City city: player.getArrayListEmporiumBuilt()){
-				System.out.print(city.getCityName() + " ");
+				print(city.getCityName() + " ");
 			}
-			System.out.println();
+			println();
 		}
 	}
 	

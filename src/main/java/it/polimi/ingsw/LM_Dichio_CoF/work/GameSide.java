@@ -9,7 +9,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-import it.polimi.ingsw.LM_Dichio_CoF.connection.BrokerGameSide;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIConnectionWithPlayer;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSide;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
@@ -80,7 +80,7 @@ public class GameSide {
 		
 		System.out.println("I am managing a player through a thread");
 		
-		BrokerGameSide.login(player, this);
+		Broker.login(player, this);
 		
 		System.out.println("The player has successfully connected with nickname: "+player.getNickname());
 		
@@ -90,7 +90,7 @@ public class GameSide {
 			firstAvailablePlayer=false;
 			new HandlerArrayListPlayer(this).start();
 		}else{
-			BrokerGameSide.waitForServer(player);
+			Broker.waitForServer(player);
 		}
 	}
 	
