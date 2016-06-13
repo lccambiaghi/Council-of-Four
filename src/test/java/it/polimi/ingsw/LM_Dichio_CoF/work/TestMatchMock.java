@@ -1,13 +1,11 @@
 package it.polimi.ingsw.LM_Dichio_CoF.work;
 
-import static it.polimi.ingsw.LM_Dichio_CoF.work.Match.inputNumber;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.io.*;
 import java.util.ArrayList;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Balcony;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -18,12 +16,10 @@ public class TestMatchMock{
 
 	private TestCases testCases = new TestCases();
     private ArrayList <Player> arrayListPlayer= testCases.arrayListPlayer();
-    private MatchMock match;
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Before
     public void setup(){
-        match = new MatchMock(arrayListPlayer);
 		System.setOut(new PrintStream(outContent));
     }
 
@@ -34,13 +30,15 @@ public class TestMatchMock{
 
 	@Test
 	public void giveInitialPoliticCards() {
+		new MatchMock(arrayListPlayer);
 		for (Player player : arrayListPlayer)
 		    assertEquals(Constant.POLITIC_CARDS_INITIAL_NUMBER, player.getArrayListPoliticCard().size());
 	}
 	
 	@Test
 	public void giveInitialAssistants() {
-        for (int i = 0; i < arrayListPlayer.size(); i++)
+		new MatchMock(arrayListPlayer);
+		for (int i = 0; i < arrayListPlayer.size(); i++)
             assertEquals(Constant.ASSISTANT_INITIAL_FIRST_PLAYER +i, arrayListPlayer.get(i).getAssistant());
 	}
 
@@ -49,20 +47,24 @@ public class TestMatchMock{
 
 		ByteArrayInputStream in;
 
-		in=new ByteArrayInputStream("1\n".getBytes());
+		in=new ByteArrayInputStream("1\n2\n".getBytes());
         System.setIn(in);
-        assertEquals(1,inputNumber(1,2));
+		MatchMock match = new MatchMock(arrayListPlayer);
+        assertEquals(1, match.inputNumber(1,2));
+		assertEquals(2, match.inputNumber(1,2));
 
 		in=new ByteArrayInputStream("a\nb\n2\n".getBytes());
 		System.setIn(in);
-		int output=inputNumber(1,2);
+		match = new MatchMock(arrayListPlayer);
+		int output= match.inputNumber(1,2);
 		assertEquals("Insert an integer value!\nInsert an integer value!\n", outContent.toString());
 		assertEquals(2,output);
 		outContent.reset();
 
 		in=new ByteArrayInputStream("4\n0\n3\n".getBytes());
 		System.setIn(in);
-		output=inputNumber(1,3);
+		match = new MatchMock(arrayListPlayer);
+		output= match.inputNumber(1,3);
 		assertEquals("Insert a value between 1 and 3\n" +
 					"Insert a value between 1 and 3\n", outContent.toString());
 		assertEquals(3,output);
@@ -74,6 +76,13 @@ public class TestMatchMock{
 
 	@Ignore
 	public void electCouncillor(){
+
+		ByteArrayInputStream in;
+
+		in=new ByteArrayInputStream("2\n1\n".getBytes());
+		System.setIn(in);
+		MatchMock match = new MatchMock(arrayListPlayer);
+
 
 		// asks if quick action : 2=no
 

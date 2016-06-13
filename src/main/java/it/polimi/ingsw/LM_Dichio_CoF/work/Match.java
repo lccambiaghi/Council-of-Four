@@ -11,14 +11,13 @@ import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
 public class Match {
 
 	private ArrayList<Player> arrayListPlayer;
-	private int numberPlayers;
 	private Field field;
 	private Market market;
+	boolean isGameOver=false;
 	
 	public Match(ArrayList<Player> arrayListPlayer) {
 		
 		this.arrayListPlayer = arrayListPlayer;
-		numberPlayers=arrayListPlayer.size();
 		
 		//Collections.shuffle(arrayListPlayer); //per adesso testiamo solo il primo giocatore
 
@@ -41,44 +40,21 @@ public class Match {
 
 	public void startGame() {
 		
-		int turn=0;
+		int turn=1;
 
-		/* try{}
-		   catch(LastEmporiumBuiltException e){}*/
+		do{
 
-		Player playerTurn = arrayListPlayer.get(turn);
+			turn(arrayListPlayer.get(turn-1)); //array positioning
 
-		/* Draw a card */
-		playerTurn.addPoliticCard(new PoliticCard());
-		
-		
-		
-		//JUST TO TEST THE INFO WITH THE PLAYERS
-		InfoMatch infoMatch = new InfoMatch(this);
-		infoMatch.printInfoField(playerTurn);
-		infoMatch.printInfoPlayer(playerTurn);
+			if (turn % arrayListPlayer.size() ==0)
+				market.startMarket();
 
+		}while(!isGameOver);
 		
-		
-		playerTurn.setMainActionsLeft(1);
 
-		System.out.println("Would you like to perform Quick Action first?");
-
-		if (askYesOrNo()) {
-			quickAction(playerTurn);
-			mainAction(playerTurn);
-		}
-		else{
-			mainAction(playerTurn);
-			System.out.println("Would you like to perform Quick Action?");
-			if (askYesOrNo())
-				quickAction(playerTurn);
-		}
-		
-		market.startMarket();
 	}
 
-	public Configurations readFileConfigurations(){
+	private Configurations readFileConfigurations(){
 
 		FileInputStream fileInputStream = null;
 		
@@ -108,19 +84,46 @@ public class Match {
 		return null;
 	}
 		
-	public void giveInitialPoliticCards(ArrayList<Player> arrayListPlayer){
+	private void giveInitialPoliticCards(ArrayList<Player> arrayListPlayer){
 		for (Player player : arrayListPlayer)
 			for (int itCard = 0; itCard < Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++)
 				player.addPoliticCard(new PoliticCard());
 	}
 	
-	public void giveInitialAssistants(ArrayList<Player> arrayListPlayer){
+	private void giveInitialAssistants(ArrayList<Player> arrayListPlayer){
 		for(int itPlayer = 0, numberAssistants = Constant.ASSISTANT_INITIAL_FIRST_PLAYER;
 			itPlayer<arrayListPlayer.size(); itPlayer++, numberAssistants++)
 				arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
 	}
 
-	public boolean askYesOrNo(){ //TODO test e socket con playerTurn
+	private void turn(Player player){
+
+		/* Draw a card */
+		player.addPoliticCard(new PoliticCard());
+
+		//JUST TO TEST THE INFO WITH THE PLAYERS
+		InfoMatch infoMatch = new InfoMatch(this);
+		infoMatch.printInfoField(player);
+		infoMatch.printInfoPlayer(player);
+
+		player.setMainActionsLeft(1);
+
+		System.out.println("Would you like to perform Quick Action first?");
+
+		if (askYesOrNo()) {
+			quickAction(player);
+			mainAction(player);
+		}
+		else{
+			mainAction(player);
+			System.out.println("Would you like to perform Quick Action?");
+			if (askYesOrNo())
+				quickAction(player);
+		}
+
+	}
+
+	private boolean askYesOrNo(){ //TODO test e socket con playerTurn
 
 		System.out.println("1. Yes");
 		System.out.println("2. No");
@@ -134,7 +137,7 @@ public class Match {
 
 	}
 
-	public static int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
+	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
 
 		Scanner in = new Scanner(System.in);
 		int inputNumber;
@@ -838,5 +841,9 @@ public class Match {
 	}
 
 	public ArrayList<Player> getArrayListPlayer(){return arrayListPlayer;}
+
+	public void setGameOver(){
+		isGameOver=true;
+	}
 
 }

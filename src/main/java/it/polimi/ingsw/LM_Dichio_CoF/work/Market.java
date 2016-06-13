@@ -12,8 +12,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
-import static it.polimi.ingsw.LM_Dichio_CoF.work.Match.inputNumber;
-
 public class Market {
 
 	private SellingObject sellingObject;
@@ -149,6 +147,31 @@ public class Market {
 			return false;
 		else
 			return true;
+
+	}
+
+	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
+
+		Scanner in = new Scanner(System.in);
+		int inputNumber;
+		boolean eligibleInput=false;
+
+		do {
+			while(!in.hasNextInt()){
+				System.out.println("Insert an integer value!");
+				in.nextLine();
+			}
+			inputNumber=in.nextInt();
+			in.nextLine();
+
+			if(inputNumber>=lowerBound && inputNumber<=upperBound)
+				eligibleInput=true;
+			else
+				System.out.println("Insert a value between "+ lowerBound
+						+ " and " + upperBound);
+		} while(!eligibleInput);
+
+		return inputNumber;
 
 	}
 
