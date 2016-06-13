@@ -96,15 +96,15 @@ public class Match {
 				arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
 	}
 
-	private void turn(Player player){
+	public void turn(Player player){
 
 		/* Draw a card */
 		player.addPoliticCard(new PoliticCard());
 
 		//JUST TO TEST THE INFO WITH THE PLAYERS
-		InfoMatch infoMatch = new InfoMatch(this);
+		/*InfoMatch infoMatch = new InfoMatch(this);
 		infoMatch.printInfoField(player);
-		infoMatch.printInfoPlayer(player);
+		infoMatch.printInfoPlayer(player);*/
 
 		player.setMainActionsLeft(1);
 
@@ -360,11 +360,6 @@ public class Match {
 	}
 
 	private void buildEmporiumWithPermitCard(Player playerTurn) {
-
-/*		try{		}
-		catch(ArrayIndexOutOfBoundException noUsablePermitCards){		}
-		catch(NullPointerException emporiumAlreadyPresent){		}
-		catch(NotEnoughAssistantException notEnoughAssistant){		}*/
 
 		ArrayList <PermitCard> usablePermitCards = getUsablePermitCards(playerTurn);
 

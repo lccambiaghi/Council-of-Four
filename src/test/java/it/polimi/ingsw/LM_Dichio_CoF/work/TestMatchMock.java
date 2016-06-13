@@ -6,6 +6,8 @@ import static org.mockito.Mockito.*;
 import java.io.*;
 import java.util.ArrayList;
 
+import it.polimi.ingsw.LM_Dichio_CoF.work.field.Balcony;
+import it.polimi.ingsw.LM_Dichio_CoF.work.field.Councillor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -29,21 +31,16 @@ public class TestMatchMock{
 	}
 
 	@Test
-	public void giveInitialPoliticCards() {
+	public void initialPoliticCardAndAssistants() {
 		new MatchMock(arrayListPlayer);
 		for (Player player : arrayListPlayer)
 		    assertEquals(Constant.POLITIC_CARDS_INITIAL_NUMBER, player.getArrayListPoliticCard().size());
-	}
-	
-	@Test
-	public void giveInitialAssistants() {
-		new MatchMock(arrayListPlayer);
 		for (int i = 0; i < arrayListPlayer.size(); i++)
-            assertEquals(Constant.ASSISTANT_INITIAL_FIRST_PLAYER +i, arrayListPlayer.get(i).getAssistant());
+			assertEquals(Constant.ASSISTANT_INITIAL_FIRST_PLAYER +i, arrayListPlayer.get(i).getAssistant());
 	}
 
     @Test
-    public void inputNumberTest() {
+    public void inputNumber() {
 
 		ByteArrayInputStream in;
 
@@ -74,34 +71,33 @@ public class TestMatchMock{
 
     }
 
-	@Ignore
+	/**
+	 * Ask if quick action first: 1.Yes 2. No
+	 * Ask which main action: 1. Election 2.PermitCard 3.Emporium 4.With King
+	 * (Ask if quick action: 1.Yes 2. No
+	 *  Ask which quick action: 1. Assistant 2. ChangePermit 3. Election 4. AdditionalMain)
+	 */
+
+	@Test
 	public void electCouncillor(){
 
-		ByteArrayInputStream in;
-
-		in=new ByteArrayInputStream("2\n1\n".getBytes());
+		/** ask which balcony : 1=Sea
+		ask which color : 1=Whatever
+		*/
+		ByteArrayInputStream in=new ByteArrayInputStream("2\n1\n1\n1\n2\n".getBytes());
 		System.setIn(in);
+
 		MatchMock match = new MatchMock(arrayListPlayer);
 
+		ArrayList<Councillor> oldCouncillors=new ArrayList<>(match.getField().getBalconyFromIndex(0).getArrayListCouncillor());
 
-		// asks if quick action : 2=no
+		match.turn(arrayListPlayer.get(0));
 
-		// asks which main action : 1=Election
+		ArrayList<Councillor> newCouncillors = match.getField().getBalconyFromIndex(0).getArrayListCouncillor();
 
-		// asks which balcony : 1=Sea
-
-		// asks which color : 1=White
+		assertEquals(oldCouncillors.subList(0,oldCouncillors.size()-2), newCouncillors.subList(1,newCouncillors.size()-1));
 
 		assertEquals(14, arrayListPlayer.get(0).getRichness());
 	}
 
-	@Ignore
-	public void engageAnAssistant(){
-
-		testCases.configurations();
-		ArrayList<Player> arrayListPlayer = testCases.arrayListPlayer();
-
-		Match match = new Match(arrayListPlayer);
-		assertEquals(7, arrayListPlayer.get(0).getRichness());
-	}
 }
