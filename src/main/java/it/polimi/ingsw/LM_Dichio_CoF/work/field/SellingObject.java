@@ -36,7 +36,11 @@ public class SellingObject {
 		System.out.println("Your Cards");
 	
 		for (int i=0; i<playerPermitCards.size(); i++){
-			System.out.println(i+1);
+			System.out.print(i+1+". Buildable Cities: ");
+			for(City city: playerPermitCards.get(i).getArrayBuildableCities()){
+				System.out.print(city.getCityName().toString()+" ");
+			};
+			System.out.println();
 		}
 		int choicePermitCard = inputNumber (1, playerPermitCards.size());
 		PermitCard sellingPermitCard = player.getArrayListPermitCard().get(choicePermitCard-1);
@@ -48,7 +52,6 @@ public class SellingObject {
 		ArrayList <PoliticCard> playerPoliticCards = player.getArrayListPoliticCard();
 		System.out.println("Which Politics Tile would you like to sell?");
 
-		//TODO implementa stampa
 		for (int i=0; i<playerPoliticCards.size(); i++){
 			System.out.println(i+1+". "+ playerPoliticCards.get(i).getCardColor().toString());
 		}
