@@ -15,7 +15,7 @@ public class InfoMatch {
 	
 	City[] arrayCity;
 	List <Integer>[] arrayCityLinks; 
-	ArrayList<Player> arrayListplayer;
+	ArrayList<Player> arrayListPlayer;
 	
 	Player player;
 	
@@ -60,25 +60,29 @@ public class InfoMatch {
 	public InfoMatch(Match match){
 		this.match = match;
 		this.field = match.getField();
-		this.arrayListplayer = match.getArrayListPlayer();
+		this.arrayListPlayer = match.getArrayListPlayer();
 		this.arrayCity = field.getArrayCity();
 		this.arrayCityLinks = field.getArrayCityLinks();	
 	}
 	
-	public void printInfoField(Player player){
-		
-		this.player=player;
-		
+	public void printInfoAllCities(Player player){
 		println();
-		println("Info of the field...");
-		println();
-		
 		printCities();
 		printCityLinks();
+		println();
+	}
+	
+	public void printInfoAllPlayers(Player player){
+		println();
+		printPlayersInRoutes();
+		println();
+	}
+	
+	public void printInfoBalconies(Player player){
+		println();
 		printBalconies();
 		printAvailableCouncillors();
-		printPlayersInRoutes();
-		
+		println();	
 	}
 	
 	public void printInfoPlayer(Player player){
@@ -86,11 +90,11 @@ public class InfoMatch {
 		this.player=player;
 		
 		println();
-		println("Info of your goods...");
-		println();
-		
 		println("You have...");
 		printPolitcCards();
+		println("- Richness points: "+ field.getRichnessRoute().getPosition(player));
+		println("- Victory points: "+ field.getVictoryRoute().getPosition(player));
+		println("- Nobility points: "+ field.getNobilityRoute().getPosition(player));
 		printAssistantNumber();
 		printPermitCards();
 		printYourCities();
@@ -124,6 +128,35 @@ public class InfoMatch {
 			}
 		}
 		println();
+	}
+	
+	public void printInfoRegions(Player player){
+		println();
+		for(int i=0; i<Constant.REGIONS_NUMBER; i++){
+			Region region = field.getRegionFromIndex(i);
+			println("Name of the region: " + region.getRegionName());
+			FaceUpPermitCardArea face = region.getFaceUpPermitCardArea();
+			PermitCard[] arrayPermitCard = face.getArrayPermitCard();
+			for(int j=0; j<arrayPermitCard.length; j++){
+				println("Permit Card " + (j+1) + ":");
+				print("- Buildable Cities: ");
+				for(City city: arrayPermitCard[j].getArrayBuildableCities())
+					print(city.getCityName() + " ");
+				println();
+				print("- Bonus: ");
+				if(!arrayPermitCard[j].hasBonus()){
+					println("-- none --");
+				}else{
+					println();
+					Bonus[] arrayBonus = arrayPermitCard[j].getArrayBonus();
+					for(Bonus bonus: arrayBonus){
+						println(bonus.getBonusName() + " " + bonus.getIncrement());
+					}
+				}
+				println();
+			}
+			
+		}
 	}
 	
 	private void printCities(){
@@ -215,7 +248,7 @@ public class InfoMatch {
 	
 	private void printPlayersInRoutes(){
 		println("Players status:");
-		for(Player player: arrayListplayer){
+		for(Player player: arrayListPlayer){
 			println(player.getNickname() + ": " + 
 					"Richness [" + field.getRichnessRoute().getPosition(player) + "], "+
 					"Victory [" + field.getVictoryRoute().getPosition(player) + "], " +
