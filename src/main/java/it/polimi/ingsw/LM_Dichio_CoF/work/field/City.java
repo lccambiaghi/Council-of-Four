@@ -123,5 +123,9 @@ public class City {
 	public CityColor getCityColor() {
 		return cityColor;
 	}
+	
+	public ArrayList<Player> getArrayListEmporium() {
+		return arrayListEmporium;
+	}
 
 }
