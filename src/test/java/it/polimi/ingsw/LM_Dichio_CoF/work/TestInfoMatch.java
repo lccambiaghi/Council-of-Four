@@ -15,10 +15,20 @@ public class TestInfoMatch {
 	ArrayList<Player> arrayListPlayer = match.getArrayListPlayer();
 	
 	InfoMatch infoMatch = new InfoMatch(match);
+	/*
+	@Test
+	public void infoAllCities(){
+		infoMatch.printInfoAllCities(arrayListPlayer.get(0));
+	}
 	
 	@Test
-	public void infoField() {
-		infoMatch.printInfoField(arrayListPlayer.get(0));
+	public void infoPlayers(){
+		infoMatch.printInfoAllPlayers(arrayListPlayer.get(0));
+	}
+	
+	@Test
+	public void infoBalconies(){
+		infoMatch.printInfoBalconies(arrayListPlayer.get(0));
 	}
 	
 	@Test
@@ -29,6 +39,11 @@ public class TestInfoMatch {
 	@Test
 	public void infoCity(){
 		infoMatch.printInfoCity(arrayListPlayer.get(0), 3);
+	}
+	*/
+	@Test
+	public void infoRegions(){
+		infoMatch.printInfoRegions(arrayListPlayer.get(0));
 	}
 	
 }
