@@ -645,7 +645,7 @@ public class Match {
 			mainAction(playerTurn);
 		}
 		else {
-			if (eligibleMove(usablePoliticCards, playerRichness)<0) {
+			if (eligibleMove(usablePoliticCards, playerRichness)<1) {
 				System.out.println("Your politic cards and richness do not allow you to satisfy the King's council. " +
 						"Choose another main move.");
 				mainAction(playerTurn);
