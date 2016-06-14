@@ -42,15 +42,18 @@ public class InfoMatch {
 	
 	
 	private void print(String string){
-		Broker.print(string, player);
+		System.out.print(string);
+		//Broker.print(string, player);
 	}
 	
 	private void println(){
-		Broker.println("", player);
+		System.out.println();
+		//Broker.println("", player);
 	}
 	
 	private void println(String string){
-		Broker.println(string, player);
+		System.out.println(string);
+		//Broker.println(string, player);
 	}
 	
 	
@@ -93,6 +96,34 @@ public class InfoMatch {
 		printYourCities();
 		println();
 		
+	}
+	
+	public void printInfoCity(Player player, int indexCity){
+		
+		City chosenCity= arrayCity[indexCity];
+		println("- City: "+ chosenCity.getCityName());
+		println("- Color: "+ chosenCity.getCityColor());
+		print("- Bonus: ");
+		if(!chosenCity.hasBonus()){
+			println("-- none --");
+		}else{
+			println();
+			Bonus[] arrayBonus = chosenCity.getArrayBonus();
+			for(Bonus bonus: arrayBonus){
+				println(bonus.getBonusName() + " " + bonus.getIncrement());
+			}
+		}
+		print("- Emporiums built by: ");
+		ArrayList<Player> arrayListEmporium = chosenCity.getArrayListEmporium();
+		if(arrayListEmporium==null){
+			print("-- none --");
+		}else{
+			println();
+			for(Player emporium: arrayListEmporium){
+				println(emporium.getNickname());
+			}
+		}
+		println();
 	}
 	
 	private void printCities(){
@@ -222,7 +253,7 @@ public class InfoMatch {
 	}
 	
 	private void printYourCities(){
-		print("- Emporium built in these cities: ");
+		print("- Emporiums built in these cities: ");
 		ArrayList<City> arrayListEmporiumBuilt = player.getArrayListEmporiumBuilt();
 		if(arrayListEmporiumBuilt.size()==0)
 			println("-- none --");
