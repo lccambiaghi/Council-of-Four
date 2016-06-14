@@ -46,8 +46,7 @@ public class TestCases {
 	
 	
 	public MatchMock matchMock(){
-		MatchMock matchMock = new MatchMock(arrayListPlayer());
-		return matchMock;
+		return new MatchMock(arrayListPlayer());
 	}
 	
 	public ArrayList <Player> arrayListPlayer() {
@@ -56,6 +55,7 @@ public class TestCases {
 		player.setNickname("A");
 		player.setAssistant(3);
 		player.setRichness(10);
+		player.acquirePermitCard(new PermitCard(arrayCity(), configurations()));
 		//City[] arrayCity = arrayCity();
 		//Configurations config = configurations();
 		//player.acquirePermitCard(new PermitCard(arrayCity, config));
