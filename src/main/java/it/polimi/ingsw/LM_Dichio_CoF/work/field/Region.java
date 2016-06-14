@@ -28,4 +28,8 @@ public class Region {
 		return faceUpPermitCardArea;
 	}
 	
+	public RegionName getRegionName(){
+		return regionName;
+	}
+	
 }
