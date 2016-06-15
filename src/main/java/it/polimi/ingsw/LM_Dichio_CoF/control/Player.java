@@ -40,6 +40,7 @@ public class Player{
 	private ArrayList <PermitCard> arrayListUsedPermitCard = new ArrayList<>();
 
 	private int mainActionsLeft;
+	private boolean quickActionDone;
 	
 	private ArrayList <City>  arrayListEmporiumBuilt = new ArrayList<>();
 
@@ -99,11 +100,11 @@ public class Player{
 	public ArrayList<City> getArrayListEmporiumBuilt(){return arrayListEmporiumBuilt;}
 	public void addCityEmporiumBuilt (City city){arrayListEmporiumBuilt.add(city);}
 
-	public int getMainActionsLeft() {
-		return mainActionsLeft;
-	}
+	public int getMainActionsLeft() {return mainActionsLeft;}
+	public void setMainActionsLeft(int mainActionsLeft) {this.mainActionsLeft = mainActionsLeft;}
 
-	public void setMainActionsLeft(int mainActionsLeft) {
-		this.mainActionsLeft = mainActionsLeft;
-	}
+	public boolean isQuickActionDone() {return quickActionDone;}
+	public void setQuickActionDone(boolean quickActionDone) {this.quickActionDone = quickActionDone;}
+	
+	
 }
