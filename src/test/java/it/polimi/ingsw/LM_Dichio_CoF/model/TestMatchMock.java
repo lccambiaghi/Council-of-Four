@@ -33,7 +33,7 @@ public class TestMatchMock{
 		System.setOut(System.out);
 	}
 
-	@Test
+	@Ignore
 	public void initialPoliticCardAndAssistants() {
 		new MatchMock(arrayListPlayer);
 		for (Player player : arrayListPlayer)
@@ -42,7 +42,7 @@ public class TestMatchMock{
 			assertEquals(Constant.ASSISTANT_INITIAL_FIRST_PLAYER +i, arrayListPlayer.get(i).getAssistant());
 	}
 
-    @Test
+	@Ignore
     public void inputNumber() {
 
 		ByteArrayInputStream in;
@@ -81,7 +81,7 @@ public class TestMatchMock{
 	 *  Ask which quick action: 1. Assistant 2. ChangePermit 3. Election 4. AdditionalMain)
 	 */
 
-	@Test
+	@Ignore
 	public void electCouncillor(){
 
 		/** ask which balcony : 1=Sea
