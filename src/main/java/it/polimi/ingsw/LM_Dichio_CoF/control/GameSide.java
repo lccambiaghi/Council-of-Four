@@ -60,7 +60,6 @@ public class GameSide {
 		}
 	}
 	
-	
 	private void listenSocket(){
 		try {
 			serverSocket = new ServerSocket(Constant.SOCKET_PORT);
@@ -72,9 +71,6 @@ public class GameSide {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
 	
 	public void handlePlayer(Player player){
 		
