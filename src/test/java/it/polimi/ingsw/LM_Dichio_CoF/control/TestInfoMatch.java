@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
@@ -19,7 +20,7 @@ public class TestInfoMatch {
 	
 	InfoMatch infoMatch = new InfoMatch(match);
 	
-	@Test
+	@Ignore
 	public void infoPlayer(){
 		infoMatch.printInfoPlayer(arrayListPlayer.get(0));
 	}
