@@ -89,6 +89,7 @@ public class Player{
 	public void discardPoliticCard(PoliticCard politicCard){arrayListPoliticCard.remove(politicCard);}
 
 	public ArrayList<PermitCard> getArrayListPermitCard(){return arrayListPermitCard;}
+	public ArrayList<PermitCard> getArrayListUsedPermitCard(){return arrayListUsedPermitCard;}
 	public void acquirePermitCard(PermitCard permitCard){arrayListPermitCard.add(permitCard);}
 	public void usePermitCard (PermitCard permitCard){
 		int i=arrayListPermitCard.indexOf(permitCard);
