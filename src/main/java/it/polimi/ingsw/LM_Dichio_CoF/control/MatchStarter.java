@@ -87,7 +87,8 @@ public class MatchStarter extends Thread{
 		
 		
 		
-		new Match(arrayListPlayerMatch);
+		Match match=Match.MatchFactory(arrayListPlayerMatch);
+		match.startGame();
 		
 		
 	}
