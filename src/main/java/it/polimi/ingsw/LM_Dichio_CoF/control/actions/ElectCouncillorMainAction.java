@@ -10,8 +10,6 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 import java.util.ArrayList;
 
-import static it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.InputHandler.inputNumber;
-
 public class ElectCouncillorMainAction extends Action {
 
     private Balcony chosenBalcony;
@@ -31,7 +29,7 @@ public class ElectCouncillorMainAction extends Action {
 
         Message.chooseBalcony(player, arrayBalcony);
 
-        chosenBalcony = field.getBalconyFromIndex(inputNumber(1, 4)-1); //-1 for array positioning
+        chosenBalcony = field.getBalconyFromIndex(Broker.askInputNumber(1, 4, player)-1); //-1 for array positioning
 
         ArrayList<Color> choosableColors = getChoosableColors();
 
@@ -40,7 +38,7 @@ public class ElectCouncillorMainAction extends Action {
 
         Message.askCouncillorColor(player, choosableColors);
 
-        chosenCouncillorColor=choosableColors.get(Broker.askInputNumber(1, choosableColors.size(), player));
+        chosenCouncillorColor=choosableColors.get(Broker.askInputNumber(1, choosableColors.size(), player)-1);
 
         return true;
     }
