@@ -7,9 +7,12 @@ public abstract class Action {
 
     protected Player player;
     protected Match match;
+    protected String resultMsg;
 
     public abstract boolean preliminarySteps();
 
     public abstract void execute();
+
+    public abstract String getResultMsg();
 
 }
