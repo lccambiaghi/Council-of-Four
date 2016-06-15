@@ -25,6 +25,32 @@ public class ControlMatch {
 		this.market=match.getMarket();
 	}
 	
+	private void println(String string, Player player){
+		//FOR_TEST
+		if(Constant.test)
+			System.out.println(string);
+		else
+			Broker.println(string, player);
+	}
+	
+	private void broadcastAll(String string, ArrayList<Player> players){
+		//FOR_TEST
+		if(Constant.test)
+			System.out.println(string);
+		else
+			Broker.printlnBroadcastAll(string, players);
+	}
+	
+	private void broadcastOthers(String string, ArrayList<Player> players, Player playerNot){
+		//FOR_TEST
+		if(Constant.test)
+			System.out.println(string);
+		else
+			Broker.printlnBroadcastOthers(string, players, playerNot);
+	}
+	
+	
+	
 	public void startMatch(){
 
 		int turn=1;
@@ -32,6 +58,9 @@ public class ControlMatch {
 		do {
 			
 			player=players.get(turn-1);
+			
+			broadcastOthers("Turn of: " +player.getNickname(), players, player);
+			println("It's your turn!", player);
 			
 			// Draw a card
 			player.addPoliticCard(new PoliticCard());
@@ -41,8 +70,11 @@ public class ControlMatch {
 			player.setQuickActionDone(false);
 			
 			infoOrAction();
+			
+			println("Your turn has ended!", player);
 
 			if (turn % players.size() == 0){
+				broadcastAll("The market has started!", players);
 				market.startMarket();
 				turn=1;
 			}else{

@@ -3,15 +3,14 @@ package it.polimi.ingsw.LM_Dichio_CoF.connection;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class Broker {
-	
-	public Broker(){}
-	
+
 	public static void sendString(String string, Player player){
 		if(player.getTypeOfConnection()=='s'){
 			player.getOutputSocket().println(string);
@@ -196,5 +195,18 @@ public class Broker {
 			}
 		}
 	}
-		
+	
+	public static synchronized void printlnBroadcastAll(String string, ArrayList<Player> players){
+		for(Player p: players){
+			println(string, p);
+		}
+	}
+	
+	public static synchronized void printlnBroadcastOthers(String string,  ArrayList<Player> players, Player playerNot){
+		for(Player p: players){
+			if(!p.equals(playerNot))
+				println(string, p);
+		}
+	}
+	
 }
