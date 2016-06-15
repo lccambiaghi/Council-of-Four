@@ -16,7 +16,7 @@ public class Market {
 
 	private SellingObject sellingObject;
 	private ArrayList <Player> arrayListPlayer;
-	private ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
+	public ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
 	private Field field;
 
 	Market (ArrayList<Player> arrayListPlayer){
@@ -87,7 +87,7 @@ public class Market {
 		
 			//prossimo giocatore
 		
-		startBuying(arrayListSellingObjects);
+		//startBuying(arrayListSellingObjects);
 		
 	}
 	private void startBuying(ArrayList <SellingObject> arrayListSelingObjects){
