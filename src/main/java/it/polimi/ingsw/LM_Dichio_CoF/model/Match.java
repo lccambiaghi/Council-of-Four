@@ -43,7 +43,7 @@ public class Match {
 
 		market = new Market (arrayListPlayer);
 		
-		controlMatch = new ControlMatch(this);
+		//controlMatch = new ControlMatch(this);
 
 		infoMatch = new InfoMatch(this);
 		
@@ -64,7 +64,7 @@ public class Match {
 
 		do{
 
-			controlMatch.controlWithPlayer(arrayListPlayer.get(turn-1));
+			controlMatch.playerTurn(arrayListPlayer.get(turn-1));
 			
 			//turn(arrayListPlayer.get(turn-1)); //array positioning
 
@@ -846,4 +846,5 @@ public class Match {
 	
 	public InfoMatch getInfoMatch() {return infoMatch;}
 
+	public Market getMarket() { return market; }
 }
