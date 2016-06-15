@@ -25,26 +25,24 @@ public class ElectCouncillorMainAction extends Action {
     @Override
     public boolean preliminarySteps(){
 
-        chosenBalcony = chooseBalcony();
+        Field field=match.getField();
+
+        Balcony[] arrayBalcony = field.getArrayBalcony();
+
+        Message.chooseBalcony(player, arrayBalcony);
+
+        chosenBalcony = field.getBalconyFromIndex(inputNumber(1, 4)-1); //-1 for array positioning
 
         ArrayList<Color> choosableColors = getChoosableColors();
 
         if (choosableColors.size()<1)
             return false;
 
-        chosenCouncillorColor=chooseCouncillorColor(choosableColors);
+        Message.askCouncillorColor(player, choosableColors);
+
+        chosenCouncillorColor=choosableColors.get(Broker.askInputNumber(1, choosableColors.size(), player));
 
         return true;
-    }
-
-    private Balcony chooseBalcony(){
-
-        Field field=match.getField();
-
-        Message.chooseBalcony_1_4(player);
-
-        return field.getBalconyFromIndex(inputNumber(1, 4)-1); //-1 for array positioning
-
     }
 
     private ArrayList<Color> getChoosableColors() {
@@ -63,17 +61,6 @@ public class ElectCouncillorMainAction extends Action {
         return choosableColors;
     }
 
-    private Color chooseCouncillorColor(ArrayList<Color> choosableColors){
-
-        Message.askNewCouncillor(player);
-
-        for (int i=0; i<choosableColors.size(); i++)
-            Broker.println(i + 1 + ". " + choosableColors.get(i), player);
-
-        return choosableColors.get(inputNumber(1, choosableColors.size()));
-
-    }
-
     @Override
     public void execute(){
 
@@ -81,7 +68,7 @@ public class ElectCouncillorMainAction extends Action {
 
         AvailableCouncillors availableCouncillors = field.getAvailableCouncillors();
 
-        Councillor chosenCouncillor = availableCouncillors.removeAvailableCouncillor(chosenCouncillorColor); //NullPointerException?
+        Councillor chosenCouncillor = availableCouncillors.removeAvailableCouncillor(chosenCouncillorColor);
 
         chosenBalcony.electCouncillor(chosenCouncillor,availableCouncillors);
 
@@ -89,6 +76,13 @@ public class ElectCouncillorMainAction extends Action {
 
         richnessRoute.movePlayer(Constant.ELECTION_RICHNESS_INCREMENT, player);
 
+        resultMsg= "Player "+ player.getNickname() + " elected a + " +
+                chosenCouncillor + " Councillor in " +
+                chosenBalcony.getNameBalcony() + ".\n";
+
     }
+
+    @Override
+    public String getResultMsg(){return resultMsg;}
 
 }
