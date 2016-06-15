@@ -20,5 +20,8 @@ public class BuildEmporiumWithKingMainAction extends Action {
     public void execute(){
 
     }
+    
+    @Override
+    public String getResultMsg(){return resultMsg;}
 
 }
