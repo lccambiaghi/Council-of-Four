@@ -1,7 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control.actions;
 
-import static it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.InputHandler.inputNumber;
-
 import java.util.ArrayList;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
@@ -53,7 +51,7 @@ public class ElectCouncillorWithAssistantQuickAction extends Action {
     	player.decrementAssistant(Constant.ELECTION_ASSISTANT_COST);
     	
     	resultMsg="Player "+player.getNickname() +"has elected a councillor paying"
-    			+"an Assistant";
+    			+" an Assistant"+ ".\n";
     }
 
     @Override
@@ -62,10 +60,11 @@ public class ElectCouncillorWithAssistantQuickAction extends Action {
     private Balcony chooseBalcony(){
 
         Field field=match.getField();
+        Balcony[] arrayBalcony = field.getArrayBalcony();
 
-        Message.chooseBalcony_1_4(player);
+        Message.chooseBalcony(player, arrayBalcony);
 
-        return field.getBalconyFromIndex(inputNumber(1, 4)-1); //-1 for array positioning
+        return field.getBalconyFromIndex(Broker.askInputNumber(1, 4, player)-1); //-1 for array positioning
 
     }
 
@@ -87,12 +86,12 @@ public class ElectCouncillorWithAssistantQuickAction extends Action {
 
     private Color chooseCouncillorColor(ArrayList<Color> choosableColors){
 
-        Message.askNewCouncillor(player);
+        Message.askCouncillorColor(player, choosableColors);
 
         for (int i=0; i<choosableColors.size(); i++)
             Broker.println(i + 1 + ". " + choosableColors.get(i), player);
 
-        return choosableColors.get(inputNumber(1, choosableColors.size()));
+        return choosableColors.get(Broker.askInputNumber(1, choosableColors.size(), player)-1);
 
     }
 
