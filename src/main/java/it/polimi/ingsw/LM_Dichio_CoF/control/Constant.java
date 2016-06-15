@@ -1,15 +1,15 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.control;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Bonus;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.BonusName;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.CityColor;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.CityName;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.Bonus;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.BonusName;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityColor;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityName;
 
 public class Constant {
 	
 	public static final int SOCKET_PORT =3000;
 
-	public static final int TIMER_SECONDS_NEW_MATCH = 20;
+	public static final int TIMER_SECONDS_NEW_MATCH = 2; //FOR TESTS
 	public static final int PLAYERS_MIN_NUMBER = 2;
 
 

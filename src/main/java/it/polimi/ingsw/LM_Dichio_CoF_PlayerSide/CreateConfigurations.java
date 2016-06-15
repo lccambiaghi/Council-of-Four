@@ -1,7 +1,8 @@
 package it.polimi.ingsw.LM_Dichio_CoF_PlayerSide;
 
 import java.util.Scanner;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
+
+import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class CreateConfigurations extends Thread{
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class HandlerArrayListPlayer extends Thread {
 

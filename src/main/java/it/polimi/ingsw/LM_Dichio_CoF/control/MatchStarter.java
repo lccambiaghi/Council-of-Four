@@ -1,9 +1,11 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.CountDown;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
 
 public class MatchStarter extends Thread{
 

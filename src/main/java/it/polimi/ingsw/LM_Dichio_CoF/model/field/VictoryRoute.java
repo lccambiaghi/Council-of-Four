@@ -1,10 +1,12 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
 import java.util.ArrayList;
 import java.util.Map;
+
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+
 import java.util.HashMap;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
 
 public class VictoryRoute implements Route {
 

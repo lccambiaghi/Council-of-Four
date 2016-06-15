@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.model;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Market;
+import it.polimi.ingsw.LM_Dichio_CoF.model.MatchMock;
 
 public class TestMarket {
 

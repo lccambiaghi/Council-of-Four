@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Color;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
 
 public class TestColor {
 

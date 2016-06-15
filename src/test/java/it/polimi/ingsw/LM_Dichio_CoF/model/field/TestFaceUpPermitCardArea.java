@@ -1,8 +1,12 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.Bonus;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.FaceUpPermitCardArea;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
 
 public class TestFaceUpPermitCardArea {
 

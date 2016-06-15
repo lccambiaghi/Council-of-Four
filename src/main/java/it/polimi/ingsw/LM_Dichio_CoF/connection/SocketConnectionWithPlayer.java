@@ -2,8 +2,8 @@ package it.polimi.ingsw.LM_Dichio_CoF.connection;
 
 import java.net.Socket;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.GameSide;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 
 public class SocketConnectionWithPlayer extends Thread {
 	

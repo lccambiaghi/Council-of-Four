@@ -1,14 +1,16 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
-import org.junit.Test;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.Bonus;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.NobilityRoute;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.NobilityRouteCell;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.NobilityRoute;
+import org.junit.Test;
 
 public class TestNobilityRoute {
 

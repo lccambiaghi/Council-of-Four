@@ -1,11 +1,11 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
-
-import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 
 public class RichnessRoute implements Route {
 

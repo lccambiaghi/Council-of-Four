@@ -1,11 +1,13 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.*;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.*;
 
 /* The constructor creates cities, assign them to regions */
 public class Field {

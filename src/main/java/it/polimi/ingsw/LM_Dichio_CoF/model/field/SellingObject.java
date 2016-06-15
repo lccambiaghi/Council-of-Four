@@ -1,11 +1,11 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
-import it.polimi.ingsw.LM_Dichio_CoF.work.PoliticCard;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 
 public class SellingObject {
 	private int price;

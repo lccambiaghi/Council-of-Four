@@ -14,8 +14,8 @@ import java.util.Scanner;
 import java.util.Timer;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
-import it.polimi.ingsw.LM_Dichio_CoF.work.GameSide;
+import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class PlayerSide {
 

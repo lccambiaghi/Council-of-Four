@@ -1,8 +1,8 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import java.util.ArrayList;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 
 public class Balcony {
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import java.io.IOException;
 

@@ -1,10 +1,10 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Color;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
 
 public class AvailableCouncillors {
 

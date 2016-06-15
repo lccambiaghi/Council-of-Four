@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
-import it.polimi.ingsw.LM_Dichio_CoF.work.MatchMock;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
+import it.polimi.ingsw.LM_Dichio_CoF.model.MatchMock;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 public class TestCases {
 

@@ -1,76 +1,123 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.control;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Balcony;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 
 public final class Message {
 	
-	public static void ifQuickAction_True_False(){
-		System.out.println("Would you like to perform Quick Action?");
+	private static void println(String string, Player player){
+		//System.out.println(string);
+		
+		//E'DA REINDIRIZZARE AL BROKER TRAMITE IL PLAYER
+		Broker.println(string, player);
 	}
 	
-	public static void chooseQuickAction_1_4(){
-		System.out.println("Which Quick Action would you like to do?");
-		System.out.println("1. Engage an Assistant");
-		System.out.println("2. Change Building Permit Tiles for a Region");
-		System.out.println("3. Send an Assistant to Elect a Councillor");
-		System.out.println("4. Perform an additional Main Action");
+	public static void chooseInfoOrAction_1_2(Player player){
+		println("What would you like to do?", player);
+		println("1. Get info of the match", player);
+		println("2. Perform an action", player);
 	}
 	
-	public static void chooseMainAction_1_4(){
-		System.out.println("Which Main Action would you like to do?");
-		System.out.println("1. Elect a Councillor");
-		System.out.println("2. Acquire a Permit Tile");
-		System.out.println("3. Build an Emporium using a Permit Tile");
-		System.out.println("4. Build an Emporium with the Help of the King");
+	public static void chooseInfo_0_6(Player player){
+		println("Choose the info you want", player);
+		println("0. [Back to menu]", player);
+		println("1. Your goods", player);
+		println("2. All cities", player);
+		println("3. Other players status", player);
+		println("4. Balconies and councillors", player);
+		println("5. All regions", player);
+		println("6. Specific city", player);
 	}
 	
-	public static void chooseRegion_1_3(){
-		System.out.println("Choose a region");
-		System.out.println("1. Sea");
-		System.out.println("2. Hill");
-		System.out.println("3. Mountain");
+	public static void chooseCityFromIndex(Player player){
+		println("Choose a city inserting the corresponding index", player);
 	}
 	
-	public static void chooseBalcony_1_4(){
-		System.out.println("Choose a Balcony");
-		System.out.println("1. Sea Balcony");
-		System.out.println("2. Hill Balcony");
-		System.out.println("3. Mountain Balcony");
-		System.out.println("4. King Balcony");
+	public static void ifQuickAction(Player player){
+		println("Would you like to perform Quick Action?", player);
 	}
 	
-	public static void choosePermitCard(){
-		System.out.println("Choose a Permit Tile");
+	public static void chooseYesOrNo_1_2(Player player){
+		println("1. Yes", player);
+		println("2. No", player);
 	}
 	
-	public static void chooseCity(){
-		System.out.println("Choose a city");
+	public static void chooseQuickAction_1_4(Player player){
+		println("Which Quick Action would you like to do?", player);
+		println("1. Engage an Assistant", player);
+		println("2. Change Building Permit Tiles for a Region", player);
+		println("3. Send an Assistant to Elect a Councillor", player);
+		println("4. Perform an additional Main Action", player);
 	}
 	
-	public static void choosePoliticsCards(){
-		System.out.println("Choose Politic Cards" );
+	public static void chooseMainAction_1_4(Player player){
+		println("Which Main Action would you like to do?", player);
+		println("1. Elect a Councillor", player);
+		println("2. Acquire a Permit Tile", player);
+		println("3. Build an Emporium using a Permit Tile", player);
+		println("4. Build an Emporium with the Help of the King", player);
 	}
 	
-	public static void youCantBuild(){
-		System.out.println("You either have no Business Permit Tiles" +
-				" or you have already built in every city they avail you to");
+	public static void chooseRegion_1_3(Player player){
+		println("Choose a region", player);
+		println("1. Sea", player);
+		println("2. Hill", player);
+		println("3. Mountain", player);
 	}
 	
-	public static void askNewCouncillor(){
-		System.out.println("What color would you like the new councillor to be?");
+	public static void chooseBalcony_1_4(Player player){
+		println("Choose a Balcony", player);
+		println("1. Sea Balcony", player);
+		println("2. Hill Balcony", player);
+		println("3. Mountain Balcony", player);
+		println("4. King Balcony", player);
 	}
 	
-	public static void askHowManyPoliticsCards(){
-		System.out.println("How many Politic Cards do you want to use?");
+	public static void choosePermitCard(Player player){
+		println("Choose a Permit Tile", player);
 	}
 	
-	
-	public static void noEnoughRichness(){
-		System.out.println("You don't have enough richness");
+	public static void chooseCity(Player player){
+		println("Choose a city", player);
 	}
 	
-	public static void noEnoughAssistant(){
-		System.out.println("You don't have enough assistants");
+	public static void choosePoliticsCards(Player player){
+		println("Choose Politic Cards", player);
+	}
+	
+	public static void choosePermitCards_1_2(Player player){
+		println("Which Permit Tile do you want take, 1 or 2?", player);
+	}
+	
+	public static void youCantBuild(Player player){
+		println("You either have no Business Permit Tiles" +
+				" or you have already built in every city they avail you to", player);
+	}
+	
+	public static void askNewCouncillor(Player player){
+		println("What color would you like the new councillor to be?", player);
+	}
+	
+	public static void askHowManyPoliticsCards(Player player){
+		println("How many Politic Cards do you want to use?", player);
+	}
+	
+	public static void selectAnotherPoliticsCardsSet(Player player){
+		println("You don't have these cards in your hand. Select an other set", player);
+	}
+	
+	public static void notEnoughRichness(Player player){
+		println("You don't have enough richness", player);
+	}
+	
+	public static void notEnoughAssistant(Player player){
+		println("You don't have enough assistants", player);
+	}
+	
+	public static void notEnoughPoliticsCards(Player player){
+		println("You don't have enough Politics Card", player);
+	}
+	public static void notEnoughPoliticsCardsAndRichness(Player player){
+		println("You don't have enough Politics Cards and Richness at the same time", player);
 	}
 	
 }

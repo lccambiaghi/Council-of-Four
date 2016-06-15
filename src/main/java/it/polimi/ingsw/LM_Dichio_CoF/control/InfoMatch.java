@@ -1,10 +1,12 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
+import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 public class InfoMatch {
 	
@@ -42,18 +44,22 @@ public class InfoMatch {
 	
 	
 	private void print(String string){
-		System.out.print(string);
-		//Broker.print(string, player);
+		//System.out.print(string);
+		Broker.print(string, player);
 	}
 	
 	private void println(){
-		System.out.println();
-		//Broker.println("", player);
+		//System.out.println();
+		Broker.println("    ", player);
 	}
 	
 	private void println(String string){
-		System.out.println(string);
-		//Broker.println(string, player);
+		//System.out.println(string);
+		Broker.println(string, player);
+	}
+	
+	public void setPlayer(Player player){
+		this.player=player;
 	}
 	
 	
@@ -86,9 +92,7 @@ public class InfoMatch {
 	}
 	
 	public void printInfoPlayer(Player player){
-		
-		this.player=player;
-		
+
 		println();
 		println("You have...");
 		printPolitcCards();
@@ -102,8 +106,17 @@ public class InfoMatch {
 		
 	}
 	
+	public void printCityAndIndex(Player player){
+		println();
+		for(int i=0; i<arrayCity.length; i++){
+			println((i+1) +". City: " +arrayCity[i].getCityName());
+		}
+		println();
+	}
+	
 	public void printInfoCity(Player player, int indexCity){
 		
+		println();
 		City chosenCity= arrayCity[indexCity];
 		println("- City: "+ chosenCity.getCityName());
 		println("- Color: "+ chosenCity.getCityColor());
@@ -134,7 +147,7 @@ public class InfoMatch {
 		println();
 		for(int i=0; i<Constant.REGIONS_NUMBER; i++){
 			Region region = field.getRegionFromIndex(i);
-			println("Name of the region: " + region.getRegionName());
+			println("REGION: " + region.getRegionName());
 			FaceUpPermitCardArea face = region.getFaceUpPermitCardArea();
 			PermitCard[] arrayPermitCard = face.getArrayPermitCard();
 			for(int j=0; j<arrayPermitCard.length; j++){
@@ -179,7 +192,6 @@ public class InfoMatch {
 		}
 		}
 		
-		
 		for(int pos: positions){
 			switch(pos){
 			case	0:
@@ -223,6 +235,7 @@ public class InfoMatch {
 	}
 	
 	private void printBalconies(){
+		println();
 		Balcony[] arrayBalconies = field.getArrayBalcony();
 		for(Balcony balcony: arrayBalconies){
 			println( balcony.getNameBalcony() + ":");
@@ -237,12 +250,13 @@ public class InfoMatch {
 	}
 	
 	private void printAvailableCouncillors(){
+		
+		println();
 		ArrayList<Councillor> arrayListCouncillor = field.getAvailableCouncillors().getArrayListCouncillor();
 		println("Available councillors:");
 		for(Councillor councillor: arrayListCouncillor){
 			print(councillor.getColor() + "  ");
 		}
-		println();
 		println();
 	}
 	
@@ -254,6 +268,7 @@ public class InfoMatch {
 					"Victory [" + field.getVictoryRoute().getPosition(player) + "], " +
 					"Nobility [" +field.getNobilityRoute().getPosition(player) + "]");
 		}
+		println();
 	}
 	
 	private void printPolitcCards(){
@@ -296,6 +311,7 @@ public class InfoMatch {
 			}
 			println();
 		}
+		println();
 	}
 	
 	

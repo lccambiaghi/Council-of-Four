@@ -1,19 +1,19 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
-import it.polimi.ingsw.LM_Dichio_CoF.work.InfoMatch;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
-import it.polimi.ingsw.LM_Dichio_CoF.work.MatchMock;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.InfoMatch;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.MatchMock;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingObject;
 
 public class TestSellingObject {
 	

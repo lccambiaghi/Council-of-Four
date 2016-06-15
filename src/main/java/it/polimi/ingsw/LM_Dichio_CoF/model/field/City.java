@@ -1,14 +1,15 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
-import it.polimi.ingsw.LM_Dichio_CoF.work.PoliticCard;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
+import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
+
+import java.util.Random;
 
 public class City {
 

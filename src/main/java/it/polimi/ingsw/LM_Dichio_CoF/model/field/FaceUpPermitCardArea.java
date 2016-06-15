@@ -1,7 +1,7 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class FaceUpPermitCardArea {
 	

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.model;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.PoliticCard;
+import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 
 public class TestPoliticCard {
 

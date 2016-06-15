@@ -1,11 +1,12 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import static org.junit.Assert.*;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.VictoryRoute;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
+
 import java.util.ArrayList;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.VictoryRoute;
 
 import org.junit.Test;
 

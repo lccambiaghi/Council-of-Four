@@ -1,8 +1,9 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.RichnessRoute;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.RichnessRoute;
+
 import org.junit.Test;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work.field;
+package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 
 public interface Route {
 

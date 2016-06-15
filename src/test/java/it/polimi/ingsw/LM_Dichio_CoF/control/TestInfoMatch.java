@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
+import it.polimi.ingsw.LM_Dichio_CoF.control.InfoMatch;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
 
 public class TestInfoMatch {
 
@@ -15,7 +18,12 @@ public class TestInfoMatch {
 	ArrayList<Player> arrayListPlayer = match.getArrayListPlayer();
 	
 	InfoMatch infoMatch = new InfoMatch(match);
-	/*
+	
+	@Test
+	public void infoPlayer(){
+		infoMatch.printInfoPlayer(arrayListPlayer.get(0));
+	}
+	
 	@Test
 	public void infoAllCities(){
 		infoMatch.printInfoAllCities(arrayListPlayer.get(0));
@@ -32,18 +40,13 @@ public class TestInfoMatch {
 	}
 	
 	@Test
-	public void infoPlayer(){
-		infoMatch.printInfoPlayer(arrayListPlayer.get(0));
+	public void infoRegions(){
+		infoMatch.printInfoRegions(arrayListPlayer.get(0));
 	}
 	
 	@Test
 	public void infoCity(){
-		infoMatch.printInfoCity(arrayListPlayer.get(0), 3);
-	}
-	*/
-	@Test
-	public void infoRegions(){
-		infoMatch.printInfoRegions(arrayListPlayer.get(0));
+		infoMatch.printInfoCity(arrayListPlayer.get(0), 14);
 	}
 	
 }

@@ -1,7 +1,9 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 
 /**
     This Mock is for testing purposes. It overrides the startGame() in the constructor

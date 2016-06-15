@@ -46,7 +46,9 @@ public class SocketListener {
 			case	"SOCKETinputNumber":{
 				int lowerBound = Integer.parseInt(socketConnection.receiveStringFS());
 				int upperBound = Integer.parseInt(socketConnection.receiveStringFS());
-				InputHandler.inputNumber(lowerBound, upperBound);
+				int result = InputHandler.inputNumber(lowerBound, upperBound);
+				socketConnection.sendStringTS(String.valueOf(result));
+				break;
 			}
 			
 			case	"SOCKETprint":

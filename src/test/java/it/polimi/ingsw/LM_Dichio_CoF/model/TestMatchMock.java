@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.model;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -6,13 +6,16 @@ import static org.mockito.Mockito.*;
 import java.io.*;
 import java.util.ArrayList;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Balcony;
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.Councillor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.MatchMock;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.Balcony;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.Councillor;
 
 public class TestMatchMock{
 

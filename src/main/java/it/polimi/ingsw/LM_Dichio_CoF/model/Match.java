@@ -1,11 +1,16 @@
-package it.polimi.ingsw.LM_Dichio_CoF.work;
+package it.polimi.ingsw.LM_Dichio_CoF.model;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.*;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.field.*;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.ControlMatch;
+import it.polimi.ingsw.LM_Dichio_CoF.control.InfoMatch;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Message;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 
 public class Match {
@@ -13,7 +18,14 @@ public class Match {
 	private ArrayList<Player> arrayListPlayer;
 	private Field field;
 	private Market market;
-	boolean isGameOver=false;
+	private boolean isGameOver=false;
+	
+	private ControlMatch controlMatch;
+	private InfoMatch infoMatch;
+	
+
+
+	private Player playerTurn;
 	
 	public Match(ArrayList<Player> arrayListPlayer) {
 		
@@ -31,6 +43,10 @@ public class Match {
 		
 		market = new Market (arrayListPlayer);
 		
+		controlMatch = new ControlMatch(this);
+		
+		infoMatch = new InfoMatch(this);
+		
 		startGame();
 		
 	}
@@ -44,9 +60,11 @@ public class Match {
 
 		do{
 
-			turn(arrayListPlayer.get(turn-1)); //array positioning
+			controlMatch.controlWithPlayer(arrayListPlayer.get(turn-1));
+			
+			//turn(arrayListPlayer.get(turn-1)); //array positioning
 
-			if (turn % arrayListPlayer.size() ==0)
+			//if (turn % arrayListPlayer.size() ==0)
 				market.startMarket();
 
 		}while(!isGameOver);
@@ -96,37 +114,42 @@ public class Match {
 				arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
 	}
 
-	public void turn(Player player){
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public void turn(Player playerTurn){
 
+		this.playerTurn=playerTurn;
+		
 		/* Draw a card */
-		player.addPoliticCard(new PoliticCard());
+		playerTurn.addPoliticCard(new PoliticCard());
 
-		//JUST TO TEST THE INFO WITH THE PLAYERS
-		/*InfoMatch infoMatch = new InfoMatch(this);
-		infoMatch.printInfoField(player);
-		infoMatch.printInfoPlayer(player);*/
+		playerTurn.setMainActionsLeft(1);
 
-		player.setMainActionsLeft(1);
-
-		System.out.println("Would you like to perform Quick Action first?");
-
+		Message.ifQuickAction(playerTurn);
+		
 		if (askYesOrNo()) {
-			quickAction(player);
-			mainAction(player);
+			quickAction(playerTurn);
+			mainAction(playerTurn);
 		}
 		else{
-			mainAction(player);
-			System.out.println("Would you like to perform Quick Action?");
+			mainAction(playerTurn);
+			Message.ifQuickAction(playerTurn);
 			if (askYesOrNo())
-				quickAction(player);
+				quickAction(playerTurn);
 		}
 
 	}
 
 	private boolean askYesOrNo(){ //TODO test e socket con playerTurn
 
-		System.out.println("1. Yes");
-		System.out.println("2. No");
+		Message.chooseYesOrNo_1_2(playerTurn);
 
 		switch (inputNumber(1,2)) {
 			case 1:
@@ -163,11 +186,7 @@ public class Match {
 	}
 
 	private void quickAction(Player playerTurn) { 
-		System.out.println("Which Quick Action would you like to do?");
-		System.out.println("1. Engage an Assistant");
-		System.out.println("2. Change Building Permit Tiles for a Region");
-		System.out.println("3. Send an Assistant to Elect a Councillor");
-		System.out.println("4. Perform an additional Main Action");
+		Message.chooseQuickAction_1_4(playerTurn);
 
 		switch (inputNumber(1,4)) {
 			case 1:
@@ -193,8 +212,7 @@ public class Match {
 		Route richnessRoute = field.getRichnessRoute();
 
 		if(richnessRoute.getPosition(playerTurn)<Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST){
-			System.out.println("You don't have enough richness to perform this action." +
-					" Choose another Quick Action.");
+			Message.notEnoughRichness(playerTurn);
 			quickAction(playerTurn);
 		}
 		else {
@@ -209,8 +227,7 @@ public class Match {
 		   catch(NotEnoughAssistantsException e)*/
 
 		if (playerTurn.getAssistant()<Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST){
-			System.out.println("You don't have enough assistants to perform this Action. " +
-					"Choose another one.");
+			Message.notEnoughAssistant(playerTurn);
 			quickAction(playerTurn);
 		}
 		else{
@@ -229,10 +246,7 @@ public class Match {
 
 	private Region chooseRegion() {
 
-		System.out.println("In which region would you like to change Building Permit Tiles?");
-		System.out.println("1. Sea");
-		System.out.println("2. Hill");
-		System.out.println("3. Mountain");
+		Message.chooseRegion_1_3(playerTurn);
 
 		return field.getRegionFromIndex(inputNumber(1,3) - 1); // -1 for array positioning
 	}
@@ -243,8 +257,7 @@ public class Match {
 		   catch(NotEnoughAssistantsException e)*/
 
 		if (playerTurn.getAssistant()<Constant.ELECTION_ASSISTANT_COST){
-			System.out.println("You don't have enough assistants to perform this Action. " +
-					"Choose another one.");
+			Message.notEnoughAssistant(playerTurn);
 			quickAction(playerTurn);
 		}
 		else {
@@ -262,11 +275,7 @@ public class Match {
 
 	private Balcony chooseBalcony(){
 
-		System.out.println("In which balcony would you like to elect a new councillor?");
-		System.out.println("1. Sea Balcony");
-		System.out.println("2. Hill Balcony");
-		System.out.println("3. Mountain Balcony");
-		System.out.println("4. King Balcony");
+		Message.chooseBalcony_1_4(playerTurn);
 
 		return field.getBalconyFromIndex(inputNumber(1, 4)-1); //-1 for array positioning
 
@@ -289,7 +298,8 @@ public class Match {
 
 	private Color chooseCouncillorColor(ArrayList<Color> choosableColors){
 
-		System.out.println("What color would you like the new councillor to be?");
+		Message.askNewCouncillor(playerTurn);
+		
 		for (int i=0; i<choosableColors.size(); i++)
 			System.out.println(i+1 + ". " + choosableColors.get(i));
 
@@ -305,8 +315,7 @@ public class Match {
 
 	private void performAdditionalMainAction(Player playerTurn){
 		if (playerTurn.getAssistant()<Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST){
-			System.out.println("You don't have enough assistants to perform this Action. " +
-					"Choose another one.");
+			Message.notEnoughAssistant(playerTurn);
 			quickAction(playerTurn);
 		}
 		else{
@@ -319,11 +328,7 @@ public class Match {
 	 	calls the according method and decreases his mainActionsLeft by one */
 	private void mainAction(Player playerTurn) {
 
-		System.out.println("Which Main Action would you like to do?");
-		System.out.println("1. Elect a Councillor");
-		System.out.println("2. Acquire a Business Permit Tile");
-		System.out.println("3. Build an Emporium using a Permit Tile");
-		System.out.println("4. Build an Emporium with the Help of the King");
+		Message.chooseMainAction_1_4(playerTurn);
 
 		switch (inputNumber(1,4)) {
 			case 1:
@@ -364,9 +369,7 @@ public class Match {
 		ArrayList <PermitCard> usablePermitCards = getUsablePermitCards(playerTurn);
 
 		if (usablePermitCards.size()<1){
-			System.out.println("You either have no Business Permit Tiles" +
-					" or you have already built in every city they avail you to" +
-					". Choose another Main Move.");
+			Message.notEnoughPoliticsCardsAndRichness(playerTurn);
 			mainAction(playerTurn);
 		}
 		else {
@@ -420,7 +423,7 @@ public class Match {
 
 	private int choosePermitCard(ArrayList<PermitCard> usablePermitCards) {
 
-		System.out.println("Which of your Business Permit Tiles would you like to use?");
+		Message.choosePermitCard(playerTurn);
 
 		for(int i=0; i<usablePermitCards.size();i++) {
 
@@ -444,7 +447,7 @@ public class Match {
 
 	private int chooseBuildableCity(PermitCard chosenPermitCard) {
 
-		System.out.println("Which city would you like to build your emporium in?");
+		Message.chooseCity(playerTurn);
 
 		City[] actualBuildableCities = chosenPermitCard.getArrayBuildableCities();
 		for (int i = 0; i < actualBuildableCities.length; i++) {
@@ -487,10 +490,8 @@ public class Match {
 	}
 
 	private void acquirePermitCard(Player playerTurn){
-		System.out.println("Which balcony would you like to satisfy?");
-		System.out.println("1. Sea Balcony");
-		System.out.println("2. Hill Balcony");
-		System.out.println("3. Mountain Balcony");
+		
+		Message.chooseRegion_1_3(playerTurn);
 		
 		int inputBalcony = inputNumber(1, 3) -1;
 		Balcony chosenBalcony = field.getBalconyFromIndex(inputBalcony);
@@ -530,7 +531,7 @@ public class Match {
 			}// creo l'arraylist di colori delle carte scelte da usare, includo il multicolor
 		}
 		else  {
-			System.out.println("You don't have these cards in your hand. Select an other set");
+			Message.selectAnotherPoliticsCardsSet(playerTurn);
 			acquirePermitCard(playerTurn);
 		}	
 		/*
@@ -552,7 +553,7 @@ public class Match {
 				payed=payed + numberOfMulticolor;
 			
 			if(!checkIfEnoughRichness(playerTurn, payed)){
-				System.out.println("You don't have enough money. Which Main Action would you like to do?");
+				Message.notEnoughRichness(playerTurn);
 				mainAction(playerTurn);
 			}
 			else {
@@ -562,14 +563,14 @@ public class Match {
 				Region regionOfBalcony = field.getRegionFromIndex(inputBalcony);
 				FaceUpPermitCardArea faceUpPermitCardOfRegion = regionOfBalcony.getFaceUpPermitCardArea();
 
-				System.out.println("Which Permit Card do you want take, 1 or 2?");
+				Message.choosePermitCards_1_2(playerTurn);
 				PermitCard chosenPermitCard = faceUpPermitCardOfRegion.acquirePermitCard(inputNumber(1, 2)-1);
 
 				playerTurn.acquirePermitCard(chosenPermitCard);
 			}
 		}
 		else{
-				System.out.println("You don't have enough money. Which Main Action would you like to do?");
+				Message.notEnoughRichness(playerTurn);
 				mainAction(playerTurn);
 		}
 
@@ -640,18 +641,16 @@ public class Match {
 		int playerRichness = richnessRoute.getPosition(playerTurn);
 
 		if (usablePoliticCards.size()<1){
-			System.out.println("You have no politic cards to satisfy the King's council. " +
-					"Choose another main move.");
+			Message.notEnoughPoliticsCards(playerTurn);
 			mainAction(playerTurn);
 		}
 		else {
 			if (eligibleMove(usablePoliticCards, playerRichness)<1) {
-				System.out.println("Your politic cards and richness do not allow you to satisfy the King's council. " +
-						"Choose another main move.");
+				Message.notEnoughPoliticsCardsAndRichness(playerTurn);
 				mainAction(playerTurn);
 			}
 			else {
-				System.out.println("Which cards would you like to use to satisfy King's council?");
+				Message.choosePoliticsCards(playerTurn);
 
 				boolean eligibleSet=false;
 				int cost;
@@ -662,7 +661,7 @@ public class Match {
 					if (cost>0)
 						eligibleSet=true;
 					else
-						System.out.println("You don't have enough coins to use this set. Choose another one.");
+						Message.notEnoughRichness(playerTurn);
 				}while(!eligibleSet);
 
 				for (PoliticCard politicCard:chosenPoliticCards)
@@ -840,5 +839,7 @@ public class Match {
 	public void setGameOver(){
 		isGameOver=true;
 	}
+	
+	public InfoMatch getInfoMatch() {return infoMatch;}
 
 }

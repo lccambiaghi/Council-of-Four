@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.rmi.RemoteException;
 
-import it.polimi.ingsw.LM_Dichio_CoF.work.Configurations;
-import it.polimi.ingsw.LM_Dichio_CoF.work.GameSide;
-import it.polimi.ingsw.LM_Dichio_CoF.work.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class Broker {
 	
@@ -154,18 +154,21 @@ public class Broker {
 		}
 	}
 	
-	public static synchronized void askInputNumber(int lowerBound, int upperBound, Player player){
+	public static synchronized int askInputNumber(int lowerBound, int upperBound, Player player){
+		int result = 0;
 		if(player.getTypeOfConnection()=='s'){
 			sendString("SOCKETinputNumber",player);
-			sendString(String.valueOf(lowerBound),player);
+			sendString(String.valueOf(lowerBound), player);
 			sendString(String.valueOf(upperBound),player);
+			result = Integer.parseInt(receiveString(player));
 		}else{
 			try {
-				player.getRmiPlayerSide().inputNumber(lowerBound, upperBound);
+				result = player.getRmiPlayerSide().inputNumber(lowerBound, upperBound);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
 	
 	public static synchronized void print(String string, Player player){
