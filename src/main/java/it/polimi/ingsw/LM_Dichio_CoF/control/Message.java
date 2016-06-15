@@ -1,6 +1,10 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.Balcony;
+
+import java.util.ArrayList;
 
 public final class Message {
 	
@@ -65,12 +69,13 @@ public final class Message {
 		println("3. Mountain", player);
 	}
 	
-	public static void chooseBalcony_1_4(Player player){
-		println("Choose a Balcony", player);
-		println("1. Sea Balcony", player);
-		println("2. Hill Balcony", player);
-		println("3. Mountain Balcony", player);
-		println("4. King Balcony", player);
+	public static void chooseBalcony(Player player, Balcony[] arrayBalcony){
+
+		println("Choose a Balcony:", player);
+
+		for(int i=0; i<arrayBalcony.length; i++)
+			println(i+1 + " " + arrayBalcony[i].getNameBalcony(), player);
+
 	}
 	
 	public static void choosePermitCard(Player player){
@@ -94,8 +99,13 @@ public final class Message {
 				" or you have already built in every city they avail you to", player);
 	}
 	
-	public static void askNewCouncillor(Player player){
+	public static void askCouncillorColor(Player player, ArrayList<Color> choosableColors){
+
 		println("What color would you like the new councillor to be?", player);
+
+		for(int i=0; i<choosableColors.size(); i++)
+			println(i+1 + " " + choosableColors.get(i), player);
+
 	}
 	
 	public static void askHowManyPoliticsCards(Player player){
