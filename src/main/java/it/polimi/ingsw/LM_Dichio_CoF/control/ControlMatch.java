@@ -1,21 +1,42 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Market;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
-import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.InputHandler;
+
+import java.util.ArrayList;
 
 public class ControlMatch {
 
+	private final Market market;
 	private Match match;
 	private Player player;
+	private final ArrayList<Player> players;
 	private int choice;
-	
-	public ControlMatch(Match match){
-		this.match=match;
+	private static boolean gameOver;
+
+	public ControlMatch(ArrayList<Player> arrayListPlayers){
+		this.players =arrayListPlayers;
+		match=Match.MatchFactory(arrayListPlayers);
+		market=match.getMarket();
 	}
 	
-	
-	public void controlWithPlayer(Player player){
+	public void startMatch(){
+
+		int turn=1;
+
+		do {
+			playerTurn(players.get(turn-1));
+
+			if (turn % players.size() == 0)
+				market.startMarket();
+
+			turn++;
+		}while(!gameOver);
+
+	}
+
+	public void playerTurn(Player player){
 		
 		this.player=player;
 		
@@ -119,5 +140,7 @@ public class ControlMatch {
 		}
 		player.setMainActionsLeft(player.getMainActionsLeft() - 1);
 	}
-	
+
+	public static void setGameOver(){ gameOver=true;	}
+
 }
