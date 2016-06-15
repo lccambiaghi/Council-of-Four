@@ -19,7 +19,7 @@ public class TestMarket {
     private MatchMock match = testCases.matchMock();
 	private Market market= new Market (arrayListPlayer);
 	
-	@Test
+	@Ignore
 	public void startMarketAssistant() {
 		market.startMarket();
 		
@@ -29,7 +29,7 @@ public class TestMarket {
 		assertEquals(0, arrayListPlayer.get(0).getAssistant());
 		
 	}
-	@Test
+	@Ignore
 	public void startMarketPermitCard() {
 		market.startMarket();
 		
@@ -39,7 +39,7 @@ public class TestMarket {
 		assertEquals(0, arrayListPlayer.get(0).getArrayListPermitCard().size());
 		
 	}
-	@Test
+	@Ignore
 	public void startMarketPoliticCard() {
 		market.startMarket();
 		

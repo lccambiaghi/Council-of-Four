@@ -21,7 +21,7 @@ public class TestSellingObject {
     private ArrayList <Player> arrayListPlayer= testCases.arrayListPlayer();
     private MatchMock match = testCases.matchMock();
     
-    @Test
+    @Ignore
 	public void constructorPolitic() {
 
 		//ByteArrayInputStream in=new ByteArrayInputStream("1\n5\n".getBytes());

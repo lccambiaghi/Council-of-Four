@@ -44,18 +44,28 @@ public class InfoMatch {
 	
 	
 	private void print(String string){
-		//System.out.print(string);
-		Broker.print(string, player);
+		
+		//FOR_TEST
+		if(Constant.test)
+			System.out.print(string);
+		else
+			Broker.print(string, player);
 	}
 	
 	private void println(){
-		//System.out.println();
-		Broker.println("    ", player);
+		//FOR_TEST
+		if(Constant.test)
+			System.out.println();
+		else
+			Broker.println("", player);
 	}
 	
 	private void println(String string){
-		//System.out.println(string);
-		Broker.println(string, player);
+		//FOR_TEST
+		if(Constant.test)
+			System.out.println(string);
+		else
+			Broker.println(string, player);
 	}
 	
 	public void setPlayer(Player player){

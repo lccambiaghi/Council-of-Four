@@ -5,10 +5,11 @@ import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 public final class Message {
 	
 	private static void println(String string, Player player){
-		//System.out.println(string);
-		
-		//E'DA REINDIRIZZARE AL BROKER TRAMITE IL PLAYER
-		Broker.println(string, player);
+		//FOR_TEST
+		if(Constant.test)
+			System.out.println(string);
+		else
+			Broker.println(string, player);
 	}
 	
 	public static void chooseInfoOrAction_1_2(Player player){
