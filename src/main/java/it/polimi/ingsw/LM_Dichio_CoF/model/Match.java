@@ -36,23 +36,27 @@ public class Match {
 		Configurations config = readFileConfigurations();
 		
 		giveInitialPoliticCards(this.arrayListPlayer);
-		
+
 		giveInitialAssistants(this.arrayListPlayer);
 		
 		field = new Field(config, arrayListPlayer);
-		
+
 		market = new Market (arrayListPlayer);
 		
 		controlMatch = new ControlMatch(this);
-		
+
 		infoMatch = new InfoMatch(this);
-		
-		startGame();
 		
 	}
 
 	// MatchMock
 	public Match(){};
+
+	public static Match MatchFactory(ArrayList<Player> arrayListPlayer){
+
+		return new Match(arrayListPlayer);
+
+	}
 
 	public void startGame() {
 		
