@@ -3,8 +3,10 @@ package it.polimi.ingsw.LM_Dichio_CoF.control;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Market;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
+import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ControlMatch {
 
@@ -13,12 +15,14 @@ public class ControlMatch {
 	private Player player;
 	private final ArrayList<Player> players;
 	private int choice;
-	private static boolean gameOver;
+	private boolean gameOver;
 
-	public ControlMatch(ArrayList<Player> arrayListPlayers){
-		this.players =arrayListPlayers;
-		match=Match.MatchFactory(arrayListPlayers);
-		market=match.getMarket();
+	public ControlMatch(ArrayList<Player> arrayListPlayer){
+		Collections.shuffle(arrayListPlayer);
+		
+		this.players =arrayListPlayer;
+		this.match=Match.MatchFactory(arrayListPlayer);
+		this.market=match.getMarket();
 	}
 	
 	public void startMatch(){
@@ -26,20 +30,31 @@ public class ControlMatch {
 		int turn=1;
 
 		do {
-			playerTurn(players.get(turn-1));
+			
+			player=players.get(turn-1);
+			
+			// Draw a card
+			player.addPoliticCard(new PoliticCard());
+			
+			//Set actions 
+			player.setMainActionsLeft(1);
+			player.setQuickActionDone(false);
+			
+			infoOrAction();
 
-			if (turn % players.size() == 0)
+			if (turn % players.size() == 0){
 				market.startMarket();
-
-			turn++;
+				turn=1;
+			}else{
+				turn++;
+			}
+			
 		}while(!gameOver);
 
 	}
 
-	public void playerTurn(Player player){
-		
-		this.player=player;
-		
+	public void infoOrAction(){
+
 		Message.chooseInfoOrAction_1_2(player);
 		choice = Broker.askInputNumber(1, 2, player);
 		
@@ -55,7 +70,6 @@ public class ControlMatch {
 		do{
 			Message.chooseInfo_0_6(player);
 			choice = Broker.askInputNumber(0, 6, player);
-					// PER I TEST InputHandler.inputNumber(0, 6);
 					
 			switch (choice) {
 			case 1:
@@ -79,14 +93,15 @@ public class ControlMatch {
 			}
 		}
 		while(choice!=0);
+		infoOrAction();
 	}
 	
 	private void cityFromIndex(){
 		int numCities = match.getField().getArrayCity().length;
 		Message.chooseCityFromIndex(player);
 		match.getInfoMatch().printCityAndIndex(player);
-		choice = Broker.askInputNumber(1, numCities, player);
-		match.getInfoMatch().printInfoCity(player, choice-1);
+		int indexCity = Broker.askInputNumber(1, numCities, player);
+		match.getInfoMatch().printInfoCity(player, indexCity-1);
 	}
 	
 	
@@ -97,7 +112,8 @@ public class ControlMatch {
 		if(choice==1){
 			quickAction();
 		}else if(choice==2){
-			mainAction();
+			if(player.getMainActionsLeft()!=0)
+				mainAction();
 		}
 	}
 	
@@ -119,6 +135,12 @@ public class ControlMatch {
 				//performAdditionalMainAction(player);
 				break;
 		}
+		
+		//IF QUICK ACTION DONE SUCCESSFULLY
+		player.setQuickActionDone(true);
+		
+		actionsLeftHandler();
+			
 	}
 	
 	private void mainAction() {
@@ -138,9 +160,28 @@ public class ControlMatch {
 				//buildEmporiumWithKing(playerTurn);
 				break;
 		}
-		player.setMainActionsLeft(player.getMainActionsLeft() - 1);
+		
+		//IF MAIN ACTION DONE SUCCESSFULLY
+			player.setMainActionsLeft(player.getMainActionsLeft() - 1);
+		
+		actionsLeftHandler();
+		
 	}
 
-	public static void setGameOver(){ gameOver=true;	}
+	private void actionsLeftHandler(){
+		if(player.getMainActionsLeft()>0){
+			if(!player.isQuickActionDone()){
+				ifQuickAction();
+			}else{
+				mainAction();
+			}
+		}else if(player.getMainActionsLeft()==0){
+			if(!player.isQuickActionDone()){
+				ifQuickAction();
+			}
+		}
+	}
+	
+	public void setGameOver(){ gameOver=true;	}
 
 }
