@@ -21,39 +21,39 @@ public class ChangePermitCardsQuickAction extends Action {
 
     @Override
     public boolean preliminarySteps(){
-    	if (player.getAssistant()<Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST){
+
+		if (player.getAssistant()<Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST){
 			Message.notEnoughAssistant(player);
     		return false;
     	}
-	
-    	chosenRegion = chooseRegion();
 
-        return false;
+		Field field = match.getField();
+
+		Message.chooseRegion_1_3(player);
+
+    	chosenRegion = field.getRegionFromIndex(Broker.askInputNumber(1, 3, player) - 1); // -1 for array positioning
+
+        return true;
     }
 
     @Override
     public void execute(){
-    	FaceUpPermitCardArea chosenArea=chosenRegion.getFaceUpPermitCardArea();
+
+		FaceUpPermitCardArea chosenArea=chosenRegion.getFaceUpPermitCardArea();
+
 		PermitCard[] arrayPermitCard = chosenArea.getArrayPermitCard();
 
-		for (int i = 0; i < arrayPermitCard.length; i++) {
+		for (int i = 0; i < arrayPermitCard.length; i++)
 			chosenArea.changePermitCard(i);
-		}
 
 		player.decrementAssistant(Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST);
 		
-		resultMsg="Player"+ player.getNickname() +"has changed the face up Permit Cards in the"
-				+" Region " + chosenRegion.getRegionName().toString();
+		resultMsg="Player "+ player.getNickname() +" has changed the face up Permit Cards in "
+				 + chosenRegion.getRegionName();
 
     }
     
     @Override
     public String getResultMsg(){return resultMsg;}
 
-	private Region chooseRegion() {
-		Field field = match.getField();
-		Message.chooseRegion_1_3(player);
-
-		return field.getRegionFromIndex(Broker.askInputNumber(1, 3, player) - 1); // -1 for array positioning
-	}
 }

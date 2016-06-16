@@ -17,38 +17,50 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
 
 public class BuildEmporiumPermitCardMainAction extends Action {
 
-	int indexChosenCity;
-	PermitCard chosenPermitCard;
-	int indexChosenPermitCard;
-	
-    public BuildEmporiumPermitCardMainAction(Match match, Player player){
-        this.match=match;
-        this.player=player;
+	private int indexChosenCity;
+	private PermitCard chosenPermitCard;
+	private City chosenCity;
+
+	public BuildEmporiumPermitCardMainAction(Match match, Player player){
+
+		this.match=match;
+
+		this.player=player;
+
     }
 
     @Override
     public boolean preliminarySteps(){
-    	ArrayList <PermitCard> usablePermitCards = getUsablePermitCards();
+
+		ArrayList <PermitCard> usablePermitCards = getUsablePermitCards();
 
 		if (usablePermitCards.size()<1){
-			Message.notEnoughPoliticsCardsAndRichness(player);
+			Message.youCantBuild(player);
 			return false;
 		}
-		
-		indexChosenPermitCard = choosePermitCard(usablePermitCards);
-		chosenPermitCard = usablePermitCards.get(indexChosenPermitCard);
-		indexChosenCity = chooseBuildableCity(chosenPermitCard);
+
+		Message.choosePermitCard(player, usablePermitCards);
+
+		chosenPermitCard = usablePermitCards.get(Broker.askInputNumber(1,usablePermitCards.size(), player)-1); //array positioning
+
+		City[] buildableCities = chosenPermitCard.getArrayBuildableCities();
+
+		Message.chooseCity(player, buildableCities);
+
+		chosenCity = buildableCities[Broker.askInputNumber(1, buildableCities.length, player)];
 		
 		return true;
+
     }
 
     @Override
     public void execute(){
-    	Field field = match.getField();
-    	City[] arrayCity = field.getArrayCity();
-    	
-		arrayCity[indexChosenCity].buildEmporium(player);
-		player.usePermitCard(player.getArrayListPermitCard().get(indexChosenPermitCard));
+
+		Field field=match.getField();
+
+		chosenCity.buildEmporium(player);
+
+		player.usePermitCard(chosenPermitCard);
 
 		// applying bonuses
 		ArrayList<City> nearbyBuiltCities = getAdjacentBuiltCities(indexChosenCity);
@@ -56,14 +68,19 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 		for (City city: nearbyBuiltCities)
 			for (Bonus bonus : city.getArrayBonus())
 				bonus.applyBonus(player, field);
-        resultMsg="Player "+player.getNickname() +"has built an emporium in "
-        		+ arrayCity[indexChosenCity].getCityName().toString() + " City" + ".\n";
+
+        resultMsg="Player "+player.getNickname() +" has built an emporium in "
+        		+ chosenCity.getCityName() + " City" + ".\n";
+
     }
     
     @Override
     public String getResultMsg(){return resultMsg;}
 
-    private ArrayList<PermitCard> getUsablePermitCards() {
+	/*  This method creates an arrayList of usablePermitCards setting actualBuildableCities.
+           It moves these permitCards in the front of the player's hand to make them
+           easily removable once the player selects one of them  */
+	private ArrayList<PermitCard> getUsablePermitCards() {
 
 		ArrayList <PermitCard> usablePermitCards= new ArrayList<>();
 
@@ -87,49 +104,19 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		return usablePermitCards;
     }
-    
-	private int choosePermitCard(ArrayList<PermitCard> usablePermitCards) {
 
-		Message.choosePermitCard(player);
-
-		for(int i=0; i<usablePermitCards.size();i++) {
-
-			PermitCard usablePermitCard = usablePermitCards.get(i); // ArrayIndexOutOfBoundException?
-
-			System.out.println(i + 1 + ". ");
-			System.out.println("Buildable Cities:");
-
-			City[] arrayBuildableCities = usablePermitCard.getArrayBuildableCities();
-			for (City buildableCity : arrayBuildableCities)
-				System.out.print(buildableCity.getCityName() + " ");
-
-			System.out.println("Bonus:");
-			Bonus[] arrayBonus = usablePermitCard.getArrayBonus();
-			for (Bonus bonus : arrayBonus)
-				System.out.print(bonus.getBonusName() + " ");
-		}
-
-		return Broker.askInputNumber(1, usablePermitCards.size(), player)-1; // -1 for array positioning
-	}
-    
-	private int chooseBuildableCity(PermitCard chosenPermitCard) {
-
-		Message.chooseCity(player);
-
-		City[] actualBuildableCities = chosenPermitCard.getArrayBuildableCities();
-		for (int i = 0; i < actualBuildableCities.length; i++) {
-			City buildableCity = actualBuildableCities[i];
-			System.out.println(i + 1 + ". " + buildableCity.getCityName());
-		}
-
-		return Broker.askInputNumber(1, actualBuildableCities.length, player) - 1; // -1 for array positioning
-
-	}
-
+	/* Queue of adjacent built cities. It starts only with chosenCity.
+		Elements of queue are removed and analysed one at a time.
+		If a city is linked to the analysed element of the queue and emporium is present,
+		the city is also added to the queue */
 	private ArrayList<City> getAdjacentBuiltCities(int indexChosenCity) {
+
 		Field field = match.getField();
+
 		List<Integer>[] arrayCityLinks = field.getArrayCityLinks();
+
 		boolean[] visitedCities = new boolean[arrayCityLinks.length];
+
 		Queue<Integer> toVisitQueue = new LinkedList<>();
 
 		toVisitQueue.add(indexChosenCity);
@@ -138,14 +125,17 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 		ArrayList<City> nearbyBuiltCities = new ArrayList<>();
 		City[] arrayCity=field.getArrayCity();
 		while (!toVisitQueue.isEmpty()) {
+
 			int visitingCity = toVisitQueue.remove();
+
 			nearbyBuiltCities.add(arrayCity[visitingCity]);
-			for (Integer adjCity : arrayCityLinks[visitingCity]) {
+
+			for (Integer adjCity : arrayCityLinks[visitingCity])
 				if (arrayCity[adjCity].isEmporiumAlreadyBuilt(player) && !visitedCities[adjCity]) {
 					toVisitQueue.add(adjCity);
 					visitedCities[adjCity] = true;
 				}
-			}
+
 		}
 
 		return nearbyBuiltCities;
