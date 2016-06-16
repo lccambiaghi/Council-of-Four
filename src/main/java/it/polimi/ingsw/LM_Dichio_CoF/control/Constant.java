@@ -9,9 +9,9 @@ public class Constant {
 	
 	public static final boolean test = false;
 	
-	
 	public static final int SOCKET_PORT =3000;
 
+	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 20;
 	public static final int TIMER_SECONDS_NEW_MATCH = 2; //FOR TESTS
 	public static final int PLAYERS_MIN_NUMBER = 2;
 
