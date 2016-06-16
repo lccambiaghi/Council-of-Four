@@ -74,12 +74,7 @@ public class PlayerSide {
 			}
 		}
 	}
-	
-	/*
-	 * Methods only used by the connection SOCKET
-	 */
-	// TS= To Server, FS= From Server
-	
+
 	protected char getTypeOfConnection() {
 		return typeOfConnection;
 	}

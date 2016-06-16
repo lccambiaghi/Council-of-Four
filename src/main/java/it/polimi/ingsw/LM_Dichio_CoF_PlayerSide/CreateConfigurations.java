@@ -2,10 +2,11 @@ package it.polimi.ingsw.LM_Dichio_CoF_PlayerSide;
 
 import java.util.Scanner;
 
+import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class CreateConfigurations extends Thread{
-
+	
 	PlayerSide playerSide;
 	
 	public CreateConfigurations(PlayerSide playerSide){ this.playerSide=playerSide; }
@@ -19,16 +20,7 @@ public class CreateConfigurations extends Thread{
 		int playersMaxNumber = 0;
 		boolean repeat = true;
 		System.out.println("First of all, enter the max number of players you want (min 2, max 8)");
-		do {
-	        while (!inCLI.hasNextInt()){
-	        	System.out.println("Enter a number!");
-	        	inCLI.next();
-	        }
-	        playersMaxNumber= inCLI.nextInt();
-	        if(2<=playersMaxNumber&&playersMaxNumber<=8){
-				repeat = false;
-			}else System.out.println("min 2, max 8!");
-	    } while (repeat);
+		InputHandler.inputNumber(2, 8);
 		
 		Configurations config = new Configurations();
 		
