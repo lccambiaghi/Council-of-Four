@@ -1,7 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.model;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,12 +8,9 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
-import it.polimi.ingsw.LM_Dichio_CoF.model.MatchMock;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.Balcony;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Councillor;
 
 public class TestMatchMock{
@@ -23,26 +19,7 @@ public class TestMatchMock{
     private ArrayList <Player> arrayListPlayer= testCases.arrayListPlayer();
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
-    @Before
-    public void setup(){
-		System.setOut(new PrintStream(outContent));
-    }
-
-	@After
-	public void cleanup(){
-		System.setOut(System.out);
-	}
-
-	@Ignore
-	public void initialPoliticCardAndAssistants() {
-		new MatchMock(arrayListPlayer);
-		for (Player player : arrayListPlayer)
-		    assertEquals(Constant.POLITIC_CARDS_INITIAL_NUMBER, player.getArrayListPoliticCard().size());
-		for (int i = 0; i < arrayListPlayer.size(); i++)
-			assertEquals(Constant.ASSISTANT_INITIAL_FIRST_PLAYER +i, arrayListPlayer.get(i).getAssistant());
-	}
-
-	@Ignore
+	/*@Ignore
     public void inputNumber() {
 
 		ByteArrayInputStream in;
@@ -71,36 +48,6 @@ public class TestMatchMock{
 
 		//cleanup input stream
         System.setIn(System.in);
-
+*/
     }
 
-	/**
-	 * Ask if quick action first: 1.Yes 2. No
-	 * Ask which main action: 1. Election 2.PermitCard 3.Emporium 4.With King
-	 * (Ask if quick action: 1.Yes 2. No
-	 *  Ask which quick action: 1. Assistant 2. ChangePermit 3. Election 4. AdditionalMain)
-	 */
-
-	@Ignore
-	public void electCouncillor(){
-
-		/** ask which balcony : 1=Sea
-		ask which color : 1=Whatever
-		*/
-		ByteArrayInputStream in=new ByteArrayInputStream("2\n1\n1\n1\n2\n".getBytes());
-		System.setIn(in);
-
-		MatchMock match = new MatchMock(arrayListPlayer);
-
-		ArrayList<Councillor> oldCouncillors=new ArrayList<>(match.getField().getBalconyFromIndex(0).getArrayListCouncillor());
-
-		match.turn(arrayListPlayer.get(0));
-
-		ArrayList<Councillor> newCouncillors = match.getField().getBalconyFromIndex(0).getArrayListCouncillor();
-
-		assertEquals(oldCouncillors.subList(0,oldCouncillors.size()-2), newCouncillors.subList(1,newCouncillors.size()-1));
-
-		assertEquals(14, arrayListPlayer.get(0).getRichness());
-	}
-
-}

@@ -12,12 +12,11 @@ import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.InfoMatch;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
-import it.polimi.ingsw.LM_Dichio_CoF.model.MatchMock;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingObject;
 
 public class TestSellingObject {
 	
-	private TestCases testCases = new TestCases();
+	/*private TestCases testCases = new TestCases();
     private ArrayList <Player> arrayListPlayer= testCases.arrayListPlayer();
     private MatchMock match = testCases.matchMock();
     
@@ -73,6 +72,6 @@ public class TestSellingObject {
 		assertEquals(0, arrayListPlayer.get(0).getArrayListPermitCard().size());
 
 		//System.setIn(System.in);
-	}
+	}*/
 
 }

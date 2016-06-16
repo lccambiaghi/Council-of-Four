@@ -14,7 +14,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
 
 public class TestInfoMatch {
 
-	TestCases testCases = new TestCases();
+	/*TestCases testCases = new TestCases();
 	Match match = testCases.matchMock();
 	ArrayList<Player> arrayListPlayer = match.getArrayListPlayer();
 	
@@ -48,6 +48,6 @@ public class TestInfoMatch {
 	@Test
 	public void infoCity(){
 		infoMatch.printInfoCity(arrayListPlayer.get(0), 14);
-	}
+	}*/
 	
 }

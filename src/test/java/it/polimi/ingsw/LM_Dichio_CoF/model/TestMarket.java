@@ -10,11 +10,10 @@ import org.junit.Test;
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Market;
-import it.polimi.ingsw.LM_Dichio_CoF.model.MatchMock;
 
 public class TestMarket {
 
-	private TestCases testCases = new TestCases();
+	/*private TestCases testCases = new TestCases();
     private ArrayList <Player> arrayListPlayer= testCases.arrayListPlayer();
     private MatchMock match = testCases.matchMock();
 	private Market market= new Market (arrayListPlayer);
@@ -48,6 +47,6 @@ public class TestMarket {
 		assertEquals(4, market.arrayListSellingObjects.get(0).getPrice());
 		assertEquals(5, arrayListPlayer.get(0).getArrayListPoliticCard().size());
 		
-	}
+	}*/
 
 }
