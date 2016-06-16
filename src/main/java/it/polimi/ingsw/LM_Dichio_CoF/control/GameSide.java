@@ -8,6 +8,11 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIConnectionWithPlayer;
@@ -18,26 +23,47 @@ import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIConnection;
 
 public class GameSide {
 
-	private static ArrayList <Player> arrayListPlayer = new ArrayList <Player>();
+	public static void main( String[] args ){
+		new GameSide();
+    }
+	
+	
+	private static ArrayList<Player> arrayListPlayer = new ArrayList<Player>();
+	private static ArrayList<Player> arrayListAllPlayer = new ArrayList<Player>();
+	
+	//private static PriorityQueue<Player> queuePlayer = new PriorityQueue<Player>();
+	//private static PriorityQueue<Player> queueAllPlayer = new PriorityQueue<Player>();
 	
 	private RMIGameSideInterface rmiGameSide;
+	
 	private ServerSocket serverSocket;
+	private ListenSocket listenSocket;
+	
+	private WaitingRoom waitingRoom;
 	
 	public static final Object lockArrayListPlayer = new Object();
+	public static final Object lockWaitingRoomAvailable = new Object();
 	
-	private boolean firstAvailablePlayer=true;
+	private boolean waitingRoomAvailable=false;
 	
 	public GameSide() {
 		
 		/**
 		 * Initialize and locate the RMI registry
 		 */
-		initializeRMI();
+		//initializeRMI();
 		
 		/**
-		 * Start listening with Socket
+		 * Start listening with Socket with a thread
 		 */
-		listenSocket();
+		listenSocket = new ListenSocket(this);
+		listenSocket.start();
+		
+		/**
+		 * Start checking (while true)
+		 * if a new player has connected and (if so) create a Waiting Room if there's none already available
+		 */
+		arrayListPlayerHandler();
 		
 	}
 	
@@ -60,48 +86,42 @@ public class GameSide {
 		}
 	}
 	
-	private void listenSocket(){
-		try {
-			serverSocket = new ServerSocket(Constant.SOCKET_PORT);
-			while(true){
-				Socket socket = serverSocket.accept();
-				new SocketConnectionWithPlayer(socket, this);		
+	class ListenSocket extends Thread{
+		
+		private GameSide gameSide;
+		public ListenSocket(GameSide gameSide){this.gameSide=gameSide;}
+		public void run(){
+			try {
+				serverSocket = new ServerSocket(Constant.SOCKET_PORT);
+				System.out.println("Socket listening on port "+Constant.SOCKET_PORT);
+				while(true){
+					Socket socket = serverSocket.accept();
+					new SocketConnectionWithPlayer(socket, gameSide);		
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 	
 	public void handlePlayer(Player player){
 		
-		System.out.println("I am managing a player through a thread");
-		
 		Broker.login(player, this);
 		
-		System.out.println("The player has successfully connected with nickname: "+player.getNickname());
-		
-		addPlayerToArrayList(player);
-		
-		if(firstAvailablePlayer){
-			firstAvailablePlayer=false;
-			new HandlerArrayListPlayer(this).start();
-		}else{
-			Broker.waitForServer(player);
+		synchronized (lockArrayListPlayer) {
+			player.setPlaying(false);
+			arrayListPlayer.add(player);
+			arrayListAllPlayer.add(player);
 		}
+	
 	}
 	
 	public boolean isNicknameInUse(String nickname){
-		for(Player player: getArrayListPlayer()){
+		for(Player player: getArrayListAllPlayer()){
 			if(player.getNickname().equals(nickname))
 				return true;
 		}
 		return false;
-	}
-	
-	private void addPlayerToArrayList(Player player){
-		synchronized(lockArrayListPlayer){
-			arrayListPlayer.add(player);
-		}
 	}
 	
 	public ArrayList<Player> getArrayListPlayer() {
@@ -110,22 +130,49 @@ public class GameSide {
 		}
 	}
 	
+	public ArrayList<Player> getArrayListAllPlayer() {
+		return arrayListAllPlayer;
+	}
 	
-	public void removeArrayListPlayer(int playersNumber){
-		synchronized (lockArrayListPlayer) {
-			for(int i=0; i<playersNumber; i++){
-				arrayListPlayer.remove(0);
+	public void setWaitingRoomAvailable(boolean waitingRoomAvailable) {
+		synchronized (lockWaitingRoomAvailable) {
+			this.waitingRoomAvailable = waitingRoomAvailable;
+		}
+	}
+	
+	public boolean getWaitingRoomAvailable() {
+		synchronized (lockWaitingRoomAvailable) {
+			return waitingRoomAvailable;
+		}
+	}
+	
+	private void arrayListPlayerHandler(){
+		
+		Player player = null;
+		Boolean startWaitingRoom = false;
+		while(true){
+			synchronized(lockArrayListPlayer){
+				if(arrayListPlayer.size()!=0){
+					player = arrayListPlayer.remove(0);
+				}
+			}
+			if(player!=null){
+				synchronized (lockWaitingRoomAvailable) {
+					if(!waitingRoomAvailable){
+						waitingRoomAvailable=true;
+						startWaitingRoom=true;
+						waitingRoom = new WaitingRoom(this, player);
+					}else{
+						waitingRoom.addPlayerToWaitingRoom(player);
+					}
+					player=null;
+				}
+				if(startWaitingRoom){
+					waitingRoom.start();
+					startWaitingRoom=false;
+				}
 			}
 		}
 	}
 	
-	public Player getFirstPlayer(){
-		synchronized (lockArrayListPlayer) {
-			return(arrayListPlayer.get(0));
-		}
-	}
-	
-	public void setFirstAvailablePlayer(boolean firstAvailablePlayer) {this.firstAvailablePlayer = firstAvailablePlayer;}
-	
-
 }
