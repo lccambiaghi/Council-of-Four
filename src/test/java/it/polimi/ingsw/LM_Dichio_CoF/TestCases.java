@@ -98,7 +98,7 @@ public class TestCases {
 		 * Do not change this parameter and the difficulty one until we haven't create 
 		 * new maps for those combination missing
 		 */
-		config.setCitiesNumber(15);
+		config.setCitiesNumber(18);
 		
 		config.setPermitCardBonusNumberMin(2);
 		config.setPermitCardBonusNumberMax(3);
@@ -108,7 +108,7 @@ public class TestCases {
 			config.setNobilityBonusNumber(7);
 		}
 		
-		config.setCityLinksPreconfigured(false);
+		config.setCityLinksPreconfigured(true);
 		if(config.isCityLinksPreconfigured()==false){
 			int[][]cityLinksMatrix =  new int[][]{
 				{0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
@@ -139,7 +139,7 @@ public class TestCases {
 			config.setCityLinksMatrix(cityLinksMatrix);
 			
 		}else{
-			config.setDifficulty("n".charAt(0));
+			config.setDifficulty("h".charAt(0));
 		}
 		
 		config.setCityBonusRandom(false);
