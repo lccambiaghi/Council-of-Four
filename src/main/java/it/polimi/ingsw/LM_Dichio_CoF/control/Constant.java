@@ -7,10 +7,11 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityName;
 
 public class Constant {
 	
-	public static final boolean test = false;
+	public static final boolean test = true;
 	
 	public static final int SOCKET_PORT =3000;
 
+	public static final int TIMER_SECONDS_CHECK_QUEUE_PLAYER = 3;
 	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 20;
 	public static final int TIMER_SECONDS_NEW_MATCH = 2; //FOR TESTS
 	public static final int PLAYERS_MIN_NUMBER = 2;
@@ -56,7 +57,7 @@ public class Constant {
 	public static final CityColor[][] CITIES_COLOR = {
 			{CityColor.Blue, CityColor.Blue, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold},
 			{CityColor.Blue, CityColor.Blue, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold},
-			{CityColor.Red, CityColor.Red, CityColor.Blue, CityColor.Blue, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold},
+			{CityColor.Red, CityColor.Red, CityColor.Blue, CityColor.Blue, CityColor.Blue, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Bronze, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Silver, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold, CityColor.Gold},
 	};
 
 	//nobility bonuses
