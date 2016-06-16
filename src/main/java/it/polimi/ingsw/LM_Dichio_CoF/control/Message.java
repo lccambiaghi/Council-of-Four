@@ -2,9 +2,14 @@ package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
+import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Balcony;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.Bonus;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public final class Message {
 	
@@ -78,16 +83,54 @@ public final class Message {
 
 	}
 	
-	public static void choosePermitCard(Player player){
-		println("Choose a Permit Tile", player);
+	public static void choosePermitCard(Player player, ArrayList<PermitCard> arrayListPermitCard){
+
+		println("Choose a Building Permit Tile:", player);
+
+		for(int i=0; i<arrayListPermitCard.size(); i++) {
+
+			PermitCard permitCard = arrayListPermitCard.get(i);
+
+			println(i + 1 + ". \nBuildable Cities:\n", player);
+			for (City buildableCity : permitCard.getArrayBuildableCities())
+				Broker.print(buildableCity.getCityName() + " ", player);
+
+			println("\nBonus:\n", player);
+			for (Bonus bonus : permitCard.getArrayBonus())
+				Broker.print(bonus.getBonusName() + " " + bonus.getIncrement() + "   ", player);
+
+		}
+
 	}
 	
-	public static void chooseCity(Player player){
-		println("Choose a city", player);
+	public static void chooseCity(Player player, City[] arrayCity){
+
+		println("Choose a city:", player);
+
+		for(int i=0; i<arrayCity.length; i++)
+			println(i+1 + " " + arrayCity[i], player);
+
 	}
+
+	// Polymorphism
+	public static void chooseCity(Player player, Map<City, Integer> movableCities){
+
+		println("Choose a destination city for the king:", player);
+		int i=0;
+		for (Map.Entry<City, Integer> city : movableCities.entrySet()){
+			println(i + 1 + ". " + city.getKey() + " Cost: " + city.getValue(), player);
+			i++;
+		}
+	}
+
 	
-	public static void choosePoliticsCards(Player player){
-		println("Choose Politic Cards", player);
+	public static void choosePoliticsCards(Player player, ArrayList<PoliticCard> arrayListPoliticCard){
+
+		println("Choose Politic Cards:", player);
+
+		for(int i=0; i<arrayListPoliticCard.size(); i++)
+			println(i+1 + " " + arrayListPoliticCard.get(i).getCardColor(), player);
+
 	}
 	
 	public static void choosePermitCards_1_2(Player player){

@@ -9,16 +9,19 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.Route;
 
 public class EngageAssistantQuickAction extends Action {
 
-	String resultMsg;
     public EngageAssistantQuickAction(Match match, Player player){
+
         this.match=match;
+
         this.player=player;
     }
 
     @Override
     public boolean preliminarySteps(){
-    	Field field= match.getField();
-    	Route richnessRoute = field.getRichnessRoute();
+
+        Field field= match.getField();
+
+        Route richnessRoute = field.getRichnessRoute();
 
 		if(richnessRoute.getPosition(player)<Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST){
 			Message.notEnoughRichness(player);
@@ -26,18 +29,23 @@ public class EngageAssistantQuickAction extends Action {
 		}
     	
         return true;
+
     }
 
     @Override
     public void execute(){
     	
     	Field field= match.getField();
+
     	Route richnessRoute = field.getRichnessRoute();
     
-    	richnessRoute.movePlayer(-(Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST),player); //eccezione lanciata qui
-		player.addAssistant(1);
+    	richnessRoute.movePlayer(-(Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST),player);
+
+        player.addAssistant(1);
 		
-		resultMsg="Player"+ player.getNickname() +"has engaged an Assistant paying three coins";
+		resultMsg="Player "+ player.getNickname() +" has engaged an Assistant paying "
+                + Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST + " coins";
+
     }
 
     @Override
