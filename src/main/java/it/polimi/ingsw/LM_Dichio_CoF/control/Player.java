@@ -31,6 +31,8 @@ public class Player{
 	private PrintWriter outputSocket;	
 	
 	// variables of the game
+	private boolean playing;
+	
 	private int richness;
 	private int assistant;
 
@@ -76,6 +78,9 @@ public class Player{
 	
 	public Scanner getInputSocket() {return inputSocket;}
 	public PrintWriter getOutputSocket() {return outputSocket;}	
+	
+	public boolean isPlaying() {return playing;}
+	public void setPlaying(boolean playing) {this.playing = playing;}
 	
 	public int getRichness() {return richness;}
 	public void setRichness(int richness) {this.richness = richness;}
