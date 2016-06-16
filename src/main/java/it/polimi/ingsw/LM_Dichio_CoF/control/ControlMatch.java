@@ -1,6 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.CountDown;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Market;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
@@ -25,6 +26,8 @@ public class ControlMatch {
 		this.market=match.getMarket();
 	}
 	
+	
+	//ONLY FOR TESTS
 	private void println(String string, Player player){
 		//FOR_TEST
 		if(Constant.test)
@@ -60,10 +63,14 @@ public class ControlMatch {
 			player=players.get(turn-1);
 			
 			broadcastOthers("Turn of: " +player.getNickname(), players, player);
-			println("It's your turn!", player);
 			
 			// Draw a card
 			player.addPoliticCard(new PoliticCard());
+			
+			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_TO_PERFORM_ACTION*1000);
+			
+			println("It's your turn! You have "+Constant.TIMER_SECONDS_TO_PERFORM_ACTION+" seconds!", player);
+			
 			
 			//Set actions 
 			player.setMainActionsLeft(1);
@@ -72,6 +79,8 @@ public class ControlMatch {
 			infoOrAction();
 			
 			println("Your turn has ended!", player);
+			
+			//CHECK IF LAST EMPORIUM BUILT
 
 			if (turn % players.size() == 0){
 				broadcastAll("The market has started!", players);
@@ -169,7 +178,7 @@ public class ControlMatch {
 		}
 		
 		//IF QUICK ACTION DONE SUCCESSFULLY
-		player.setQuickActionDone(true);
+			player.setQuickActionDone(true);
 		
 		actionsLeftHandler();
 			
