@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
-import it.polimi.ingsw.LM_Dichio_CoF.model.MatchMock;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 public class TestCases {
@@ -43,10 +42,9 @@ public class TestCases {
 		System.out.println();
 		return arrayCity;
 	}
-	
-	
-	public MatchMock matchMock(){
-		return new MatchMock(arrayListPlayer());
+
+	public Match match(){
+		return Match.MatchFactory(arrayListPlayer());
 	}
 	
 	public ArrayList <Player> arrayListPlayer() {

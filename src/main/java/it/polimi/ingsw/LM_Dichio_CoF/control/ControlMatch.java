@@ -175,6 +175,7 @@ public class ControlMatch {
 		if (action.preliminarySteps()) {
 			action.execute();
 			player.setQuickActionDone(true);
+			broadcastOthers(action.getResultMsg(), players, player);
 		}
 		
 		actionsLeftHandler();
@@ -207,6 +208,7 @@ public class ControlMatch {
 		if (action.preliminarySteps()) {
 			action.execute();
 			player.setMainActionsLeft(player.getMainActionsLeft() - 1);
+			broadcastOthers(action.getResultMsg(), players, player);
 		}
 
 		actionsLeftHandler();
