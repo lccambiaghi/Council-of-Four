@@ -75,18 +75,6 @@ public class Broker {
 		
 	}
 	
-	public static void waitForServer(Player player){
-		if(player.getTypeOfConnection()=='s'){
-			sendString("SOCKETwaitForServer",player);
-		}else{
-			try {
-				player.getRmiPlayerSide().waitForServer();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
 	public static void askToConfigure(Player player){
 		if(player.getTypeOfConnection()=='s'){
 			sendString("SOCKETconfigure",player);
@@ -127,30 +115,6 @@ public class Broker {
 			}
 		}
 		return config;
-	}
-	
-	public static synchronized void sayMatchIsStarting(Player player){
-		if(player.getTypeOfConnection()=='s'){
-			sendString("SOCKETstartingMatch",player);
-		}else{
-			try {
-				player.getRmiPlayerSide().startingMatch();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public static synchronized void sayMatchHasStarted(Player player){
-		if(player.getTypeOfConnection()=='s'){
-			sendString("SOCKETmatchStarted",player);
-		}else{
-			try {
-				player.getRmiPlayerSide().matchStarted();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public static synchronized int askInputNumber(int lowerBound, int upperBound, Player player){

@@ -18,10 +18,6 @@ public class SocketListener {
 			case	"SOCKETlogin":
 				playerSide.login();
 				break;
-			
-			case	"SOCKETwaitForServer":
-				playerSide.waitForServer();
-				break;
 				
 			case 	"SOCKETconfigure":
 				playerSide.configure();
@@ -33,14 +29,6 @@ public class SocketListener {
 				
 			case	"SOCKETgetConfigurationsAsObject":
 				socketConnection.sendObjectTS(playerSide.getConfigurationsAsObject());
-				break;
-			
-			case 	"SOCKETstartingMatch":
-				playerSide.startingMatch();
-				break;
-				
-			case	"SOCKETmatchStarted":
-				playerSide.matchStarted();
 				break;
 			
 			case	"SOCKETinputNumber":{
@@ -58,15 +46,7 @@ public class SocketListener {
 			case	"SOCKETprintln":
 				System.out.println(socketConnection.receiveStringFS());
 				break;
-			
-			case	"SOCKETwaitTurn":
-				playerSide.waitTurn();
-				break;
-			
-			case	"SOCKETplay":
-				playerSide.play();
-				break;
-			
+
 			default	:
 				System.out.println("error");
 				break;

@@ -32,10 +32,6 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 		return string;
 	}
 	
-	public void waitForServer(){
-		playerSide.waitForServer();
-	}
-	
 	public void configure(){	
 		this.playerSide.configure();	
 	}
@@ -46,22 +42,6 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 	
 	public Object getConfigurationsAsObject(){
 		return playerSide.getConfigurationsAsObject();
-	}
-	
-	public void startingMatch(){
-		playerSide.startingMatch();
-	}
-	
-	public void matchStarted(){
-		playerSide.matchStarted();
-	}
-	
-	public void waitTurn(){
-		playerSide.waitTurn();
-	}
-	
-	public void play(){
-		playerSide.play();
 	}
 	
 	public void print(String string){

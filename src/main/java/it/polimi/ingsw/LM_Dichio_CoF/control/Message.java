@@ -21,6 +21,15 @@ public final class Message {
 			Broker.println(string, player);
 	}
 	
+	public static void waitForServer(Player player){
+		println("Just wait a moment...", player);
+	}
+	
+	public static void waitForMatch(Player player){
+		println("You have been selected for a match, wait a moment...", player);
+	}
+	
+	
 	public static void chooseInfoOrAction_1_2(Player player){
 		println("What would you like to do?", player);
 		println("1. Get info of the match", player);

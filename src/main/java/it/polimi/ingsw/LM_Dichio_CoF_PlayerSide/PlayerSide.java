@@ -109,11 +109,6 @@ public class PlayerSide {
 		return nickname;
 	}
 	
-	
-	public void waitForServer(){
-		System.out.println("Just wait a moment...");
-	}
-	
 	public void configure(){
 		System.out.println("You are the first player, standard configurations will be used (FOR THE MOMENT)");
 	}	
@@ -129,23 +124,6 @@ public class PlayerSide {
 		setStandardConfigurations();
 		return config;
 	}
-	
-	public void startingMatch(){
-		System.out.println("You have been selected for a match, wait a moment...");
-	}
-	
-	public void matchStarted(){
-		System.out.println("You are playing in a match!");
-	}
-	
-	public void waitTurn(){
-		System.out.println("It's not your turn yet, wait...");
-	}
-	
-	public void play(){
-		System.out.println("IT'S YOUR TURN!");
-	}
-	
 	
 	
 	//Those two methods are not used for the moment
