@@ -21,14 +21,23 @@ public final class Message {
 			Broker.println(string, player);
 	}
 	
-	public static void waitForServer(Player player){
-		println("Just wait a moment...", player);
-	}
-	
 	public static void waitForMatch(Player player){
 		println("You have been selected for a match, wait a moment...", player);
 	}
 	
+	public static void matchStarted(Player player){
+		println("You are playing in a match!", player);
+	}
+	
+	public static void waitTurn(Player player){
+		println("It's not your turn yet, wait...", player);
+	}
+	
+	public static String matchStarted = "You are playing in a match!";
+	
+	public static void play(Player player){
+		println("It's your turn!", player);
+	}
 	
 	public static void chooseInfoOrAction_1_2(Player player){
 		println("What would you like to do?", player);

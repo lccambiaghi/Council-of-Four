@@ -30,10 +30,7 @@ public class GameSide {
 	
 	private static ArrayList<Player> arrayListPlayer = new ArrayList<Player>();
 	private static ArrayList<Player> arrayListAllPlayer = new ArrayList<Player>();
-	
-	//private static PriorityQueue<Player> queuePlayer = new PriorityQueue<Player>();
-	//private static PriorityQueue<Player> queueAllPlayer = new PriorityQueue<Player>();
-	
+
 	private RMIGameSideInterface rmiGameSide;
 	
 	private ServerSocket serverSocket;

@@ -7,7 +7,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityName;
 
 public class Constant {
 	
-	public static final boolean test = true;
+	public static final boolean test = false;
 	
 	public static final int SOCKET_PORT =3000;
 
