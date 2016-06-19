@@ -1,7 +1,9 @@
 package it.polimi.ingsw.LM_Dichio_CoF_PlayerSide;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
@@ -18,27 +20,37 @@ public class CreateConfigurations extends Thread{
 		System.out.println("You have to create the configurations of a match\n");
 		
 		int playersMaxNumber = 0;
-		boolean repeat = true;
 		System.out.println("First of all, enter the max number of players you want (min 2, max 8)");
-		InputHandler.inputNumber(2, 8);
+		playersMaxNumber= InputHandler.inputNumber(2, 8);
 		
 		Configurations config = new Configurations();
 		
-		/*
-		 * Do not change this parameter and the difficulty one until we haven't create 
-		 * new maps for those combination missing
-		 */
-		config.setCitiesNumber(15);
+		config.setCitiesNumber(citiesNumber(playersMaxNumber));
 		
-		config.setPermitCardBonusNumberMin(2);
-		config.setPermitCardBonusNumberMax(3);
+		System.out.println("How many bonuses would you like to set as minimum on the Permit Cards?"
+				+"Insert a value between 0 and 5");
+		int numberBonusesMin=InputHandler.inputNumber(0, 5);
 		
-		config.setNobilityBonusRandom(false);
-		if(config.isNobilityBonusRandom()==false){
-			config.setNobilityBonusNumber(7);
+		config.setPermitCardBonusNumberMin(numberBonusesMin);
+		System.out.println("How many bonuses would you like to set as maximum on the Permit Cards?"
+				+"Insert a value between" + numberBonusesMin + " and 5");
+		config.setPermitCardBonusNumberMax(InputHandler.inputNumber(numberBonusesMin, 5));
+		
+		System.out.println("Would you like to play with a random number of bonuses on the Nobility Route? 1. Yes 2. No");
+		int nobilityBonusRandom=InputHandler.inputNumber(1, 2);
+		if (nobilityBonusRandom==1){
+			config.setNobilityBonusRandom(false);
+			System.out.println("How many cells of Nobility Route would you like with a bonus?"
+					+ "Insert a value between 0 and 11");
+			config.setNobilityBonusNumber(InputHandler.inputNumber(0, 11));
 		}
+		else 
+			config.setNobilityBonusRandom(true);
 		
-		config.setCityLinksPreconfigured(false);
+		
+		System.out.println("Would you like to play with preconfigured links? 1. Yes 2. No");
+		if (InputHandler.inputNumber(1, 2)==2)
+			config.setCityLinksPreconfigured(false);
 		if(config.isCityLinksPreconfigured()==false){
 			int[][]cityLinksMatrix =  new int[][]{
 				{0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
@@ -69,20 +81,54 @@ public class CreateConfigurations extends Thread{
 			config.setCityLinksMatrix(cityLinksMatrix);
 			
 		}else{
-			config.setDifficulty("n".charAt(0));
+			System.out.println("Select the difficulty (from lower to higher links)");
+			System.out.println("l. low number of linked cities");
+			System.out.println("n. medium number of linked cities");
+			System.out.println("h. higher number of linked cities");
+			config.setDifficulty(InputHandler.inputCharacter());
 		}
 		
-		config.setCityBonusRandom(true);
+		System.out.print("Would you like to play with random bonuses on the cities? 1. Yes 2. No");
+		if(InputHandler.inputNumber(1, 2)==1)
+			config.setCityBonusRandom(true);
+		
 		if(config.isCityBonusRandom()==false){
-			//da implementare, ma essendo un esempio non ha senso farlo ora (l'array di mappe)
+			HashMap<String, Integer>[] cityBonusArray = new HashMap[config.getCitiesNumber()];
+			for(int i=0; i<cityBonusArray.length; i++){
+				
+				
+			}
+
+		
 		}else{
-			config.setCityBonusNumberMin(2);
-			config.setCityBonusNumberMax(3);
+			System.out.println("How many bonuses would you like to set as minimum on the Cities?"
+					+"Insert a value between 0 and 5");
+			numberBonusesMin=InputHandler.inputNumber(0, 5);
+			
+			config.setCityBonusNumberMin(numberBonusesMin);
+			System.out.println("How many bonuses would you like to set as maximum on the Cities?"
+					+"Insert a value between" + numberBonusesMin + " and 5");
+			config.setCityBonusNumberMax(InputHandler.inputNumber(numberBonusesMin, 5));
 		}
 		
 		playerSide.setPlayersMaxNumber(playersMaxNumber);
 		playerSide.setConfigurations(config);
-		
+	}
+	
+	
+	private int citiesNumber(int playersNumber){
+		switch (playersNumber){
+		case (5):
+			return Constant.CITIES_NUMBER_MEDIUM;
+		case (6): 
+			return Constant.CITIES_NUMBER_MEDIUM;
+		case (7):
+			return Constant.CITIES_NUMBER_HIGH;
+		case (8): 
+			return Constant.CITIES_NUMBER_HIGH;
+		default :
+			return Constant.CITIES_NUMBER_LOW;
+		}
 	}
 	
 }
