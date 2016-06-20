@@ -24,7 +24,7 @@ public class CreateConfigurations extends Thread{
 		playersMaxNumber= InputHandler.inputNumber(2, 8);
 		
 		Configurations config = new Configurations();
-		
+		//Input number tra 15 18 21
 		config.setCitiesNumber(citiesNumber(playersMaxNumber));
 		
 		System.out.println("How many bonuses would you like to set as minimum on the Permit Cards?"
