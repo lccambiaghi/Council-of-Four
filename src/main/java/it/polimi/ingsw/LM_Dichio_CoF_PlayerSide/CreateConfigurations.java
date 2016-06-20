@@ -51,6 +51,8 @@ public class CreateConfigurations extends Thread{
 		System.out.println("Would you like to play with preconfigured links? 1. Yes 2. No");
 		if (InputHandler.inputNumber(1, 2)==2)
 			config.setCityLinksPreconfigured(false);
+		else
+			config.setCityLinksPreconfigured(true);
 		if(config.isCityLinksPreconfigured()==false){
 			int[][]cityLinksMatrix =  new int[][]{
 				{0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
