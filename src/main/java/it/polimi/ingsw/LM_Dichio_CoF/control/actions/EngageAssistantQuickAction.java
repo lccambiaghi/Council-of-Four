@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control.actions;
 
+import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Message;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
@@ -24,7 +25,7 @@ public class EngageAssistantQuickAction extends Action {
         Route richnessRoute = field.getRichnessRoute();
 
 		if(richnessRoute.getPosition(player)<Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST){
-			Message.notEnoughRichness(player);
+            Broker.sendString(Message.notEnoughAssistant(), player);
 			return false;
 		}
     	

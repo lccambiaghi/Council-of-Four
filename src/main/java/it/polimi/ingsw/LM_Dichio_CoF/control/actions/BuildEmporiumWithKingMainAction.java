@@ -35,12 +35,12 @@ public class BuildEmporiumWithKingMainAction extends Action {
         ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards(chosenBalcony);
 
         if (usablePoliticCards.size()<1) {
-            Message.notEnoughPoliticsCards(player);
+            Broker.sendString(Message.notEnoughPoliticsCards(),player);
             return false;
         }
 
         if (eligibleMove(usablePoliticCards)<1){
-            Message.notEnoughRichness(player);
+            Broker.sendString(Message.notEnoughAssistant(), player);
             return false;
         }
 
@@ -52,12 +52,12 @@ public class BuildEmporiumWithKingMainAction extends Action {
             if (satisfactionCost >0)
                 eligibleSet=true;
             else
-                Message.notEnoughRichness(player);
+                Broker.sendString(Message.notEnoughAssistant(), player);
         }while(!eligibleSet);
 
         Map<City, Integer> movableCities = getMovableCities();
 
-        Message.chooseCity(player,movableCities);
+        Broker.sendString(Message.chooseCity(movableCities), player);
         int chosenIndex=Broker.askInputNumber(1, movableCities.size(), player)-1;
 
         int i=0;

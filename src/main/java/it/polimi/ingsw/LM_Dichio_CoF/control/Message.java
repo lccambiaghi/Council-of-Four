@@ -21,175 +21,187 @@ public final class Message {
 			Broker.println(string, player);
 	}
 	
-	public static void waitForMatch(Player player){
-		println("You have been selected for a match, wait a moment...", player);
+	public static String waitForMatch(){
+		return ("You have been selected for a match, wait a moment...");
 	}
 	
-	public static void matchStarted(Player player){
-		println("You are playing in a match!", player);
+	public static String matchStarted(){
+		return ("You are playing in a match!");
 	}
 	
-	public static void waitTurn(Player player){
-		println("It's not your turn yet, wait...", player);
+	public static String waitTurn(){
+		return("It's not your turn yet, wait...");
 	}
 	
-	public static String matchStarted = "You are playing in a match!";
-	
-	public static void play(Player player){
-		println("It's your turn!", player);
+	public static String play(Player player){
+		return ("It's your turn!");
 	}
 	
-	public static void chooseInfoOrAction_1_2(Player player){
-		println("What would you like to do?", player);
-		println("1. Get info of the match", player);
-		println("2. Perform an action", player);
+	public static String chooseInfoOrAction_1_2(){
+		return ("What would you like to do?\n" +
+				"1. Get info of the match\n" +
+				"2. Perform an action");
 	}
 	
-	public static void chooseInfo_0_6(Player player){
-		println("Choose the info you want", player);
-		println("0. [Back to menu]", player);
-		println("1. Your goods", player);
-		println("2. All cities", player);
-		println("3. Other players status", player);
-		println("4. Balconies and councillors", player);
-		println("5. All regions", player);
-		println("6. Specific city", player);
+	public static String chooseInfo_0_6(){
+		return("Choose the info you want\n"+
+			"0. [Back to menu]\n" +
+			"1. Your goods\n" +
+			"2. All cities\n" +
+			"3. Other players status\n" +
+			"4. Balconies and councillors\n" +
+			"5. All regions\n" +
+			"6. Specific city");
 	}
 	
-	public static void chooseCityFromIndex(Player player){
-		println("Choose a city inserting the corresponding index", player);
+	public static String chooseCityFromIndex(){
+		return ("Choose a city inserting the corresponding index");
 	}
 	
-	public static void ifQuickAction(Player player){
-		println("Would you like to perform Quick Action?", player);
+	public static String ifQuickAction(){
+		return("Would you like to perform Quick Action?");
 	}
 	
-	public static void chooseYesOrNo_1_2(Player player){
-		println("1. Yes", player);
-		println("2. No", player);
+	public static String chooseYesOrNo_1_2(){
+		return("1. Yes\n" +
+			"2. No");
 	}
 	
-	public static void chooseQuickAction_1_4(Player player){
-		println("Which Quick Action would you like to do?", player);
-		println("1. Engage an Assistant", player);
-		println("2. Change Building Permit Tiles for a Region", player);
-		println("3. Send an Assistant to Elect a Councillor", player);
-		println("4. Perform an additional Main Action", player);
+	public static String chooseQuickAction_1_4(){
+		return("Which Quick Action would you like to do?\n" +
+			"1. Engage an Assistant\n" +
+			"2. Change Building Permit Tiles for a Region\n" +
+			"3. Send an Assistant to Elect a Councillor\n" +
+			"4. Perform an additional Main Action");
 	}
 	
-	public static void chooseMainAction_1_4(Player player){
-		println("Which Main Action would you like to do?", player);
-		println("1. Elect a Councillor", player);
-		println("2. Acquire a Permit Tile", player);
-		println("3. Build an Emporium using a Permit Tile", player);
-		println("4. Build an Emporium with the Help of the King", player);
+	public static String chooseMainAction_1_4(){
+		return("Which Main Action would you like to do?\n" +
+			"1. Elect a Councillor\n" +
+			"2. Acquire a Permit Tile\n" +
+			"3. Build an Emporium using a Permit Tile\n" +
+			"4. Build an Emporium with the Help of the King");
 	}
 	
-	public static void chooseRegion_1_3(Player player){
-		println("Choose a region", player);
-		println("1. Sea", player);
-		println("2. Hill", player);
-		println("3. Mountain", player);
+	public static String chooseRegion_1_3(){
+		return ("Choose a region\n" +
+			"1. Sea\n" +
+			"2. Hill\n" +
+			"3. Mountain");
 	}
 	
-	public static void chooseBalcony(Player player, Balcony[] arrayBalcony){
+	public static String chooseBalcony(Balcony[] arrayBalcony){
 
-		println("Choose a Balcony:", player);
+		String message="Choose a Balcony:";
 
 		for(int i=0; i<arrayBalcony.length; i++)
-			println(i+1 + " " + arrayBalcony[i].getNameBalcony(), player);
+			message = message + (i+1) + " " + arrayBalcony[i].getNameBalcony();
+
+		return message;
 
 	}
 	
-	public static void choosePermitCard(Player player, ArrayList<PermitCard> arrayListPermitCard){
+	public static String choosePermitCard(ArrayList<PermitCard> arrayListPermitCard){
 
-		println("Choose a Building Permit Tile:", player);
+		String message="Choose a Building Permit Tile:\n";
 
 		for(int i=0; i<arrayListPermitCard.size(); i++) {
 
 			PermitCard permitCard = arrayListPermitCard.get(i);
 
-			println(i + 1 + ". \nBuildable Cities:\n", player);
+			message = message + (i + 1) + ". \nBuildable Cities:\n";
 			for (City buildableCity : permitCard.getArrayBuildableCities())
-				Broker.print(buildableCity.getCityName() + " ", player);
+				message = message + buildableCity.getCityName() + " ";
 
-			println("\nBonus:\n", player);
+			message = message + "\nBonus:\n";
 			for (Bonus bonus : permitCard.getArrayBonus())
-				Broker.print(bonus.getBonusName() + " " + bonus.getIncrement() + "   ", player);
-
+				message = message + bonus.getBonusName() + " " + bonus.getIncrement() + "   ";
 		}
+
+		return message;
 
 	}
 	
-	public static void chooseCity(Player player, City[] arrayCity){
+	public static String chooseCity(City[] arrayCity){
 
-		println("Choose a city:", player);
+		String message= "Choose a city:\n";
 
 		for(int i=0; i<arrayCity.length; i++)
-			println(i+1 + " " + arrayCity[i], player);
+			message = message + (i+1) + " " + arrayCity[i];
+
+		return message;
 
 	}
 
-	// Polymorphism
-	public static void chooseCity(Player player, Map<City, Integer> movableCities){
+	// Overloading
+	public static String chooseCity(Map<City, Integer> movableCities){
 
-		println("Choose a destination city for the king:", player);
+		String message = "Choose a destination city for the king:";
+
 		int i=0;
 		for (Map.Entry<City, Integer> city : movableCities.entrySet()){
-			println(i + 1 + ". " + city.getKey() + " Cost: " + city.getValue(), player);
+			message = message + (i + 1) + ". " + city.getKey() + " Cost: " + city.getValue();
 			i++;
 		}
+
+		return message;
+
 	}
 
 	
-	public static void choosePoliticsCards(Player player, ArrayList<PoliticCard> arrayListPoliticCard){
+	public static String choosePoliticsCards(ArrayList<PoliticCard> arrayListPoliticCard){
 
-		println("Choose Politic Cards:", player);
+		String message = "Choose Politic Cards:";
 
 		for(int i=0; i<arrayListPoliticCard.size(); i++)
-			println(i+1 + " " + arrayListPoliticCard.get(i).getCardColor(), player);
+			message = message + (i+1) + " " + arrayListPoliticCard.get(i).getCardColor();
+
+		return message;
 
 	}
 	
-	public static void choosePermitCards_1_2(Player player){
-		println("Which Permit Tile do you want take, 1 or 2?", player);
+	public static String choosePermitCards_1_2(){
+		return ("Which Permit Tile do you want take, 1 or 2?");
 	}
 	
-	public static void youCantBuild(Player player){
-		println("You either have no Business Permit Tiles" +
-				" or you have already built in every city they avail you to", player);
+	public static String youCantBuild(){
+		return ("You either have no Business Permit Tiles" +
+				" or you have already built in every city they avail you to");
 	}
 	
-	public static void askCouncillorColor(Player player, ArrayList<Color> choosableColors){
+	public static String askCouncillorColor(ArrayList<Color> choosableColors){
 
-		println("What color would you like the new councillor to be?", player);
+		String message = ("What color would you like the new councillor to be?");
 
 		for(int i=0; i<choosableColors.size(); i++)
-			println(i+1 + " " + choosableColors.get(i), player);
+			message = message + (i+1) + " " + choosableColors.get(i);
+
+		return message;
 
 	}
 	
-	public static void askHowManyPoliticsCards(Player player){
-		println("How many Politic Cards do you want to use?", player);
+	public static String askHowManyPoliticsCards(){
+		return ("How many Politic Cards do you want to use?");
 	}
 	
-	public static void selectAnotherPoliticsCardsSet(Player player){
-		println("You don't have these cards in your hand. Select an other set", player);
+	public static String selectAnotherPoliticsCardsSet(){
+		return("You don't have these cards in your hand. Select an other set");
 	}
 	
-	public static void notEnoughRichness(Player player){
-		println("You don't have enough richness", player);
+	public static String notEnoughRichness(){
+		return ("You don't have enough richness");
 	}
 	
-	public static void notEnoughAssistant(Player player){
-		println("You don't have enough assistants", player);
+	public static String notEnoughAssistant(){
+		return ("You don't have enough assistants");
 	}
 	
-	public static void notEnoughPoliticsCards(Player player){
-		println("You don't have enough Politics Card", player);
+	public static String notEnoughPoliticsCards(){
+		return ("You don't have enough Politics Card");
 	}
-	public static void notEnoughPoliticsCardsAndRichness(Player player){
-		println("You don't have enough Politics Cards and Richness at the same time", player);
+
+	public static String notEnoughPoliticsCardsAndRichness(){
+		return ("You don't have enough Politics Cards and Richness at the same time");
 	}
 	
 }

@@ -11,6 +11,8 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static it.polimi.ingsw.LM_Dichio_CoF.control.Message.chooseInfoOrAction_1_2;
+
 public class ControlMatch {
 
 	private final Market market;
@@ -71,7 +73,7 @@ public class ControlMatch {
 
 	public void infoOrAction(){
 
-		Message.chooseInfoOrAction_1_2(player);
+		Broker.sendString(chooseInfoOrAction_1_2(),player);
 
 		choice = Broker.askInputNumber(1, 2, player);
 		
@@ -87,7 +89,7 @@ public class ControlMatch {
 		match.getInfoMatch().setPlayer(player);
 
 		do{
-			Message.chooseInfo_0_6(player);
+			Broker.sendString(Message.chooseInfo_0_6(), player);
 
 			choice = Broker.askInputNumber(0, 6, player);
 					
@@ -109,7 +111,7 @@ public class ControlMatch {
 				break;
 			case 6:
 				City[] arrayCity = match.getField().getArrayCity();
-				Message.chooseCity(player, arrayCity);
+				Broker.sendString(Message.chooseCity(arrayCity), player);
 				match.getInfoMatch().printInfoCity(player, Broker.askInputNumber(1, arrayCity.length, player)-1); //array positioning
 				break;
 			}
@@ -135,8 +137,8 @@ public class ControlMatch {
 	
 	private void ifQuickAction(){
 
-		Message.ifQuickAction(player);
-		Message.chooseYesOrNo_1_2(player);
+		Broker.sendString(Message.ifQuickAction(),player);
+		Broker.sendString(Message.chooseYesOrNo_1_2(), player);
 
 		choice = Broker.askInputNumber(1, 2, player);
 
@@ -151,7 +153,7 @@ public class ControlMatch {
 	
 	private void quickAction() {
 
-		Message.chooseQuickAction_1_4(player);
+		Broker.sendString(Message.chooseQuickAction_1_4(), player);
 
 		choice = Broker.askInputNumber(1, 4, player);
 
@@ -184,7 +186,7 @@ public class ControlMatch {
 	
 	private void mainAction() {
 
-		Message.chooseMainAction_1_4(player);
+		Broker.println(Message.chooseMainAction_1_4(), player);
 
 		choice = Broker.askInputNumber(1, 4, player);
 

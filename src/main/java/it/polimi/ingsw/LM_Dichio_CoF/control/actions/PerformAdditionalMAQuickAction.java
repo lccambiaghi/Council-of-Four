@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control.actions;
 
+import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Message;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
@@ -19,7 +20,7 @@ public class PerformAdditionalMAQuickAction extends Action {
     public boolean preliminarySteps(){
 
         if (player.getAssistant()<Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST){
-			Message.notEnoughAssistant(player);
+            Broker.sendString(Message.notEnoughAssistant(), player);
 			return false;
 		}
 		

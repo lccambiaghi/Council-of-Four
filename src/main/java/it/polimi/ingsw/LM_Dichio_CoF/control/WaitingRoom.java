@@ -68,7 +68,7 @@ public class WaitingRoom extends Thread{
 		
 		gameSide.setWaitingRoomAvailable(false);
 		
-		Broker.printlnBroadcastAll(Message.matchStarted, arrayListPlayerMatch);
+		Broker.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
 		
 		controlMatch = new ControlMatch(arrayListPlayerMatch);
 		controlMatch.startMatch();
@@ -118,7 +118,7 @@ public class WaitingRoom extends Thread{
 	public void addPlayerToWaitingRoom(Player player){
 		arrayListPlayerMatch.add(player);
 		increaseNumPlayers();
-		Message.waitForMatch(player);
+		Broker.sendString(Message.waitForMatch(),  player);
 	}
 	
 }

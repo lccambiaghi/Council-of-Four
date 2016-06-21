@@ -32,7 +32,7 @@ public class AcquirePermitCardMainAction extends Action {
 
         Balcony[] arrayBalcony=field.getArrayBalcony();
 
-        Message.chooseBalcony(player, arrayBalcony);
+        Broker.sendString(Message.chooseBalcony(arrayBalcony), player);
 
         int chosenIndex = Broker.askInputNumber(1, 3, player) -1; //-1 for array positioning
         Balcony chosenBalcony = field.getBalconyFromIndex(chosenIndex); //-1 for array positioning
@@ -41,12 +41,12 @@ public class AcquirePermitCardMainAction extends Action {
         ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards(chosenBalcony);
 
         if (usablePoliticCards.size()<1) {
-            Message.notEnoughPoliticsCards(player);
+            Broker.sendString(Message.notEnoughPoliticsCards(),player);
             return false;
         }
 
         if (eligibleMove(usablePoliticCards)<1){
-            Message.notEnoughRichness(player);
+            Broker.sendString(Message.notEnoughAssistant(), player);
             return false;
         }
 
@@ -58,13 +58,13 @@ public class AcquirePermitCardMainAction extends Action {
             if (satisfactionCost >0)
                 eligibleSet=true;
             else
-                Message.notEnoughRichness(player);
+                Broker.sendString(Message.notEnoughAssistant(), player);
         }while(!eligibleSet);
 
         PermitCard[] choosablePermitCards = chosenRegion.getFaceUpPermitCardArea().getArrayPermitCard();
         ArrayList<PermitCard> arrayListChoosablePermitCards = new ArrayList<>(Arrays.asList(choosablePermitCards));
 
-        Message.choosePermitCard(player,arrayListChoosablePermitCards);
+        Broker.sendString(Message.choosePermitCard(arrayListChoosablePermitCards),player);
 
         chosenPermitCard =  choosablePermitCards[Broker.askInputNumber(1, choosablePermitCards.length, player)-1];
 
