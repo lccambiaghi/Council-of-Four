@@ -68,13 +68,13 @@ public class Field {
 					if (config.isCityBonusRandom())
 						arrayCity[cityIndex] = new City(config, cityName, regionName, CityColor.Purple);
 					else
-						arrayCity[cityIndex] = new City(config.getCityBonusArrayMaps()[cityIndex], cityName, regionName, CityColor.Purple);
+						arrayCity[cityIndex] = new City(config.getArrayListCityBonus()[cityIndex], cityName, regionName, CityColor.Purple);
 				}
 				else {
 					if (config.isCityBonusRandom())
 						arrayCity[cityIndex] = new City(config, cityName, regionName, arrayCityColor[itColor]);
 					else
-						arrayCity[cityIndex] = new City(config.getCityBonusArrayMaps()[cityIndex], cityName, regionName, arrayCityColor[itColor]);
+						arrayCity[cityIndex] = new City(config.getArrayListCityBonus()[cityIndex], cityName, regionName, arrayCityColor[itColor]);
 					itColor++;
 				}
 				arrayCityPerRegion[itCityPerRegion] = arrayCity[cityIndex];
