@@ -1,9 +1,10 @@
 package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CityBonus extends Bonus{
+public class CityBonus extends Bonus implements Serializable{
 	
 	ArrayList <CityBonus> arrayListCityBonus = new ArrayList <> ();
 	

@@ -8,7 +8,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.BonusName;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityBonus;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityName;
-import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.Configurations;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class CreateConfigurations extends Thread{
 	

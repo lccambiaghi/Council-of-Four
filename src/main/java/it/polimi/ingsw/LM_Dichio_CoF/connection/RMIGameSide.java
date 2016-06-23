@@ -16,7 +16,8 @@ public class RMIGameSide extends UnicastRemoteObject implements RMIGameSideInter
 	}
 	
 	public void connectToServer(RMIPlayerSideInterface rmiPlayerSide) throws RemoteException{
-		new RMIConnectionWithPlayer(rmiPlayerSide, gameSide);
+		RMIConnectionWithPlayer r = new RMIConnectionWithPlayer(rmiPlayerSide, gameSide);
+		gameSide.startHandlePlayer(gameSide, r.getPlayer());
 	}
 	
 	public boolean isNicknameInUse(String nickname) throws RemoteException{

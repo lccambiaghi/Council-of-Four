@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 
+import it.polimi.ingsw.LM_Dichio_CoF.connection.ConnectionWithPlayerInterface;
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
@@ -21,15 +22,9 @@ public class Player{
 	private String nickname;
 	
 	private char typeOfConnection;
-	private Socket playerSocket;
-	private RMIPlayerSideInterface rmiPlayerSide;
 	
-	private char CLIorGUI;
+	private ConnectionWithPlayerInterface connectionWithPlayer;
 
-	
-	private Scanner inputSocket;
-	private PrintWriter outputSocket;	
-	
 	// variables of the game
 	private boolean playing;
 	
@@ -51,33 +46,20 @@ public class Player{
 	public Player(char typeOfConnection){
 		this.typeOfConnection=typeOfConnection; 	
 	}
-
-	public Socket getPlayerSocket() {return playerSocket;}
-	public void setPlayerSocket(Socket playerSocket) { this.playerSocket = playerSocket; }
 	
-	public void openSocketStream(){
-		try {
-			outputSocket = new PrintWriter(playerSocket.getOutputStream());
-			inputSocket = new Scanner(playerSocket.getInputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public ConnectionWithPlayerInterface getConnectionWithPlayer() {
+		return connectionWithPlayer;
+	}
+
+	public void setConnectionWithPlayer(ConnectionWithPlayerInterface connectionWithPlayer) {
+		this.connectionWithPlayer = connectionWithPlayer;
 	}
 	
-	public RMIPlayerSideInterface getRmiPlayerSide() {return rmiPlayerSide;}
-	public void setRmiPlayerSide(RMIPlayerSideInterface rmiPlayerSide) {this.rmiPlayerSide=rmiPlayerSide;}
-
-	public char getCLIorGUI() {return CLIorGUI;}
-	public void setCLIorGUI(char cLIorGUI) {CLIorGUI = cLIorGUI;}	
-
 	public String getNickname() {return nickname;}
 	public void setNickname(String nickname) {this.nickname = nickname;}
 	
 	public char getTypeOfConnection() {return typeOfConnection;}
 	public void setTypeOfConnection(char typeOfConnection) {this.typeOfConnection = typeOfConnection;}
-	
-	public Scanner getInputSocket() {return inputSocket;}
-	public PrintWriter getOutputSocket() {return outputSocket;}	
 	
 	public boolean isPlaying() {return playing;}
 	public void setPlaying(boolean playing) {this.playing = playing;}
