@@ -8,7 +8,6 @@ import java.util.Random;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
-
 public class PermitCard {
 
 	private City[] arrayBuildableCities;
