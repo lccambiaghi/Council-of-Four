@@ -54,23 +54,12 @@ public class City {
 
 	/* Assigned bonus constructor: it receives bonusMap, it creates arrayListBonusCity
 	  and assigns them to the city */
-	public City (Map <String, Integer> bonusMap, CityName cityName, RegionName regionName, CityColor cityColor){
+	public City (ArrayList <CityBonus> cityBonus, CityName cityName, RegionName regionName, CityColor cityColor){
 
 		this.cityName = cityName;
 		this.regionName = regionName;
 		this.cityColor=cityColor;
-					
-		ArrayList <Bonus> arrayListBonusCity = new ArrayList <> ();
-
-		for (Entry<String, Integer> stringIntegerEntry : bonusMap.entrySet()) {
-			Entry entry = (Entry) stringIntegerEntry;
-			String bonusName = (String) entry.getKey();
-			Integer bonusIncrement = (Integer) entry.getValue();
-			Bonus bonus = new Bonus(bonusName, bonusIncrement);
-			arrayListBonusCity.add(bonus);
-		}
-		
-		this.arrayBonus=arrayListBonusCity.toArray(new Bonus[arrayListBonusCity.size()]);
+		this.arrayBonus=cityBonus.toArray(new Bonus[cityBonus.size()]);
 				
 	}
 
