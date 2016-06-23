@@ -36,17 +36,17 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		if (usablePermitCards.size()<1){
 
-			Broker.sendString(Message.youCantBuild(),player);
+			Broker.println(Message.youCantBuild(),player);
 			return false;
 		}
 
-		Broker.sendString(Message.choosePermitCard(usablePermitCards),player);
+		Broker.println(Message.choosePermitCard(usablePermitCards),player);
 
 		chosenPermitCard = usablePermitCards.get(Broker.askInputNumber(1,usablePermitCards.size(), player)-1); //array positioning
 
 		City[] buildableCities = chosenPermitCard.getArrayBuildableCities();
 
-		Broker.sendString(Message.chooseCity(buildableCities), player);
+		Broker.println(Message.chooseCity(buildableCities), player);
 
 		chosenCity = buildableCities[Broker.askInputNumber(1, buildableCities.length, player)];
 		

@@ -20,7 +20,7 @@ public class PerformAdditionalMAQuickAction extends Action {
     public boolean preliminarySteps(){
 
         if (player.getAssistant()<Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST){
-            Broker.sendString(Message.notEnoughAssistant(), player);
+            Broker.println(Message.notEnoughAssistant(), player);
 			return false;
 		}
 		
