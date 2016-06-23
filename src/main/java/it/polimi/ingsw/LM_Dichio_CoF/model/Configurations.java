@@ -4,8 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityBonus;
 
 public class Configurations implements Serializable{
 
@@ -25,7 +28,8 @@ public class Configurations implements Serializable{
 	private boolean cityBonusRandom;
 	private int cityBonusNumberMin;
 	private int cityBonusNumberMax;
-	private HashMap<String,Integer> cityBonusArrayMaps[];
+    private ArrayList<CityBonus> arrayListCityBonus[];
+
 
 	public Configurations(){}
 
@@ -109,12 +113,14 @@ public class Configurations implements Serializable{
 		this.cityBonusRandom = cityBonusRandom;
 	}
 
-	public HashMap<String, Integer>[] getCityBonusArrayMaps() {
-		return cityBonusArrayMaps;
+	
+	public ArrayList<CityBonus>[] getArrayListCityBonus() {
+		return arrayListCityBonus;
 	}
+	
 
-	public void setCityBonusArrayMaps(HashMap<String, Integer>[] cityBonusArrayMaps) {
-		this.cityBonusArrayMaps = cityBonusArrayMaps;
+	public void setArrayListCityBonus(ArrayList<CityBonus>[] arrayListCityBonus) {
+		this.arrayListCityBonus = arrayListCityBonus;
 	}
 
 	public int getCitiesNumber() {
