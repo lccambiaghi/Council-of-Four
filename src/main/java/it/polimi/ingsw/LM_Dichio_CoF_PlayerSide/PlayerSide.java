@@ -20,7 +20,7 @@ public class PlayerSide {
 
 	
 	public static void main (String[] args){
-		new PlayerSide();
+		new CreateConfigurations(new PlayerSide()).start();
 	}
 	
 	private String nickname;
@@ -41,7 +41,7 @@ public class PlayerSide {
 	private Configurations config;
 	
 	public PlayerSide() {
-		
+		/*
 		System.out.println("I am alive");	
 		
 		inCLI = new Scanner(System.in);
@@ -49,7 +49,7 @@ public class PlayerSide {
 		/*
 		 * Method of the client
 		 * It already controls the input, that can only be "s" or "r"
-		 */
+		 *//*
 		chooseConnection();
 		
 		if(typeOfConnection=='s'){
@@ -58,7 +58,7 @@ public class PlayerSide {
 		}else{
 			rmiConnection = new RMIConnection(this);
 		}
-	
+	*/
 	}
 		
 	
