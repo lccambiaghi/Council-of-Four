@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
-import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class TestCases {
 
@@ -23,20 +23,21 @@ public class TestCases {
 	/* Cities of Sea Region */
 	public City[] arrayCity(){
 
-		Map <String, Integer> bonusMap =new HashMap <> ();
+		ArrayList<CityBonus> arrayListCityBonus[] = new ArrayList[config.getCitiesNumber()];
+		for (int i=0; i<arrayListCityBonus.length; i++){
+			arrayListCityBonus[i] = new ArrayList<>();
+	    	arrayListCityBonus[i].add(new CityBonus(BonusName.Assistant, 2));
+	    	arrayListCityBonus[i].add(new CityBonus(BonusName.Richness, 1));
+		}
 
-		bonusMap.put("Assistant", 2);
-		bonusMap.put("Nobility", 1);
-		bonusMap.put("Richness", 0);
-
-		Configurations config=configurations();
+		//Configurations config=configurations();
 
 		int n = config.getNumberCities()/3;
 		arrayCity= new City[config.getNumberCities()/3];
 		for(int i=0; i<n; i++){
 			
-			//arrayCity[i] = new City(configTest, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
-			arrayCity[i] = new City(bonusMap, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
+			//arrayCity[i] = new City(config, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
+			arrayCity[i] = new City(arrayListCityBonus[i], CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
 
 		}
 		System.out.println();
@@ -92,9 +93,7 @@ public class TestCases {
 	}
 
 
-	private void createConfigurations(){
-
-		/*
+	private void createConfigurations(){		/*
 		 * Do not change this parameter and the difficulty one until we haven't create 
 		 * new maps for those combination missing
 		 */
@@ -144,14 +143,14 @@ public class TestCases {
 		
 		config.setCityBonusRandom(false);
         if(config.isCityBonusRandom()==false){
-			HashMap[] cityBonusArrayMap = new HashMap[config.getCitiesNumber()];
-            for(int i = 0; i< config.getCitiesNumber(); i++){
-                HashMap <String, Integer> bonusMap =new HashMap <> ();
-                bonusMap.put("Assistant", 2);
-                bonusMap.put("Nobility", 1);
-                cityBonusArrayMap[i]=bonusMap;
-            }
-			config.setCityBonusArrayMaps(cityBonusArrayMap);
+    		ArrayList<CityBonus> arrayListCityBonus[]= new ArrayList[config.getCitiesNumber()];
+    		
+    		for (int i=0; i<arrayListCityBonus.length; i++){
+    			arrayListCityBonus[i] = new ArrayList<>();
+    	    	arrayListCityBonus[i].add(new CityBonus(BonusName.Assistant, 2));
+    	    	arrayListCityBonus[i].add(new CityBonus(BonusName.Richness, 1));
+    		}
+			config.setArrayListCityBonus(arrayListCityBonus);
         }else{
 			config.setCityBonusNumberMin(2);
 			config.setCityBonusNumberMax(3);

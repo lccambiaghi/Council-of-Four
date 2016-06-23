@@ -1,16 +1,14 @@
 package it.polimi.ingsw.LM_Dichio_CoF_PlayerSide;
 
-import java.util.HashMap;
-import java.util.Scanner;
 import java.util.*;
 
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
-import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.BonusName;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityBonus;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityName;
+import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.Configurations;
 
 public class CreateConfigurations extends Thread{
 	
@@ -45,7 +43,8 @@ public class CreateConfigurations extends Thread{
 				+"Insert a value between" + numberBonusesMin + " and 5");
 		config.setPermitCardBonusNumberMax(InputHandler.inputNumber(numberBonusesMin, 5));
 		
-		System.out.println("Would you like to play with a random number of bonuses on the Nobility Route? 1. Yes 2. No");
+		System.out.println("Would you like to play with a random number of bonuses on the Nobility Route?"
+				+ "1. Yes 2. No");
 		int nobilityBonusRandom=InputHandler.inputNumber(1, 2);
 		if (nobilityBonusRandom==1){
 			config.setNobilityBonusRandom(false);
@@ -57,7 +56,8 @@ public class CreateConfigurations extends Thread{
 			config.setNobilityBonusRandom(true);
 		
 		
-		System.out.println("Would you like to play with preconfigured links? 1. Yes 2. No");
+		System.out.println("Would you like to play with preconfigured links?"
+				+ "1. Yes 2. No");
 		if (InputHandler.inputNumber(1, 2)==2)
 			config.setCityLinksPreconfigured(false);
 		else
@@ -99,13 +99,15 @@ public class CreateConfigurations extends Thread{
 			config.setDifficulty(chooseDifficulty(InputHandler.inputNumber(1,3)));
 		}
 		
-		System.out.print("Would you like to play with random bonuses on the cities? 1. Yes 2. No");
+		System.out.print("Would you like to play with random bonuses on the cities?"
+				+ "1. Yes 2. No");
 		if(InputHandler.inputNumber(1, 2)==1)
 			config.setCityBonusRandom(true);
 		
 		if(config.isCityBonusRandom()==false){
 		    ArrayList<CityBonus> arrayListCityBonus[] = new ArrayList[config.getCitiesNumber()];
 		    for (int i=0; i<arrayListCityBonus.length; i++){
+		    	arrayListCityBonus[i] = new ArrayList<>();
 		    	arrayListCityBonus[i]=askForBonus(i);
 			}
 		    config.setArrayListCityBonus(arrayListCityBonus);
@@ -145,7 +147,7 @@ public class CreateConfigurations extends Thread{
 		ArrayList <CityBonus> cityBonus = new ArrayList <>();
 		int increment=0;
 		BonusName chosenBonus=null;
-		int choice;
+		int choice=0;
 		int oldChoice=0;
 		
 		System.out.println("Choose the types of bonus to set in the city " + cityName);

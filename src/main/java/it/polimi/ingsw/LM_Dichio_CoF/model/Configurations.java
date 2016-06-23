@@ -17,19 +17,18 @@ public class Configurations implements Serializable{
 	private int permitCardBonusNumberMin;
 	private int permitCardBonusNumberMax;
 	
-	private boolean nobilityBonusRandom;
+	boolean nobilityBonusRandom;
 
-	private int nobilityBonusNumber; //how many bonus the user wants on the nobilityRoute
+	int nobilityBonusNumber; //how many bonus the user wants on the nobilityRoute
 
-	private boolean cityLinksPreconfigured;
+	boolean cityLinksPreconfigured;
 	private char difficulty; // e, n, h
-	private int cityLinksMatrix[][];
+	int cityLinksMatrix[][];
 
-	private boolean cityBonusRandom;
+	boolean cityBonusRandom;
 	private int cityBonusNumberMin;
 	private int cityBonusNumberMax;
     private ArrayList<CityBonus> arrayListCityBonus[];
-
 
 	public Configurations(){}
 
@@ -113,11 +112,9 @@ public class Configurations implements Serializable{
 		this.cityBonusRandom = cityBonusRandom;
 	}
 
-	
 	public ArrayList<CityBonus>[] getArrayListCityBonus() {
 		return arrayListCityBonus;
 	}
-	
 
 	public void setArrayListCityBonus(ArrayList<CityBonus>[] arrayListCityBonus) {
 		this.arrayListCityBonus = arrayListCityBonus;
