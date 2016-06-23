@@ -28,22 +28,4 @@ public class InputHandler {
 		return inputNumber;
 
 	}
-	
-	public static char inputCharacter (){
-		Scanner in = new Scanner(System.in);
-		char inputChar;
-		boolean eligibleInput=false;
-		
-		do {
-			inputChar=in.next().charAt(0);
-			in.nextLine();
-
-			if(inputChar=='l' || inputChar=='h' || inputChar=='n')
-				eligibleInput=true;
-			else
-				System.out.println("Insert an other char: only l, n, h are correct");
-		} while(!eligibleInput);
-		
-		return inputChar;
-	}
 }
