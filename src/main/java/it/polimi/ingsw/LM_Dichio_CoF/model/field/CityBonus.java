@@ -1,9 +1,12 @@
 package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class CityBonus extends Bonus{
-
+	
+	ArrayList <CityBonus> arrayListCityBonus = new ArrayList <> ();
+	
 	/* The constructor assigns a random bonus name and assigns a random increment*/
 	public CityBonus(){
 		
@@ -15,6 +18,11 @@ public class CityBonus extends Bonus{
 		
 		this.increment = random.nextInt(maxIncrement)+1;
 				
+	}
+	
+	public CityBonus(BonusName name, int increment){
+		this.bonusName=name;
+		this.increment=increment;
 	}
 	
 	/* This method is static.
@@ -32,6 +40,13 @@ public class CityBonus extends Bonus{
 		}
 		
 		return arrayBonus;
+	}
+	
+	public ArrayList <CityBonus> setArrayListCityBonus (CityBonus bonus){
+		
+		arrayListCityBonus.add(bonus);
+		return arrayListCityBonus;
+		
 	}
 	
 }
