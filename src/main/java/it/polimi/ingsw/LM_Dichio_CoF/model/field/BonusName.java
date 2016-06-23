@@ -59,6 +59,8 @@ public enum BonusName {
     	return bonusName;
     }
 
-    public int getMaxIncrement(BonusName bonusName){return bonusName.maxIncrement;}
+    public static int getMaxIncrement(BonusName bonusName){return bonusName.maxIncrement;}
+
+	public static BonusName getBonusNameFromIndex(int index){ return values()[index]; }
 
 }
