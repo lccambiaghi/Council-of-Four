@@ -44,7 +44,14 @@ public class Broker {
 	}
 	
 	public static void println(String string, Player player){
-		player.getConnectionWithPlayer().println(string);
+		CharSequence newLine = "\n";
+		if(string.contains(newLine)){
+			String[] arrayString = string.split("\n");
+			for(String s: arrayString)
+				player.getConnectionWithPlayer().println(s);
+		}else{
+			player.getConnectionWithPlayer().println(string);
+		}
 	}
 	
 	public static void printlnBroadcastAll(String string, ArrayList<Player> players){
