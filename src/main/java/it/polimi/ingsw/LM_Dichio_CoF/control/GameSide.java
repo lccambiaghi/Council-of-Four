@@ -93,7 +93,8 @@ public class GameSide {
 				System.out.println("Socket listening on port "+Constant.SOCKET_PORT);
 				while(true){
 					Socket socket = serverSocket.accept();
-					new SocketConnectionWithPlayer(socket, gameSide);		
+					SocketConnectionWithPlayer s = new SocketConnectionWithPlayer(socket, gameSide);
+					startHandlePlayer(gameSide, s.getPlayer());
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -101,14 +102,25 @@ public class GameSide {
 		}
 	}
 	
-	public void handlePlayer(Player player){
+	public void startHandlePlayer(GameSide gameSide, Player player){
+		new HandlePlayer(gameSide, player).start();
+	}
+	
+	class HandlePlayer extends Thread{
 		
-		Broker.login(player, this);
+		private GameSide gameSide;
+		private Player player; 
 		
-		synchronized (lockArrayListPlayer) {
-			player.setPlaying(false);
-			arrayListPlayer.add(player);
-			arrayListAllPlayer.add(player);
+		public HandlePlayer(GameSide gameSide, Player player){this.gameSide=gameSide; this.player=player;}
+		
+		public void run(){
+			Broker.login(player, gameSide);
+			
+			synchronized (lockArrayListPlayer) {
+				player.setPlaying(false);
+				arrayListPlayer.add(player);
+				arrayListAllPlayer.add(player);
+			}
 		}
 	
 	}

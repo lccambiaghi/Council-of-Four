@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
-import it.polimi.ingsw.LM_Dichio_CoF.connection.CountDown;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class WaitingRoom extends Thread{
@@ -46,6 +45,8 @@ public class WaitingRoom extends Thread{
 				for(int index=playersMaxNumber; index<numPlayers; index++)
 					gameSide.getArrayListPlayer().add(arrayListPlayerMatch.remove(index));
 			}
+			gameSide.setWaitingRoomAvailable(false);
+			timeToPlay=true;
 		}
 		
 		while(!timeToPlay){
@@ -61,12 +62,13 @@ public class WaitingRoom extends Thread{
 				}
 			}
 			if(getNumPlayers()==playersMaxNumber){
-				timeToPlay=true;
+				synchronized(gameSide.lockWaitingRoomAvailable){
+					timeToPlay=true;
+					gameSide.setWaitingRoomAvailable(false);
+				}
 			}
-		
+			
 		}
-		
-		gameSide.setWaitingRoomAvailable(false);
 		
 		Broker.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
 		

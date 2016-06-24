@@ -25,7 +25,7 @@ public class EngageAssistantQuickAction extends Action {
         Route richnessRoute = field.getRichnessRoute();
 
 		if(richnessRoute.getPosition(player)<Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST){
-            Broker.sendString(Message.notEnoughAssistant(), player);
+            Broker.println(Message.notEnoughAssistant(), player);
 			return false;
 		}
     	

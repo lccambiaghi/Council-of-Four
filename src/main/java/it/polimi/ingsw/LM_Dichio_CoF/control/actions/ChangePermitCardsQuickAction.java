@@ -23,13 +23,13 @@ public class ChangePermitCardsQuickAction extends Action {
     public boolean preliminarySteps(){
 
 		if (player.getAssistant()<Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST){
-			Broker.sendString(Message.notEnoughAssistant(), player);
+			Broker.println(Message.notEnoughAssistant(), player);
     		return false;
     	}
 
 		Field field = match.getField();
 
-		Broker.sendString(Message.chooseRegion_1_3(), player);
+		Broker.println(Message.chooseRegion_1_3(), player);
 
     	chosenRegion = field.getRegionFromIndex(Broker.askInputNumber(1, 3, player) - 1); // -1 for array positioning
 

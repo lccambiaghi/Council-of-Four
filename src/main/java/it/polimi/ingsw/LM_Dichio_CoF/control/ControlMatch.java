@@ -1,7 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
-import it.polimi.ingsw.LM_Dichio_CoF.connection.CountDown;
 import it.polimi.ingsw.LM_Dichio_CoF.control.actions.*;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Market;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
@@ -34,21 +33,23 @@ public class ControlMatch {
 
 	public void startMatch(){
 
+		for(Player p: players)
+			p.setPlaying(true);
+		
 		int turn=1;
 
 		do {
 			
 			player=players.get(turn-1);
-
-			broadcastOthers("Turn of: " +player.getNickname(), players, player);
-			
-			// Draw a card
-			player.addPoliticCard(new PoliticCard());
 			
 			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_TO_PERFORM_ACTION*1000);
 			
+			broadcastOthers("Turn of: " +player.getNickname(), players, player);
 			println("It's your turn! You have "+Constant.TIMER_SECONDS_TO_PERFORM_ACTION+" seconds!", player);
 
+			// Draw a card
+			player.addPoliticCard(new PoliticCard());
+			
 			//Set actions 
 			player.setMainActionsLeft(1);
 			player.setQuickActionDone(false);
@@ -73,7 +74,7 @@ public class ControlMatch {
 
 	public void infoOrAction(){
 
-		Broker.sendString(chooseInfoOrAction_1_2(),player);
+		Broker.println(chooseInfoOrAction_1_2(),player);
 
 		choice = Broker.askInputNumber(1, 2, player);
 		
@@ -89,7 +90,7 @@ public class ControlMatch {
 		match.getInfoMatch().setPlayer(player);
 
 		do{
-			Broker.sendString(Message.chooseInfo_0_6(), player);
+			Broker.println(Message.chooseInfo_0_6(), player);
 
 			choice = Broker.askInputNumber(0, 6, player);
 					
@@ -111,7 +112,7 @@ public class ControlMatch {
 				break;
 			case 6:
 				City[] arrayCity = match.getField().getArrayCity();
-				Broker.sendString(Message.chooseCity(arrayCity), player);
+				Broker.println(Message.chooseCity(arrayCity), player);
 				match.getInfoMatch().printInfoCity(player, Broker.askInputNumber(1, arrayCity.length, player)-1); //array positioning
 				break;
 			}
@@ -137,8 +138,8 @@ public class ControlMatch {
 	
 	private void ifQuickAction(){
 
-		Broker.sendString(Message.ifQuickAction(),player);
-		Broker.sendString(Message.chooseYesOrNo_1_2(), player);
+		Broker.println(Message.ifQuickAction(),player);
+		Broker.println(Message.chooseYesOrNo_1_2(), player);
 
 		choice = Broker.askInputNumber(1, 2, player);
 
@@ -153,7 +154,7 @@ public class ControlMatch {
 	
 	private void quickAction() {
 
-		Broker.sendString(Message.chooseQuickAction_1_4(), player);
+		Broker.println(Message.chooseQuickAction_1_4(), player);
 
 		choice = Broker.askInputNumber(1, 4, player);
 
