@@ -1,7 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
-import it.polimi.ingsw.LM_Dichio_CoF.connection.CountDown;
 import it.polimi.ingsw.LM_Dichio_CoF.control.actions.*;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Market;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
@@ -34,21 +33,23 @@ public class ControlMatch {
 
 	public void startMatch(){
 
+		for(Player p: players)
+			p.setPlaying(true);
+		
 		int turn=1;
 
 		do {
 			
 			player=players.get(turn-1);
-
-			broadcastOthers("Turn of: " +player.getNickname(), players, player);
-			
-			// Draw a card
-			player.addPoliticCard(new PoliticCard());
 			
 			CountDown countDown = new CountDown(Constant.TIMER_SECONDS_TO_PERFORM_ACTION*1000);
 			
+			broadcastOthers("Turn of: " +player.getNickname(), players, player);
 			println("It's your turn! You have "+Constant.TIMER_SECONDS_TO_PERFORM_ACTION+" seconds!", player);
 
+			// Draw a card
+			player.addPoliticCard(new PoliticCard());
+			
 			//Set actions 
 			player.setMainActionsLeft(1);
 			player.setQuickActionDone(false);

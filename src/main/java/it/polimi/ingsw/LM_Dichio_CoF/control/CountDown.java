@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF.connection;
+package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import java.util.Timer;
 import java.util.TimerTask;

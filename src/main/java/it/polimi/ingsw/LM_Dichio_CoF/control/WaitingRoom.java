@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
-import it.polimi.ingsw.LM_Dichio_CoF.connection.CountDown;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class WaitingRoom extends Thread{
