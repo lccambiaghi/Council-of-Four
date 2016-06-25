@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF_PlayerSide;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityName;
@@ -34,27 +35,35 @@ public class InputHandler {
 		Scanner in = new Scanner(System.in);
 		String string;
 		boolean correct=true;
+		ArrayList <Character> temp;
+		ArrayList <Character> outChar = new ArrayList<>();
+		for (int i=lastCity.ordinal(); i<CityName.W.ordinal();i++){
+			outChar.add(CityName.getCityNameFromIndex(i).toString().charAt(0));
+		}
+		
 		do{
+			
 			string = in.nextLine();
 			string.replaceAll("\\s", "");
+			char [] chars = string.toCharArray();
+			temp=new ArrayList <>();
 			
-			for(int i=0,j=lastCity.ordinal();i<string.length() && correct;i++){
-				int enumPosition=CityName.valueOf(String.valueOf(string.charAt(i))).ordinal();
-				for(int k=1; i<k && k<string.length() && correct; k++){
-					if(string.charAt(i)==string.charAt(k)){
-						System.out.println("You have inserted the same city more than once.");
-						System.out.println("Please insert another set of cities");
-						correct=false;
-					}
-				}
-				if (enumPosition> j){
-					System.out.println("You have inserted a city out of range");
+			for(Character ch : chars){
+				int enumPosition=CityName.valueOf(String.valueOf(ch)).ordinal();
+				if(temp.contains(ch)){
+					System.out.println("You have inserted the same city more than once.");
 					System.out.println("Please insert another set of cities");
 					correct=false;
-				}
-				if (enumPosition==currentCity.ordinal()){
+				}else if (enumPosition==currentCity.ordinal()){
 					System.out.println("You have inserted the same city of the started.");
 					System.out.println("Please insert another set of cities");
+					correct=false;
+				}else if(outChar.contains(ch)){
+					System.out.println("You have inserted a city out of range");
+					System.out.println("Please insert another set of cities");
+					correct=false;	
+				}else{
+					temp.add(ch);
 				}
 			}
 		}while(!correct);
