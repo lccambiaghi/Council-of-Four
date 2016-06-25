@@ -30,7 +30,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
     }
 
     @Override
-    public boolean preliminarySteps(){
+    public boolean preliminarySteps() throws InterruptedException{
 
 		ArrayList <PermitCard> usablePermitCards = getUsablePermitCards();
 

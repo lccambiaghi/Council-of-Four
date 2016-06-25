@@ -18,7 +18,7 @@ public class EngageAssistantQuickAction extends Action {
     }
 
     @Override
-    public boolean preliminarySteps(){
+    public boolean preliminarySteps() throws InterruptedException{
 
         Field field= match.getField();
 
