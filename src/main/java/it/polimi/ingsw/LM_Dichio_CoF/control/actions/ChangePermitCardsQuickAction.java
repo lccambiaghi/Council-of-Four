@@ -20,7 +20,7 @@ public class ChangePermitCardsQuickAction extends Action {
     }
 
     @Override
-    public boolean preliminarySteps(){
+    public boolean preliminarySteps() throws InterruptedException{
 
 		if (player.getAssistant()<Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST){
 			Broker.println(Message.notEnoughAssistant(), player);

@@ -24,7 +24,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
     }
 
     @Override
-    public boolean preliminarySteps(){
+    public boolean preliminarySteps() throws InterruptedException{
 
         Field field=match.getField();
 
@@ -141,7 +141,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     }
 
-    private ArrayList<PoliticCard> choosePoliticCardsUntilEligible(ArrayList<PoliticCard> usablePoliticCards) {
+    private ArrayList<PoliticCard> choosePoliticCardsUntilEligible(ArrayList<PoliticCard> usablePoliticCards) throws InterruptedException {
 
         ArrayList<PoliticCard> chosenPoliticCards = new ArrayList<>();
 

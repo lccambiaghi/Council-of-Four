@@ -9,7 +9,7 @@ public abstract class Action {
     protected Match match;
     protected String resultMsg;
 
-    public abstract boolean preliminarySteps();
+    public abstract boolean preliminarySteps() throws InterruptedException;
 
     public abstract void execute();
 

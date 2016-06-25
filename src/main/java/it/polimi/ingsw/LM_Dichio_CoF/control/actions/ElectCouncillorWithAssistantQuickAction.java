@@ -27,7 +27,7 @@ public class ElectCouncillorWithAssistantQuickAction extends Action {
     }
 
     @Override
-    public boolean preliminarySteps(){
+    public boolean preliminarySteps() throws InterruptedException{
 
         if (player.getAssistant()<Constant.ELECTION_ASSISTANT_COST){
             Broker.println(Message.notEnoughAssistant(), player);
