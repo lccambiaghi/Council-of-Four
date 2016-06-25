@@ -37,8 +37,7 @@ public class PlayerSide {
 	private Scanner inCLI;
 	
 	private SocketListener socketListener;
-	
-	private int playersMaxNumber;
+
 	private Configurations config;
 	
 	public PlayerSide() {
@@ -109,16 +108,6 @@ public class PlayerSide {
 		return nickname;
 	}
 	
-	public void configure(){
-		System.out.println("You are the first player, standard configurations will be used (FOR THE MOMENT)");
-	}	
-	
-	public int getConfigurationsPlayersMaxNumber(){
-		System.out.println("(FOR THE MOMENT) the standard players number will be used");
-		setStandardPlayersMaxNumber();
-		return playersMaxNumber;
-	}
-	
 	public Object getConfigurationsAsObject(){
 		System.out.println("(FOR THE MOMENT) the standard configurations will be used");
 		setStandardConfigurations();
@@ -127,11 +116,8 @@ public class PlayerSide {
 	
 	
 	//Those two methods are not used for the moment
-	public void setPlayersMaxNumber(int playersMaxNumber){ this.playersMaxNumber= playersMaxNumber; }
 	public void setConfigurations(Configurations config){ this.config = config; }
-		
-	public void setStandardPlayersMaxNumber(){ this.playersMaxNumber= 4;}
-		
+	
 	private void setStandardConfigurations(){
 		
 		FileInputStream fileInputStream = null;
