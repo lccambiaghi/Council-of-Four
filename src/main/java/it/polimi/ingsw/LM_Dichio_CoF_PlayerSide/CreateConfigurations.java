@@ -32,7 +32,8 @@ public class CreateConfigurations extends Thread{
 		System.out.print("2. 18 Cities");
 		System.out.print("3. 21 Cities");
 		
-		config.setCitiesNumber(citiesNumber(InputHandler.inputNumber(1, 3)));
+		int cityNumber = citiesNumber(InputHandler.inputNumber(1, 3));
+		config.setCitiesNumber(cityNumber);
 		
 		System.out.println("How many bonuses would you like to set as minimum on the Permit Cards?"
 				+"Insert a value between 0 and 5");
@@ -63,7 +64,34 @@ public class CreateConfigurations extends Thread{
 		else
 			config.setCityLinksPreconfigured(true);
 		if(config.isCityLinksPreconfigured()==false){
-			int[][]cityLinksMatrix =  new int[][]{
+			int[][]cityLinksMatrix =  new int[cityNumber][cityNumber];
+			
+			
+			for(int i=0; i<cityNumber; i++){
+				CityName cityName = CityName.getCityNameFromIndex(i);
+				
+				String input;
+				System.out.println("Which cities would you like to connect with city " + cityName +" ?");
+				System.out.println("Input example: BCD");
+				input=InputHandler.inputCity(cityName,CityName.getCityNameFromIndex(cityNumber-1));
+				for (int j=0; j<input.length();j++){
+					    cityLinksMatrix[i][CityName.valueOf(String.valueOf(input.charAt(j))).ordinal()]=1;				    
+					}
+				}
+			for(int i=0; i<cityNumber; i++){
+				for(int j=i; j<cityNumber;j++){
+					cityLinksMatrix[j][i]=cityLinksMatrix[i][j];
+				}
+			}		
+			for(int i=0; i<cityNumber; i++){
+				for(int j=i; j<cityNumber;j++){
+					cityLinksMatrix[i][j]=cityLinksMatrix[j][i];
+				}
+			}	
+						
+			config.setCityLinksMatrix(cityLinksMatrix);
+			
+			/*{
 				{0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
 				{0,	0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
 				{0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0},
@@ -84,12 +112,12 @@ public class CreateConfigurations extends Thread{
     		 * This fir cycle is for making the matrix specular,
     		 * because in the txt file it is only upper triangular set
     		 */
-			for(int i=0; i<config.getCitiesNumber(); i++){
-				for(int j=i; j<config.getCitiesNumber();j++){
+			/*for(int i=0; i<cityNumber; i++){
+				for(int j=i; j<cityNumber;j++){
 					cityLinksMatrix[j][i]=cityLinksMatrix[i][j];
 				}
-			}
-			config.setCityLinksMatrix(cityLinksMatrix);
+			}*/
+			
 			
 		}else{
 			System.out.println("Select the difficulty (from lower to higher links)");
@@ -105,7 +133,7 @@ public class CreateConfigurations extends Thread{
 			config.setCityBonusRandom(true);
 		
 		if(config.isCityBonusRandom()==false){
-		    ArrayList<CityBonus> arrayListCityBonus[] = new ArrayList[config.getCitiesNumber()];
+		    ArrayList<CityBonus> arrayListCityBonus[] = new ArrayList[cityNumber];
 		    for (int i=0; i<arrayListCityBonus.length; i++){
 		    	arrayListCityBonus[i] = new ArrayList<>();
 		    	arrayListCityBonus[i]=askForBonus(i);
