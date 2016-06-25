@@ -35,21 +35,21 @@ public class CreateConfigurations extends Thread{
 		int cityNumber = citiesNumber(InputHandler.inputNumber(1, 3));
 		config.setCitiesNumber(cityNumber);
 		
-		System.out.println("How many bonuses would you like to set as minimum on the Permit Cards?"
+		System.out.println("How many bonuses would you like to set as minimum on the Permit Cards?\n"
 				+"Insert a value between 0 and 5");
 		int numberBonusesMin=InputHandler.inputNumber(0, 5);
 		
 		config.setPermitCardBonusNumberMin(numberBonusesMin);
-		System.out.println("How many bonuses would you like to set as maximum on the Permit Cards?"
+		System.out.println("How many bonuses would you like to set as maximum on the Permit Cards\n?"
 				+"Insert a value between" + numberBonusesMin + " and 5");
 		config.setPermitCardBonusNumberMax(InputHandler.inputNumber(numberBonusesMin, 5));
 		
-		System.out.println("Would you like to play with a random number of bonuses on the Nobility Route?"
+		System.out.println("Would you like to play with a random number of bonuses on the Nobility Route?\n"
 				+ "1. Yes 2. No");
 		int nobilityBonusRandom=InputHandler.inputNumber(1, 2);
 		if (nobilityBonusRandom==1){
 			config.setNobilityBonusRandom(false);
-			System.out.println("How many cells of Nobility Route would you like with a bonus?"
+			System.out.println("How many cells of Nobility Route would you like with a bonus?\n"
 					+ "Insert a value between 0 and 11");
 			config.setNobilityBonusNumber(InputHandler.inputNumber(0, 11));
 		}
@@ -57,7 +57,7 @@ public class CreateConfigurations extends Thread{
 			config.setNobilityBonusRandom(true);
 		
 		
-		System.out.println("Would you like to play with preconfigured links?"
+		System.out.println("Would you like to play with preconfigured links?\n"
 				+ "1. Yes 2. No");
 		if (InputHandler.inputNumber(1, 2)==2)
 			config.setCityLinksPreconfigured(false);
@@ -78,6 +78,7 @@ public class CreateConfigurations extends Thread{
 					    cityLinksMatrix[i][CityName.valueOf(String.valueOf(input.charAt(j))).ordinal()]=1;				    
 					}
 				}
+				
 			for(int i=0; i<cityNumber; i++){
 				for(int j=i; j<cityNumber;j++){
 					cityLinksMatrix[j][i]=cityLinksMatrix[i][j];
@@ -87,9 +88,9 @@ public class CreateConfigurations extends Thread{
 				for(int j=i; j<cityNumber;j++){
 					cityLinksMatrix[i][j]=cityLinksMatrix[j][i];
 				}
-			}	
-						
+							
 			config.setCityLinksMatrix(cityLinksMatrix);
+			}
 			
 			/*{
 				{0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
@@ -127,7 +128,7 @@ public class CreateConfigurations extends Thread{
 			config.setDifficulty(chooseDifficulty(InputHandler.inputNumber(1,3)));
 		}
 		
-		System.out.print("Would you like to play with random bonuses on the cities?"
+		System.out.print("Would you like to play with random bonuses on the cities?\n"
 				+ "1. Yes 2. No");
 		if(InputHandler.inputNumber(1, 2)==1)
 			config.setCityBonusRandom(true);
@@ -140,12 +141,12 @@ public class CreateConfigurations extends Thread{
 			}
 		    config.setArrayListCityBonus(arrayListCityBonus);
 		}else{
-			System.out.println("How many bonuses would you like to set as minimum on the Cities?"
+			System.out.println("How many bonuses would you like to set as minimum on the Cities?\n"
 					+"Insert a value between 0 and 5");
 			numberBonusesMin=InputHandler.inputNumber(0, 5);
 			
 			config.setCityBonusNumberMin(numberBonusesMin);
-			System.out.println("How many bonuses would you like to set as maximum on the Cities?"
+			System.out.println("How many bonuses would you like to set as maximum on the Cities?\n"
 					+"Insert a value between" + numberBonusesMin + " and 5");
 			config.setCityBonusNumberMax(InputHandler.inputNumber(numberBonusesMin, 5));
 		}
