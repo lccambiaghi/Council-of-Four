@@ -31,42 +31,50 @@ public class InputHandler {
 		return inputNumber;
 
 	}
-	public static String inputCity (CityName currentCity, CityName lastCity){
+	public static Character[] inputCity (CityName currentCity, CityName lastCity){
 		Scanner in = new Scanner(System.in);
 		String string;
 		boolean correct=true;
 		ArrayList <Character> temp;
 		ArrayList <Character> outChar = new ArrayList<>();
-		for (int i=lastCity.ordinal(); i<CityName.W.ordinal();i++){
+		for (int i=lastCity.ordinal()+1; i<=CityName.Z.ordinal();i++){
 			outChar.add(CityName.getCityNameFromIndex(i).toString().charAt(0));
 		}
 		
 		do{
-			
+			correct=true;
 			string = in.nextLine();
-			string.replaceAll("\\s", "");
-			char [] chars = string.toCharArray();
+			char [] chars = string.toUpperCase().replaceAll("\\s+", "").toCharArray();
 			temp=new ArrayList <>();
 			
-			for(Character ch : chars){
-				int enumPosition=CityName.valueOf(String.valueOf(ch)).ordinal();
-				if(temp.contains(ch)){
-					System.out.println("You have inserted the same city more than once.");
-					System.out.println("Please insert another set of cities");
-					correct=false;
-				}else if (enumPosition==currentCity.ordinal()){
-					System.out.println("You have inserted the same city of the started.");
-					System.out.println("Please insert another set of cities");
-					correct=false;
-				}else if(outChar.contains(ch)){
-					System.out.println("You have inserted a city out of range");
-					System.out.println("Please insert another set of cities");
-					correct=false;	
-				}else{
-					temp.add(ch);
+			if(chars.length==0){
+				System.out.println("You have inserted a void input");
+				System.out.println("Please insert a valid set of cities");
+				correct=false;
+			}else{
+				for(int i=0; i<chars.length && correct; i++){
+					char ch = chars[i];
+					int enumPosition=(CityName.valueOf(String.valueOf(ch))).ordinal();
+					if(temp.contains(ch)){
+						System.out.println("You have inserted the same city more than once.");
+						System.out.println("Please insert another set of cities");
+						correct=false;
+					}else if (enumPosition==currentCity.ordinal()){
+						System.out.println("You have inserted the same city of the started.");
+						System.out.println("Please insert another set of cities");
+						correct=false;
+					}else if(outChar.contains(ch)){
+						System.out.println("You have inserted a city out of range");
+						System.out.println("Please insert another set of cities");
+						correct=false;	
+					}else{
+						temp.add(ch);
+					}
 				}
 			}
 		}while(!correct);
-		return string;
+		
+		Character [] result = temp.toArray(new Character [temp.size()]);
+		return result;
 	}
 }
