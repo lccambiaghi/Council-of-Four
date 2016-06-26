@@ -67,11 +67,14 @@ public class CreateConfigurations extends Thread{
 			int[][]cityLinksMatrix =  new int[cityNumber][cityNumber];
 			
 			
-			for(int i=0; i<cityNumber; i++){
+			for(int i=0; i<cityNumber-1; i++){
 				CityName cityName = CityName.getCityNameFromIndex(i);
 				
 				System.out.println("Which cities would you like to connect with city " + cityName +" ?");
-				System.out.println("Input example: BCD");
+				System.out.println("Insert a set of cities from this:");
+				for (int j=cityName.ordinal()+1; j<CityName.getCityNameFromIndex(cityNumber).ordinal(); j++){
+					System.out.print(CityName.getCityNameFromIndex(j).toString()+" ");
+				}
 				Character[] input=InputHandler.inputCity(cityName,CityName.getCityNameFromIndex(cityNumber-1));
 				for (int j=0; j<input.length;j++){
 					    cityLinksMatrix[i][CityName.valueOf(String.valueOf(input[j])).ordinal()]=1;				    
@@ -83,12 +86,15 @@ public class CreateConfigurations extends Thread{
 					cityLinksMatrix[j][i]=cityLinksMatrix[i][j];
 				}
 			}		
-			for(int i=0; i<cityNumber; i++){
-				for(int j=i; j<cityNumber;j++){
-					cityLinksMatrix[i][j]=cityLinksMatrix[j][i];
-				}
-							
+			
+						
 			config.setCityLinksMatrix(cityLinksMatrix);
+			
+			for(int i=0; i<cityNumber; i++){
+				for(int j=0; j<cityNumber;j++){
+					System.out.print(cityLinksMatrix[i][j]+" ");
+				}
+				System.out.println();
 			}
 			
 			/*{
@@ -175,7 +181,7 @@ public class CreateConfigurations extends Thread{
 		int increment=0;
 		BonusName chosenBonus=null;
 		int choice;
-		int oldChoice=0;
+		ArrayList <Integer> oldChoices = new ArrayList <>();
 		
 		System.out.println("Choose the types of bonus to set in the city " + cityName);
 		do{
@@ -188,7 +194,7 @@ public class CreateConfigurations extends Thread{
 			choice = InputHandler.inputNumber(0, 5);
 			
 			if (choice!=0){
-				while (choice==oldChoice){
+				while (oldChoices.contains(choice)){
 					System.out.println("Select an other bonus, you have alredy used it");
 					choice = InputHandler.inputNumber(0, 5);
 				}
@@ -197,7 +203,7 @@ public class CreateConfigurations extends Thread{
 				System.out.println("Choose the increment: min 1 max "+BonusName.getMaxIncrement(chosenBonus));
 				increment = InputHandler.inputNumber(1, BonusName.getMaxIncrement(chosenBonus));
 				cityBonus.add(new CityBonus(chosenBonus, increment));
-				oldChoice=choice;
+				oldChoices.add(choice);
 				}
 			}
 		}
