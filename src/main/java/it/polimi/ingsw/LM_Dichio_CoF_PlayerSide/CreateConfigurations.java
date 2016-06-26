@@ -28,9 +28,9 @@ public class CreateConfigurations extends Thread{
 		
 		Configurations config = new Configurations();
 		System.out.println("How many cities would you like to have in your match?");
-		System.out.print("1. 15 Cities");
-		System.out.print("2. 18 Cities");
-		System.out.print("3. 21 Cities");
+		System.out.println("1. 15 Cities");
+		System.out.println("2. 18 Cities");
+		System.out.println("3. 21 Cities");
 		
 		int cityNumber = citiesNumber(InputHandler.inputNumber(1, 3));
 		config.setCitiesNumber(cityNumber);
@@ -40,8 +40,8 @@ public class CreateConfigurations extends Thread{
 		int numberBonusesMin=InputHandler.inputNumber(0, 5);
 		
 		config.setPermitCardBonusNumberMin(numberBonusesMin);
-		System.out.println("How many bonuses would you like to set as maximum on the Permit Cards\n?"
-				+"Insert a value between" + numberBonusesMin + " and 5");
+		System.out.println("How many bonuses would you like to set as maximum on the Permit Cards?\n"
+				+"Insert a value between " + numberBonusesMin + " and 5");
 		config.setPermitCardBonusNumberMax(InputHandler.inputNumber(numberBonusesMin, 5));
 		
 		System.out.println("Would you like to play with a random number of bonuses on the Nobility Route?\n"
@@ -70,12 +70,11 @@ public class CreateConfigurations extends Thread{
 			for(int i=0; i<cityNumber; i++){
 				CityName cityName = CityName.getCityNameFromIndex(i);
 				
-				String input;
 				System.out.println("Which cities would you like to connect with city " + cityName +" ?");
 				System.out.println("Input example: BCD");
-				input=InputHandler.inputCity(cityName,CityName.getCityNameFromIndex(cityNumber-1));
-				for (int j=0; j<input.length();j++){
-					    cityLinksMatrix[i][CityName.valueOf(String.valueOf(input.charAt(j))).ordinal()]=1;				    
+				Character[] input=InputHandler.inputCity(cityName,CityName.getCityNameFromIndex(cityNumber-1));
+				for (int j=0; j<input.length;j++){
+					    cityLinksMatrix[i][CityName.valueOf(String.valueOf(input[j])).ordinal()]=1;				    
 					}
 				}
 				
@@ -151,7 +150,6 @@ public class CreateConfigurations extends Thread{
 			config.setCityBonusNumberMax(InputHandler.inputNumber(numberBonusesMin, 5));
 		}
 		
-		playerSide.setPlayersMaxNumber(playersMaxNumber);
 		playerSide.setConfigurations(config);
 	}
 	
@@ -176,7 +174,7 @@ public class CreateConfigurations extends Thread{
 		ArrayList <CityBonus> cityBonus = new ArrayList <>();
 		int increment=0;
 		BonusName chosenBonus=null;
-		int choice=0;
+		int choice;
 		int oldChoice=0;
 		
 		System.out.println("Choose the types of bonus to set in the city " + cityName);
@@ -190,16 +188,17 @@ public class CreateConfigurations extends Thread{
 			choice = InputHandler.inputNumber(0, 5);
 			
 			if (choice!=0){
-				do {
+				while (choice==oldChoice){
 					System.out.println("Select an other bonus, you have alredy used it");
 					choice = InputHandler.inputNumber(0, 5);
 				}
-				while (choice==oldChoice);
+				if(choice!=0){		
 				chosenBonus=BonusName.getBonusNameFromIndex(choice-1);
 				System.out.println("Choose the increment: min 1 max "+BonusName.getMaxIncrement(chosenBonus));
 				increment = InputHandler.inputNumber(1, BonusName.getMaxIncrement(chosenBonus));
 				cityBonus.add(new CityBonus(chosenBonus, increment));
 				oldChoice=choice;
+				}
 			}
 		}
 		while (choice!=0);
