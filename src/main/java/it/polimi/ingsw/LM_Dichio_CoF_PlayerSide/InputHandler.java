@@ -36,11 +36,10 @@ public class InputHandler {
 		String string;
 		boolean correct=true;
 		ArrayList <Character> temp;
-		ArrayList <Character> outChar = new ArrayList<>();
-		for (int i=lastCity.ordinal()+1; i<=CityName.Z.ordinal();i++){
-			outChar.add(CityName.getCityNameFromIndex(i).toString().charAt(0));
-		}
 		
+		int asciiLowerBound= (int) currentCity.toString().charAt(0);
+		int asciiUpperBound= (int) lastCity.toString().charAt(0);;
+				
 		do{
 			correct=true;
 			string = in.nextLine();
@@ -54,19 +53,14 @@ public class InputHandler {
 			}else{
 				for(int i=0; i<chars.length && correct; i++){
 					char ch = chars[i];
-					int enumPosition=(CityName.valueOf(String.valueOf(ch))).ordinal();
 					if(temp.contains(ch)){
 						System.out.println("You have inserted the same city more than once.");
 						System.out.println("Please insert another set of cities");
 						correct=false;
-					}else if (enumPosition==currentCity.ordinal()){
-						System.out.println("You have inserted the same city of the started.");
-						System.out.println("Please insert another set of cities");
+					}else if (((int)ch)<=asciiLowerBound || ((int) ch)>asciiUpperBound){
+						System.out.println("Invalid set of cities");
+						System.out.println("Please insert another one");
 						correct=false;
-					}else if(outChar.contains(ch)){
-						System.out.println("You have inserted a city out of range");
-						System.out.println("Please insert another set of cities");
-						correct=false;	
 					}else{
 						temp.add(ch);
 					}
