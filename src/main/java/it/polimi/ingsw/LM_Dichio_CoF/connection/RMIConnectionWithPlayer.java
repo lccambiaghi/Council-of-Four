@@ -9,7 +9,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIPlayerSideInterface;
 
-public class RMIConnectionWithPlayer extends Thread implements ConnectionWithPlayerInterface{
+public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 
 	GameSide gameSide;
 	Player player;
@@ -59,24 +59,6 @@ public class RMIConnectionWithPlayer extends Thread implements ConnectionWithPla
 			e.printStackTrace();
 		}
 	}
-	
-	public void askToConfigure(){
-		try {
-			rmiPlayerSide.configure();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
-			
-	public int getPlayersMaxNumber(){
-		int playersMaxNumber=0;
-		try {
-			playersMaxNumber = rmiPlayerSide.getConfigurationsPlayersNumber();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		return playersMaxNumber;
-	}
 			
 	public Configurations getConfigurations(){
 		Configurations config = null;
@@ -114,5 +96,6 @@ public class RMIConnectionWithPlayer extends Thread implements ConnectionWithPla
 		}
 	}
 	
-	
 }
+
+

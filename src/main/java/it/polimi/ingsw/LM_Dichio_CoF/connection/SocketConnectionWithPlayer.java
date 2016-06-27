@@ -10,7 +10,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
-public class SocketConnectionWithPlayer extends Thread implements ConnectionWithPlayerInterface{
+public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface{
 	
 	GameSide gameSide;
 	
@@ -69,10 +69,6 @@ public class SocketConnectionWithPlayer extends Thread implements ConnectionWith
 			}
 		}
 	}
-	
-	public void askToConfigure(){
-		sendString("SOCKETconfigure");
-	}
 			
 	public int getPlayersMaxNumber(){
 		int playersMaxNumber=0;
@@ -118,6 +114,5 @@ public class SocketConnectionWithPlayer extends Thread implements ConnectionWith
 		sendString("SOCKETprintln");
 		sendString(string);
 	}
-	
 	
 }
