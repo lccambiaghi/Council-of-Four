@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control;
 
+import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.ConnectionWithPlayerInterface;
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
@@ -15,7 +16,9 @@ public class Player{
 	private char typeOfConnection;
 	
 	private ConnectionWithPlayerInterface connectionWithPlayer;
-
+	
+	private Broker broker;
+	
 	// variables of the game
 	private boolean playing;
 	
@@ -44,6 +47,14 @@ public class Player{
 
 	public void setConnectionWithPlayer(ConnectionWithPlayerInterface connectionWithPlayer) {
 		this.connectionWithPlayer = connectionWithPlayer;
+	}
+	
+	public Broker getBroker() {
+		return broker;
+	}
+	
+	public void setBroker(Broker broker) {
+		this.broker=broker;
 	}
 	
 	public String getNickname() {return nickname;}

@@ -22,7 +22,6 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 
 public class Turn {
 
-	private Timer timer;
 	private Player player;
 	private Match match;
 	private ArrayList<Player> players = new ArrayList<Player>();
@@ -43,12 +42,6 @@ public class Turn {
 	}
 	
 	public void startTurn() throws InterruptedException{
-		
-		/*
-		CountDown countDown = new CountDown(Constant.TIMER_SECONDS_TO_PERFORM_ACTION*1000);
-		println("It's your turn! You have "+Constant.TIMER_SECONDS_TO_PERFORM_ACTION+" seconds!", player);
-		println("Your turn has ended!", player);
-		*/
 		
 		broadcastOthers(Message.turnOf(player), players, player);
 		println(Message.yourTurn(Constant.TIMER_SECONDS_TO_PERFORM_ACTION), player);
@@ -77,7 +70,7 @@ public class Turn {
 		if(turnHandler.isAlive()){
 			turnHandler.interrupt();
 			player.setPlaying(false);
-			broadcastOthers(Message.playerHasBeenKickedOff(player), players, player);
+			//broadcastOthers(Message.playerHasBeenKickedOff(player), players, player);
 		}
 		
 	}
@@ -96,9 +89,9 @@ public class Turn {
 		
 	public void infoOrAction() throws InterruptedException{
 
-		Broker.println(chooseInfoOrAction_1_2(),player);
+		player.getBroker().println(chooseInfoOrAction_1_2());
 
-		choice = Broker.askInputNumber(1, 2, player);
+		choice = player.getBroker().askInputNumber(1, 2);
 		
 		if(choice==1)
 			infoMatch();
@@ -112,9 +105,9 @@ public class Turn {
 		match.getInfoMatch().setPlayer(player);
 
 		do{
-			Broker.println(Message.chooseInfo_0_6(), player);
+			player.getBroker().println(Message.chooseInfo_0_6());
 
-			choice = Broker.askInputNumber(0, 6, player);
+			choice = player.getBroker().askInputNumber(0, 6);
 					
 			switch (choice) {
 			case 1:
@@ -134,8 +127,8 @@ public class Turn {
 				break;
 			case 6:
 				City[] arrayCity = match.getField().getArrayCity();
-				Broker.println(Message.chooseCity(arrayCity), player);
-				match.getInfoMatch().printInfoCity(player, Broker.askInputNumber(1, arrayCity.length, player)-1); //array positioning
+				player.getBroker().println(Message.chooseCity(arrayCity));
+				match.getInfoMatch().printInfoCity(player, player.getBroker().askInputNumber(1, arrayCity.length)-1); //array positioning
 				break;
 			}
 		}
@@ -160,10 +153,10 @@ public class Turn {
 	
 	private void ifQuickAction() throws InterruptedException{
 
-		Broker.println(Message.ifQuickAction(),player);
-		Broker.println(Message.chooseYesOrNo_1_2(), player);
+		player.getBroker().println(Message.ifQuickAction());
+		player.getBroker().println(Message.chooseYesOrNo_1_2());
 
-		choice = Broker.askInputNumber(1, 2, player);
+		choice = player.getBroker().askInputNumber(1, 2);
 
 		if(choice==1)
 			quickAction();
@@ -176,9 +169,9 @@ public class Turn {
 	
 	private void quickAction() throws InterruptedException {
 
-		Broker.println(Message.chooseQuickAction_1_4(), player);
+		player.getBroker().println(Message.chooseQuickAction_1_4());
 
-		choice = Broker.askInputNumber(1, 4, player);
+		choice = player.getBroker().askInputNumber(1, 4);
 
 		Action action;
 
@@ -209,9 +202,9 @@ public class Turn {
 	
 	private void mainAction() throws InterruptedException {
 
-		Broker.println(Message.chooseMainAction_1_4(), player);
+		player.getBroker().println(Message.chooseMainAction_1_4());
 
-		choice = Broker.askInputNumber(1, 4, player);
+		choice = player.getBroker().askInputNumber(1, 4);
 
 		Action action;
 
@@ -246,7 +239,7 @@ public class Turn {
 		if(Constant.test)
 			System.out.println(string);
 		else
-			Broker.println(string, player);
+			player.getBroker().println(string);
 	}
 
 	private void broadcastAll(String string, ArrayList<Player> players) throws InterruptedException{
@@ -254,7 +247,7 @@ public class Turn {
 		if(Constant.test)
 			System.out.println(string);
 		else
-			Broker.printlnBroadcastAll(string, players);
+			Broadcast.printlnBroadcastAll(string, players);
 	}
 
 	private void broadcastOthers(String string, ArrayList<Player> players, Player playerNot) throws InterruptedException{
@@ -262,7 +255,7 @@ public class Turn {
 		if(Constant.test)
 			System.out.println(string);
 		else
-			Broker.printlnBroadcastOthers(string, players, playerNot);
+			Broadcast.printlnBroadcastOthers(string, players, playerNot);
 	}
 	
 }

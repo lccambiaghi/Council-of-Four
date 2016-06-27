@@ -48,7 +48,7 @@ public class GameSide {
 		/**
 		 * Initialize and locate the RMI registry
 		 */
-		//initializeRMI();
+		initializeRMI();
 		
 		/**
 		 * Start listening with Socket with a thread
@@ -113,7 +113,7 @@ public class GameSide {
 		
 		public void run(){
 			
-			Broker.login(player, gameSide);
+			player.getBroker().login(gameSide);
 			
 			synchronized (lockArrayListPlayer) {
 				player.setPlaying(false);

@@ -59,7 +59,7 @@ public class WaitingRoom extends Thread{
 		
 		
 		try {
-			Broker.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
+			Broadcast.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,9 +80,9 @@ public class WaitingRoom extends Thread{
 		int playersMaxNumberChoice=0;
 		
 		try {
-			Broker.println("You are the first player, insert the number of players you want to play with.\n"
-					+ "Min: 2, Max: 8", firstPlayer);
-			playersMaxNumberChoice = Broker.askInputNumber(2, 8, firstPlayer);
+			firstPlayer.getBroker().println("You are the first player, insert the number of players you want to play with.\n"
+					+ "Min: 2, Max: 8");
+			playersMaxNumberChoice = firstPlayer.getBroker().askInputNumber(2, 8);
 		} catch (InterruptedException e) {}
 		
 		synchronized (lockNumPlayers) {
@@ -90,15 +90,15 @@ public class WaitingRoom extends Thread{
 				playersMaxNumber=playersMaxNumberChoice;
 			}else{
 				try {
-					Broker.println("Too late! There are already " + numPlayers +" players waiting for the match,\n"
-							+ "you'll play with them using last configurations created",firstPlayer);
+					firstPlayer.getBroker().println("Too late! There are already " + numPlayers +" players waiting for the match,\n"
+							+ "you'll play with them using last configurations created");
 				} catch (InterruptedException e) {}
 				standardConfig=true;
 			}
 		}
 		
 		if(!standardConfig){
-			config = Broker.getConfigurations(firstPlayer);
+			config = firstPlayer.getBroker().getConfigurations();
 			saveFileConfigurations(config);
 		}
 
@@ -119,7 +119,7 @@ public class WaitingRoom extends Thread{
 			}
 		}
 		try {
-			Broker.println(Message.waitForMatch(),  player);
+			player.getBroker().println(Message.waitForMatch());
 		} catch (InterruptedException e) {}
 	}
 	

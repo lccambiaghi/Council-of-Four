@@ -61,7 +61,7 @@ public class ControlMatch {
 		if(Constant.test)
 			System.out.println(string);
 		else
-			Broker.println(string, player);
+			player.getBroker().println(string);
 	}
 
 	private void broadcastAll(String string, ArrayList<Player> players) throws InterruptedException{
@@ -69,7 +69,7 @@ public class ControlMatch {
 		if(Constant.test)
 			System.out.println(string);
 		else
-			Broker.printlnBroadcastAll(string, players);
+			Broadcast.printlnBroadcastAll(string, players);
 	}
 
 	private void broadcastOthers(String string, ArrayList<Player> players, Player playerNot) throws InterruptedException{
@@ -77,7 +77,7 @@ public class ControlMatch {
 		if(Constant.test)
 			System.out.println(string);
 		else
-			Broker.printlnBroadcastOthers(string, players, playerNot);
+			Broadcast.printlnBroadcastOthers(string, players, playerNot);
 	}
 
 }

@@ -19,6 +19,10 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 	private Scanner inputSocket;
 	private PrintWriter outputSocket;
 	
+	private int intResult;
+	
+	private Object lock = new Object();
+
 	public SocketConnectionWithPlayer(Socket clientSocket, GameSide gameSide){
 		
 		this.gameSide=gameSide;
@@ -28,7 +32,8 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		
 		openSocketStream();
 		
-		player.setConnectionWithPlayer(this);
+		Broker b = new Broker(this);
+		player.setBroker(b);
 		
 	}
 	
@@ -96,13 +101,14 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		return object;
 	}
 	
-	public synchronized int askInputNumber(int lowerBound, int upperBound){
-		int result = 0;
+	public synchronized void askInputNumber(int lowerBound, int upperBound){
 		sendString("SOCKETinputNumber");
 		sendString(String.valueOf(lowerBound));
 		sendString(String.valueOf(upperBound));
-		result = Integer.parseInt(receiveString());
-		return result;
+		this.intResult = Integer.parseInt(receiveString());
+		synchronized (lock) {
+			lock.notify();
+		}
 	}
 	
 	public synchronized void print(String string){
@@ -113,6 +119,14 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 	public synchronized void println(String string){
 		sendString("SOCKETprintln");
 		sendString(string);
+	}
+	
+	public int getIntResult() {
+		return intResult;
+	}
+	
+	public Object getLock(){
+		return lock;
 	}
 	
 }

@@ -16,10 +16,14 @@ public interface ConnectionWithPlayerInterface {
 	
 	public Configurations getConfigurations();
 	
-	public int askInputNumber(int lowerBound, int upperBound);
+	public void askInputNumber(int lowerBound, int upperBound);
 	
 	public void print(String string);
 	
 	public void println(String string);
+	
+	public int getIntResult();
+	
+	public Object getLock();
 	
 }

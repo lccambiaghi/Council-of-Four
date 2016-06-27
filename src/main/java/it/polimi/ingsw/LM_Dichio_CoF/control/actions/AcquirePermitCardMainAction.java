@@ -32,21 +32,21 @@ public class AcquirePermitCardMainAction extends Action {
 
         Balcony[] arrayBalcony=field.getArrayBalcony();
 
-        Broker.println(Message.chooseBalcony(arrayBalcony), player);
+        player.getBroker().println(Message.chooseBalcony(arrayBalcony));
 
-        int chosenIndex = Broker.askInputNumber(1, 3, player) -1; //-1 for array positioning
+        int chosenIndex = player.getBroker().askInputNumber(1, 3) -1; //-1 for array positioning
         Balcony chosenBalcony = field.getBalconyFromIndex(chosenIndex); //-1 for array positioning
         chosenRegion = field.getRegionFromIndex(chosenIndex);
 
         ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards(chosenBalcony);
 
         if (usablePoliticCards.size()<1) {
-            Broker.println(Message.notEnoughPoliticsCards(),player);
+            player.getBroker().println(Message.notEnoughPoliticsCards());
             return false;
         }
 
         if (eligibleMove(usablePoliticCards)<1){
-            Broker.println(Message.notEnoughAssistant(), player);
+            player.getBroker().println(Message.notEnoughAssistant());
             return false;
         }
 
@@ -58,15 +58,15 @@ public class AcquirePermitCardMainAction extends Action {
             if (satisfactionCost >0)
                 eligibleSet=true;
             else
-                Broker.println(Message.notEnoughAssistant(), player);
+                player.getBroker().println(Message.notEnoughAssistant());
         }while(!eligibleSet);
 
         PermitCard[] choosablePermitCards = chosenRegion.getFaceUpPermitCardArea().getArrayPermitCard();
         ArrayList<PermitCard> arrayListChoosablePermitCards = new ArrayList<>(Arrays.asList(choosablePermitCards));
 
-        Broker.println(Message.choosePermitCard(arrayListChoosablePermitCards),player);
+        player.getBroker().println(Message.choosePermitCard(arrayListChoosablePermitCards));
 
-        chosenPermitCard =  choosablePermitCards[Broker.askInputNumber(1, choosablePermitCards.length, player)-1];
+        chosenPermitCard =  choosablePermitCards[player.getBroker().askInputNumber(1, choosablePermitCards.length)-1];
 
         return true;
     }
@@ -145,9 +145,9 @@ public class AcquirePermitCardMainAction extends Action {
 
         ArrayList<PoliticCard> chosenPoliticCards = new ArrayList<>();
 
-        Broker.println("Choose one card at a time to a maximum of four. Choose 0 when done.", player);
+        player.getBroker().println("Choose one card at a time to a maximum of four. Choose 0 when done.");
         for (int i = 0; i < usablePoliticCards.size(); i++) {
-            Broker.println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor(), player);
+            player.getBroker().println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor());
         }
 
         int indexChosenPermitCard = inputNumber(1, usablePoliticCards.size()) - 1; // -1 for array positioning
@@ -156,7 +156,7 @@ public class AcquirePermitCardMainAction extends Action {
         do {
             System.out.println("0. [Done] ");
             for (int i = 0; i < usablePoliticCards.size(); i++) {
-                Broker.println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor(), player);
+                player.getBroker().println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor());
             }
             indexChosenPermitCard = inputNumber(0, usablePoliticCards.size());
 

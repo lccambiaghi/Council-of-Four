@@ -13,14 +13,6 @@ import java.util.Map;
 
 public final class Message {
 	
-	private static void println(String string, Player player) throws InterruptedException{
-		//FOR_TEST
-		if(Constant.test)
-			System.out.println(string);
-		else
-			Broker.println(string, player);
-	}
-	
 	public static String waitForMatch(){
 		return ("You have been selected for a match, wait a moment...");
 	}

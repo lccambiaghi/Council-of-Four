@@ -49,7 +49,7 @@ public class InfoMatch {
 		if(Constant.test)
 			System.out.print(string);
 		else
-			Broker.print(string, player);
+			player.getBroker().print(string);
 	}
 	
 	private void println() throws InterruptedException{
@@ -57,7 +57,7 @@ public class InfoMatch {
 		if(Constant.test)
 			System.out.println();
 		else
-			Broker.println("", player);
+			player.getBroker().println("");
 	}
 	
 	private void println(String string) throws InterruptedException{
@@ -65,7 +65,7 @@ public class InfoMatch {
 		if(Constant.test)
 			System.out.println(string);
 		else
-			Broker.println(string, player);
+			player.getBroker().println(string);
 	}
 	
 	public void setPlayer(Player player){

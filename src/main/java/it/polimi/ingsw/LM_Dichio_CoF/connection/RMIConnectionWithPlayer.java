@@ -11,9 +11,13 @@ import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIPlayerSideInterface;
 
 public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 
-	GameSide gameSide;
-	Player player;
-	RMIPlayerSideInterface rmiPlayerSide;
+	private GameSide gameSide;
+	private Player player;
+	private RMIPlayerSideInterface rmiPlayerSide;
+	
+	private int intResult;
+	
+	public Object lock = new Object();
 	
 	public RMIConnectionWithPlayer(RMIPlayerSideInterface rmiPlayerSide, GameSide gameSide){
 	
@@ -24,7 +28,8 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		
 		player = new Player('r');
 		
-		player.setConnectionWithPlayer(this);
+		Broker b = new Broker(this);
+		player.setBroker(b);
 		
 	}
 	
@@ -70,14 +75,17 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		return config;
 	}
 	
-	public synchronized int askInputNumber(int lowerBound, int upperBound){
+	public synchronized void askInputNumber(int lowerBound, int upperBound){
 		int result = 0;
 		try {
 			result = rmiPlayerSide.inputNumber(lowerBound, upperBound);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		return result;
+		intResult=result;
+		synchronized (lock) {
+			lock.notify();
+		}
 	}
 	
 	public synchronized void print(String string){
@@ -96,6 +104,13 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		}
 	}
 	
+	public int getIntResult(){
+		return intResult;
+	}
+	
+	public Object getLock(){
+		return lock;
+	}
 }
 
 
