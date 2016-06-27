@@ -43,7 +43,7 @@ public class InfoMatch {
 			3,	0,	7,	-3,	10,	0,	14,	-3,	17,	0,	21,	-2};
 	
 	
-	private void print(String string){
+	private void print(String string) throws InterruptedException{
 		
 		//FOR_TEST
 		if(Constant.test)
@@ -52,7 +52,7 @@ public class InfoMatch {
 			Broker.print(string, player);
 	}
 	
-	private void println(){
+	private void println() throws InterruptedException{
 		//FOR_TEST
 		if(Constant.test)
 			System.out.println();
@@ -60,7 +60,7 @@ public class InfoMatch {
 			Broker.println("", player);
 	}
 	
-	private void println(String string){
+	private void println(String string) throws InterruptedException{
 		//FOR_TEST
 		if(Constant.test)
 			System.out.println(string);
@@ -81,27 +81,27 @@ public class InfoMatch {
 		this.arrayCityLinks = field.getArrayCityLinks();	
 	}
 	
-	public void printInfoAllCities(Player player){
+	public void printInfoAllCities(Player player) throws InterruptedException{
 		println();
 		printCities();
 		printCityLinks();
 		println();
 	}
 	
-	public void printInfoAllPlayers(Player player){
+	public void printInfoAllPlayers(Player player) throws InterruptedException{
 		println();
 		printPlayersInRoutes();
 		println();
 	}
 	
-	public void printInfoBalconies(Player player){
+	public void printInfoBalconies(Player player) throws InterruptedException{
 		println();
 		printBalconies();
 		printAvailableCouncillors();
 		println();	
 	}
 	
-	public void printInfoPlayer(Player player){
+	public void printInfoPlayer(Player player) throws InterruptedException{
 
 		println();
 		println("You have...");
@@ -116,7 +116,7 @@ public class InfoMatch {
 		
 	}
 	
-	public void printCityAndIndex(Player player){
+	public void printCityAndIndex(Player player) throws InterruptedException{
 		println();
 		for(int i=0; i<arrayCity.length; i++){
 			println((i+1) +". City: " +arrayCity[i].getCityName());
@@ -124,7 +124,7 @@ public class InfoMatch {
 		println();
 	}
 	
-	public void printInfoCity(Player player, int indexCity){
+	public void printInfoCity(Player player, int indexCity) throws InterruptedException{
 		
 		println();
 		City chosenCity= arrayCity[indexCity];
@@ -153,7 +153,7 @@ public class InfoMatch {
 		println();
 	}
 	
-	public void printInfoRegions(Player player){
+	public void printInfoRegions(Player player) throws InterruptedException{
 		println();
 		for(int i=0; i<Constant.REGIONS_NUMBER; i++){
 			Region region = field.getRegionFromIndex(i);
@@ -182,7 +182,7 @@ public class InfoMatch {
 		}
 	}
 	
-	private void printCities(){
+	private void printCities() throws InterruptedException{
 		
 		int[] positions;
 		
@@ -224,12 +224,12 @@ public class InfoMatch {
 		
 	}
 	
-	private void printRegions(){
+	private void printRegions() throws InterruptedException{
 		println(" " + RegionName.Sea + "    " + RegionName.Hill + "   " + RegionName.Mountain);
 	}
 	
 	
-	private void printCityLinks(){
+	private void printCityLinks() throws InterruptedException{
 		List<Integer>[] arrayCityLinks = field.getArrayCityLinks();
 		for(int i=0; i<arrayCityLinks.length; i++){
 			print(arrayCity[i].getCityName() + ": ");
@@ -244,7 +244,7 @@ public class InfoMatch {
 		println();
 	}
 	
-	private void printBalconies(){
+	private void printBalconies() throws InterruptedException{
 		println();
 		Balcony[] arrayBalconies = field.getArrayBalcony();
 		for(Balcony balcony: arrayBalconies){
@@ -259,7 +259,7 @@ public class InfoMatch {
 			
 	}
 	
-	private void printAvailableCouncillors(){
+	private void printAvailableCouncillors() throws InterruptedException{
 		
 		println();
 		ArrayList<Councillor> arrayListCouncillor = field.getAvailableCouncillors().getArrayListCouncillor();
@@ -270,7 +270,7 @@ public class InfoMatch {
 		println();
 	}
 	
-	private void printPlayersInRoutes(){
+	private void printPlayersInRoutes() throws InterruptedException{
 		println("Players status:");
 		for(Player player: arrayListPlayer){
 			println(player.getNickname() + ": " + 
@@ -281,7 +281,7 @@ public class InfoMatch {
 		println();
 	}
 	
-	private void printPolitcCards(){
+	private void printPolitcCards() throws InterruptedException{
 		print("- Politic cards: ");
 		for(PoliticCard politicCard: player.getArrayListPoliticCard()){
 			print(politicCard.getCardColor() + " ");
@@ -289,11 +289,11 @@ public class InfoMatch {
 		println();
 	}
 	
-	private void printAssistantNumber(){
+	private void printAssistantNumber() throws InterruptedException{
 		println("- Number of assistants: " + player.getAssistant());
 	}
 	
-	private void printPermitCards(){
+	private void printPermitCards() throws InterruptedException{
 		print("- Permit cards: ");
 		ArrayList<PermitCard> arrayListPermitCard = player.getArrayListPermitCard();
 		if(arrayListPermitCard.size()==0)
@@ -310,7 +310,7 @@ public class InfoMatch {
 		}
 	}
 	
-	private void printYourCities(){
+	private void printYourCities() throws InterruptedException{
 		print("- Emporiums built in these cities: ");
 		ArrayList<City> arrayListEmporiumBuilt = player.getArrayListEmporiumBuilt();
 		if(arrayListEmporiumBuilt.size()==0)

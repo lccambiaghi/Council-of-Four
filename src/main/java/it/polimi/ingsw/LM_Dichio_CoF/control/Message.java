@@ -13,7 +13,7 @@ import java.util.Map;
 
 public final class Message {
 	
-	private static void println(String string, Player player){
+	private static void println(String string, Player player) throws InterruptedException{
 		//FOR_TEST
 		if(Constant.test)
 			System.out.println(string);
@@ -26,7 +26,7 @@ public final class Message {
 	}
 	
 	public static String matchStarted(){
-		return ("You are playing in a match!");
+		return ("\n --- THE MATCH HAS STARTED! ---\n ");
 	}
 	
 	public static String waitTurn(){
@@ -202,6 +202,18 @@ public final class Message {
 
 	public static String notEnoughPoliticsCardsAndRichness(){
 		return ("You don't have enough Politics Cards and Richness at the same time");
+	}
+	
+	public static String turnOf(Player player){
+		return ("Turn of: " +player.getNickname());
+	}
+	
+	public static String yourTurn(int  seconds){
+		return ("It's your turn! You have "+ seconds +" seconds!");
+	}
+	
+	public static String playerHasBeenKickedOff(Player player){
+		return ("Player " + player.getNickname() + " has been kicked off!");
 	}
 	
 }
