@@ -14,17 +14,21 @@ public class WaitingRoom extends Thread{
 	private GameSide gameSide;
 	private Player firstPlayer;
 	
-	private int playersMaxNumber = 0;
+	private int playersMaxNumber = 8; //DEFAULT MAX NUMBER
 	private Configurations config = null;
 	
 	private int numPlayers;
-	private boolean timeToPlay = false;
 	private CountDown countDown;
-	private boolean countDownStarted = false;
+	
+	private boolean timeToPlay = false;
+	private boolean standardConfig = false;
 	
 	private ArrayList<Player> arrayListPlayerMatch = new ArrayList<Player>();
 	
-	private static final Object lockNumPlayers = new Object();
+	private final Object lockNumPlayers = new Object();
+	private final Object lockCountDown = new Object();
+	private final Object lockTimeToPlay = new Object();
+	
 	
 	private ControlMatch controlMatch;
 	
@@ -40,51 +44,94 @@ public class WaitingRoom extends Thread{
 		
 		askForConfigurations();
 		
-		synchronized(gameSide.lockWaitingRoomAvailable){
-			if(getNumPlayers()>playersMaxNumber){
-				for(int index=playersMaxNumber; index<numPlayers; index++)
-					gameSide.getArrayListPlayer().add(arrayListPlayerMatch.remove(index));
-			}
-			gameSide.setWaitingRoomAvailable(false);
-			timeToPlay=true;
+		while(!isTimeToPlay()){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {}
+			synchronized (lockCountDown) {
+				if(countDown!=null){
+					if(countDown.isTimeFinished())
+						setTimeToPlay(true);
+				}
+			}	
 		}
 		
-		while(!timeToPlay){
-			if(getNumPlayers()>1&&!countDownStarted){
-				countDownStarted=true;
-				countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
-				System.out.println("countdown started");
-			}
-			if(countDownStarted){
-				if(countDown.isTimeFinished()){
-					countDownStarted=false;
-					timeToPlay=true;
-				}
-			}
-			if(getNumPlayers()==playersMaxNumber){
-				synchronized(gameSide.lockWaitingRoomAvailable){
-					timeToPlay=true;
-					gameSide.setWaitingRoomAvailable(false);
-				}
-			}
-			
-		}
 		
-		Broker.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
+		
+		try {
+			Broker.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		controlMatch = new ControlMatch(arrayListPlayerMatch);
-		controlMatch.startMatch();
+		try {
+			controlMatch.startMatch();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 		
 	private void askForConfigurations(){
+
+		int playersMaxNumberChoice=0;
 		
-		Broker.askToConfigure(firstPlayer);
-		playersMaxNumber = Broker.getPlayersMaxNumber(firstPlayer);
-		config = Broker.getConfigurations(firstPlayer);
+		try {
+			Broker.println("You are the first player, insert the number of players you want to play with.\n"
+					+ "Min: 2, Max: 8", firstPlayer);
+			playersMaxNumberChoice = Broker.askInputNumber(2, 8, firstPlayer);
+		} catch (InterruptedException e) {}
 		
-		saveFileConfigurations(config);
+		synchronized (lockNumPlayers) {
+			if(playersMaxNumberChoice>numPlayers){
+				playersMaxNumber=playersMaxNumberChoice;
+			}else{
+				try {
+					Broker.println("Too late! There are already " + numPlayers +" players waiting for the match,\n"
+							+ "you'll play with them using last configurations created",firstPlayer);
+				} catch (InterruptedException e) {}
+				standardConfig=true;
+			}
+		}
+		
+		if(!standardConfig){
+			config = Broker.getConfigurations(firstPlayer);
+			saveFileConfigurations(config);
+		}
+
 	}
+	
+	public void addPlayerToWaitingRoom(Player player){
+		synchronized (lockNumPlayers){
+			arrayListPlayerMatch.add(player);
+			numPlayers++;
+			if(numPlayers==playersMaxNumber){
+				setTimeToPlay(true);;
+			}else{
+				if(numPlayers==2){
+					synchronized (lockCountDown) {
+						countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
+					}
+				}
+			}
+		}
+		try {
+			Broker.println(Message.waitForMatch(),  player);
+		} catch (InterruptedException e) {}
+	}
+	
+	private void setTimeToPlay(boolean b){
+		synchronized (lockTimeToPlay) {timeToPlay=b;}
+		gameSide.setWaitingRoomAvailable(false);
+	}
+	
+	private boolean isTimeToPlay(){
+		synchronized (lockTimeToPlay){ return timeToPlay; }
+	}
+	
 	
 	private void saveFileConfigurations(Configurations config){
 		
@@ -105,22 +152,6 @@ public class WaitingRoom extends Thread{
 		}
 	}
 	
-	private void increaseNumPlayers(){
-		synchronized (lockNumPlayers){
-			numPlayers++;
-		}
-	}
 	
-	private int getNumPlayers(){
-		synchronized (lockNumPlayers){
-			return numPlayers;
-		}
-	}
-	
-	public void addPlayerToWaitingRoom(Player player){
-		arrayListPlayerMatch.add(player);
-		increaseNumPlayers();
-		Broker.sendString(Message.waitForMatch(),  player);
-	}
 	
 }
