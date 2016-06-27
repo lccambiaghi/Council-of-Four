@@ -32,14 +32,6 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 		return string;
 	}
 	
-	public void configure(){	
-		this.playerSide.configure();	
-	}
-	
-	public int getConfigurationsPlayersNumber(){
-		return playerSide.getConfigurationsPlayersMaxNumber();
-	}
-	
 	public Object getConfigurationsAsObject(){
 		return playerSide.getConfigurationsAsObject();
 	}

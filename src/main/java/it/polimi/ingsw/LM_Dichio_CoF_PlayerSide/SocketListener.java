@@ -19,14 +19,6 @@ public class SocketListener {
 				playerSide.login();
 				break;
 				
-			case 	"SOCKETconfigure":
-				playerSide.configure();
-				break;
-				
-			case	"SOCKETgetConfigurationsPlayersMaxNumber":
-				socketConnection.sendStringTS(String.valueOf(playerSide.getConfigurationsPlayersMaxNumber()));
-				break;
-				
 			case	"SOCKETgetConfigurationsAsObject":
 				socketConnection.sendObjectTS(playerSide.getConfigurationsAsObject());
 				break;

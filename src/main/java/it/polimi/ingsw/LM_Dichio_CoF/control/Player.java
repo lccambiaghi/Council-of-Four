@@ -1,20 +1,11 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control;
 
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.PrintWriter;
-
 import it.polimi.ingsw.LM_Dichio_CoF.connection.ConnectionWithPlayerInterface;
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
-import it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.RMIPlayerSideInterface;
 
-import java.net.Socket;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class Player{
