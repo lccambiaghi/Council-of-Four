@@ -38,8 +38,8 @@ public class GameSide {
 	
 	private WaitingRoom waitingRoom;
 	
-	public static final Object lockArrayListPlayer = new Object();
-	public static final Object lockWaitingRoomAvailable = new Object();
+	private final Object lockArrayListPlayer = new Object();
+	private final Object lockWaitingRoomAvailable = new Object();
 	
 	private boolean waitingRoomAvailable=false;
 	
@@ -55,12 +55,6 @@ public class GameSide {
 		 */
 		listenSocket = new ListenSocket(this);
 		listenSocket.start();
-		
-		/**
-		 * Start checking (while true)
-		 * if a new player has connected and (if so) create a Waiting Room if there's none already available
-		 */
-		arrayListPlayerHandler();
 		
 	}
 	
@@ -102,8 +96,12 @@ public class GameSide {
 		}
 	}
 	
+	
+	
+	
 	public void startHandlePlayer(GameSide gameSide, Player player){
-		new HandlePlayer(gameSide, player).start();
+		HandlePlayer hp = new HandlePlayer(gameSide, player);
+		hp.start();
 	}
 	
 	class HandlePlayer extends Thread{
@@ -114,6 +112,7 @@ public class GameSide {
 		public HandlePlayer(GameSide gameSide, Player player){this.gameSide=gameSide; this.player=player;}
 		
 		public void run(){
+			
 			Broker.login(player, gameSide);
 			
 			synchronized (lockArrayListPlayer) {
@@ -121,6 +120,20 @@ public class GameSide {
 				arrayListPlayer.add(player);
 				arrayListAllPlayer.add(player);
 			}
+			
+			synchronized (lockWaitingRoomAvailable) {
+				if(!waitingRoomAvailable){
+					waitingRoomAvailable=true;
+					waitingRoom = new WaitingRoom(gameSide, player);
+					waitingRoom.start();
+				}else{
+					waitingRoom.addPlayerToWaitingRoom(player);
+					try {
+						sleep(1000);
+					} catch (InterruptedException e) {e.printStackTrace();}
+				}
+			}
+			
 		}
 	
 	}
@@ -144,44 +157,7 @@ public class GameSide {
 	}
 	
 	public void setWaitingRoomAvailable(boolean waitingRoomAvailable) {
-		synchronized (lockWaitingRoomAvailable) {
-			this.waitingRoomAvailable = waitingRoomAvailable;
-		}
-	}
-	
-	public boolean getWaitingRoomAvailable() {
-		synchronized (lockWaitingRoomAvailable) {
-			return waitingRoomAvailable;
-		}
-	}
-	
-	private void arrayListPlayerHandler(){
-		
-		Player player = null;
-		Boolean startWaitingRoom = false;
-		while(true){
-			synchronized(lockArrayListPlayer){
-				if(arrayListPlayer.size()!=0){
-					player = arrayListPlayer.remove(0);
-				}
-			}
-			if(player!=null){
-				synchronized (lockWaitingRoomAvailable) {
-					if(!waitingRoomAvailable){
-						waitingRoomAvailable=true;
-						startWaitingRoom=true;
-						waitingRoom = new WaitingRoom(this, player);
-					}else{
-						waitingRoom.addPlayerToWaitingRoom(player);
-					}
-					player=null;
-				}
-				if(startWaitingRoom){
-					waitingRoom.start();
-					startWaitingRoom=false;
-				}
-			}
-		}
+		this.waitingRoomAvailable = waitingRoomAvailable;
 	}
 	
 }
