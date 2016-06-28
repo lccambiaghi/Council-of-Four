@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Bonus;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Field;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Route;
@@ -21,11 +22,11 @@ public class Market {
 	public ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
 	private Field field;
 
-	Market (ArrayList<Player> arrayListPlayer){
+	public Market (ArrayList<Player> arrayListPlayer){
 		this.arrayListPlayer = new ArrayList<Player>(arrayListPlayer);		
 	}
 	
-	public void startMarket (){
+	public void startMarket () throws InterruptedException{
 		int turn = 0;
 		int choice;
 
@@ -42,9 +43,9 @@ public class Market {
 
 		int counter=1;
 		if (numberPermitCard>0 || numberPoliticCard>0 || numberAssistants>0){
-			System.out.println("Would you like to sell something? 1. Yes 2. No");
-			if(inputNumber(1,2)==1){
-				System.out.println("Which object would you like to sell?");
+			playerTurn.getBroker().println(Message.chooseToSellSomething_1_2());
+			if(playerTurn.getBroker().askInputNumber(1,2)==1){
+				playerTurn.getBroker().println(Message.askForObject());
 				for(int i=0; i<stock.length; i++){
 					if(stock[i]>0)
 						sellable[i]=true;
@@ -53,54 +54,94 @@ public class Market {
 					switch(i){
 						case 0:
 							if(sellable[i]){
-								System.out.println(counter +". " + "Permit Card");
+								playerTurn.getBroker().println(Message.permitCard(counter));
 								itemsMenu.put(counter, "PermitCard");
 								counter++;
 							}
 							break;
 						case 1:
 							if(sellable[i]){
-								System.out.println(counter +". " + "Politic Card");
+								playerTurn.getBroker().println(Message.politicCard(counter));
 								itemsMenu.put(counter, "PoliticCard");
 								counter++;
 							}
 							break;
 						case 2:
 							if(sellable[i]){
-								System.out.println(counter +". " + "Assistants");
+								playerTurn.getBroker().println(Message.assistants(counter));
 								itemsMenu.put(counter, "Assistants");
 							}
 							break;
 					}
 				}
-				choice= inputNumber(1, counter);
-				sellingObject = new SellingObject (playerTurn, itemsMenu.get(choice));
-				arrayListSellingObjects.add(sellingObject);
+				choice= playerTurn.getBroker().askInputNumber(1, counter);
+				
 			}
 			else
 				turn++;	
 		}else{
-			System.out.println("You can't sell nothing");
+			playerTurn.getBroker().println(Message.deniedSelling());
 			turn++;
 		}
-		
-		
-		
-		
-			//prossimo giocatore
-		
 		//startBuying(arrayListSellingObjects);
+	}
+		
+	private void selectObject(Player playerTurn, String type){	
+		int choice=0;
+		
+		switch(type){
+		case "PermitCard":
+			choice=askPermitCard(playerTurn);
+			break;
+		case "PoliticCard":
+			choice=askPoliticCard(playerTurn);
+			break;
+		case "Assistants":
+			choice=askAssistant(playerTurn);
+			break;
+		}
+		sellingObject = new SellingObject (playerTurn);
+		arrayListSellingObjects.add(sellingObject);
 		
 	}
-	private void startBuying(ArrayList <SellingObject> arrayListSelingObjects){
+	private int askPoliticCard(Player playerTurn) throws InterruptedException{
+		ArrayList <PoliticCard> playerPoliticCards = playerTurn.getArrayListPoliticCard();
+		System.out.println("Which Politics Tile would you like to sell?");
+
+		for (int i=0; i<playerPoliticCards.size(); i++){
+			System.out.println(i+1+". "+ playerPoliticCards.get(i).getCardColor().toString());
+		}
+		return playerTurn.getBroker().askInputNumber (1, playerPoliticCards.size())-1;
+	}
+	
+	private int askPermitCard(Player playerTurn) throws InterruptedException{
+		ArrayList <PermitCard> playerPermitCards = playerTurn.getArrayListPermitCard();
+		System.out.println("Which Business Permit Tile would you like to sell?");
+		System.out.println("Your Cards");
+	
+		for (int i=0; i<playerPermitCards.size(); i++){
+			System.out.print(i+1+". Buildable Cities: ");
+			for(City city: playerPermitCards.get(i).getArrayBuildableCities()){
+				System.out.print(city.getCityName().toString()+" ");
+			};
+			System.out.println();
+		}
+		return playerTurn.getBroker().askInputNumber(1, playerPermitCards.size());
+	}
+	
+	
+	
+	
+	
+	private void startBuying(ArrayList <SellingObject> arrayListSelingObjects) throws InterruptedException{
 		Collections.shuffle(arrayListPlayer);
 		int turn=0;
 		
 		Player playerTurn=arrayListPlayer.get(turn);
 		
 		for (SellingObject sellingObject : arrayListSelingObjects){
-			System.out.println("Would you like to buy this object? 1. Yes 2. No");
-			int accordingToBuy = inputNumber(1,2);
+			playerTurn.getBroker().println(Message.chooseToBuySomething_1_2());
+			int accordingToBuy = playerTurn.getBroker().askInputNumber(1,2);
 			
 			if(accordingToBuy==1){	
 				Object object = sellingObject.getObject();
@@ -130,7 +171,7 @@ public class Market {
 		
 	}
 	
-	private boolean canBuy(int price, Player playerTurn, Player sellingPlayer){
+	private boolean canBuy(int price, Player playerTurn, Player sellingPlayer) throws InterruptedException{
 		Route richnessRoute = field.getRichnessRoute();
 		if(checkIfEnoughRichness(playerTurn, price)){
 			richnessRoute.movePlayer(price, sellingPlayer);
@@ -138,7 +179,7 @@ public class Market {
 			arrayListSellingObjects.remove(sellingObject);
 			return true;
 		}
-		System.out.println("You can't buy this object!");
+		playerTurn.getBroker().println(Message.deniedBuying());
 		return false;
 	}
 	
@@ -151,30 +192,4 @@ public class Market {
 			return true;
 
 	}
-
-	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
-
-		Scanner in = new Scanner(System.in);
-		int inputNumber;
-		boolean eligibleInput=false;
-
-		do {
-			while(!in.hasNextInt()){
-				System.out.println("Insert an integer value!");
-				in.nextLine();
-			}
-			inputNumber=in.nextInt();
-			in.nextLine();
-
-			if(inputNumber>=lowerBound && inputNumber<=upperBound)
-				eligibleInput=true;
-			else
-				System.out.println("Insert a value between "+ lowerBound
-						+ " and " + upperBound);
-		} while(!eligibleInput);
-
-		return inputNumber;
-
-	}
-
 }
