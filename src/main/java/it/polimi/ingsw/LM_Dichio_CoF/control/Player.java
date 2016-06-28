@@ -39,7 +39,8 @@ public class Player{
 	
 	/* The constructor assigns to the player the type of connection */
 	public Player(char typeOfConnection){
-		this.typeOfConnection=typeOfConnection; 	
+		this.typeOfConnection=typeOfConnection;
+		this.connected=true;
 	}
 	
 	public ConnectionWithPlayerInterface getConnectionWithPlayer() {
