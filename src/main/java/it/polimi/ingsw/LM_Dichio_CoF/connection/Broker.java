@@ -8,10 +8,12 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class Broker {
 
-	ConnectionWithPlayerInterface connectionWithPlayer;
+	private ConnectionWithPlayerInterface connectionWithPlayer;
+	private Player player;
 	
-	public Broker(ConnectionWithPlayerInterface connectionWithPlayer){
+	public Broker(ConnectionWithPlayerInterface connectionWithPlayer, Player player){
 		this.connectionWithPlayer=connectionWithPlayer;
+		this.player=player;
 	}
 	
 	public void login(GameSide gameSide){

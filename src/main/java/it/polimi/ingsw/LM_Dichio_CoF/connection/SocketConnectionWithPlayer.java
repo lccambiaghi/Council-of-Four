@@ -32,7 +32,7 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		
 		openSocketStream();
 		
-		Broker b = new Broker(this);
+		Broker b = new Broker(this, player);
 		player.setBroker(b);
 		
 	}
