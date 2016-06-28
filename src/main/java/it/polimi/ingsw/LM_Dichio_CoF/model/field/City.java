@@ -19,6 +19,7 @@ public class City {
 	private City[] nearbyCity;
 	private CityColor cityColor;
 	private ArrayList<Player> arrayListEmporium;
+	private boolean colorBonusSatisfied;
 
 	/* Random bonus constructor: it receives the configurations, the name of the city given by the Region
 	 * and the name of the region itself */
@@ -28,6 +29,7 @@ public class City {
 		this.regionName = regionName;
 		this.cityColor=cityColor;
 		arrayListEmporium = new ArrayList<>();
+		colorBonusSatisfied=false;
 
 		int numberBonus;
 		Random random = new Random();
@@ -116,6 +118,14 @@ public class City {
 	
 	public ArrayList<Player> getArrayListEmporium() {
 		return arrayListEmporium;
+	}
+
+	public boolean isColorBonusSatisfied() {
+		return colorBonusSatisfied;
+	}
+
+	public void setColorBonusSatisfied(boolean colorBonusSatisfied){
+		this.colorBonusSatisfied=colorBonusSatisfied;
 	}
 
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control.actions;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Message;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
@@ -16,7 +17,8 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     private ArrayList<PoliticCard> chosenPoliticCards;
     private int satisfactionCost;
-    private Map.Entry<City, Integer> chosenCity;
+    //private Map.Entry<City, Integer> chosenCity;
+    private City chosenCity;
 
     public BuildEmporiumWithKingMainAction(Match match, Player player){
         this.match=match;
@@ -63,13 +65,90 @@ public class BuildEmporiumWithKingMainAction extends Action {
         int i=0;
         for (Map.Entry<City, Integer> city : movableCities.entrySet()) {
             if (i == chosenIndex)
-                chosenCity = city;
+                chosenCity = (City) city;
             i++;
         }
 
         return true;
 
     }
+
+
+
+    @Override
+    public void execute(){
+
+        Field field=match.getField();
+
+        Route richnessRoute = field.getRichnessRoute();
+
+        richnessRoute.movePlayer(-satisfactionCost, player);
+
+        field.getKing().setCurrentCity(chosenCity);
+
+        for (PoliticCard politicCard : chosenPoliticCards)
+            player.discardPoliticCard(politicCard);
+
+        chosenCity.buildEmporium(player);
+
+        resultMsg="Player " + player.getNickname() + " has moved the king to " +
+                chosenCity.getCityName().toString() + " city and built an emporium there.";
+
+        //check on bonus tiles
+        if(isEligibleForColorTile()){
+
+            int increment;
+
+            switch (chosenCity.getCityColor()){
+                case Blue:
+                    increment= Constant.BLUE_BONUS_TILE_VICTORY_INCREMENT;
+                    break;
+                case Bronze:
+                    increment= Constant.BRONZE_BONUS_TILE_VICTORY_INCREMENT;
+                    break;
+                case Silver:
+                    increment= Constant.SILVER_BONUS_TILE_VICTORY_INCREMENT;
+                    break;
+                case Gold:
+                    increment= Constant.GOLD_BONUS_TILE_VICTORY_INCREMENT;
+                    break;
+                case Red:
+                    increment= Constant.RED_BONUS_TILE_VICTORY_INCREMENT;
+                    break;
+                default:
+                    increment=0; //should never be reached
+            }
+
+            player.setRichness(player.getRichness()+increment);
+
+            for(City city: field.getArrayCity())
+                if(city.getCityColor() == chosenCity.getCityColor())
+                    city.setColorBonusSatisfied(true);
+
+            resultMsg = resultMsg + "\nDoing so, he acquired "
+                    + chosenCity.getCityColor().toString() +
+                    " Bonus Tile.";
+
+        }
+
+        if(isEligibleForRegionTile()){
+
+            player.setRichness(player.getRichness()+Constant.REGION_TILE_VICTORY_INCREMENT);
+
+            int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
+            Region chosenRegion = match.getField().getRegionFromIndex(chosenRegionIndex);
+            chosenRegion.setRegionBonusSatisfied(true);
+
+            resultMsg = resultMsg + "\nDoing so, he acquired "
+                    + chosenCity.getRegionName().toString() +
+                    " Bonus Tile.";
+
+        }
+
+    }
+    
+    @Override
+    public String getResultMsg(){return resultMsg;}
 
     /* First it adds Multicolor cards to usable cards, then for each councillor,
       if it finds a matching color card, it adds it and goes to next councillor */
@@ -213,25 +292,37 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     }
 
-    @Override
-    public void execute(){
+    private boolean isEligibleForRegionTile() {
 
-        Field field=match.getField();
+        int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
+        Region chosenRegion = match.getField().getRegionFromIndex(chosenRegionIndex);
 
-        Route richnessRoute = field.getRichnessRoute();
+        if(chosenRegion.isRegionBonusSatisfied())
+            return false;
 
-        richnessRoute.movePlayer(-satisfactionCost, player);
+        City[] arrayCity = chosenRegion.getArrayCity();
 
-        field.getKing().setCurrentCity(chosenCity.getKey());
+        for (City city : arrayCity)
+            if (!city.isEmporiumAlreadyBuilt(player))
+                return false;
 
-        chosenCity.getKey().buildEmporium(player);
-
-        resultMsg="Player " + player.getNickname() + " has moved the king to " +
-                chosenCity.getKey().getCityName() + " city and built an emporium there.";
+        return true;
 
     }
-    
-    @Override
-    public String getResultMsg(){return resultMsg;}
+
+    private boolean isEligibleForColorTile() {
+
+        if(chosenCity.isColorBonusSatisfied() || chosenCity.getCityColor()==CityColor.Purple)
+            return false;
+
+        City[] arrayCity = match.getField().getArrayCity();
+
+        for (City city : arrayCity)
+            if (city.getCityColor() == chosenCity.getCityColor() && !city.isEmporiumAlreadyBuilt(player))
+                return false;
+
+        return true;
+
+    }
 
 }

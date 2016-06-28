@@ -7,6 +7,7 @@ public class Region {
 	private RegionName regionName;
 	private City[] arrayCity;
 	private FaceUpPermitCardArea faceUpPermitCardArea;
+	private boolean regionBonusSatisfied;
 	
 	/* The constructor takes as parameters the name of the region
 	 * and the array of city that belongs to it.
@@ -15,7 +16,8 @@ public class Region {
 
 		this.regionName = regionName;
 		this.arrayCity = arrayCity;
-		
+		regionBonusSatisfied=false;
+
 		faceUpPermitCardArea = new FaceUpPermitCardArea(arrayCity, config);
 		
 	}
@@ -31,5 +33,12 @@ public class Region {
 	public RegionName getRegionName(){
 		return regionName;
 	}
-	
+
+	public boolean isRegionBonusSatisfied() {
+		return regionBonusSatisfied;
+	}
+
+	public void setRegionBonusSatisfied(boolean regionBonusSatisfied) {
+		this.regionBonusSatisfied = regionBonusSatisfied;
+	}
 }

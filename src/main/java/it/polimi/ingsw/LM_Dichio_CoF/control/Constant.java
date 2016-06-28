@@ -16,22 +16,20 @@ public class Constant {
 	public static final int TIMER_SECONDS_NEW_MATCH = 2; //FOR TESTS
 	public static final int PLAYERS_MIN_NUMBER = 2;
 
-
 	//assumptions
 	public static final int CITIES_NUMBER_LOW = 15;
 	public static final int CITIES_NUMBER_MEDIUM = 18;
 	public static final int CITIES_NUMBER_HIGH = 21;
 
-	//board game parameters
+	//board game fixed parameters
 	public static final int REGIONS_NUMBER =3;
-
 	public static final int BALCONIES_NUMBER=4;
 	public static final int COLORS_NUMBER =6; // COUNCILORS
-	public static final int COUNCILLORS_NUMBER_TOTAL =24; //IT HAS TO BE A MULTIPLE OF THREE
 	public static final int FACE_UP_PERMIT_CARD_PER_REGION_NUMBER =2;
 	public static final int COUNCILLORS_PER_BALCONY_NUMBER =4;
 
-	//easily changeable
+	//board game easily changeable parameters
+	public static final int COUNCILLORS_NUMBER_TOTAL =24; //IT HAS TO BE A MULTIPLE OF THREE
 	public static final int POLITIC_CARDS_INITIAL_NUMBER =6;
 	public static final int ASSISTANT_INITIAL_FIRST_PLAYER = 1;
 	public static final int RICHNESS_INITIAL_FIRST_PLAYER =10;
@@ -39,6 +37,12 @@ public class Constant {
 	public static final int NOBILITY_MAX =20;
 	public static final int VICTORY_MAX =100;
 	public static final CityName KING_CITY_INITIAL = CityName.J;
+	public static final int REGION_TILE_VICTORY_INCREMENT = 5;
+	public static final int BLUE_BONUS_TILE_VICTORY_INCREMENT = 5;
+	public static final int RED_BONUS_TILE_VICTORY_INCREMENT = 7;
+	public static final int BRONZE_BONUS_TILE_VICTORY_INCREMENT = 8;
+	public static final int SILVER_BONUS_TILE_VICTORY_INCREMENT = 12;
+	public static final int GOLD_BONUS_TILE_VICTORY_INCREMENT = 20;
 
 	//support
 	public static final int PERMIT_CARD_CITIES_NUMBER_MAX =3;

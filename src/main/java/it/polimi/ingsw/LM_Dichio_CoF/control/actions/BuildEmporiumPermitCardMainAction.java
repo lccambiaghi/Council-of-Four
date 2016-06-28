@@ -7,13 +7,11 @@ import java.util.List;
 import java.util.Queue;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Message;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.Bonus;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.Field;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 public class BuildEmporiumPermitCardMainAction extends Action {
 
@@ -71,11 +69,62 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 				bonus.applyBonus(player, field);
 
         resultMsg="Player "+player.getNickname() +" has built an emporium in "
-        		+ chosenCity.getCityName() + " City" + ".\n";
+        		+ chosenCity.getCityName().toString() + " City.";
+
+		//check on bonus tiles
+		if(isEligibleForColorTile()){
+
+			int increment;
+
+			switch (chosenCity.getCityColor()){
+				case Blue:
+					increment= Constant.BLUE_BONUS_TILE_VICTORY_INCREMENT;
+					break;
+				case Bronze:
+					increment= Constant.BRONZE_BONUS_TILE_VICTORY_INCREMENT;
+					break;
+				case Silver:
+					increment= Constant.SILVER_BONUS_TILE_VICTORY_INCREMENT;
+					break;
+				case Gold:
+					increment= Constant.GOLD_BONUS_TILE_VICTORY_INCREMENT;
+					break;
+				case Red:
+					increment= Constant.RED_BONUS_TILE_VICTORY_INCREMENT;
+					break;
+				default:
+					increment=0; //should never be reached
+			}
+
+			player.setRichness(player.getRichness()+increment);
+
+			for(City city: field.getArrayCity())
+				if(city.getCityColor() == chosenCity.getCityColor())
+					city.setColorBonusSatisfied(true);
+
+			resultMsg = resultMsg + "\nDoing so, he acquired "
+					+ chosenCity.getCityColor().toString() +
+					" Bonus Tile.";
+
+		}
+
+		if(isEligibleForRegionTile()){
+
+			player.setRichness(player.getRichness()+Constant.REGION_TILE_VICTORY_INCREMENT);
+
+			int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
+			Region chosenRegion = match.getField().getRegionFromIndex(chosenRegionIndex);
+			chosenRegion.setRegionBonusSatisfied(true);
+
+			resultMsg = resultMsg + "\nDoing so, he acquired "
+					+ chosenCity.getRegionName().toString() +
+					" Bonus Tile.";
+
+		}
 
     }
-    
-    @Override
+
+	@Override
     public String getResultMsg(){return resultMsg;}
 
 	/*  This method creates an arrayList of usablePermitCards setting actualBuildableCities.
@@ -142,9 +191,38 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 		return nearbyBuiltCities;
 
 	}
-	
-	
-	
-	
+
+	private boolean isEligibleForRegionTile() {
+
+		int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
+		Region chosenRegion = match.getField().getRegionFromIndex(chosenRegionIndex);
+
+		if(chosenRegion.isRegionBonusSatisfied())
+			return false;
+
+		City[] arrayCity = chosenRegion.getArrayCity();
+
+		for (City city : arrayCity)
+			if (!city.isEmporiumAlreadyBuilt(player))
+				return false;
+
+		return true;
+
+	}
+
+	private boolean isEligibleForColorTile() {
+
+		if(chosenCity.isColorBonusSatisfied() || chosenCity.getCityColor()==CityColor.Purple)
+			return false;
+
+		City[] arrayCity = match.getField().getArrayCity();
+
+		for (City city : arrayCity)
+			if (city.getCityColor() == chosenCity.getCityColor() && !city.isEmporiumAlreadyBuilt(player))
+				return false;
+
+		return true;
+
+	}
 	
 }
