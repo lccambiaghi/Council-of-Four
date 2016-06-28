@@ -33,7 +33,7 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		openSocketStream();
 		
 		Broker b = new Broker(this, player);
-		player.setBroker(b);
+		player.setBroker(b); 
 		
 	}
 	
@@ -127,6 +127,21 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 	
 	public Object getLock(){
 		return lock;
+	}
+	
+	public boolean isConnected(){
+		if(outputSocket.checkError()){
+    		disconnect();
+    		return false;
+		}
+		return true;
+	}
+	
+	private void disconnect(){
+		System.out.println("A player has disconnected! ");
+		player.setConnected(false);
+		inputSocket.close();
+		outputSocket.close();
 	}
 	
 }

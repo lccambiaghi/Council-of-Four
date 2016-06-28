@@ -41,7 +41,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			rmiPlayerSide.sendString(string);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			disconnect();
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			return rmiPlayerSide.receiveString();
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			disconnect();
 		}
 		return null;
 	}
@@ -61,7 +61,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 			nickname = rmiPlayerSide.getNickname();
 			player.setNickname(nickname);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			disconnect();
 		}
 	}
 			
@@ -70,7 +70,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			config = (Configurations)rmiPlayerSide.getConfigurationsAsObject();
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			disconnect();
 		}
 		return config;
 	}
@@ -80,7 +80,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			result = rmiPlayerSide.inputNumber(lowerBound, upperBound);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			disconnect();
 		}
 		intResult=result;
 		synchronized (lock) {
@@ -92,7 +92,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			rmiPlayerSide.print(string);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			disconnect();
 		}
 	}
 	
@@ -100,7 +100,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			rmiPlayerSide.println(string);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			disconnect();
 		}
 	}
 	
@@ -110,6 +110,11 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 	
 	public Object getLock(){
 		return lock;
+	}
+	
+	private void disconnect(){
+		System.out.println("A player has disconnected! ");
+		player.setConnected(false);
 	}
 }
 
