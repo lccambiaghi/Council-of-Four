@@ -26,27 +26,42 @@ public class ControlMatch {
 
 	public void startMatch() throws InterruptedException{
 
-		for(Player p: players)
-			p.setPlaying(true);
-		
 		int playerNumber=1;
 
 		do {
 			
-			player=players.get(playerNumber-1);
-			
-			turn = new Turn(match, player, players);
-			turn.startTurn();
-			
-			//CHECK IF LAST EMPORIUM BUILT
-
-			if (playerNumber % players.size() == 0){
-				broadcastAll("The market has started!", players);
-				market.startMarket();
-				playerNumber=1;
+			int playingPlayers=0;
+			for(Player p: players){
+				if(p.isConnected())
+					playingPlayers++;
 			}
-			else
-				playerNumber++;
+			
+			if(playingPlayers==1){
+				for(Player p: players){
+					if(p.isConnected())
+						p.getBroker().println(Message.youWon());
+				}
+				gameOver=true;
+			
+			}else{
+				
+				player=players.get(playerNumber-1);
+				
+				if(player.isConnected()){
+					turn = new Turn(match, player, players);
+					turn.startTurn();
+				}
+				
+				//CHECK IF LAST EMPORIUM BUILT
+	
+				if (playerNumber % players.size() == 0){
+					broadcastAll("The market has started!", players);
+					market.startMarket();
+					playerNumber=1;
+				}
+				else
+					playerNumber++;
+			}
 			
 		}while(!gameOver);
 
