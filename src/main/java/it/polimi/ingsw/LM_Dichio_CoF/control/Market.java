@@ -1,4 +1,4 @@
-package it.polimi.ingsw.LM_Dichio_CoF.model;
+package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
-import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Bonus;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Field;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
