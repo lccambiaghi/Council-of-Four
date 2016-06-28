@@ -31,31 +31,14 @@ public class SellingObject {
 
 	
 	private PermitCard askPermitCard (Player player){
-		ArrayList <PermitCard> playerPermitCards = player.getArrayListPermitCard();
-		System.out.println("Which Business Permit Tile would you like to sell?");
-		System.out.println("Your Cards");
-	
-		for (int i=0; i<playerPermitCards.size(); i++){
-			System.out.print(i+1+". Buildable Cities: ");
-			for(City city: playerPermitCards.get(i).getArrayBuildableCities()){
-				System.out.print(city.getCityName().toString()+" ");
-			};
-			System.out.println();
-		}
-		int choicePermitCard = inputNumber (1, playerPermitCards.size());
+		
 		PermitCard sellingPermitCard = player.getArrayListPermitCard().get(choicePermitCard-1);
 		player.getArrayListPermitCard().remove(choicePermitCard-1);
 		return sellingPermitCard;
 	}
 	
 	private PoliticCard askPoliticCard (Player player) {
-		ArrayList <PoliticCard> playerPoliticCards = player.getArrayListPoliticCard();
-		System.out.println("Which Politics Tile would you like to sell?");
-
-		for (int i=0; i<playerPoliticCards.size(); i++){
-			System.out.println(i+1+". "+ playerPoliticCards.get(i).getCardColor().toString());
-		}
-		int choicePoliticCard = inputNumber (1, playerPoliticCards.size())-1;
+		
 		PoliticCard sellingPoliticCard = player.getArrayListPoliticCard().get(choicePoliticCard);
 		player.getArrayListPoliticCard().remove(choicePoliticCard);
 		return sellingPoliticCard;

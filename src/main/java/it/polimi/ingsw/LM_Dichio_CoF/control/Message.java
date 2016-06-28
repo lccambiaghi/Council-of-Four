@@ -240,7 +240,9 @@ public final class Message {
 	public static String youWon(){
 		return ("You won the match!");
 	}
-	
+	public static String choosePoliticCard(){
+		return ("Which Politics Tile would you like to sell?");
+	}
 	
 	
 	
