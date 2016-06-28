@@ -75,7 +75,7 @@ public class Market {
 					}
 				}
 				choice= playerTurn.getBroker().askInputNumber(1, counter);
-				
+				selectObject(playerTurn, itemsMenu.get(choice));
 			}
 			else
 				turn++;	
@@ -86,52 +86,71 @@ public class Market {
 		//startBuying(arrayListSellingObjects);
 	}
 		
-	private void selectObject(Player playerTurn, String type){	
-		int choice=0;
+	private void selectObject(Player playerTurn, String type) throws InterruptedException{	
+		PermitCard chosenPermitCard;
+		PoliticCard chosenPoliticCard;
+		int chosenAssistants;
+		int price;
 		
 		switch(type){
 		case "PermitCard":
-			choice=askPermitCard(playerTurn);
+			chosenPermitCard=askPermitCard(playerTurn);
+			price = askPrice(playerTurn);
+			sellingObject = new SellingObject (playerTurn, chosenPermitCard, price);
 			break;
 		case "PoliticCard":
-			choice=askPoliticCard(playerTurn);
+			chosenPoliticCard = askPoliticCard (playerTurn);
+			price = askPrice(playerTurn);
+			sellingObject=new SellingObject(playerTurn, chosenPoliticCard, price);
 			break;
 		case "Assistants":
-			choice=askAssistant(playerTurn);
+			chosenAssistants = askAssistant (playerTurn);
+			price = askPrice(playerTurn);
+			sellingObject=new SellingObject(playerTurn, chosenAssistants, price);
 			break;
 		}
-		sellingObject = new SellingObject (playerTurn);
+		
 		arrayListSellingObjects.add(sellingObject);
 		
 	}
-	private int askPoliticCard(Player playerTurn) throws InterruptedException{
+	private PoliticCard askPoliticCard(Player playerTurn) throws InterruptedException{
 		ArrayList <PoliticCard> playerPoliticCards = playerTurn.getArrayListPoliticCard();
-		System.out.println("Which Politics Tile would you like to sell?");
-
-		for (int i=0; i<playerPoliticCards.size(); i++){
-			System.out.println(i+1+". "+ playerPoliticCards.get(i).getCardColor().toString());
-		}
-		return playerTurn.getBroker().askInputNumber (1, playerPoliticCards.size())-1;
+		
+		playerTurn.getBroker().println(Message.choosePoliticCard(playerPoliticCards));
+		
+		int chosenPoliticCard= playerTurn.getBroker().askInputNumber (1, playerPoliticCards.size())-1;
+		
+		PoliticCard sellingPoliticCard = playerTurn.getArrayListPoliticCard().get(chosenPoliticCard);
+		playerTurn.getArrayListPoliticCard().remove(chosenPoliticCard);
+		return sellingPoliticCard;
 	}
 	
-	private int askPermitCard(Player playerTurn) throws InterruptedException{
+	private PermitCard askPermitCard(Player playerTurn) throws InterruptedException{
 		ArrayList <PermitCard> playerPermitCards = playerTurn.getArrayListPermitCard();
-		System.out.println("Which Business Permit Tile would you like to sell?");
-		System.out.println("Your Cards");
-	
-		for (int i=0; i<playerPermitCards.size(); i++){
-			System.out.print(i+1+". Buildable Cities: ");
-			for(City city: playerPermitCards.get(i).getArrayBuildableCities()){
-				System.out.print(city.getCityName().toString()+" ");
-			};
-			System.out.println();
-		}
-		return playerTurn.getBroker().askInputNumber(1, playerPermitCards.size());
+		
+		playerTurn.getBroker().println(Message.choosePermitCard_noBonus(playerPermitCards));
+
+		int chosenPermitCard = playerTurn.getBroker().askInputNumber(1, playerPermitCards.size())-1;
+		
+		PermitCard sellingPermitCard = playerTurn.getArrayListPermitCard().get(chosenPermitCard);
+		playerTurn.getArrayListPermitCard().remove(chosenPermitCard-1);
+		
+		return sellingPermitCard;
 	}
 	
+	private int askAssistant(Player playerTurn) throws InterruptedException{
+		playerTurn.getBroker().println(Message.chooseAssistants(playerTurn));
 	
+		int chosenAssistants= playerTurn.getBroker().askInputNumber(1, playerTurn.getAssistant());
+		
+		playerTurn.decrementAssistant(chosenAssistants);
+		return chosenAssistants;
+	}
 	
-	
+	private int askPrice(Player playerTurn) throws InterruptedException{
+		playerTurn.getBroker().println(Message.askPrice());
+		return playerTurn.getBroker().askInputNumber(1, 20);
+	}
 	
 	private void startBuying(ArrayList <SellingObject> arrayListSelingObjects) throws InterruptedException{
 		Collections.shuffle(arrayListPlayer);

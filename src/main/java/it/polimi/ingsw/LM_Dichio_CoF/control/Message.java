@@ -240,12 +240,43 @@ public final class Message {
 	public static String youWon(){
 		return ("You won the match!");
 	}
-	public static String choosePoliticCard(){
-		return ("Which Politics Tile would you like to sell?");
+	public static String choosePoliticCard(ArrayList <PoliticCard> playerPoliticCards){
+		String message= "Which Politics Tile would you like to sell?";
+		
+		for (int i=0; i<playerPoliticCards.size(); i++){
+			message = (i+1)+". "+ playerPoliticCards.get(i).getCardColor().toString();
+		}
+		return message;
+		
 	}
 	
+	public static String choosePermitCard_noBonus(ArrayList <PermitCard> playerPermitCards){
+		String message= "Which Business Permit Tile would you like to sell?\n"
+				+ "Your Cards:";
 	
+		for (int i=0; i<playerPermitCards.size(); i++){
+			PermitCard permitCard = playerPermitCards.get(i);
+
+			message = message + (i + 1) + ". \nBuildable Cities:\n";
+			for (City buildableCity : permitCard.getArrayBuildableCities())
+				message = message + buildableCity.getCityName() + " ";
+			System.out.println();
+		}
+				
+		return message;
+		
+	}
 	
-	
+	public static String chooseAssistants (Player player){
+		String message ="How many assistants do you would to sell? You have: " 
+				+ player.getAssistant() + " assistants";
+		return message;
+
+	}
+
+	public static String askPrice (){
+		return ("Which price would you like to sell it for?");
+
+	}
 	
 }
