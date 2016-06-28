@@ -8,8 +8,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import it.polimi.ingsw.LM_Dichio_CoF.TestCases;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Market;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
-import it.polimi.ingsw.LM_Dichio_CoF.model.Market;
 
 public class TestMarket {
 

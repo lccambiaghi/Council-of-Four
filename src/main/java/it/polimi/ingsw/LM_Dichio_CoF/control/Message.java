@@ -208,4 +208,75 @@ public final class Message {
 		return ("Player " + player.getNickname() + " has been kicked off!");
 	}
 	
+	public static String chooseToSellSomething_1_2(){
+		return ("Would you like to sell something?\n" +
+				"1. Yes\n" +
+				"2. No");
+	}
+	public static String chooseToBuySomething_1_2(){
+		return ("Would you like to buy this object?\n" +
+				"1. Yes\n" +
+				"2. No");
+	}
+	
+	public static String askForObject(){
+		return ("Which object would you like to sell?");
+	}
+	public static String permitCard(int counter){
+		return (counter+". Permit Card");
+	}
+	public static String politicCard(int counter){
+		return (counter+". Politic Card");
+	}
+	public static String assistants(int counter){
+		return (counter+". Assistants");
+	}
+	public static String deniedSelling (){
+		return ("You can't sell nothing");
+	}
+	public static String deniedBuying (){
+		return ("You can't buy this object");
+	}
+	public static String youWon(){
+		return ("You won the match!");
+	}
+	public static String choosePoliticCard(ArrayList <PoliticCard> playerPoliticCards){
+		String message= "Which Politics Tile would you like to sell?";
+		
+		for (int i=0; i<playerPoliticCards.size(); i++){
+			message = (i+1)+". "+ playerPoliticCards.get(i).getCardColor().toString();
+		}
+		return message;
+		
+	}
+	
+	public static String choosePermitCard_noBonus(ArrayList <PermitCard> playerPermitCards){
+		String message= "Which Business Permit Tile would you like to sell?\n"
+				+ "Your Cards:";
+	
+		for (int i=0; i<playerPermitCards.size(); i++){
+			PermitCard permitCard = playerPermitCards.get(i);
+
+			message = message + (i + 1) + ". \nBuildable Cities:\n";
+			for (City buildableCity : permitCard.getArrayBuildableCities())
+				message = message + buildableCity.getCityName() + " ";
+			System.out.println();
+		}
+				
+		return message;
+		
+	}
+	
+	public static String chooseAssistants (Player player){
+		String message ="How many assistants do you would to sell? You have: " 
+				+ player.getAssistant() + " assistants";
+		return message;
+
+	}
+
+	public static String askPrice (){
+		return ("Which price would you like to sell it for?");
+
+	}
+	
 }
