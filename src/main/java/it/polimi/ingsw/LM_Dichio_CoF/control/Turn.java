@@ -59,14 +59,24 @@ public class Turn {
 		
 		turnHandler.start(); 
 
+		
+		/**
+		 * This "while" permits to check every second if the timer
+		 * to perform the action has expired
+		 */
 		while (System.currentTimeMillis() < endTime) {
 		    try {
 		         Thread.sleep(1000);  // Sleep 1 second
+		         
+		         // If the player has finished his turn before the timer expires
 		         if(!turnHandler.isAlive())
 		        	 break;
 		    } catch (InterruptedException e) {}	
 		}
 		
+		/**
+		 * If the timer has expired and the player hasn't completed an action
+		 */
 		if(turnHandler.isAlive()){
 			turnHandler.interrupt();
 			player.setPlaying(false);
