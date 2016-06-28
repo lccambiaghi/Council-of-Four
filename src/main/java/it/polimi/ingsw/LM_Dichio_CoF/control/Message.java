@@ -208,4 +208,42 @@ public final class Message {
 		return ("Player " + player.getNickname() + " has been kicked off!");
 	}
 	
+	public static String chooseToSellSomething_1_2(){
+		return ("Would you like to sell something?\n" +
+				"1. Yes\n" +
+				"2. No");
+	}
+	public static String chooseToBuySomething_1_2(){
+		return ("Would you like to buy this object?\n" +
+				"1. Yes\n" +
+				"2. No");
+	}
+	
+	public static String askForObject(){
+		return ("Which object would you like to sell?");
+	}
+	public static String permitCard(int counter){
+		return (counter+". Permit Card");
+	}
+	public static String politicCard(int counter){
+		return (counter+". Politic Card");
+	}
+	public static String assistants(int counter){
+		return (counter+". Assistants");
+	}
+	public static String deniedSelling (){
+		return ("You can't sell nothing");
+	}
+	public static String deniedBuying (){
+		return ("You can't buy this object");
+	}
+	public static String youWon(){
+		return ("You won the match!");
+	}
+	
+	
+	
+	
+	
+	
 }
