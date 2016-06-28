@@ -35,12 +35,12 @@ public class BuildEmporiumWithKingMainAction extends Action {
         ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards(chosenBalcony);
 
         if (usablePoliticCards.size()<1) {
-            Broker.println(Message.notEnoughPoliticsCards(),player);
+            player.getBroker().println(Message.notEnoughPoliticsCards());
             return false;
         }
 
         if (eligibleMove(usablePoliticCards)<1){
-            Broker.println(Message.notEnoughAssistant(), player);
+            player.getBroker().println(Message.notEnoughAssistant());
             return false;
         }
 
@@ -52,13 +52,13 @@ public class BuildEmporiumWithKingMainAction extends Action {
             if (satisfactionCost >0)
                 eligibleSet=true;
             else
-                Broker.println(Message.notEnoughAssistant(), player);
+                player.getBroker().println(Message.notEnoughAssistant());
         }while(!eligibleSet);
 
         Map<City, Integer> movableCities = getMovableCities();
 
-        Broker.println(Message.chooseCity(movableCities), player);
-        int chosenIndex=Broker.askInputNumber(1, movableCities.size(), player)-1;
+        player.getBroker().println(Message.chooseCity(movableCities));
+        int chosenIndex=player.getBroker().askInputNumber(1, movableCities.size())-1;
 
         int i=0;
         for (Map.Entry<City, Integer> city : movableCities.entrySet()) {
@@ -145,9 +145,9 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         ArrayList<PoliticCard> chosenPoliticCards = new ArrayList<>();
 
-        Broker.println("Choose one card at a time to a maximum of four. Choose 0 when done.", player);
+        player.getBroker().println("Choose one card at a time to a maximum of four. Choose 0 when done.");
         for (int i = 0; i < usablePoliticCards.size(); i++) {
-            Broker.println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor(), player);
+            player.getBroker().println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor());
         }
 
         int indexChosenPermitCard = inputNumber(1, usablePoliticCards.size()) - 1; // -1 for array positioning
@@ -156,7 +156,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
         do {
             System.out.println("0. [Done] ");
             for (int i = 0; i < usablePoliticCards.size(); i++) {
-                Broker.println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor(), player);
+                player.getBroker().println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor());
             }
             indexChosenPermitCard = inputNumber(0, usablePoliticCards.size());
 

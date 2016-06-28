@@ -20,7 +20,7 @@ public class PerformAdditionalMAQuickAction extends Action {
     public boolean preliminarySteps() throws InterruptedException{
 
         if (player.getAssistant()<Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST){
-            Broker.println(Message.notEnoughAssistant(), player);
+            player.getBroker().println(Message.notEnoughAssistant());
 			return false;
 		}
 		

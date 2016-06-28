@@ -30,7 +30,7 @@ public class ElectCouncillorWithAssistantQuickAction extends Action {
     public boolean preliminarySteps() throws InterruptedException{
 
         if (player.getAssistant()<Constant.ELECTION_ASSISTANT_COST){
-            Broker.println(Message.notEnoughAssistant(), player);
+            player.getBroker().println(Message.notEnoughAssistant());
             return false;
         }
 
@@ -38,18 +38,18 @@ public class ElectCouncillorWithAssistantQuickAction extends Action {
 
         Balcony[] arrayBalcony = field.getArrayBalcony();
 
-        Broker.println(Message.chooseBalcony(arrayBalcony), player);
+        player.getBroker().println(Message.chooseBalcony(arrayBalcony));
 
-        chosenBalcony = field.getBalconyFromIndex(Broker.askInputNumber(1, 4, player)-1); //-1 for array positioning
+        chosenBalcony = field.getBalconyFromIndex(player.getBroker().askInputNumber(1, 4)-1); //-1 for array positioning
 
         ArrayList<Color> choosableColors = getChoosableColors();
 
         if (choosableColors.size()<1)
             return false;
 
-        Broker.println(Message.askCouncillorColor(choosableColors), player);
+        player.getBroker().println(Message.askCouncillorColor(choosableColors));
 
-        chosenCouncillorColor=choosableColors.get(Broker.askInputNumber(1, choosableColors.size(), player)-1); //-1 for array positioning
+        chosenCouncillorColor=choosableColors.get(player.getBroker().askInputNumber(1, choosableColors.size())-1); //-1 for array positioning
 
         return true;
 

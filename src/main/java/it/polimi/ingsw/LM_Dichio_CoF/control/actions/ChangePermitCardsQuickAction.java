@@ -23,15 +23,15 @@ public class ChangePermitCardsQuickAction extends Action {
     public boolean preliminarySteps() throws InterruptedException{
 
 		if (player.getAssistant()<Constant.PERMIT_CARD_CHANGE_ASSISTANT_COST){
-			Broker.println(Message.notEnoughAssistant(), player);
+			player.getBroker().println(Message.notEnoughAssistant());
     		return false;
     	}
 
 		Field field = match.getField();
 
-		Broker.println(Message.chooseRegion_1_3(), player);
+		player.getBroker().println(Message.chooseRegion_1_3());
 
-    	chosenRegion = field.getRegionFromIndex(Broker.askInputNumber(1, 3, player) - 1); // -1 for array positioning
+    	chosenRegion = field.getRegionFromIndex(player.getBroker().askInputNumber(1, 3) - 1); // -1 for array positioning
 
         return true;
     }
