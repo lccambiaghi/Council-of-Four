@@ -21,6 +21,11 @@ public class ControlMatch {
 		this.players =arrayListPlayer;
 		this.match=Match.MatchFactory(arrayListPlayer);
 		this.market=match.getMarket();
+		
+		for(Player p: players){
+			if(p.getBroker().isConnected())
+				p.setPlaying(true);
+		}
 
 	}
 
@@ -32,24 +37,30 @@ public class ControlMatch {
 			
 			int playingPlayers=0;
 			for(Player p: players){
-				if(p.isConnected())
+				if(p.isPlaying())
 					playingPlayers++;
 			}
 			
 			if(playingPlayers==1){
 				for(Player p: players){
-					if(p.isConnected())
+					if(p.isPlaying())
 						p.getBroker().println(Message.youWon());
 				}
 				gameOver=true;
-			
+				
 			}else{
 				
 				player=players.get(playerNumber-1);
 				
-				if(player.isConnected()){
-					turn = new Turn(match, player, players);
-					turn.startTurn();
+				if(player.isPlaying()){
+					if(player.getBroker().isConnected()){
+						turn = new Turn(match, player, players);
+						turn.startTurn();
+					}
+					if(!player.getBroker().isConnected()){
+						Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOff(player), players, player);
+						player.setPlaying(false);
+					}
 				}
 				
 				//CHECK IF LAST EMPORIUM BUILT
