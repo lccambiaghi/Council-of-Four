@@ -21,7 +21,6 @@ public class Player{
 	
 	// variables of the game
 	private boolean playing;
-	private boolean connected;
 	
 	private int richness;
 	private int assistant;
@@ -40,7 +39,6 @@ public class Player{
 	/* The constructor assigns to the player the type of connection */
 	public Player(char typeOfConnection){
 		this.typeOfConnection=typeOfConnection;
-		this.connected=true;
 	}
 	
 	public ConnectionWithPlayerInterface getConnectionWithPlayer() {
@@ -67,9 +65,6 @@ public class Player{
 	
 	public boolean isPlaying() {return playing;}
 	public void setPlaying(boolean playing) {this.playing = playing;}
-	
-	public boolean isConnected() {return connected;}
-	public void setConnected(boolean connected) {this.connected = connected;}
 	
 	public int getRichness() {return richness;}
 	public void setRichness(int richness) {this.richness = richness;}
