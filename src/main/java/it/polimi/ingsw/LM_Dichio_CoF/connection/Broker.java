@@ -25,7 +25,7 @@ public class Broker {
 	}
 	
 	public int askInputNumber(int lowerBound, int upperBound) throws InterruptedException{
-		handleInterrupt();
+		exceptionLauncher();
 		Thread t = new Thread(new Runnable() {
 		     public void run() {
 		    	 connectionWithPlayer.askInputNumber(lowerBound, upperBound);
@@ -41,8 +41,9 @@ public class Broker {
 	}
 	
 	public void print(String string) throws InterruptedException{
-		handleInterrupt();
-		connectionWithPlayer.print(string);
+		exceptionLauncher();
+		if(isConnected())
+			connectionWithPlayer.print(string);
 	}
 	
 	public void println(String string) throws InterruptedException{
@@ -57,13 +58,21 @@ public class Broker {
 	}
 	
 	private void printlnReal(String string) throws InterruptedException{
-		handleInterrupt();
-		connectionWithPlayer.println(string);
+		exceptionLauncher();
+		if(isConnected())
+			connectionWithPlayer.println(string);
 	}
 	
-	private void handleInterrupt() throws InterruptedException{
+	private void exceptionLauncher() throws InterruptedException{
 		if (Thread.interrupted())
 			throw new InterruptedException();
+	}
+	
+	public boolean isConnected(){
+		if(connectionWithPlayer.isConnected())
+			return true;
+		else
+			return false;
 	}
 	
 }
