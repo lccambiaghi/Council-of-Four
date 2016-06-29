@@ -131,17 +131,9 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 	
 	public boolean isConnected(){
 		if(outputSocket.checkError()){
-    		disconnect();
     		return false;
 		}
 		return true;
-	}
-	
-	private void disconnect(){
-		System.out.println("A player has disconnected! ");
-		player.setConnected(false);
-		inputSocket.close();
-		outputSocket.close();
 	}
 	
 }

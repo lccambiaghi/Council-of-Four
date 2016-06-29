@@ -26,4 +26,6 @@ public interface ConnectionWithPlayerInterface {
 	
 	public Object getLock();
 	
+	public boolean isConnected();
+	
 }

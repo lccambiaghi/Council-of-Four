@@ -41,7 +41,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			rmiPlayerSide.sendString(string);
 		} catch (RemoteException e) {
-			disconnect();
+			e.printStackTrace();
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			return rmiPlayerSide.receiveString();
 		} catch (RemoteException e) {
-			disconnect();
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -61,7 +61,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 			nickname = rmiPlayerSide.getNickname();
 			player.setNickname(nickname);
 		} catch (RemoteException e) {
-			disconnect();
+			e.printStackTrace();
 		}
 	}
 			
@@ -70,7 +70,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			config = (Configurations)rmiPlayerSide.getConfigurationsAsObject();
 		} catch (RemoteException e) {
-			disconnect();
+			e.printStackTrace();
 		}
 		return config;
 	}
@@ -80,7 +80,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			result = rmiPlayerSide.inputNumber(lowerBound, upperBound);
 		} catch (RemoteException e) {
-			disconnect();
+			e.printStackTrace();
 		}
 		intResult=result;
 		synchronized (lock) {
@@ -92,7 +92,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			rmiPlayerSide.print(string);
 		} catch (RemoteException e) {
-			disconnect();
+			e.printStackTrace();
 		}
 	}
 	
@@ -100,7 +100,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			rmiPlayerSide.println(string);
 		} catch (RemoteException e) {
-			disconnect();
+			e.printStackTrace();
 		}
 	}
 	
@@ -112,9 +112,13 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		return lock;
 	}
 	
-	private void disconnect(){
-		System.out.println("A player has disconnected! ");
-		player.setConnected(false);
+	public boolean isConnected(){
+		try {
+			rmiPlayerSide.print("");
+		} catch (RemoteException e) {
+			return false;
+		}
+		return true;
 	}
 }
 
