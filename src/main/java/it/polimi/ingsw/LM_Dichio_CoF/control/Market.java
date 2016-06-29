@@ -43,9 +43,11 @@ public class Market {
 
 		int counter=1;
 		if (numberPermitCard>0 || numberPoliticCard>0 || numberAssistants>0){
+			
 			playerTurn.getBroker().println(Message.chooseToSellSomething_1_2());
 			if(playerTurn.getBroker().askInputNumber(1,2)==1){
 				playerTurn.getBroker().println(Message.askForObject());
+				
 				for(int i=0; i<stock.length; i++){
 					if(stock[i]>0)
 						sellable[i]=true;
@@ -77,12 +79,10 @@ public class Market {
 				choice= playerTurn.getBroker().askInputNumber(1, counter);
 				selectObject(playerTurn, itemsMenu.get(choice));
 			}
-			else
-				turn++;	
 		}else{
 			playerTurn.getBroker().println(Message.deniedSelling());
-			turn++;
 		}
+		turn++;
 		//startBuying(arrayListSellingObjects);
 	}
 		
