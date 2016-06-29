@@ -79,8 +79,6 @@ public class Turn {
 		 */
 		if(turnHandler.isAlive()){
 			turnHandler.interrupt();
-			player.setPlaying(false);
-			//broadcastOthers(Message.playerHasBeenKickedOff(player), players, player);
 		}
 		
 	}
