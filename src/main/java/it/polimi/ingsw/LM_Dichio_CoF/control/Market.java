@@ -28,6 +28,15 @@ public class Market {
 	
 	public void startMarket () throws InterruptedException{
 		int turn = 0;
+		while ((turn+1) % arrayListPlayer.size() != 0){
+			startSelling(turn);
+			turn++;
+		}
+		
+		startBuying(arrayListSellingObjects);
+	}
+	
+	private void startSelling(int turn) throws InterruptedException{
 		int choice;
 
 		boolean [] sellable = new boolean [3] ;
@@ -82,10 +91,8 @@ public class Market {
 		}else{
 			playerTurn.getBroker().println(Message.deniedSelling());
 		}
-		turn++;
-		//startBuying(arrayListSellingObjects);
 	}
-		
+	
 	private void selectObject(Player playerTurn, String type) throws InterruptedException{	
 		PermitCard chosenPermitCard;
 		PoliticCard chosenPoliticCard;
