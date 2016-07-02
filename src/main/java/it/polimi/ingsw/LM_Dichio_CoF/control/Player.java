@@ -20,7 +20,7 @@ public class Player{
 	private Broker broker;
 	
 	// variables of the game
-	private boolean playing;
+	private boolean connected;
 	
 	private int richness;
 	private int assistant;
@@ -63,8 +63,8 @@ public class Player{
 	public char getTypeOfConnection() {return typeOfConnection;}
 	public void setTypeOfConnection(char typeOfConnection) {this.typeOfConnection = typeOfConnection;}
 	
-	public boolean isPlaying() {return playing;}
-	public void setPlaying(boolean playing) {this.playing = playing;}
+	public boolean isConnected() {return connected;}
+	public void setConnected(boolean connected) {this.connected = connected;}
 	
 	public int getRichness() {return richness;}
 	public void setRichness(int richness) {this.richness = richness;}

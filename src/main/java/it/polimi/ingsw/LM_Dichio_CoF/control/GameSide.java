@@ -116,7 +116,7 @@ public class GameSide {
 			player.getBroker().login(gameSide);
 			
 			synchronized (lockArrayListPlayer) {
-				player.setPlaying(false);
+				player.setConnected(true);
 				arrayListPlayer.add(player);
 				arrayListAllPlayer.add(player);
 			}

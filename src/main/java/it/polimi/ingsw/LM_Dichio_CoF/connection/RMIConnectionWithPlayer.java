@@ -37,50 +37,33 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		return player;
 	}
 	
-	public void sendString(String string){
-		try {
-			rmiPlayerSide.sendString(string);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public String receiveString(){ 
-		try {
-			return rmiPlayerSide.receiveString();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	public void login(GameSide gameSide){
+	public void login(GameSide gameSide) throws DisconnectedException{
 		String nickname= null;
 		try {
 			rmiPlayerSide.login();
 			nickname = rmiPlayerSide.getNickname();
 			player.setNickname(nickname);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			throw new DisconnectedException();
 		}
 	}
 			
-	public Configurations getConfigurations(){
+	public Configurations getConfigurations() throws DisconnectedException{
 		Configurations config = null;
 		try {
 			config = (Configurations)rmiPlayerSide.getConfigurationsAsObject();
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			throw new DisconnectedException();
 		}
 		return config;
 	}
 	
-	public synchronized void askInputNumber(int lowerBound, int upperBound){
+	public void askInputNumber(int lowerBound, int upperBound) throws DisconnectedException{
 		int result = 0;
 		try {
 			result = rmiPlayerSide.inputNumber(lowerBound, upperBound);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			throw new DisconnectedException();
 		}
 		intResult=result;
 		synchronized (lock) {
@@ -88,19 +71,19 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		}
 	}
 	
-	public synchronized void print(String string){
+	public void print(String string) throws DisconnectedException{
 		try {
 			rmiPlayerSide.print(string);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			throw new DisconnectedException();
 		}
 	}
 	
-	public synchronized void println(String string){
+	public void println(String string) throws DisconnectedException{
 		try {
 			rmiPlayerSide.println(string);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			throw new DisconnectedException();
 		}
 	}
 	
@@ -112,14 +95,14 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		return lock;
 	}
 	
-	public boolean isConnected(){
+	/*public boolean checkIfConnected(){
 		try {
 			rmiPlayerSide.print("");
 		} catch (RemoteException e) {
 			return false;
 		}
 		return true;
-	}
+	}*/
 }
 
 

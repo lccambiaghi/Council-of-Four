@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
@@ -50,16 +51,26 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		}
 	}
 	
-	public void sendString(String string){
-		outputSocket.println(string);
-		outputSocket.flush();
+	private void sendString(String string) throws DisconnectedException{
+		try{
+			outputSocket.println(string);
+			outputSocket.flush();
+		}catch (NoSuchElementException e){
+			throw new DisconnectedException();
+		}
 	}
 	
-	public String receiveString(){ 
-		return inputSocket.nextLine();
+	private String receiveString(){ 
+		String s = null;
+		try{
+			s = inputSocket.nextLine();
+		}catch (NoSuchElementException e){
+			player.setConnected(false);
+		}
+		return s;
 	}
 	
-	public void login(GameSide gameSide){
+	public void login(GameSide gameSide) throws DisconnectedException{
 		String nickname= null;
 		sendString("SOCKETlogin");
 		boolean logged = false;
@@ -75,14 +86,14 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		}
 	}
 			
-	public int getPlayersMaxNumber(){
+	public int getPlayersMaxNumber() throws DisconnectedException{
 		int playersMaxNumber=0;
 		sendString("SOCKETgetConfigurationsPlayersMaxNumber");
 		playersMaxNumber = Integer.parseInt(receiveString());
 		return playersMaxNumber;
 	}
 			
-	public Configurations getConfigurations(){
+	public Configurations getConfigurations() throws DisconnectedException{
 		Configurations config = null;
 		sendString("SOCKETgetConfigurationsAsObject");
 		config = (Configurations)receiveObject();
@@ -101,7 +112,7 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		return object;
 	}
 	
-	public synchronized void askInputNumber(int lowerBound, int upperBound){
+	public void askInputNumber(int lowerBound, int upperBound) throws DisconnectedException{
 		sendString("SOCKETinputNumber");
 		sendString(String.valueOf(lowerBound));
 		sendString(String.valueOf(upperBound));
@@ -111,12 +122,12 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		}
 	}
 	
-	public synchronized void print(String string){
+	public void print(String string) throws DisconnectedException{
 		sendString("SOCKETprint");
 		sendString(string);
 	}
 	
-	public synchronized void println(String string){
+	public void println(String string) throws DisconnectedException{
 		sendString("SOCKETprintln");
 		sendString(string);
 	}
@@ -129,11 +140,9 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		return lock;
 	}
 	
-	public boolean isConnected(){
-		if(outputSocket.checkError()){
-    		return false;
-		}
-		return true;
-	}
+	/*public boolean checkIfConnected(){
+		print("");
+		return player.isConnected();
+	}*/
 	
 }
