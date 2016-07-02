@@ -32,11 +32,11 @@ public class FaceUpPermitCardArea {
 	 * taken one */
 	public PermitCard acquirePermitCard(int index){
 		PermitCard chosenPermitCard = arrayPermitCard[index];
-		changePermitCard(index);
+		replacePermitCard(index);
 		return chosenPermitCard;
 	}
 
-	public void changePermitCard (int index){
+	public void replacePermitCard(int index){
 		arrayPermitCard[index]=new PermitCard(arrayCity, config);
 	}
 

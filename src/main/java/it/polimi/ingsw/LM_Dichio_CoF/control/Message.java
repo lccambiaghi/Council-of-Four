@@ -1,6 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control;
 
-import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Balcony;
@@ -221,12 +220,14 @@ public final class Message {
 
 	public static String askCouncillorColor(ArrayList<Color> choosableColors){
 
-		String message = ("What color would you like the new councillor to be?");
+		StringBuilder message = new StringBuilder();
+
+		message.append("What color would you like the new councillor to be?");
 
 		for(int i=0; i<choosableColors.size(); i++)
-			message = message + (i+1) + " " + choosableColors.get(i);
+			message.append(i+1).append(" ").append(choosableColors.get(i));
 
-		return message;
+		return message.toString();
 
 	}
 
@@ -239,11 +240,11 @@ public final class Message {
 	}
 
 	public static String notEnoughRichnessForThisSet(){
-		return ("You don't have enough richness to use this set. Please select another one");
+		return ("You don't have enough richness to use this set. Please select another one.");
 	}
 
 	public static String notEnoughAssistant(){
-		return ("You don't have enough assistants t");
+		return ("You don't have enough assistants to perform this move. Please select another one.");
 	}
 
 	public static String notEnoughPoliticsCards(){

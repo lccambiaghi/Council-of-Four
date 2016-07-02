@@ -1,6 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control.actions;
 
-import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Message;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
@@ -18,7 +17,7 @@ public class AcquirePermitCardMainAction extends Action {
     private Region chosenRegion;
     private ArrayList<PoliticCard> chosenPoliticCards;
     private int satisfactionCost;
-    private PermitCard chosenPermitCard;
+    private int indexChosenPermitCard;
 
     public AcquirePermitCardMainAction(Match match, Player player){
         this.match=match;
@@ -43,33 +42,33 @@ public class AcquirePermitCardMainAction extends Action {
         ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards(chosenBalcony);
 
         if (usablePoliticCards.isEmpty()) {
-            player.getBroker().println(Message.notEnoughPoliticsCards());
+            player.getBroker().println(Message.notEligibleForMove());
             return false;
         }
 
-        if (hasEnoughRichness(usablePoliticCards)<1){
-            player.getBroker().println(Message.notEnoughRichness());
+        if (calculateSatisfactionCost(usablePoliticCards)<1){
+            player.getBroker().println(Message.notEligibleForMove());
             return false;
         }
 
         boolean eligibleSet=false;
         do {
             chosenPoliticCards = choosePoliticCardsUntilEligible(usablePoliticCards);
-            satisfactionCost =hasEnoughRichness(chosenPoliticCards);
-            if (satisfactionCost >0)
+            satisfactionCost = calculateSatisfactionCost(chosenPoliticCards);
+            if (satisfactionCost >=0)
                 eligibleSet=true;
             else
-                player.getBroker().println(Message.notEnoughRichness());
+                player.getBroker().println(Message.notEnoughRichnessForThisSet());
         }while(!eligibleSet);
 
         PermitCard[] choosablePermitCards = chosenRegion.getFaceUpPermitCardArea().getArrayPermitCard();
         ArrayList<PermitCard> arrayListChoosablePermitCards = new ArrayList<>(Arrays.asList(choosablePermitCards));
 
         player.getBroker().println(Message.choosePermitCard(arrayListChoosablePermitCards));
-
-        chosenPermitCard =  choosablePermitCards[player.getBroker().askInputNumber(1, choosablePermitCards.length)-1];
+        indexChosenPermitCard = player.getBroker().askInputNumber(1, choosablePermitCards.length)-1;
 
         return true;
+
     }
 
     /* First it adds Multicolor cards to usable cards, then for each councillor,
@@ -104,7 +103,7 @@ public class AcquirePermitCardMainAction extends Action {
     /* First call: if a set of cards that allows the player to perform the move exists,
 		the method returns a positive number.
 		Second call: if the specified set is eligible, the method returns what the player has to pay */
-    private int hasEnoughRichness(ArrayList<PoliticCard> usablePoliticCards) {
+    private int calculateSatisfactionCost(ArrayList<PoliticCard> usablePoliticCards) {
 
         Route richnessRoute = match.getField().getRichnessRoute();
         int playerRichness= richnessRoute.getPosition(player);
@@ -118,19 +117,19 @@ public class AcquirePermitCardMainAction extends Action {
 
         switch (numberSingleColor+numberMulticolor) {
             case 1:
-                if (playerRichness > 10 + numberMulticolor)
+                if (playerRichness >= 10 + numberMulticolor)
                     return 10 + numberMulticolor;
                 break;
             case 2:
-                if (playerRichness > 7 + numberMulticolor)
+                if (playerRichness >= 7 + numberMulticolor)
                     return 7 + numberMulticolor;
                 break;
             case 3:
-                if (playerRichness > 4 + numberMulticolor)
+                if (playerRichness >= 4 + numberMulticolor)
                     return 4 + numberMulticolor;
                 break;
             default: // >3
-                if (playerRichness > 4 - numberSingleColor)
+                if (playerRichness >= 4 - numberSingleColor)
                     return 4 - numberSingleColor;
                 break;
         }
@@ -146,26 +145,28 @@ public class AcquirePermitCardMainAction extends Action {
 
         player.getBroker().println("Choose one card at a time to a maximum of four. Choose 0 when done.");
 
-        int indexSelectedPermitCard;
+        int indexSelectedCard;
         int numberSelectedCards=0;
-        int lowerBoundIndex=1;
+        int lowerBoundInput=1;
+
         do {
 
-            if(numberSelectedCards>=1) {
+            if(numberSelectedCards==1)
+                lowerBoundInput = 0;
+
+            if(numberSelectedCards>=1)
                 player.getBroker().println("0. [Done] ");
-                lowerBoundIndex = 0;
-            }
 
             player.getBroker().println(Message.choosePoliticCard(selectablePoliticCards));
 
-            indexSelectedPermitCard = inputNumber(lowerBoundIndex, selectablePoliticCards.size());
+            indexSelectedCard = inputNumber(lowerBoundInput, selectablePoliticCards.size());
 
-            if (indexSelectedPermitCard > 0)
-                selectedPoliticCards.add(usablePoliticCards.remove(indexSelectedPermitCard - 1)); // -1 for array positioning
+            if (indexSelectedCard > 0)
+                selectedPoliticCards.add(selectablePoliticCards.remove(indexSelectedCard - 1)); // -1 for array positioning
 
             numberSelectedCards++;
 
-        } while (indexSelectedPermitCard > 0 && numberSelectedCards < 4);
+        } while (indexSelectedCard > 0 && numberSelectedCards < 4);
 
         return selectedPoliticCards;
 
@@ -174,17 +175,22 @@ public class AcquirePermitCardMainAction extends Action {
     @Override
     public void execute(){
 
+        //discard politics cards
         for (PoliticCard politicCard:chosenPoliticCards)
             player.discardPoliticCard(politicCard);
 
+        //decrease richness
         Field field = match.getField();
         Route richnessRoute=field.getRichnessRoute();
         richnessRoute.movePlayer(-satisfactionCost, player);
 
-        player.acquirePermitCard(chosenPermitCard);
-
-        for (Bonus bonus: chosenPermitCard.getArrayBonus())
+        //applying bonuses
+        FaceUpPermitCardArea faceUpPermitCardArea=chosenRegion.getFaceUpPermitCardArea();
+        for (Bonus bonus: faceUpPermitCardArea.getArrayPermitCard()[indexChosenPermitCard].getArrayBonus())
             bonus.applyBonus(player, field);
+
+        //acquiring permit card and replacing it on the board
+        player.acquirePermitCard(faceUpPermitCardArea.acquirePermitCard(indexChosenPermitCard));
 
         resultMsg="Player " + player.getNickname() + " has acquired a new Permit Card in " +
                 chosenRegion.getRegionName();

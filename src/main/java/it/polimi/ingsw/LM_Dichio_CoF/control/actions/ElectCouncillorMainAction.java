@@ -1,6 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control.actions;
 
-import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Message;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
@@ -13,10 +12,13 @@ import java.util.ArrayList;
 public class ElectCouncillorMainAction extends Action {
 
     private Balcony chosenBalcony;
+
     private Color chosenCouncillorColor;
 
     public ElectCouncillorMainAction(Match match, Player player){
+
         this.match=match;
+
         this.player=player;
     }
 
@@ -29,53 +31,59 @@ public class ElectCouncillorMainAction extends Action {
 
         player.getBroker().println(Message.chooseBalcony(arrayBalcony));
 
-        chosenBalcony = field.getBalconyFromIndex(player.getBroker().askInputNumber(1, 4)-1); //-1 for array positioning
+        chosenBalcony = field.getBalconyFromIndex(player.getBroker().askInputNumber(1, arrayBalcony.length)-1); //-1 for array positioning
 
         ArrayList<Color> choosableColors = getChoosableColors();
 
-        if (choosableColors.size()<1)
+        if (choosableColors.isEmpty()){
+            player.getBroker().println(Message.notEligibleForMove());
             return false;
+        }
 
         player.getBroker().println(Message.askCouncillorColor(choosableColors));
 
         chosenCouncillorColor=choosableColors.get(player.getBroker().askInputNumber(1, choosableColors.size())-1);
 
         return true;
+
     }
 
     private ArrayList<Color> getChoosableColors() {
 
-        Field field=match.getField();
-        ArrayList<Councillor> availableCouncillors = field.getAvailableCouncillors().getArrayListCouncillor();
+        ArrayList<Councillor> availableCouncillors = match.getField().getAvailableCouncillors().getArrayListCouncillor();
+
         boolean[] seen = new boolean[Constant.COLORS_NUMBER];
 
         ArrayList<Color> choosableColors = new ArrayList<>();
+
         for (Councillor councillor: availableCouncillors)
             if (!seen[Color.valueOf(councillor.getColor().toString()).ordinal()]) {
+
                 choosableColors.add(councillor.getColor());
+
                 seen[Color.valueOf(councillor.getColor().toString()).ordinal()]=true;
+
             }
 
         return choosableColors;
+
     }
 
     @Override
     public void execute(){
 
-        Field field=match.getField();
-
-        AvailableCouncillors availableCouncillors = field.getAvailableCouncillors();
+        AvailableCouncillors availableCouncillors = match.getField().getAvailableCouncillors();
 
         Councillor chosenCouncillor = availableCouncillors.removeAvailableCouncillor(chosenCouncillorColor);
 
         chosenBalcony.electCouncillor(chosenCouncillor,availableCouncillors);
 
-        Route richnessRoute = field.getRichnessRoute();
+        Route richnessRoute = match.getField().getRichnessRoute();
 
         richnessRoute.movePlayer(Constant.ELECTION_RICHNESS_INCREMENT, player);
 
         resultMsg= "Player "+ player.getNickname() + " elected a + " +
-                chosenCouncillor + " Councillor in " +
+                chosenCouncillor.getColor() + " Councillor in " +
                 chosenBalcony.getNameBalcony() + ".\n";
 
     }

@@ -56,8 +56,10 @@ public class Bonus {
 	}
 
 	public void applyBonus(Player player, Field field) {
+
 		Route richnessRoute;
 		Route nobilityRoute;
+		Route victoryRoute;
 
 		switch (bonusName){
 			case Assistant:
@@ -72,8 +74,8 @@ public class Bonus {
 				nobilityRoute.movePlayer(increment, player);
 				break;
 			case Victory:
-				nobilityRoute = field.getNobilityRoute();
-				nobilityRoute.movePlayer(increment, player);
+				victoryRoute = field.getVictoryRoute();
+				victoryRoute.movePlayer(increment, player);
 				break;
 			case Cards:
 				for (int i=0; i<increment; i++)

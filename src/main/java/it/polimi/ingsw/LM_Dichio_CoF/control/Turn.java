@@ -1,24 +1,13 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control;
 
-import static it.polimi.ingsw.LM_Dichio_CoF.control.Message.chooseInfoOrAction_1_2;
-
-import java.util.ArrayList;
-import java.util.Timer;
-
-import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
-import it.polimi.ingsw.LM_Dichio_CoF.control.CountDown.TimeIsFinished;
-import it.polimi.ingsw.LM_Dichio_CoF.control.actions.AcquirePermitCardMainAction;
-import it.polimi.ingsw.LM_Dichio_CoF.control.actions.Action;
-import it.polimi.ingsw.LM_Dichio_CoF.control.actions.BuildEmporiumPermitCardMainAction;
-import it.polimi.ingsw.LM_Dichio_CoF.control.actions.BuildEmporiumWithKingMainAction;
-import it.polimi.ingsw.LM_Dichio_CoF.control.actions.ChangePermitCardsQuickAction;
-import it.polimi.ingsw.LM_Dichio_CoF.control.actions.ElectCouncillorMainAction;
-import it.polimi.ingsw.LM_Dichio_CoF.control.actions.ElectCouncillorWithAssistantQuickAction;
-import it.polimi.ingsw.LM_Dichio_CoF.control.actions.EngageAssistantQuickAction;
-import it.polimi.ingsw.LM_Dichio_CoF.control.actions.PerformAdditionalMAQuickAction;
+import it.polimi.ingsw.LM_Dichio_CoF.control.actions.*;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
+
+import java.util.ArrayList;
+
+import static it.polimi.ingsw.LM_Dichio_CoF.control.Message.chooseInfoOrAction_1_2;
 
 public class Turn implements Runnable{
 
@@ -91,7 +80,7 @@ public class Turn implements Runnable{
 				break;
 			case 6:
 				City[] arrayCity = match.getField().getArrayCity();
-				player.getBroker().println(Message.chooseCity(arrayCity));
+				player.getBroker().println(Message.chooseDestinationCity(arrayCity));
 				match.getInfoMatch().printInfoCity(player, player.getBroker().askInputNumber(1, arrayCity.length)-1); //array positioning
 				break;
 			}

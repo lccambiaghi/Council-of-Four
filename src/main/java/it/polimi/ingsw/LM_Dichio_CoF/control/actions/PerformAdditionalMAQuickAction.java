@@ -1,6 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control.actions;
 
-import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Message;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
@@ -20,8 +19,11 @@ public class PerformAdditionalMAQuickAction extends Action {
     public boolean preliminarySteps() throws InterruptedException{
 
         if (player.getAssistant()<Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST){
+
             player.getBroker().println(Message.notEnoughAssistant());
+
 			return false;
+
 		}
 		
         return true;
@@ -36,7 +38,7 @@ public class PerformAdditionalMAQuickAction extends Action {
         player.decrementAssistant(Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST);
 		
 		resultMsg="Player "+ player.getNickname() +" paid " +  Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST
-                + " and will perform another main action";
+                + " assistants in order to perform an additional main action";
 
     }
     

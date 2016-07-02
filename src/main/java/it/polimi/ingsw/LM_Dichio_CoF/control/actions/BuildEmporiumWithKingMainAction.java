@@ -1,6 +1,5 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control.actions;
 
-import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Message;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
@@ -16,32 +15,42 @@ import static it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.InputHandler.inputNumber;
 public class BuildEmporiumWithKingMainAction extends Action {
 
     private ArrayList<PoliticCard> chosenPoliticCards;
+
     private int satisfactionCost;
+
+    private int kingCost;
+
     private City chosenCity;
 
     public BuildEmporiumWithKingMainAction(Match match, Player player){
+
         this.match=match;
+
         this.player=player;
+
     }
 
     @Override
-    public boolean preliminarySteps() throws InterruptedException{
+    public boolean preliminarySteps() throws InterruptedException {
 
-        Field field=match.getField();
+        Map<City, Integer> reachableCities = getReachableCities(0);
 
-        Balcony[] arrayBalcony=field.getArrayBalcony();
+        int minimumKingCost = reachableCities.entrySet().iterator().next().getValue();
 
-        Balcony chosenBalcony = field.getBalconyFromIndex(arrayBalcony.length-1);
-
-        ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards(chosenBalcony);
+        ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards();
 
         if (usablePoliticCards.isEmpty()) {
-            player.getBroker().println(Message.notEnoughPoliticsCards());
+
+            player.getBroker().println(Message.notEligibleForMove());
+
             return false;
+
         }
 
-        if (eligibleMove(usablePoliticCards)<1){
-            player.getBroker().println(Message.notEnoughAssistant());
+        if (calculateSatisfactionCost(usablePoliticCards, minimumKingCost)<1){
+
+            player.getBroker().println(Message.notEnoughRichnessForThisSet());
+
             return false;
         }
 
@@ -49,30 +58,185 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         do {
             chosenPoliticCards = choosePoliticCardsUntilEligible(usablePoliticCards);
-            satisfactionCost =eligibleMove(chosenPoliticCards);
+            satisfactionCost = calculateSatisfactionCost(chosenPoliticCards, minimumKingCost);
             if (satisfactionCost >0)
                 eligibleSet=true;
             else
-                player.getBroker().println(Message.notEnoughAssistant());
+                player.getBroker().println(Message.notEnoughRichnessForThisSet());
         }while(!eligibleSet);
 
-        Map<City, Integer> movableCities = getMovableCities();
+        Map<City, Integer> movableCities = getReachableCities(satisfactionCost);
 
-        player.getBroker().println(Message.chooseCity(movableCities));
+        player.getBroker().println(Message.chooseDestinationCity(movableCities));
+
         int chosenIndex=player.getBroker().askInputNumber(1, movableCities.size())-1;
 
-        int i=0;
-        for (Map.Entry<City, Integer> city : movableCities.entrySet()) {
-            if (i == chosenIndex)
-                chosenCity = (City) city;
-            i++;
-        }
+        Iterator itCities = movableCities.entrySet().iterator();
+        for (int i=1; i<=chosenIndex; i++)
+            itCities.next();
+        Map.Entry chosenEntry = (Map.Entry) itCities.next();
+
+        chosenCity= (City) chosenEntry.getKey();
+        kingCost= (int) chosenEntry.getValue();
 
         return true;
 
     }
 
+    /**
+     * First call: get every reachable buildableCity assuming the player pays 0 for election
+     * Second call: get every reachable buildableCity given that the player has to pay for satisfaction
+     */
+    private Map<City, Integer> getReachableCities(int satisfactionCost) {
 
+        Field field=match.getField();
+
+        City[] arrayCity=field.getArrayCity();
+
+        int indexCurrentCity=field.getKing().getCurrentCity().getCityName().ordinal();
+
+        List<Integer>[] arrayCityLinks = field.getArrayCityLinks();
+
+        boolean[] visitedCities = new boolean[arrayCityLinks.length];
+
+        Queue<Integer> visitingLevelQueue = new LinkedList<>();
+
+        Queue<Integer> nextLevelQueue = new LinkedList<>();
+
+        visitingLevelQueue.add(indexCurrentCity);
+        visitedCities[indexCurrentCity] = true;
+
+        Map<City, Integer> movableCities= new LinkedHashMap<>();
+
+        int levelCost=0;
+
+        movableCities.put(arrayCity[indexCurrentCity], levelCost);
+
+        while (player.getRichness()-satisfactionCost>=levelCost) {
+            while(!visitingLevelQueue.isEmpty()) {
+                int visitingCity = visitingLevelQueue.remove();
+                for (Integer adjCity : arrayCityLinks[visitingCity])
+                    if (!visitedCities[adjCity]) {
+                        nextLevelQueue.add(adjCity);
+                        visitedCities[adjCity] = true;
+                        if (!arrayCity[adjCity].isEmporiumAlreadyBuilt(player))
+                            movableCities.put(arrayCity[adjCity],levelCost);
+                    }
+            }
+            while(!nextLevelQueue.isEmpty())
+                visitingLevelQueue.add(nextLevelQueue.remove());
+            levelCost+=2;
+        }
+
+        return movableCities;
+
+    }
+
+    /* First it adds Multicolor cards to usable cards, then for each councillor,
+	   if it finds a matching color card, it adds it and goes to next councillor */
+    private ArrayList<PoliticCard> getUsablePoliticCards() {
+
+        Balcony[] arrayBalcony = match.getField().getArrayBalcony();
+
+        Balcony kingBalcony = match.getField().getBalconyFromIndex(arrayBalcony.length-1);
+
+        ArrayList <PoliticCard> playerHand = new ArrayList<>(player.getArrayListPoliticCard());
+
+        ArrayList <PoliticCard> usableCards = new ArrayList<>();
+
+        for (PoliticCard politicCard: playerHand)
+            if (politicCard.getCardColor()== Color.Multicolor) {
+                usableCards.add(politicCard);
+                playerHand.remove(politicCard);
+            }
+
+        for (Councillor councillor : kingBalcony.getArrayListCouncillor()) {
+            boolean councillorSatisfied = false;
+            while (!councillorSatisfied)
+                for (PoliticCard politicCard : playerHand)
+                    if (councillor.getColor() == politicCard.getCardColor()) {
+                        usableCards.add(politicCard);
+                        playerHand.remove(politicCard);
+                        councillorSatisfied = true;
+                    }
+        }
+
+        return usableCards;
+
+    }
+
+    /* First call: if a set of cards that allows the player to perform the move exists,
+		the method returns a positive number.
+		Second call: if the specified set is eligible, the method returns what the player has to pay */
+    private int calculateSatisfactionCost(ArrayList<PoliticCard> arrayListPoliticCards, int minimumKingCost) {
+
+        Route richnessRoute = match.getField().getRichnessRoute();
+        int playerRichness= richnessRoute.getPosition(player);
+
+        int numberMulticolor=0;
+        for (PoliticCard politicCard:arrayListPoliticCards )
+            if(politicCard.getCardColor()==Color.Multicolor) {
+                numberMulticolor++;
+                arrayListPoliticCards.remove(politicCard);
+            }
+        int numberSingleColor=arrayListPoliticCards.size();
+
+        switch (numberSingleColor+numberMulticolor) {
+            case 1:
+                if (playerRichness - minimumKingCost >= 10 + numberMulticolor)
+                    return 10 + numberMulticolor;
+                break;
+            case 2:
+                if (playerRichness - minimumKingCost >= 7 + numberMulticolor)
+                    return 7 + numberMulticolor;
+                break;
+            case 3:
+                if (playerRichness - minimumKingCost >= 4 + numberMulticolor)
+                    return 4 + numberMulticolor;
+                break;
+            default: // >3
+                if (playerRichness - minimumKingCost >= 4 - numberSingleColor)
+                    return 4 - numberSingleColor;
+                break;
+        }
+
+        return -1;
+
+    }
+
+    private ArrayList<PoliticCard> choosePoliticCardsUntilEligible(ArrayList<PoliticCard> usablePoliticCards) throws InterruptedException {
+
+        ArrayList<PoliticCard> selectablePoliticCards = new ArrayList<>(usablePoliticCards);
+        ArrayList<PoliticCard> selectedPoliticCards = new ArrayList<>();
+
+        player.getBroker().println("Choose one card at a time to a maximum of four. Choose 0 when done.");
+
+        int indexSelectedCard;
+        int numberSelectedCards=0;
+        int lowerBoundInput=1;
+
+        do {
+
+            if(numberSelectedCards==1)
+                lowerBoundInput = 0;
+
+            if(numberSelectedCards>=1)
+                player.getBroker().println("0. [Done] ");
+
+            player.getBroker().println(Message.choosePoliticCard(selectablePoliticCards));
+
+            indexSelectedCard = inputNumber(lowerBoundInput, selectablePoliticCards.size());
+
+            if (indexSelectedCard > 0)
+                selectedPoliticCards.add(selectablePoliticCards.remove(indexSelectedCard - 1)); // -1 for array positioning
+
+            numberSelectedCards++;
+
+        } while (indexSelectedCard > 0 && numberSelectedCards < 4);
+
+        return selectedPoliticCards;
+
+    }
 
     @Override
     public void execute(){
@@ -81,12 +245,12 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         Route richnessRoute = field.getRichnessRoute();
 
-        richnessRoute.movePlayer(-satisfactionCost, player);
-
-        field.getKing().setCurrentCity(chosenCity);
+        richnessRoute.movePlayer(-(satisfactionCost+kingCost), player);
 
         for (PoliticCard politicCard : chosenPoliticCards)
             player.discardPoliticCard(politicCard);
+
+        field.getKing().setCurrentCity(chosenCity);
 
         chosenCity.buildEmporium(player);
 
@@ -94,6 +258,12 @@ public class BuildEmporiumWithKingMainAction extends Action {
                 chosenCity.getCityName().toString() + " city and built an emporium there.";
 
         //check on bonus tiles
+        checkBonusTiles();
+
+    }
+
+    private void checkBonusTiles() {
+
         if(isEligibleForColorTile()){
 
             int increment;
@@ -120,7 +290,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
             player.setRichness(player.getRichness()+increment);
 
-            for(City city: field.getArrayCity())
+            for(City city: match.getField().getArrayCity())
                 if(city.getCityColor() == chosenCity.getCityColor())
                     city.setColorBonusSatisfied(true);
 
@@ -143,149 +313,6 @@ public class BuildEmporiumWithKingMainAction extends Action {
                     " Bonus Tile.";
 
         }
-
-    }
-    
-    @Override
-    public String getResultMsg(){return resultMsg;}
-
-    /* First it adds Multicolor cards to usable cards, then for each councillor,
-      if it finds a matching color card, it adds it and goes to next councillor */
-    private ArrayList<PoliticCard> getUsablePoliticCards(Balcony chosenBalcony) {
-
-        ArrayList <PoliticCard> playerHand = player.getArrayListPoliticCard();
-
-        ArrayList <PoliticCard> usableCards = new ArrayList<>();
-
-        for (PoliticCard politicCard: playerHand)
-            if (politicCard.getCardColor()== Color.Multicolor) {
-                usableCards.add(politicCard);
-                playerHand.remove(politicCard);
-            }
-
-        for (Councillor councillor : chosenBalcony.getArrayListCouncillor()) {
-            boolean councillorSatisfied = false;
-            while (!councillorSatisfied)
-                for (PoliticCard politicCard : playerHand)
-                    if (councillor.getColor() == politicCard.getCardColor()) {
-                        usableCards.add(politicCard);
-                        playerHand.remove(politicCard);
-                        councillorSatisfied = true;
-                    }
-        }
-
-        return usableCards;
-
-    }
-
-    /* First call: if a set of cards that allows the player to perform the move exists,
-		the method returns a positive number.
-		Second call: if the specified set is eligible, the method returns what the player has to pay */
-    private int eligibleMove(ArrayList<PoliticCard> usablePoliticCards) {
-
-        Route richnessRoute = match.getField().getRichnessRoute();
-        int playerRichness= richnessRoute.getPosition(player);
-
-        int numberMulticolor=0;
-        for (PoliticCard politicCard:usablePoliticCards )
-            if(politicCard.getCardColor()==Color.Multicolor) {
-                numberMulticolor++;
-                usablePoliticCards.remove(politicCard);
-            }
-        int numberSingleColor=usablePoliticCards.size();
-
-        switch (numberSingleColor+numberMulticolor) {
-            case 1:
-                if (playerRichness > 10 + numberMulticolor)
-                    return 10 + numberMulticolor;
-                break;
-            case 2:
-                if (playerRichness > 7 + numberMulticolor)
-                    return 7 + numberMulticolor;
-                break;
-            case 3:
-                if (playerRichness > 4 + numberMulticolor)
-                    return 4 + numberMulticolor;
-                break;
-            default: // >3
-                if (playerRichness > 4 - numberSingleColor)
-                    return 4 - numberSingleColor;
-                break;
-        }
-
-        return -1;
-
-    }
-
-    private ArrayList<PoliticCard> choosePoliticCardsUntilEligible(ArrayList<PoliticCard> usablePoliticCards) throws InterruptedException {
-
-        ArrayList<PoliticCard> selectedPoliticCards = new ArrayList<>();
-
-        player.getBroker().println("Choose one card at a time to a maximum of four. Choose 0 when done.");
-        for (int i = 0; i < usablePoliticCards.size(); i++) {
-            player.getBroker().println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor());
-        }
-
-        int indexChosenPermitCard = inputNumber(1, usablePoliticCards.size()) - 1; // -1 for array positioning
-        selectedPoliticCards.add(usablePoliticCards.remove(indexChosenPermitCard));
-
-        do {
-            player.getBroker().println("0. [Done]");
-            for (int i = 0; i < usablePoliticCards.size(); i++) {
-                player.getBroker().println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor());
-            }
-            indexChosenPermitCard = inputNumber(0, usablePoliticCards.size());
-
-            if (indexChosenPermitCard > 0)
-                selectedPoliticCards.add(usablePoliticCards.remove(indexChosenPermitCard - 1)); // -1 for array positioning
-
-        } while (indexChosenPermitCard > 0 && selectedPoliticCards.size() < 4);
-
-        return selectedPoliticCards;
-
-    }
-
-    private Map<City, Integer> getMovableCities() {
-
-        Field field=match.getField();
-        City[] arrayCity=field.getArrayCity();
-
-        int indexCurrentCity= Arrays.asList(arrayCity).indexOf(field.getKing().getCurrentCity());
-
-        List<Integer>[] arrayCityLinks = field.getArrayCityLinks();
-
-        boolean[] visitedCities = new boolean[arrayCityLinks.length];
-
-        Queue<Integer> visitingLevelQueue = new LinkedList<>();
-
-        Queue<Integer> nextLevelQueue = new LinkedList<>();
-
-        visitingLevelQueue.add(indexCurrentCity);
-        visitedCities[indexCurrentCity] = true;
-
-        Map<City, Integer> movableCities= new LinkedHashMap<>();
-
-        int levelCost=0;
-
-        movableCities.put(arrayCity[indexCurrentCity], levelCost);
-
-        while (player.getRichness()>levelCost) {
-            while(!visitingLevelQueue.isEmpty()) {
-                int visitingCity = visitingLevelQueue.remove();
-                for (Integer adjCity : arrayCityLinks[visitingCity])
-                    if (!visitedCities[adjCity]) {
-                        nextLevelQueue.add(adjCity);
-                        visitedCities[adjCity] = true;
-                        if (!arrayCity[adjCity].isEmporiumAlreadyBuilt(player))
-                            movableCities.put(arrayCity[adjCity],levelCost);
-                    }
-            }
-            while(!nextLevelQueue.isEmpty())
-                visitingLevelQueue.add(nextLevelQueue.remove());
-            levelCost+=2;
-        }
-
-        return movableCities;
 
     }
 
@@ -321,5 +348,8 @@ public class BuildEmporiumWithKingMainAction extends Action {
         return true;
 
     }
+
+    @Override
+    public String getResultMsg(){return resultMsg;}
 
 }
