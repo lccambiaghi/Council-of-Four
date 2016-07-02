@@ -17,7 +17,6 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     private ArrayList<PoliticCard> chosenPoliticCards;
     private int satisfactionCost;
-    //private Map.Entry<City, Integer> chosenCity;
     private City chosenCity;
 
     public BuildEmporiumWithKingMainAction(Match match, Player player){
@@ -36,7 +35,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards(chosenBalcony);
 
-        if (usablePoliticCards.size()<1) {
+        if (usablePoliticCards.isEmpty()) {
             player.getBroker().println(Message.notEnoughPoliticsCards());
             return false;
         }
@@ -154,8 +153,6 @@ public class BuildEmporiumWithKingMainAction extends Action {
       if it finds a matching color card, it adds it and goes to next councillor */
     private ArrayList<PoliticCard> getUsablePoliticCards(Balcony chosenBalcony) {
 
-        Field field = match.getField();
-
         ArrayList <PoliticCard> playerHand = player.getArrayListPoliticCard();
 
         ArrayList <PoliticCard> usableCards = new ArrayList<>();
@@ -200,19 +197,19 @@ public class BuildEmporiumWithKingMainAction extends Action {
         switch (numberSingleColor+numberMulticolor) {
             case 1:
                 if (playerRichness > 10 + numberMulticolor)
-                    return (10 + numberMulticolor);
+                    return 10 + numberMulticolor;
                 break;
             case 2:
                 if (playerRichness > 7 + numberMulticolor)
-                    return (7 + numberMulticolor);
+                    return 7 + numberMulticolor;
                 break;
             case 3:
                 if (playerRichness > 4 + numberMulticolor)
-                    return (4 + numberMulticolor);
+                    return 4 + numberMulticolor;
                 break;
             default: // >3
                 if (playerRichness > 4 - numberSingleColor)
-                    return (4 - numberSingleColor);
+                    return 4 - numberSingleColor;
                 break;
         }
 
@@ -222,7 +219,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     private ArrayList<PoliticCard> choosePoliticCardsUntilEligible(ArrayList<PoliticCard> usablePoliticCards) throws InterruptedException {
 
-        ArrayList<PoliticCard> chosenPoliticCards = new ArrayList<>();
+        ArrayList<PoliticCard> selectedPoliticCards = new ArrayList<>();
 
         player.getBroker().println("Choose one card at a time to a maximum of four. Choose 0 when done.");
         for (int i = 0; i < usablePoliticCards.size(); i++) {
@@ -230,21 +227,21 @@ public class BuildEmporiumWithKingMainAction extends Action {
         }
 
         int indexChosenPermitCard = inputNumber(1, usablePoliticCards.size()) - 1; // -1 for array positioning
-        chosenPoliticCards.add(usablePoliticCards.remove(indexChosenPermitCard));
+        selectedPoliticCards.add(usablePoliticCards.remove(indexChosenPermitCard));
 
         do {
-            System.out.println("0. [Done] ");
+            player.getBroker().println("0. [Done]");
             for (int i = 0; i < usablePoliticCards.size(); i++) {
                 player.getBroker().println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor());
             }
             indexChosenPermitCard = inputNumber(0, usablePoliticCards.size());
 
             if (indexChosenPermitCard > 0)
-                chosenPoliticCards.add(usablePoliticCards.remove(indexChosenPermitCard - 1)); // -1 for array positioning
+                selectedPoliticCards.add(usablePoliticCards.remove(indexChosenPermitCard - 1)); // -1 for array positioning
 
-        } while (indexChosenPermitCard > 0 && chosenPoliticCards.size() < 4);
+        } while (indexChosenPermitCard > 0 && selectedPoliticCards.size() < 4);
 
-        return chosenPoliticCards;
+        return selectedPoliticCards;
 
     }
 
