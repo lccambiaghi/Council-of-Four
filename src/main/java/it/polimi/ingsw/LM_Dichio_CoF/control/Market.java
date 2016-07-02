@@ -162,35 +162,38 @@ public class Market {
 	private void startBuying(ArrayList <SellingObject> arrayListSelingObjects) throws InterruptedException{
 		Collections.shuffle(arrayListPlayer);
 		int turn=0;
-		
 		Player playerTurn=arrayListPlayer.get(turn);
 		
-		for (SellingObject sellingObject : arrayListSelingObjects){
-			playerTurn.getBroker().println(Message.chooseToBuySomething_1_2());
-			int accordingToBuy = playerTurn.getBroker().askInputNumber(1,2);
-			
-			if(accordingToBuy==1){	
-				Object object = sellingObject.getObject();
+		while ((turn+1) % arrayListPlayer.size() != 0){
+
+					
+			for (SellingObject sellingObject : arrayListSelingObjects){
+				playerTurn.getBroker().println(Message.chooseToBuySomething_1_2());
+				int accordingToBuy = playerTurn.getBroker().askInputNumber(1,2);
 				
-				int price = sellingObject.getPrice();
-				Player owner = sellingObject.getOwner();
-				
-				switch (object.getClass().getSimpleName()){
-					case "PermitCard": 
-						if(canBuy(price,playerTurn,owner)){
-							playerTurn.getArrayListPermitCard().add((PermitCard)object);
-						}
-						break;
-					case "PoliticCard": 
-						if(canBuy(price,playerTurn,owner)){
-							playerTurn.getArrayListPoliticCard().add((PoliticCard)object);
-						}
-						break;
-					case "Integer":
-						if(canBuy(price,playerTurn,owner)){
-							playerTurn.addAssistant((int)object);
-						}
-						break;
+				if(accordingToBuy==1){	
+					Object object = sellingObject.getObject();
+					
+					int price = sellingObject.getPrice();
+					Player owner = sellingObject.getOwner();
+					
+					switch (object.getClass().getSimpleName()){
+						case "PermitCard": 
+							if(canBuy(price,playerTurn,owner)){
+								playerTurn.getArrayListPermitCard().add((PermitCard)object);
+							}
+							break;
+						case "PoliticCard": 
+							if(canBuy(price,playerTurn,owner)){
+								playerTurn.getArrayListPoliticCard().add((PoliticCard)object);
+							}
+							break;
+						case "Integer":
+							if(canBuy(price,playerTurn,owner)){
+								playerTurn.addAssistant((int)object);
+							}
+							break;
+					}
 				}
 			}
 		}
