@@ -20,31 +20,21 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 
-public class Turn {
+public class Turn implements Runnable{
 
 	private Player player;
 	private Match match;
 	private ArrayList<Player> players = new ArrayList<Player>();
-	
-	private TurnHandler turnHandler;
-	
-	private long startTime;
-	private long endTime;
-	
+
 	private int choice;
 	
 	public Turn(Match match, Player player, ArrayList<Player> players){
 		this.match=match;
 		this.player=player;
 		this.players=players;
-		
-		turnHandler = new TurnHandler();
 	}
 	
-	public void startTurn() throws InterruptedException{
-		
-		broadcastOthers(Message.turnOf(player), players, player);
-		println(Message.yourTurn(Constant.TIMER_SECONDS_TO_PERFORM_ACTION), player);
+	public void run(){
 		
 		// Draw a card
 		player.addPoliticCard(new PoliticCard());
@@ -53,47 +43,13 @@ public class Turn {
 		player.setMainActionsLeft(1);
 		player.setQuickActionDone(false);
 		
-		
-		startTime = System.currentTimeMillis();
-		endTime = startTime + (Constant.TIMER_SECONDS_TO_PERFORM_ACTION+20)*1000;
-		
-		turnHandler.start(); 
-
-		
-		/**
-		 * This "while" permits to check every second if the timer
-		 * to perform the action has expired
-		 */
-		while (System.currentTimeMillis() < endTime) {
-		    try {
-		         Thread.sleep(1000);  // Sleep 1 second
-		         
-		         // If the player has finished his turn before the timer expires
-		         if(!turnHandler.isAlive())
-		        	 break;
-		    } catch (InterruptedException e) {}	
-		}
-		
-		/**
-		 * If the timer has expired and the player hasn't completed an action
-		 */
-		if(turnHandler.isAlive()){
-			turnHandler.interrupt();
+		try {
+			infoOrAction();
+		} catch (InterruptedException e) {
+			System.out.println("The thread managing " + player.getNickname() + " has been successfully interrupted");
 		}
 		
 	}
-	
-	class TurnHandler extends Thread{
-	
-		public void run(){
-			try{
-				infoOrAction();
-			} catch (InterruptedException e) {
-				System.out.println("The thread was successfully interrupted");
-			}
-		}
-	}
-	
 		
 	public void infoOrAction() throws InterruptedException{
 
