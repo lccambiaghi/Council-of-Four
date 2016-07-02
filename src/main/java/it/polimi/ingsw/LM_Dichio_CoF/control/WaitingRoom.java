@@ -14,16 +14,18 @@ public class WaitingRoom extends Thread{
 	private GameSide gameSide;
 	private Player firstPlayer;
 	
-	private int playersMaxNumber = 8; //DEFAULT MAX NUMBER
+	private int playersMaxNumber;
 	private Configurations config = null;
 	
 	private int numPlayers;
 	private CountDown countDown;
 	
 	private boolean timeToPlay = false;
-	private boolean standardConfig = false;
+	private boolean canGoWithCountDown = false;
 	
 	private ArrayList<Player> arrayListPlayerMatch = new ArrayList<Player>();
+	
+	private final Object lockWaitingRoom = new Object();
 	
 	private final Object lockNumPlayers = new Object();
 	private final Object lockCountDown = new Object();
@@ -42,26 +44,22 @@ public class WaitingRoom extends Thread{
 	
 	public void run(){
 		
-		askForConfigurations();
+		askForNumberPlayers();
 		
-		while(!isTimeToPlay()){
+		while(!timeToPlay){
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {}
-			synchronized (lockCountDown) {
-				if(countDown!=null){
-					if(countDown.isTimeFinished())
-						setTimeToPlay(true);
+			if(canGoWithCountDown){
+				if(countDown.isTimeFinished()){
+					timeToPlay=true;
 				}
-			}	
+			}
 		}
-		
-		
 		
 		try {
 			Broadcast.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -69,69 +67,151 @@ public class WaitingRoom extends Thread{
 		try {
 			controlMatch.startMatch();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+	
+	public void askForNumberPlayers(){
 		
+		Thread t = new Thread(new Runnable(){
+			public void run(){
+				try {
+					firstPlayer.getBroker().println("You are the first player!\n"
+							+ "Insert the number of players you want to play with.\n"
+							+ "Min: 2, Max: 8\n"
+							+ "(You have 10 seconds)");
+					playersMaxNumber = firstPlayer.getBroker().askInputNumber(2, 8);	
+				} catch (InterruptedException e) {
+					try {
+						firstPlayer.getBroker().println("Too late!\n"
+								+ "You'll play using the standard players number and configurations");
+					} catch (InterruptedException e1) {}
+				}
+				
+			}			
+			
+		});
+		t.start();
+		
+		/**
+		 * This "while" permits to check every second if the timer
+		 * to set the number of players has expired
+		 */
+		long startTime = System.currentTimeMillis();
+		long endTime = startTime + (10)*1000;
+		while (System.currentTimeMillis() < endTime) {
+		    try {
+		         Thread.sleep(1000);  // Sleep 1 second
+		         
+		         // If the player has set players before the timer expires
+		         if(!t.isAlive())
+		        	 break;
+		         
+		    } catch (InterruptedException e) {}	
+		}
+		
+		synchronized (lockWaitingRoom) {
+			lockWaitingRoom.notify();
+		}
+		
+		/**
+		 * If the timer has expired and the player hasn't set the number of players
+		 */
+		if(t.isAlive()){	
+			t.interrupt();
+			playersMaxNumber=8;
+			canGoWithCountDown=true;
+		}else{
+			
+			askForConfigurations();
+			
+		}
+		
+	}
+	
 	private void askForConfigurations(){
 
-		int playersMaxNumberChoice=0;
-		
-		try {
-			firstPlayer.getBroker().println("You are the first player, insert the number of players you want to play with.\n"
-					+ "Min: 2, Max: 8");
-			playersMaxNumberChoice = firstPlayer.getBroker().askInputNumber(2, 8);
-		} catch (InterruptedException e) {}
-		
-		synchronized (lockNumPlayers) {
-			if(playersMaxNumberChoice>numPlayers){
-				playersMaxNumber=playersMaxNumberChoice;
-			}else{
+		Thread t = new Thread(new Runnable(){
+			public void run(){
 				try {
-					firstPlayer.getBroker().println("Too late! There are already " + numPlayers +" players waiting for the match,\n"
-							+ "you'll play with them using last configurations created");
-				} catch (InterruptedException e) {}
-				standardConfig=true;
-			}
+					firstPlayer.getBroker().println("Do you want to play with last configurations used?\n"
+							+ "(You have 120 seconds)");
+					firstPlayer.getBroker().println(Message.chooseYesOrNo_1_2());
+					int choice = firstPlayer.getBroker().askInputNumber(1, 2);
+					if(choice==2){
+						config = firstPlayer.getBroker().getConfigurations();
+						saveFileConfigurations(config);
+					}
+				} catch (InterruptedException e) {
+					try {
+						firstPlayer.getBroker().println("Too late! You'll play with last configurations used");
+					} catch (InterruptedException e1) {}
+				}
+				
+			}			
+			
+		});
+		t.start();
+		
+		/**
+		 * This "while" permits to check every second if the timer
+		 * to set configurations has expired
+		 */
+		long startTime = System.currentTimeMillis();
+		long endTime = startTime + (120)*1000;
+		while (System.currentTimeMillis() < endTime) {
+		    try {
+		         Thread.sleep(1000);  // Sleep 1 second
+		         
+		         // If the player has set players before the timer expires
+		         if(!t.isAlive())
+		        	 break;
+		         
+		    } catch (InterruptedException e) {}	
 		}
 		
-		if(!standardConfig){
-			config = firstPlayer.getBroker().getConfigurations();
-			saveFileConfigurations(config);
+		/**
+		 * If the timer has expired and the player hasn't set the configurations
+		 */
+		if(t.isAlive()){	
+			t.interrupt();
 		}
-
+		
+		if(numPlayers==playersMaxNumber)
+			timeToPlay=true;
+		else if(numPlayers>1)
+			countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
+	
 	}
 	
 	public void addPlayerToWaitingRoom(Player player){
+		
 		synchronized (lockNumPlayers){
 			arrayListPlayerMatch.add(player);
 			numPlayers++;
 			if(numPlayers==playersMaxNumber){
-				setTimeToPlay(true);;
+				gameSide.setWaitingRoomAvailable(false);
+				timeToPlay=true;
 			}else{
 				if(numPlayers==2){
-					synchronized (lockCountDown) {
-						countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
+					if(canGoWithCountDown){
+						synchronized (lockCountDown) {
+							countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
+						}
 					}
 				}
 			}
+			synchronized (lockWaitingRoom) {
+				lockWaitingRoom.notify();
+			}
 		}
+		
 		try {
 			player.getBroker().println(Message.waitForMatch());
 		} catch (InterruptedException e) {}
+		
 	}
-	
-	private void setTimeToPlay(boolean b){
-		synchronized (lockTimeToPlay) {timeToPlay=b;}
-		gameSide.setWaitingRoomAvailable(false);
-	}
-	
-	private boolean isTimeToPlay(){
-		synchronized (lockTimeToPlay){ return timeToPlay; }
-	}
-	
 	
 	private void saveFileConfigurations(Configurations config){
 		
@@ -152,6 +232,6 @@ public class WaitingRoom extends Thread{
 		}
 	}
 	
-	
+	public Object getLockWaitingRoom(){ return lockWaitingRoom; }
 	
 }
