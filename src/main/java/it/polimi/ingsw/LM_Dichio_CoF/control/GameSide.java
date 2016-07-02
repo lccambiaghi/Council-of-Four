@@ -15,6 +15,7 @@ import java.util.TimerTask;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.DisconnectedException;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIConnectionWithPlayer;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSide;
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
@@ -37,6 +38,8 @@ public class GameSide {
 	private ListenSocket listenSocket;
 	
 	private WaitingRoom waitingRoom;
+	
+	private Object lockWaitingRoom;
 	
 	private final Object lockArrayListPlayer = new Object();
 	private final Object lockWaitingRoomAvailable = new Object();
@@ -109,31 +112,43 @@ public class GameSide {
 		private GameSide gameSide;
 		private Player player; 
 		
-		public HandlePlayer(GameSide gameSide, Player player){this.gameSide=gameSide; this.player=player;}
+		public HandlePlayer(GameSide gameSide, Player player){
+			this.gameSide=gameSide;
+			this.player=player;
+		}
 		
 		public void run(){
 			
-			player.getBroker().login(gameSide);
+			try {
 			
-			synchronized (lockArrayListPlayer) {
-				player.setConnected(true);
-				arrayListPlayer.add(player);
-				arrayListAllPlayer.add(player);
-			}
+				player.getBroker().login(gameSide);
 			
-			synchronized (lockWaitingRoomAvailable) {
-				if(!waitingRoomAvailable){
-					waitingRoomAvailable=true;
-					waitingRoom = new WaitingRoom(gameSide, player);
-					waitingRoom.start();
-				}else{
-					waitingRoom.addPlayerToWaitingRoom(player);
-					try {
-						sleep(1000);
-					} catch (InterruptedException e) {e.printStackTrace();}
+				synchronized (lockArrayListPlayer) {
+					player.setConnected(true);
+					arrayListPlayer.add(player);
+					arrayListAllPlayer.add(player);
 				}
+				
+				synchronized (lockWaitingRoomAvailable) {
+					
+					if(!waitingRoomAvailable){
+						waitingRoomAvailable=true;
+						waitingRoom = new WaitingRoom(gameSide, player);
+						waitingRoom.start();
+						lockWaitingRoom=waitingRoom.getLockWaitingRoom();
+					}else{
+						waitingRoom.addPlayerToWaitingRoom(player);
+					}
+					try {
+						synchronized (lockWaitingRoom) {
+							lockWaitingRoom.wait();
+						}
+					} catch (InterruptedException e) {}
+				}
+				
+			}catch (DisconnectedException e){
+				System.out.println("The player trying to login has disconnected!");
 			}
-			
 		}
 	
 	}
