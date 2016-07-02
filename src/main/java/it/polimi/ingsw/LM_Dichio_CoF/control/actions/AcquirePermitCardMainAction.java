@@ -35,30 +35,31 @@ public class AcquirePermitCardMainAction extends Action {
         player.getBroker().println(Message.chooseBalcony(arrayBalcony));
 
         int chosenIndex = player.getBroker().askInputNumber(1, 3) -1; //-1 for array positioning
+
         Balcony chosenBalcony = field.getBalconyFromIndex(chosenIndex); //-1 for array positioning
+
         chosenRegion = field.getRegionFromIndex(chosenIndex);
 
         ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards(chosenBalcony);
 
-        if (usablePoliticCards.size()<1) {
+        if (usablePoliticCards.isEmpty()) {
             player.getBroker().println(Message.notEnoughPoliticsCards());
             return false;
         }
 
-        if (eligibleMove(usablePoliticCards)<1){
-            player.getBroker().println(Message.notEnoughAssistant());
+        if (hasEnoughRichness(usablePoliticCards)<1){
+            player.getBroker().println(Message.notEnoughRichness());
             return false;
         }
 
         boolean eligibleSet=false;
-
         do {
             chosenPoliticCards = choosePoliticCardsUntilEligible(usablePoliticCards);
-            satisfactionCost =eligibleMove(chosenPoliticCards);
+            satisfactionCost =hasEnoughRichness(chosenPoliticCards);
             if (satisfactionCost >0)
                 eligibleSet=true;
             else
-                player.getBroker().println(Message.notEnoughAssistant());
+                player.getBroker().println(Message.notEnoughRichness());
         }while(!eligibleSet);
 
         PermitCard[] choosablePermitCards = chosenRegion.getFaceUpPermitCardArea().getArrayPermitCard();
@@ -75,9 +76,7 @@ public class AcquirePermitCardMainAction extends Action {
 	   if it finds a matching color card, it adds it and goes to next councillor */
     private ArrayList<PoliticCard> getUsablePoliticCards(Balcony chosenBalcony) {
 
-        Field field = match.getField();
-
-        ArrayList <PoliticCard> playerHand = player.getArrayListPoliticCard();
+        ArrayList <PoliticCard> playerHand = new ArrayList<>(player.getArrayListPoliticCard());
 
         ArrayList <PoliticCard> usableCards = new ArrayList<>();
 
@@ -105,35 +104,34 @@ public class AcquirePermitCardMainAction extends Action {
     /* First call: if a set of cards that allows the player to perform the move exists,
 		the method returns a positive number.
 		Second call: if the specified set is eligible, the method returns what the player has to pay */
-    private int eligibleMove(ArrayList<PoliticCard> usablePoliticCards) {
+    private int hasEnoughRichness(ArrayList<PoliticCard> usablePoliticCards) {
 
         Route richnessRoute = match.getField().getRichnessRoute();
         int playerRichness= richnessRoute.getPosition(player);
 
         int numberMulticolor=0;
         for (PoliticCard politicCard:usablePoliticCards )
-            if(politicCard.getCardColor()==Color.Multicolor) {
+            if(politicCard.getCardColor()==Color.Multicolor)
                 numberMulticolor++;
-                usablePoliticCards.remove(politicCard);
-            }
-        int numberSingleColor=usablePoliticCards.size();
+
+        int numberSingleColor=usablePoliticCards.size()-numberMulticolor;
 
         switch (numberSingleColor+numberMulticolor) {
             case 1:
                 if (playerRichness > 10 + numberMulticolor)
-                    return (10 + numberMulticolor);
+                    return 10 + numberMulticolor;
                 break;
             case 2:
                 if (playerRichness > 7 + numberMulticolor)
-                    return (7 + numberMulticolor);
+                    return 7 + numberMulticolor;
                 break;
             case 3:
                 if (playerRichness > 4 + numberMulticolor)
-                    return (4 + numberMulticolor);
+                    return 4 + numberMulticolor;
                 break;
             default: // >3
                 if (playerRichness > 4 - numberSingleColor)
-                    return (4 - numberSingleColor);
+                    return 4 - numberSingleColor;
                 break;
         }
 
@@ -143,29 +141,33 @@ public class AcquirePermitCardMainAction extends Action {
 
     private ArrayList<PoliticCard> choosePoliticCardsUntilEligible(ArrayList<PoliticCard> usablePoliticCards) throws InterruptedException {
 
-        ArrayList<PoliticCard> chosenPoliticCards = new ArrayList<>();
+        ArrayList<PoliticCard> selectablePoliticCards = new ArrayList<>(usablePoliticCards);
+        ArrayList<PoliticCard> selectedPoliticCards = new ArrayList<>();
 
         player.getBroker().println("Choose one card at a time to a maximum of four. Choose 0 when done.");
-        for (int i = 0; i < usablePoliticCards.size(); i++) {
-            player.getBroker().println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor());
-        }
 
-        int indexChosenPermitCard = inputNumber(1, usablePoliticCards.size()) - 1; // -1 for array positioning
-        chosenPoliticCards.add(usablePoliticCards.remove(indexChosenPermitCard));
-
+        int indexSelectedPermitCard;
+        int numberSelectedCards=0;
+        int lowerBoundIndex=1;
         do {
-            System.out.println("0. [Done] ");
-            for (int i = 0; i < usablePoliticCards.size(); i++) {
-                player.getBroker().println(i + 1 + ". " + usablePoliticCards.get(i).getCardColor());
+
+            if(numberSelectedCards>=1) {
+                player.getBroker().println("0. [Done] ");
+                lowerBoundIndex = 0;
             }
-            indexChosenPermitCard = inputNumber(0, usablePoliticCards.size());
 
-            if (indexChosenPermitCard > 0)
-                chosenPoliticCards.add(usablePoliticCards.remove(indexChosenPermitCard - 1)); // -1 for array positioning
+            player.getBroker().println(Message.choosePoliticCard(selectablePoliticCards));
 
-        } while (indexChosenPermitCard > 0 && chosenPoliticCards.size() < 4);
+            indexSelectedPermitCard = inputNumber(lowerBoundIndex, selectablePoliticCards.size());
 
-        return chosenPoliticCards;
+            if (indexSelectedPermitCard > 0)
+                selectedPoliticCards.add(usablePoliticCards.remove(indexSelectedPermitCard - 1)); // -1 for array positioning
+
+            numberSelectedCards++;
+
+        } while (indexSelectedPermitCard > 0 && numberSelectedCards < 4);
+
+        return selectedPoliticCards;
 
     }
 

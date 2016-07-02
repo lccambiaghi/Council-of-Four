@@ -30,9 +30,9 @@ public final class Message {
 	}
 	
 	public static String chooseInfoOrAction_1_2(){
-		return ("What would you like to do?\n" +
+		return "What would you like to do?\n" +
 				"1. Get info of the match\n" +
-				"2. Perform an action");
+				"2. Perform an action";
 	}
 	
 	public static String chooseInfo_0_6(){
@@ -143,12 +143,12 @@ public final class Message {
 	
 	public static String choosePoliticsCards(ArrayList<PoliticCard> arrayListPoliticCard){
 
-		String message = "Choose Politic Cards:";
+		StringBuilder message= new StringBuilder();
 
 		for(int i=0; i<arrayListPoliticCard.size(); i++)
-			message = message + (i+1) + " " + arrayListPoliticCard.get(i).getCardColor();
+			message.append(i+1).append(" ").append(arrayListPoliticCard.get(i).getCardColor()).append("\n");
 
-		return message;
+		return message.toString();
 
 	}
 	
@@ -181,7 +181,7 @@ public final class Message {
 	}
 	
 	public static String notEnoughRichness(){
-		return ("You don't have enough richness");
+		return ("You don't have enough richness.");
 	}
 	
 	public static String notEnoughAssistant(){
@@ -189,7 +189,8 @@ public final class Message {
 	}
 	
 	public static String notEnoughPoliticsCards(){
-		return ("You don't have enough Politics Card");
+		return ("You don't have enough Politics Card\n" +
+				"Please choose another main move.");
 	}
 
 	public static String notEnoughPoliticsCardsAndRichness(){

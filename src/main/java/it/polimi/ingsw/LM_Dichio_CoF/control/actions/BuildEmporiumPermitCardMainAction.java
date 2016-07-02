@@ -32,7 +32,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		ArrayList <PermitCard> usablePermitCards = getUsablePermitCards();
 
-		if (usablePermitCards.size()<1){
+		if (usablePermitCards.isEmpty()){
 
 			player.getBroker().println(Message.youCantBuild());
 			return false;
@@ -145,7 +145,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 					actualBuildableCities.add(buildableCity);
 			}
 
-			if (actualBuildableCities.size() > 0) {
+			if (actualBuildableCities.isEmpty()) {
 				Collections.swap(playerPermitCards,i,usablePermitCards.size());
 				usablePermitCards.add(permitCard);
 				permitCard.setArrayBuildableCities(actualBuildableCities);
