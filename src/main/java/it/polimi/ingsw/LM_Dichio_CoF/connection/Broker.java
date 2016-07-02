@@ -16,19 +16,31 @@ public class Broker {
 		this.player=player;
 	}
 	
-	public void login(GameSide gameSide){
+	public void login(GameSide gameSide) throws DisconnectedException{
 		connectionWithPlayer.login(gameSide);
 	}
 			
 	public Configurations getConfigurations(){
-		return connectionWithPlayer.getConfigurations();
+		try {
+			return connectionWithPlayer.getConfigurations();
+		} catch (DisconnectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}return null;
 	}
 	
 	public int askInputNumber(int lowerBound, int upperBound) throws InterruptedException{
-		exceptionLauncher();
+		
+		interruptedExceptionLauncher();
+		
 		Thread t = new Thread(new Runnable() {
 		     public void run() {
-		    	 connectionWithPlayer.askInputNumber(lowerBound, upperBound);
+		    	 try {
+					connectionWithPlayer.askInputNumber(lowerBound, upperBound);
+				} catch (DisconnectedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		     }
 		});  
 		Object lock = connectionWithPlayer.getLock();
@@ -36,14 +48,24 @@ public class Broker {
 		synchronized (lock) {
 			lock.wait();
 		}
-		
 		return connectionWithPlayer.getIntResult();
 	}
 	
 	public void print(String string) throws InterruptedException{
-		exceptionLauncher();
-		if(isConnected())
-			connectionWithPlayer.print(string);
+		
+		interruptedExceptionLauncher();
+		
+		Thread t = new Thread(new Runnable() {
+		     public void run() {
+		    	 try {
+					connectionWithPlayer.print(string);
+				} catch (DisconnectedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		     }
+		});
+		t.start();
 	}
 	
 	public void println(String string) throws InterruptedException{
@@ -58,21 +80,28 @@ public class Broker {
 	}
 	
 	private void printlnReal(String string) throws InterruptedException{
-		exceptionLauncher();
-		if(isConnected())
+		
+		interruptedExceptionLauncher();
+		
+		try {
 			connectionWithPlayer.println(string);
+		} catch (DisconnectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
-	
-	private void exceptionLauncher() throws InterruptedException{
+	 
+	private void interruptedExceptionLauncher() throws InterruptedException{
 		if (Thread.interrupted())
 			throw new InterruptedException();
 	}
 	
+	
 	public boolean isConnected(){
-		if(connectionWithPlayer.isConnected())
-			return true;
-		else
-			return false;
+		/**DEPRECATED
+		 */
+		return true;
 	}
 	
 }
