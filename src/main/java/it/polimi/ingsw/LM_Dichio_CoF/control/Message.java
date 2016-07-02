@@ -244,7 +244,8 @@ public final class Message {
 		String message= "Which Politics Tile would you like to sell?";
 		
 		for (int i=0; i<playerPoliticCards.size(); i++){
-			message = (i+1)+". "+ playerPoliticCards.get(i).getCardColor().toString();
+			message = message +"\n"+ 
+					(i+1)+". "+ playerPoliticCards.get(i).getCardColor().toString();
 		}
 		return message;
 		
@@ -258,9 +259,10 @@ public final class Message {
 			PermitCard permitCard = playerPermitCards.get(i);
 
 			message = message + (i + 1) + ". \nBuildable Cities:\n";
-			for (City buildableCity : permitCard.getArrayBuildableCities())
-				message = message + buildableCity.getCityName() + " ";
-			System.out.println();
+			for (City buildableCity : permitCard.getArrayBuildableCities()){
+				message = message + buildableCity.getCityName() + " " ;
+				System.out.println();
+			}
 		}
 				
 		return message;
