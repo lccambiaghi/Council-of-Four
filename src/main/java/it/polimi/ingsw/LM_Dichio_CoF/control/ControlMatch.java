@@ -33,7 +33,7 @@ public class ControlMatch {
 	private ArrayList<Player> getPlayersConnected(){
 		ArrayList<Player> ps = new ArrayList<Player>();
 		for(Player p: allPlayers){
-			if(p.getBroker().isConnected())
+			//if(p.getBroker().isConnected())
 				ps.add(p);
 		}
 		return ps;
@@ -109,10 +109,6 @@ public class ControlMatch {
 			Broadcast.printlnBroadcastOthers(Message.turnOf(player), playersConnected, player);
 			player.getBroker().println(Message.yourTurn(Constant.TIMER_SECONDS_TO_PERFORM_ACTION));
 		}catch (InterruptedException e) {}
-			
-		startTime = System.currentTimeMillis();
-		endTime = startTime + (Constant.TIMER_SECONDS_TO_PERFORM_ACTION+20)*1000;
-		
 		
 		turn = new Turn(match, player, allPlayers);
 		Thread turnThread = new Thread(turn);
@@ -122,6 +118,8 @@ public class ControlMatch {
 		 * This "while" permits to check every second if the timer
 		 * to perform the action has expired
 		 */
+		startTime = System.currentTimeMillis();
+		endTime = startTime + (Constant.TIMER_SECONDS_TO_PERFORM_ACTION)*1000;
 		while (System.currentTimeMillis() < endTime) {
 		    try {
 		         Thread.sleep(1000);  // Sleep 1 second
