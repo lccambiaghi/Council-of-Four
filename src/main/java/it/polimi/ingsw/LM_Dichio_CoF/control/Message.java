@@ -95,22 +95,27 @@ public final class Message {
 	
 	public static String choosePermitCard(ArrayList<PermitCard> arrayListPermitCard){
 
-		String message="Choose a Building Permit Tile:\n";
+		StringBuilder message= new StringBuilder();
+
+		message.append("Choose a Building Permit Tile:\n");
 
 		for(int i=0; i<arrayListPermitCard.size(); i++) {
 
 			PermitCard permitCard = arrayListPermitCard.get(i);
 
-			message = message + (i + 1) + ". \nBuildable Cities:\n";
-			for (City buildableCity : permitCard.getArrayBuildableCities())
-				message = message + buildableCity.getCityName() + " ";
+			message.append(i+1).append(". \nBuildable Cities:\n");
 
-			message = message + "\nBonus:\n";
+			for (City buildableCity : permitCard.getArrayBuildableCities())
+				message.append(buildableCity.getCityName()).append(" ");
+
+			message.append("\nBonus:\n");
+
 			for (Bonus bonus : permitCard.getArrayBonus())
-				message = message + bonus.getBonusName() + " " + bonus.getIncrement() + "   ";
+				message.append(bonus.getBonusName()).append(" ").append(bonus.getIncrement()).append("   ");
+
 		}
 
-		return message;
+		return message.toString();
 
 	}
 	
