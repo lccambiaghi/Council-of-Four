@@ -56,16 +56,16 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 			outputSocket.println(string);
 			outputSocket.flush();
 		}catch (NoSuchElementException e){
-			throw new DisconnectedException();
+			disconnectionHandler();
 		}
 	}
 	
-	private String receiveString(){ 
+	private String receiveString() throws DisconnectedException{ 
 		String s = null;
 		try{
 			s = inputSocket.nextLine();
 		}catch (NoSuchElementException e){
-			player.setConnected(false);
+			disconnectionHandler();
 		}
 		return s;
 	}
@@ -139,6 +139,17 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 	public Object getLock(){
 		return lock;
 	}
+	
+	private void disconnectionHandler() throws DisconnectedException{
+		closeSocketStream();
+		throw new DisconnectedException();
+	}
+	
+	private void closeSocketStream(){
+		inputSocket.close();
+		outputSocket.close();
+	}
+	
 	
 	/*public boolean checkIfConnected(){
 		print("");
