@@ -8,24 +8,20 @@ public interface ConnectionWithPlayerInterface {
 
 	public abstract Player getPlayer();
 	
-	public void sendString(String string);
+	public void login(GameSide gameSide) throws DisconnectedException;
 	
-	public String receiveString();
+	public Configurations getConfigurations() throws DisconnectedException;
 	
-	public void login(GameSide gameSide);
+	public void askInputNumber(int lowerBound, int upperBound) throws DisconnectedException;
 	
-	public Configurations getConfigurations();
+	public void print(String string) throws DisconnectedException;
 	
-	public void askInputNumber(int lowerBound, int upperBound);
-	
-	public void print(String string);
-	
-	public void println(String string);
+	public void println(String string) throws DisconnectedException;
 	
 	public int getIntResult();
 	
 	public Object getLock();
 	
-	public boolean isConnected();
+	//public boolean checkIfConnected();
 	
 }
