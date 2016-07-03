@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.Broker;
+import it.polimi.ingsw.LM_Dichio_CoF.connection.DisconnectedException;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class WaitingRoom extends Thread{
@@ -129,8 +130,10 @@ public class WaitingRoom extends Thread{
 					firstPlayer.getBroker().println(Message.chooseYesOrNo_1_2());
 					int choice = firstPlayer.getBroker().askInputNumber(1, 2);
 					if(choice==2){
-						config = firstPlayer.getBroker().getConfigurations();
-						saveFileConfigurations(config);
+						try {
+							config = firstPlayer.getBroker().getConfigurations();
+							saveFileConfigurations(config);
+						} catch (DisconnectedException e) {}
 					}
 				} catch (InterruptedException e) {
 					try {

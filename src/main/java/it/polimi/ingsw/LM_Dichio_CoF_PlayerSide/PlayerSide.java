@@ -13,6 +13,8 @@ import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.Timer;
 
+import org.mockito.internal.creation.settings.CreationSettings;
+
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
 import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
@@ -108,15 +110,17 @@ public class PlayerSide {
 	}
 	
 	public Object getConfigurationsAsObject(){
-		System.out.println("(FOR THE MOMENT) the standard configurations will be used");
-		setStandardConfigurations();
+		
+		CreateConfigurations cc = new CreateConfigurations(this);
+		
+		config = cc.getCustomConfig();
+		
+		//System.out.println("(FOR THE MOMENT) the standard configurations will be used");
+		//setStandardConfigurations();
 		return config;
 	}
 	
-	
-	//Those two methods are not used for the moment
-	public void setConfigurations(Configurations config){ this.config = config; }
-	
+	//DEPRECATED
 	private void setStandardConfigurations(){
 		
 		FileInputStream fileInputStream = null;
@@ -140,43 +144,5 @@ public class PlayerSide {
 			}
 		}
 	}
-	
-	
-	
-	
-	/*	
-	standardConfig = true;
-	if(standardConfig){
-		setStandardPlayersNumber();
-		setStandardConfigurations();
-	}
-	sendStringTS(""+playersMaxNumber);
-	sendObjectTS(config);
-	}*/
-	/* 
-	 * It starts a thread to manage the creation of configurations
-	 * This way server says that the time is over the thread will stop
-	 * The timer is not fixed to 20 seconds, this is a server's problem
-	 * I have to implement another timer:
-	 * when the second player arrives a new timer starts (for example 1 minute)
-	 * so that the other players don't have to wait to much for a new match, whose config
-	 * are created by the first player.
-	 * If the player can't set them on time then he will send a standard configuration
-	 */
-	//CreateConfigurations createConfigurations = new CreateConfigurations(this);
-	//Thread threadCreateConfigurations = new Thread(createConfigurations);
-	//threadCreateConfigurations.start();
-	
-	//Case: client can't make the config on time
-	///// Here I need a method to stop the thread
-	//System.out.println(/*"Too late,"*/"standard configurations will be used");
-	/*standardConfig = true;
-	if(standardConfig){
-		setStandardPlayersNumber();
-		setStandardConfigurations();
-	}
-	sendStringTS(""+playersMaxNumber);
-	sendObjectTS(config);
-	*/
 	
 }

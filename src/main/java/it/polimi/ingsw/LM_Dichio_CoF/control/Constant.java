@@ -10,6 +10,9 @@ public class Constant {
 	public static final boolean test = false;
 	
 	public static final int SOCKET_PORT =3000;
+	
+	public static final String RMI_REGISTRY_ADDRESS = "127.0.0.1";
+	public static final int RMI_PORT =1099;
 
 	public static final int TIMER_SECONDS_CHECK_QUEUE_PLAYER = 3;
 	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 20;

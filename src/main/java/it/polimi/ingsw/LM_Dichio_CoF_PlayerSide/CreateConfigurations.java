@@ -10,23 +10,18 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityBonus;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityName;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
-public class CreateConfigurations extends Thread{
+public class CreateConfigurations{
 	
-	PlayerSide playerSide;
+	private PlayerSide playerSide;
+	private Configurations config;
 	
-	public CreateConfigurations(PlayerSide playerSide){ this.playerSide=playerSide; }
-	Scanner inCLI = new Scanner(System.in);
+	public CreateConfigurations(PlayerSide playerSide){ 
+		this.playerSide=playerSide;
+		this.config = new Configurations();
+	}
 	
-	public void run(){
+	public Configurations getCustomConfig(){
 		
-		System.out.println("You are the first player");
-		System.out.println("You have to create the configurations of a match\n");
-		
-		int playersMaxNumber = 0;
-		System.out.println("First of all, enter the max number of players you want (min 2, max 8)");
-		playersMaxNumber= InputHandler.inputNumber(2, 8);
-		
-		Configurations config = new Configurations();
 		System.out.println("How many cities would you like to have in your match?");
 		System.out.println("1. 15 Cities");
 		System.out.println("2. 18 Cities");
@@ -156,7 +151,7 @@ public class CreateConfigurations extends Thread{
 			config.setCityBonusNumberMax(InputHandler.inputNumber(numberBonusesMin, 5));
 		}
 		
-		playerSide.setConfigurations(config);
+		return config;
 	}
 	
 	

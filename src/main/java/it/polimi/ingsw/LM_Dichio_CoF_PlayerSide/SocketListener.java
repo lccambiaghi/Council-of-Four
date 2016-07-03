@@ -31,6 +31,9 @@ public class SocketListener {
 				break;
 			}
 			
+			//case	"SOCKETstopInputNumber":
+			//	break;
+			
 			case	"SOCKETprint":
 				System.out.print(socketConnection.receiveStringFS());
 				break;
@@ -38,7 +41,7 @@ public class SocketListener {
 			case	"SOCKETprintln":
 				System.out.println(socketConnection.receiveStringFS());
 				break;
-
+				
 			default	:
 				System.out.println("error");
 				break;

@@ -65,13 +65,13 @@ public class GameSide {
 		try {
 		
 			System.out.println("Creating RMI registry...");
-			java.rmi.registry.LocateRegistry.createRegistry(1099);
+			java.rmi.registry.LocateRegistry.createRegistry(Constant.RMI_PORT);
 			
 			System.out.println("Implementing RMIGameSide...");
 			rmiGameSide=new RMIGameSide(this);
 			
 			System.out.println("Rebinding...");
-			Naming.rebind("rmi://127.0.0.1:1099/CoF", rmiGameSide);
+			Naming.rebind("rmi://" + Constant.RMI_REGISTRY_ADDRESS +":" + Constant.RMI_PORT+"/CoF", rmiGameSide);
 			
 			System.out.println("RMI initialized!");
 
@@ -118,36 +118,35 @@ public class GameSide {
 		}
 		
 		public void run(){
-			
 			try {
-			
 				player.getBroker().login(gameSide);
-			
-				synchronized (lockArrayListPlayer) {
-					player.setConnected(true);
-					arrayListPlayer.add(player);
-					arrayListAllPlayer.add(player);
-				}
-				
-				synchronized (lockWaitingRoomAvailable) {
-					
-					if(!waitingRoomAvailable){
-						waitingRoomAvailable=true;
-						waitingRoom = new WaitingRoom(gameSide, player);
-						waitingRoom.start();
-						lockWaitingRoom=waitingRoom.getLockWaitingRoom();
-					}else{
-						waitingRoom.addPlayerToWaitingRoom(player);
-					}
-					try {
-						synchronized (lockWaitingRoom) {
-							lockWaitingRoom.wait();
-						}
-					} catch (InterruptedException e) {}
-				}
-				
+				putPlayerInWaitingRoom();
 			}catch (DisconnectedException e){
 				System.out.println("The player trying to login has disconnected!");
+			}
+		}
+		
+		private void putPlayerInWaitingRoom(){
+			synchronized (lockArrayListPlayer) {
+				player.setConnected(true);
+				arrayListPlayer.add(player);
+				arrayListAllPlayer.add(player);
+			}
+			
+			synchronized (lockWaitingRoomAvailable) {
+				if(!waitingRoomAvailable){
+					waitingRoomAvailable=true;
+					waitingRoom = new WaitingRoom(gameSide, player);
+					waitingRoom.start();
+					lockWaitingRoom=waitingRoom.getLockWaitingRoom();
+				}else{
+					waitingRoom.addPlayerToWaitingRoom(player);
+				}
+				try {
+					synchronized (lockWaitingRoom) {
+						lockWaitingRoom.wait();
+					}
+				} catch (InterruptedException e) {}
 			}
 		}
 	

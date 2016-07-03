@@ -20,13 +20,8 @@ public class Broker {
 		connectionWithPlayer.login(gameSide);
 	}
 			
-	public Configurations getConfigurations(){
-		try {
-			return connectionWithPlayer.getConfigurations();
-		} catch (DisconnectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}return null;
+	public Configurations getConfigurations() throws DisconnectedException{
+		return connectionWithPlayer.getConfigurations();
 	}
 	
 	public int askInputNumber(int lowerBound, int upperBound) throws InterruptedException{
@@ -54,18 +49,13 @@ public class Broker {
 	public void print(String string) throws InterruptedException{
 		
 		interruptedExceptionLauncher();
+		 try {
+			connectionWithPlayer.print(string);
+		} catch (DisconnectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		Thread t = new Thread(new Runnable() {
-		     public void run() {
-		    	 try {
-					connectionWithPlayer.print(string);
-				} catch (DisconnectedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		     }
-		});
-		t.start();
 	}
 	
 	public void println(String string) throws InterruptedException{
@@ -95,13 +85,6 @@ public class Broker {
 	private void interruptedExceptionLauncher() throws InterruptedException{
 		if (Thread.interrupted())
 			throw new InterruptedException();
-	}
-	
-	
-	public boolean isConnected(){
-		/**DEPRECATED
-		 */
-		return true;
 	}
 	
 }

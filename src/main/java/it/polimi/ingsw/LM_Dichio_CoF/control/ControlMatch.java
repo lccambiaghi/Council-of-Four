@@ -55,22 +55,22 @@ public class ControlMatch {
 				
 				//CHECK IF LAST EMPORIUM BUILT
 					
-				player=allPlayers.get(playerNumber);
-			
-				while(!player.isConnected()){
+				do{
 				
 					//If it's the last player of the group
-					if(playerNumber==allPlayers.size()-1){
+					if(playerNumber==allPlayers.size()){
 						
 						playerNumber=0;
 						goMarket=true;
 						break;
 						
 					}else{
+						
+						player=allPlayers.get(playerNumber);
 						playerNumber++;
-						player=allPlayers.get(playerNumber-1);
 					}
-				}
+				
+				}while(!player.isConnected());
 				
 				if(!goMarket){
 					
@@ -79,11 +79,10 @@ public class ControlMatch {
 					if(!player.isConnected()){
 						Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOff(player), playersConnected, player);
 					}
-					
-					playerNumber++;
 				
 				}else{
 					
+					goMarket=false;
 					marketHandler();
 					
 				}
