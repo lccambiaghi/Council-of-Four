@@ -36,7 +36,7 @@ public class Match {
 		
 		field = new Field(config, arrayListPlayer);
 
-		market = new Market (arrayListPlayer);
+		market = new Market (arrayListPlayer,field);
 		
 		//controlMatch = new ControlMatch(this);
 
