@@ -27,12 +27,13 @@ public class Market {
 	}
 	
 	public void startMarket () throws InterruptedException{
-		int turn = 0;
-		while ((turn+1) % arrayListPlayer.size() != 0){
+		int turn = 1;
+		do {
 			startSelling(turn);
 			turn++;
-		}
-		
+			}
+		while ((turn % arrayListPlayer.size()) != 0);
+				
 		startBuying(arrayListSellingObjects);
 	}
 	
@@ -161,14 +162,13 @@ public class Market {
 	
 	private void startBuying(ArrayList <SellingObject> arrayListSelingObjects) throws InterruptedException{
 		Collections.shuffle(arrayListPlayer);
-		int turn=0;
+		int turn=1;
 		Player playerTurn=arrayListPlayer.get(turn);
 		
-		while ((turn+1) % arrayListPlayer.size() != 0){
-
-					
+		do{
+				
 			for (SellingObject sellingObject : arrayListSelingObjects){
-				playerTurn.getBroker().println(Message.chooseToBuySomething_1_2());
+				playerTurn.getBroker().println(Message.chooseToBuySomething_1_2(sellingObject));
 				int accordingToBuy = playerTurn.getBroker().askInputNumber(1,2);
 				
 				if(accordingToBuy==1){	
@@ -195,8 +195,11 @@ public class Market {
 							break;
 					}
 				}
+			
 			}
+			turn++;
 		}
+		while ((turn % arrayListPlayer.size() != 0));
 		
 	}
 	
