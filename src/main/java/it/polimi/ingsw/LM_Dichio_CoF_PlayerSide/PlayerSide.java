@@ -63,15 +63,14 @@ public class PlayerSide {
 		
 	
 	private void chooseConnection(){
-		boolean chosen = false;
-		while(!chosen){
-			System.out.println("Choose connection: 's' (Socket) or 'r' (RMI)");
-			String in = inCLI.nextLine();
-			if(in.equals("s")||in.equals("r")){
-				this.typeOfConnection=in.charAt(0);
-				chosen=true;
-			}
-		}
+		System.out.println("Choose connection:\n"
+				+ "1. Socket\n"
+				+ "2. RMI");
+		int choice = InputHandler.inputNumber(1, 2);
+		if(choice==1)
+			this.typeOfConnection='s';
+		else
+			this.typeOfConnection='r';
 	}
 
 	protected char getTypeOfConnection() {

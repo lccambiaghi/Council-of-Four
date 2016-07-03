@@ -44,7 +44,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 			nickname = rmiPlayerSide.getNickname();
 			player.setNickname(nickname);
 		} catch (RemoteException e) {
-			throw new DisconnectedException();
+			disconnectionHandler();
 		}
 	}
 			
@@ -53,7 +53,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			config = (Configurations)rmiPlayerSide.getConfigurationsAsObject();
 		} catch (RemoteException e) {
-			throw new DisconnectedException();
+			disconnectionHandler();
 		}
 		return config;
 	}
@@ -63,7 +63,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			result = rmiPlayerSide.inputNumber(lowerBound, upperBound);
 		} catch (RemoteException e) {
-			throw new DisconnectedException();
+			disconnectionHandler();
 		}
 		intResult=result;
 		synchronized (lock) {
@@ -75,7 +75,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			rmiPlayerSide.print(string);
 		} catch (RemoteException e) {
-			throw new DisconnectedException();
+			disconnectionHandler();
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		try {
 			rmiPlayerSide.println(string);
 		} catch (RemoteException e) {
-			throw new DisconnectedException();
+			disconnectionHandler();
 		}
 	}
 	
@@ -95,14 +95,11 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		return lock;
 	}
 	
-	/*public boolean checkIfConnected(){
-		try {
-			rmiPlayerSide.print("");
-		} catch (RemoteException e) {
-			return false;
-		}
-		return true;
-	}*/
+	private void disconnectionHandler() throws DisconnectedException{
+		player.setConnected(false);
+		throw new DisconnectedException();
+	}
+	
 }
 
 
