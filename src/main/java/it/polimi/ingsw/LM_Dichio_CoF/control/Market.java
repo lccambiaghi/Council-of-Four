@@ -13,7 +13,10 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Field;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Route;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingAssistants;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingObject;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingPermitCard;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingPoliticCard;
 
 public class Market {
 
@@ -22,12 +25,13 @@ public class Market {
 	public ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
 	private Field field;
 
-	public Market (ArrayList<Player> arrayListPlayer){
-		this.arrayListPlayer = new ArrayList<Player>(arrayListPlayer);		
+	public Market (ArrayList<Player> arrayListPlayer, Field field){
+		this.arrayListPlayer = new ArrayList<Player>(arrayListPlayer);
+		this.field=field;
 	}
 	
 	public void startMarket () throws InterruptedException{
-		int turn = 1;
+		int turn = 0;
 		do {
 			startSelling(turn);
 			turn++;
@@ -95,6 +99,7 @@ public class Market {
 	}
 	
 	private void selectObject(Player playerTurn, String type) throws InterruptedException{	
+		
 		PermitCard chosenPermitCard;
 		PoliticCard chosenPoliticCard;
 		int chosenAssistants;
@@ -104,17 +109,17 @@ public class Market {
 		case "PermitCard":
 			chosenPermitCard=askPermitCard(playerTurn);
 			price = askPrice(playerTurn);
-			sellingObject = new SellingObject (playerTurn, chosenPermitCard, price);
+			sellingObject = new SellingPermitCard (chosenPermitCard, playerTurn, price);
 			break;
 		case "PoliticCard":
 			chosenPoliticCard = askPoliticCard (playerTurn);
 			price = askPrice(playerTurn);
-			sellingObject=new SellingObject(playerTurn, chosenPoliticCard, price);
+			sellingObject=new SellingPoliticCard(chosenPoliticCard, playerTurn, price);
 			break;
 		case "Assistants":
 			chosenAssistants = askAssistant (playerTurn);
 			price = askPrice(playerTurn);
-			sellingObject=new SellingObject(playerTurn, chosenAssistants, price);
+			sellingObject=new SellingAssistants(chosenAssistants, playerTurn, price);
 			break;
 		}
 		
@@ -161,45 +166,38 @@ public class Market {
 	}
 	
 	private void startBuying(ArrayList <SellingObject> arrayListSelingObjects) throws InterruptedException{
-		Collections.shuffle(arrayListPlayer);
-		int turn=1;
-		Player playerTurn=arrayListPlayer.get(turn);
+		ArrayList <Player> arrayListPlayerMarket = arrayListPlayer;
+		Collections.shuffle(arrayListPlayerMarket);
+		int turn=0;
+		boolean buyingSuccessful;
 		
 		do{
-				
-			for (SellingObject sellingObject : arrayListSelingObjects){
-				playerTurn.getBroker().println(Message.chooseToBuySomething_1_2(sellingObject));
-				int accordingToBuy = playerTurn.getBroker().askInputNumber(1,2);
-				
-				if(accordingToBuy==1){	
-					Object object = sellingObject.getObject();
+			Player playerTurn=arrayListPlayerMarket.get(turn);
+			playerTurn.getBroker().println(Message.chooseToBuySomething_1_2());
+			if(playerTurn.getBroker().askInputNumber(1,2)==1){
 					
-					int price = sellingObject.getPrice();
-					Player owner = sellingObject.getOwner();
+				for (int i=0; i<arrayListSelingObjects.size();i++){
+					playerTurn.getBroker().println((i+1)+ ". " + arrayListSellingObjects.get(i).getObjectInfo());
+				}
+				do{
+					playerTurn.getBroker().println(Message.askObjectToBuy());
+					int choosenObject = playerTurn.getBroker().askInputNumber(1, arrayListSelingObjects.size())-1;
+					SellingObject possibleBuyedObject=arrayListSelingObjects.get(choosenObject);
 					
-					switch (object.getClass().getSimpleName()){
-						case "PermitCard": 
-							if(canBuy(price,playerTurn,owner)){
-								playerTurn.getArrayListPermitCard().add((PermitCard)object);
-							}
-							break;
-						case "PoliticCard": 
-							if(canBuy(price,playerTurn,owner)){
-								playerTurn.getArrayListPoliticCard().add((PoliticCard)object);
-							}
-							break;
-						case "Integer":
-							if(canBuy(price,playerTurn,owner)){
-								playerTurn.addAssistant((int)object);
-							}
-							break;
+					if (canBuy(possibleBuyedObject.getPrice(), playerTurn, possibleBuyedObject.getOwner())){
+						possibleBuyedObject.addToPlayer(playerTurn);
+						arrayListSelingObjects.remove(choosenObject);
+						buyingSuccessful=true;
+					}
+					else {
+						buyingSuccessful=false;
 					}
 				}
-			
+				while(!buyingSuccessful);
 			}
 			turn++;
 		}
-		while ((turn % arrayListPlayer.size() != 0));
+		while ((turn % arrayListPlayerMarket.size()) != 0);
 		
 	}
 	
@@ -208,7 +206,6 @@ public class Market {
 		if(checkIfEnoughRichness(playerTurn, price)){
 			richnessRoute.movePlayer(price, sellingPlayer);
 			richnessRoute.movePlayer(-price, playerTurn);
-			arrayListSellingObjects.remove(sellingObject);
 			return true;
 		}
 		playerTurn.getBroker().println(Message.deniedBuying());
