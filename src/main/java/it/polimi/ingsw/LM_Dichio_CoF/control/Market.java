@@ -175,22 +175,29 @@ public class Market {
 			Player playerTurn=arrayListPlayerMarket.get(turn);
 			playerTurn.getBroker().println(Message.chooseToBuySomething_1_2());
 			if(playerTurn.getBroker().askInputNumber(1,2)==1){
-					
+				playerTurn.getBroker().println(Message.skipBuying());
 				for (int i=0; i<arrayListSelingObjects.size();i++){
 					playerTurn.getBroker().println((i+1)+ ". " + arrayListSellingObjects.get(i).getObjectInfo());
 				}
 				do{
 					playerTurn.getBroker().println(Message.askObjectToBuy());
-					int choosenObject = playerTurn.getBroker().askInputNumber(1, arrayListSelingObjects.size())-1;
-					SellingObject possibleBuyedObject=arrayListSelingObjects.get(choosenObject);
-					
-					if (canBuy(possibleBuyedObject.getPrice(), playerTurn, possibleBuyedObject.getOwner())){
-						possibleBuyedObject.addToPlayer(playerTurn);
-						arrayListSelingObjects.remove(choosenObject);
+					int choosenObject = playerTurn.getBroker().askInputNumber(0, arrayListSelingObjects.size())-1;
+					if(choosenObject==-1){
 						buyingSuccessful=true;
-					}
-					else {
-						buyingSuccessful=false;
+						turn++;
+					}				
+					else{
+						SellingObject possibleBuyedObject=arrayListSelingObjects.get(choosenObject);
+						
+						if (canBuy(possibleBuyedObject.getPrice(), playerTurn, possibleBuyedObject.getOwner())){
+							possibleBuyedObject.addToPlayer(playerTurn);
+							arrayListSelingObjects.remove(choosenObject);
+							buyingSuccessful=true;
+						}
+						else {
+							
+							buyingSuccessful=false;
+						}
 					}
 				}
 				while(!buyingSuccessful);
