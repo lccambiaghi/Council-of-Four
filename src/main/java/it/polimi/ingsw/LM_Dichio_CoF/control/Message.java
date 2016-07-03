@@ -6,6 +6,10 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.Balcony;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Bonus;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingObject;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingAssistants;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingPermitCard;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingPoliticCard;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -268,19 +272,22 @@ public final class Message {
 		return ("Player " + player.getNickname() + " has been kicked off!");
 	}
 
-	public static String chooseToSellSomething_1_2(){
+	public static String chooseToSellSomething_1_2(){		
 		return ("Would you like to sell something?\n" +
 				"1. Yes\n" +
 				"2. No");
 	}
 	public static String chooseToBuySomething_1_2(){
-		return ("Would you like to buy this object?\n" +
+		return ("Would you like to buy something?\n" +
 				"1. Yes\n" +
 				"2. No");
 	}
 
 	public static String askForObject(){
 		return ("Which object would you like to sell?");
+	}
+	public static String askObjectToBuy(){
+		return ("Which object would you like to buy?");
 	}
 	public static String permitCard(int counter){
 		return (counter+". Permit Card");
@@ -338,7 +345,32 @@ public final class Message {
 
 	public static String askPrice (){
 		return ("Which price would you like to sell it for?");
-
+	}
+		
+	public static String getInfoPermitCard (PermitCard sellingPermitCard, int price){
+		StringBuilder message= new StringBuilder();
+		
+		message.append("With this permitcard you can build in: ").append(sellingPermitCard.getArrayBuildableCities())
+		.append(" The price is: ").append(price).append("coins");
+		
+		return message.toString();
 	}
 	
+	public static String getInfoPoliticCard (PoliticCard sellingPoliticCard, int price){
+		StringBuilder message= new StringBuilder();
+		
+		message.append("Politic Card Color:").append(" ").append(sellingPoliticCard.getCardColor()).append(". ")
+		.append("The price is: ").append(price).append("coins");
+		
+		return message.toString();
+	}
+	
+	public static String getInfoAssistants (int sellingAssistants, int price){
+		StringBuilder message= new StringBuilder();
+		
+		message.append("Number of Assistants: ").append(sellingAssistants).append(". ")
+		.append("The price is: ").append(price).append("coins");
+		
+		return message.toString();
+	}	
 }
