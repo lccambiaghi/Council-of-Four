@@ -33,7 +33,7 @@ public class ControlMatch {
 	private ArrayList<Player> getPlayersConnected(){
 		ArrayList<Player> ps = new ArrayList<Player>();
 		for(Player p: allPlayers){
-			//if(p.getBroker().isConnected())
+			p.isConnected();
 				ps.add(p);
 		}
 		return ps;
@@ -47,35 +47,28 @@ public class ControlMatch {
 			
 			playersConnected = getPlayersConnected();
 			
-			if(playersConnected==null){
+			if(!atLeastTwoPlayersConnected()){
 				
 				gameOver=true;
-				
-			}else if(playersConnected.size()==1){
-				
-				playersConnected.get(0).getBroker().println(Message.youWon());
-				gameOver=true;
-				
+
 			}else{
 				
 				//CHECK IF LAST EMPORIUM BUILT
-				
-				if(playerNumber==allPlayers.size()){
-					goMarket=true;
-				}
-				
-				if(!goMarket){
-					player=allPlayers.get(playerNumber);
-				
-					while(!player.getBroker().isConnected()){
 					
+				player=allPlayers.get(playerNumber);
+			
+				while(!player.isConnected()){
+				
+					//If it's the last player of the group
+					if(playerNumber==allPlayers.size()-1){
+						
+						playerNumber=0;
+						goMarket=true;
+						break;
+						
+					}else{
 						playerNumber++;
-						if(playerNumber==allPlayers.size()){
-							goMarket=true;
-							break;
-						}else{
-							player=allPlayers.get(playerNumber-1);
-						}
+						player=allPlayers.get(playerNumber-1);
 					}
 				}
 				
@@ -83,7 +76,7 @@ public class ControlMatch {
 					
 					turnHandler();
 					
-					if(!player.getBroker().isConnected()){
+					if(!player.isConnected()){
 						Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOff(player), playersConnected, player);
 					}
 					
@@ -91,7 +84,6 @@ public class ControlMatch {
 				
 				}else{
 					
-					playerNumber=0;
 					marketHandler();
 					
 				}
@@ -151,6 +143,17 @@ public class ControlMatch {
 		
 	}
 
-	public void setGameOver(){ gameOver=true;	}
-
+	private boolean atLeastTwoPlayersConnected(){
+		if(playersConnected==null){
+			return false;
+		}else if(playersConnected.size()==1){
+			try {
+				playersConnected.get(0).getBroker().println(Message.youWon());
+			} catch (InterruptedException e) {}
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 }

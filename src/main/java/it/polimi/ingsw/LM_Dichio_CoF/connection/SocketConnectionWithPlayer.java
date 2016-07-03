@@ -142,6 +142,7 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 	
 	private void disconnectionHandler() throws DisconnectedException{
 		closeSocketStream();
+		player.setConnected(false);
 		throw new DisconnectedException();
 	}
 	
