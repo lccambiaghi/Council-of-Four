@@ -44,7 +44,13 @@ public class WaitingRoom extends Thread{
 	
 	public void run(){
 		
-		askForNumberPlayers();
+		boolean onTime = askForNumberPlayers();
+		if(onTime){
+			askForConfigurations();
+		}else{
+			playersMaxNumber=8;
+			canGoWithCountDown=true;
+		}
 		
 		while(!timeToPlay){
 			try {
@@ -72,7 +78,7 @@ public class WaitingRoom extends Thread{
 		
 	}
 	
-	public void askForNumberPlayers(){
+	public boolean askForNumberPlayers(){
 		
 		Thread t = new Thread(new Runnable(){
 			public void run(){
@@ -94,22 +100,8 @@ public class WaitingRoom extends Thread{
 		});
 		t.start();
 		
-		/**
-		 * This "while" permits to check every second if the timer
-		 * to set the number of players has expired
-		 */
-		long startTime = System.currentTimeMillis();
-		long endTime = startTime + (10)*1000;
-		while (System.currentTimeMillis() < endTime) {
-		    try {
-		         Thread.sleep(1000);  // Sleep 1 second
-		         
-		         // If the player has set players before the timer expires
-		         if(!t.isAlive())
-		        	 break;
-		         
-		    } catch (InterruptedException e) {}	
-		}
+
+		interruptThreadIfTimerExpires(t, 10);
 		
 		synchronized (lockWaitingRoom) {
 			lockWaitingRoom.notify();
@@ -118,14 +110,11 @@ public class WaitingRoom extends Thread{
 		/**
 		 * If the timer has expired and the player hasn't set the number of players
 		 */
-		if(t.isAlive()){	
+		if(t.isAlive()){
 			t.interrupt();
-			playersMaxNumber=8;
-			canGoWithCountDown=true;
+			return false;
 		}else{
-			
-			askForConfigurations();
-			
+			return true;
 		}
 		
 	}
@@ -154,22 +143,7 @@ public class WaitingRoom extends Thread{
 		});
 		t.start();
 		
-		/**
-		 * This "while" permits to check every second if the timer
-		 * to set configurations has expired
-		 */
-		long startTime = System.currentTimeMillis();
-		long endTime = startTime + (120)*1000;
-		while (System.currentTimeMillis() < endTime) {
-		    try {
-		         Thread.sleep(1000);  // Sleep 1 second
-		         
-		         // If the player has set players before the timer expires
-		         if(!t.isAlive())
-		        	 break;
-		         
-		    } catch (InterruptedException e) {}	
-		}
+		interruptThreadIfTimerExpires(t, 120);
 		
 		/**
 		 * If the timer has expired and the player hasn't set the configurations
@@ -229,6 +203,25 @@ public class WaitingRoom extends Thread{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	private void interruptThreadIfTimerExpires(Thread t, int seconds){
+		/**
+		 * This "while" permits to check every second if the timer
+		 * to set configurations has expired
+		 */
+		long startTime = System.currentTimeMillis();
+		long endTime = startTime + (seconds)*1000;
+		while (System.currentTimeMillis() < endTime) {
+		    try {
+		         Thread.sleep(1000);  // Sleep 1 second
+		         
+		         // If the player has set players before the timer expires
+		         if(!t.isAlive())
+		        	 break;
+		         
+		    } catch (InterruptedException e) {}	
 		}
 	}
 	
