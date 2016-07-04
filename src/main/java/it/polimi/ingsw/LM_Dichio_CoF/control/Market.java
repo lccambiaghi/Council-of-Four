@@ -146,7 +146,7 @@ public class Market {
 		int chosenPermitCard = playerTurn.getBroker().askInputNumber(1, playerPermitCards.size())-1;
 		
 		PermitCard sellingPermitCard = playerTurn.getArrayListPermitCard().get(chosenPermitCard);
-		playerTurn.getArrayListPermitCard().remove(chosenPermitCard-1);
+		playerTurn.getArrayListPermitCard().remove(chosenPermitCard);
 		
 		return sellingPermitCard;
 	}
