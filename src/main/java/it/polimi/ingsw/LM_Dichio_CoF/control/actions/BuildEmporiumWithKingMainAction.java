@@ -10,8 +10,6 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 import java.util.*;
 
-import static it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.InputHandler.inputNumber;
-
 public class BuildEmporiumWithKingMainAction extends Action {
 
     private ArrayList<PoliticCard> chosenPoliticCards;

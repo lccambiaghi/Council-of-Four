@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import static it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.InputHandler.inputNumber;
-
 public class AcquirePermitCardMainAction extends Action {
 
     private Region chosenRegion;
