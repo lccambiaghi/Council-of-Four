@@ -95,6 +95,14 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		return lock;
 	}
 	
+	public void stopInputNumber() throws DisconnectedException{
+		try {
+			rmiPlayerSide.stopInputNumber();
+		} catch (RemoteException e) {
+			disconnectionHandler();
+		}
+	}
+	
 	private void disconnectionHandler() throws DisconnectedException{
 		player.setConnected(false);
 		throw new DisconnectedException();

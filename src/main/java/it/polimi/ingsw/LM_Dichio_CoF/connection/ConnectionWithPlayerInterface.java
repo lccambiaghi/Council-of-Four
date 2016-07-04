@@ -22,6 +22,6 @@ public interface ConnectionWithPlayerInterface {
 	
 	public Object getLock();
 	
-	//public boolean checkIfConnected();
+	public void stopInputNumber() throws DisconnectedException;
 	
 }

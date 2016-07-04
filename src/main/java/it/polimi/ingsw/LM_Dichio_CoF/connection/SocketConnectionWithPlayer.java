@@ -122,6 +122,10 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		}
 	}
 	
+	public void stopInputNumber() throws DisconnectedException{
+		sendString("SOCKETstopInputNumber");
+	}
+	
 	public void print(String string) throws DisconnectedException{
 		sendString("SOCKETprint");
 		sendString(string);
