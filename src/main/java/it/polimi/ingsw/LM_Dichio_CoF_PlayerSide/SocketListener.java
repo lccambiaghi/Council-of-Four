@@ -37,7 +37,6 @@ public class SocketListener {
 			}
 			
 			case	"SOCKETstopInputNumber":
-				System.out.println("Someone told me to stop");
 				inputStop=true;
 				playerSide.getInputHandler().stopInputNumber();
 				break;
