@@ -51,7 +51,7 @@ public class GameSide {
 		/**
 		 * Initialize and locate the RMI registry
 		 */
-		//initializeRMI();
+		initializeRMI();
 		
 		/**
 		 * Start listening with Socket with a thread
