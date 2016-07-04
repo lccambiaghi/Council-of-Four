@@ -7,29 +7,65 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityName;
 
 public class InputHandler {
 
-	public static int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
+	private Scanner in;
+	private boolean stopped = false;
+	
+	public InputHandler(){	}
+	
+	public void stopInputNumber(){
+		stopped=true;
+		System.out.println("STOPPED");
+	}
+	
+	private void checkIfInput() throws InterruptedException{
+		boolean goOn = true;
+		while(goOn){
+			if(in.hasNextLine()){
+				goOn = false;
+			}else{
 
-		Scanner in = new Scanner(System.in);
-		int inputNumber;
-		boolean eligibleInput=false;
-
-		do {
-			while(!in.hasNextInt()){
-				System.out.println("Insert an integer value!");
-				in.nextLine();
+				System.out.println("DIO CANE");
+				Thread.sleep(20000);
+				if(stopped){
+					stopped=false;
+					throw new InterruptedException();
+				}	
 			}
-			inputNumber=in.nextInt();
-			in.nextLine();
+		}
+	}
+	
+	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
 
-			if(inputNumber>=lowerBound && inputNumber<=upperBound)
-				eligibleInput=true;
-			else
-				System.out.println("Insert a value between "+ lowerBound
-									+ " and " + upperBound);
-		} while(!eligibleInput);
-
+		int inputNumber = 0;
+		try{
+			
+			in = new Scanner(System.in);
+		
+			boolean eligibleInput=false;
+	
+			do {
+				
+				checkIfInput();
+				while(!in.hasNextInt()){
+					System.out.println("Insert an integer value!");
+					in.nextLine();
+					checkIfInput();
+				}
+				inputNumber=in.nextInt();
+				in.nextLine();
+	
+				if(inputNumber>=lowerBound && inputNumber<=upperBound)
+					eligibleInput=true;
+				else
+					System.out.println("Insert a value between "+ lowerBound
+										+ " and " + upperBound);
+			} while(!eligibleInput);
+			
+		}catch (InterruptedException e) {
+			System.out.println("Too late!");
+		}
 		return inputNumber;
-
+		
 	}
 	public static Character[] inputCity (CityName currentCity, CityName lastCity){
 		Scanner in = new Scanner(System.in);

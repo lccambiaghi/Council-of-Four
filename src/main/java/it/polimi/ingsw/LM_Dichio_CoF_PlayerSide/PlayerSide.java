@@ -21,7 +21,7 @@ public class PlayerSide {
 
 	
 	public static void main (String[] args){
-		new CreateConfigurations(new PlayerSide())/*.start()*/;
+		new PlayerSide();
 	}
 	
 	private String nickname;
@@ -34,7 +34,7 @@ public class PlayerSide {
 	
 	private RMIConnection rmiConnection;
 	
-	private Scanner inCLI;
+	private InputHandler inputHandler;
 	
 	private SocketListener socketListener;
 
@@ -44,7 +44,7 @@ public class PlayerSide {
 		
 		System.out.println("I am alive");	
 		
-		inCLI = new Scanner(System.in);
+		inputHandler = new InputHandler();
 		
 		/*
 		 * Method of the client
@@ -66,7 +66,7 @@ public class PlayerSide {
 		System.out.println("Choose connection:\n"
 				+ "1. Socket\n"
 				+ "2. RMI");
-		int choice = InputHandler.inputNumber(1, 2);
+		int choice = inputHandler.inputNumber(1, 2);
 		if(choice==1)
 			this.typeOfConnection='s';
 		else
@@ -80,6 +80,7 @@ public class PlayerSide {
 	public void login(){
 		boolean logged = false;
 		String nickname = null;
+		Scanner inCLI = new Scanner(System.in);
 		while(!logged){
 			System.out.println("Enter your nickname");
 			nickname = inCLI.nextLine();
@@ -109,13 +110,17 @@ public class PlayerSide {
 	
 	public Object getConfigurationsAsObject(){
 		
-		CreateConfigurations cc = new CreateConfigurations(this);
+		CreateConfigurations cc = new CreateConfigurations(this, inputHandler);
 		
 		config = cc.getCustomConfig();
 		
 		//System.out.println("(FOR THE MOMENT) the standard configurations will be used");
 		//setStandardConfigurations();
 		return config;
+	}
+	
+	public InputHandler getInputHandler(){
+		return inputHandler;
 	}
 	
 	//DEPRECATED
