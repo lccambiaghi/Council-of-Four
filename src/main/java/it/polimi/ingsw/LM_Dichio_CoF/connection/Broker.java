@@ -41,7 +41,17 @@ public class Broker {
 		Object lock = connectionWithPlayer.getLock();
 		t.start();
 		synchronized (lock) {
-			lock.wait();
+			try{
+				lock.wait();
+			} catch (InterruptedException e) {
+				try {
+					connectionWithPlayer.stopInputNumber();
+				} catch (DisconnectedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				throw new InterruptedException();
+			}
 		}
 		return connectionWithPlayer.getIntResult();
 	}

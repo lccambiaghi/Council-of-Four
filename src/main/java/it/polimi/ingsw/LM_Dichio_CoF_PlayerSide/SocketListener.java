@@ -5,11 +5,13 @@ public class SocketListener {
 	String message;
 	PlayerSide playerSide;
 	SocketConnection socketConnection;
+	boolean inputStop;
 	
 	public SocketListener(PlayerSide playerSide, SocketConnection socketConnection){
 		
 		this.socketConnection = socketConnection;
 		this.playerSide=playerSide;
+		this.inputStop=false;
 		
 		while(true){
 			message = socketConnection.receiveStringFS();
@@ -26,13 +28,19 @@ public class SocketListener {
 			case	"SOCKETinputNumber":{
 				int lowerBound = Integer.parseInt(socketConnection.receiveStringFS());
 				int upperBound = Integer.parseInt(socketConnection.receiveStringFS());
-				int result = InputHandler.inputNumber(lowerBound, upperBound);
-				socketConnection.sendStringTS(String.valueOf(result));
+				int result = playerSide.getInputHandler().inputNumber(lowerBound, upperBound);
+				if(!inputStop)
+					socketConnection.sendStringTS(String.valueOf(result));
+				else
+					inputStop=false;
 				break;
 			}
 			
-			//case	"SOCKETstopInputNumber":
-			//	break;
+			case	"SOCKETstopInputNumber":
+				System.out.println("Someone told me to stop");
+				inputStop=true;
+				playerSide.getInputHandler().stopInputNumber();
+				break;
 			
 			case	"SOCKETprint":
 				System.out.print(socketConnection.receiveStringFS());
@@ -43,7 +51,7 @@ public class SocketListener {
 				break;
 				
 			default	:
-				System.out.println("error");
+				System.out.println("Error receiving String through socket");
 				break;
 			}
 		}
