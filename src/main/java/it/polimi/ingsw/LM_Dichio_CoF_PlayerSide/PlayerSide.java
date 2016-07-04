@@ -13,8 +13,6 @@ import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.Timer;
 
-import org.mockito.internal.creation.settings.CreationSettings;
-
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
 import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
