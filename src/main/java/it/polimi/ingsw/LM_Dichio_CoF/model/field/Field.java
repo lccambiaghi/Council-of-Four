@@ -20,7 +20,7 @@ public class Field {
 	private ArrayList<Player> arrayListPlayer;
 	private Route richnessRoute;
 	private Route victoryRoute;
-	private Route nobilityRoute;
+	private NobilityRoute nobilityRoute;
 	private Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
 	
 	private King king;
@@ -223,6 +223,7 @@ public class Field {
 		}else{
 			this.nobilityRoute = new NobilityRoute(arrayListPlayer);
 		}
+		nobilityRoute.setField(this);
 		
 	}
 	
