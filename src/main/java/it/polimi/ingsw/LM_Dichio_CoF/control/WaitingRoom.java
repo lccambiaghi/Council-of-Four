@@ -57,7 +57,7 @@ public class WaitingRoom extends Thread{
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {}
-			if(canGoWithCountDown){
+			if(countDown!=null){
 				if(countDown.isTimeFinished()){
 					timeToPlay=true;
 				}
@@ -91,8 +91,7 @@ public class WaitingRoom extends Thread{
 					playersMaxNumber = firstPlayer.getBroker().askInputNumber(2, 8);	
 				} catch (InterruptedException e) {
 					try {
-						firstPlayer.getBroker().println("Too late!\n"
-								+ "You'll play using the standard players number and configurations");
+						firstPlayer.getBroker().println("You'll play using the standard players number and configurations");
 					} catch (InterruptedException e1) {}
 				}
 				
@@ -102,7 +101,7 @@ public class WaitingRoom extends Thread{
 		t.start();
 		
 
-		interruptThreadIfTimerExpires(t, 10);
+		waitForTimer(t, 10);
 		
 		synchronized (lockWaitingRoom) {
 			lockWaitingRoom.notify();
@@ -146,7 +145,7 @@ public class WaitingRoom extends Thread{
 		});
 		t.start();
 		
-		interruptThreadIfTimerExpires(t, 120);
+		waitForTimer(t, 120);
 		
 		/**
 		 * If the timer has expired and the player hasn't set the configurations
@@ -209,7 +208,7 @@ public class WaitingRoom extends Thread{
 		}
 	}
 	
-	private void interruptThreadIfTimerExpires(Thread t, int seconds){
+	private void waitForTimer(Thread t, int seconds){
 		/**
 		 * This "while" permits to check every second if the timer
 		 * to set configurations has expired
