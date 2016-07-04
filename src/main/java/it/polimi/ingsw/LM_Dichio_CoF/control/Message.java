@@ -183,14 +183,14 @@ public final class Message {
 
 		StringBuilder message= new StringBuilder();
 
-		message.append("Choose a destination city for the king:");
+		message.append("Choose a destination city for the king:\n");
 
 		Iterator itCities = movableCities.entrySet().iterator();
 
 		int i=1;
-		while (!itCities.hasNext()) {
+		while (itCities.hasNext()) {
 			Map.Entry city = (Map.Entry) itCities.next();
-			message.append(i + 1).append(". ").append(city.getKey()).append(" Cost: ").append(city.getValue()).append("\n");
+			message.append(i).append(". ").append(city.getKey()).append(" Cost: ").append(city.getValue()).append("\n");
 			i++;
 		}
 

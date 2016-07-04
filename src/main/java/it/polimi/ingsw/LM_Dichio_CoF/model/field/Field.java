@@ -29,7 +29,7 @@ public class Field {
 		
 		this.config=config;
 		this.arrayListPlayer = arrayListPlayer;
-		
+
 		createCitiesAndRegions();
 		
 		assignNearbyCities();
@@ -45,15 +45,20 @@ public class Field {
 	private void createCitiesAndRegions(){
 
 		int numberCities = config.getNumberCities();
+
 		arrayCity = new City[numberCities];
 		
 		int numberCitiesPerRegion = numberCities/Constant.REGIONS_NUMBER;
+
 		City[] arrayCityPerRegion = new City[numberCitiesPerRegion];
 
 		CityColor[] arrayCityColor = createArrayCityColor(numberCities);
 
 		// ristruttura ciclo: king fuori e guarda design patter proxy
 		// proxy: crea city prima e inizializza i parametri nel ciclo(??)
+
+
+
 		for(int itRegion = 0, itColor=0; itRegion<Constant.REGIONS_NUMBER; itRegion++){
 
 			RegionName regionName = RegionName.getRegionNameFromIndex(itRegion);
@@ -65,10 +70,13 @@ public class Field {
 				CityName cityName = CityName.getCityNameFromIndex(cityIndex);
 
 				if (cityName.equals(Constant.KING_CITY_INITIAL)) {
-					if (config.isCityBonusRandom())
+					if (config.isCityBonusRandom()) {
 						arrayCity[cityIndex] = new City(config, cityName, regionName, CityColor.Purple);
-					else
+					}
+					else{
 						arrayCity[cityIndex] = new City(config.getArrayListCityBonus()[cityIndex], cityName, regionName, CityColor.Purple);
+						this.king = new King(arrayCity[cityIndex]);
+					}
 				}
 				else {
 					if (config.isCityBonusRandom())
@@ -88,6 +96,7 @@ public class Field {
 
 	/* This method returns an array of randomly orderered CityColors */
 	private CityColor[] createArrayCityColor(int numberCities){
+
 		CityColor[] arrayCityColor = new CityColor[numberCities];
 
 		switch (numberCities) {

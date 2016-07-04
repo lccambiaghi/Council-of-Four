@@ -59,7 +59,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
         do {
             chosenPoliticCards = choosePoliticCardsUntilEligible(usablePoliticCards);
             satisfactionCost = calculateSatisfactionCost(chosenPoliticCards, minimumKingCost);
-            if (satisfactionCost >0)
+            if (player.getRichness() - satisfactionCost >= 0)
                 eligibleSet=true;
             else
                 player.getBroker().println(Message.notEnoughRichnessForThisSet());
@@ -69,7 +69,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         player.getBroker().println(Message.chooseDestinationCity(movableCities));
 
-        int chosenIndex=player.getBroker().askInputNumber(1, movableCities.size())-1;
+        int chosenIndex=player.getBroker().askInputNumber(1, movableCities.size());
 
         Iterator itCities = movableCities.entrySet().iterator();
         for (int i=1; i<=chosenIndex; i++)
@@ -144,21 +144,24 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         ArrayList <PoliticCard> usableCards = new ArrayList<>();
 
-        for (PoliticCard politicCard: playerHand)
-            if (politicCard.getCardColor()== Color.Multicolor) {
+        for (Iterator<PoliticCard> iterator = playerHand.iterator(); iterator.hasNext(); ) {
+            PoliticCard politicCard = iterator.next();
+            if (politicCard.getCardColor() == Color.Multicolor) {
                 usableCards.add(politicCard);
-                playerHand.remove(politicCard);
+                iterator.remove();
             }
+        }
 
         for (Councillor councillor : kingBalcony.getArrayListCouncillor()) {
             boolean councillorSatisfied = false;
-            while (!councillorSatisfied)
-                for (PoliticCard politicCard : playerHand)
-                    if (councillor.getColor() == politicCard.getCardColor()) {
-                        usableCards.add(politicCard);
-                        playerHand.remove(politicCard);
-                        councillorSatisfied = true;
-                    }
+            for (Iterator<PoliticCard> iterator = playerHand.iterator(); iterator.hasNext(); ) {
+                PoliticCard politicCard = iterator.next();
+                if (councillor.getColor() == politicCard.getCardColor() && !councillorSatisfied ) {
+                    usableCards.add(politicCard);
+                    iterator.remove();
+                    councillorSatisfied = true;
+                }
+            }
         }
 
         return usableCards;
@@ -175,11 +178,10 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         int numberMulticolor=0;
         for (PoliticCard politicCard:arrayListPoliticCards )
-            if(politicCard.getCardColor()==Color.Multicolor) {
+            if(politicCard.getCardColor()==Color.Multicolor)
                 numberMulticolor++;
-                arrayListPoliticCards.remove(politicCard);
-            }
-        int numberSingleColor=arrayListPoliticCards.size();
+
+        int numberSingleColor= arrayListPoliticCards.size()-numberMulticolor;
 
         switch (numberSingleColor+numberMulticolor) {
             case 1:
@@ -225,7 +227,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
             player.getBroker().println(Message.choosePoliticCard(selectablePoliticCards));
 
-            indexSelectedCard = inputNumber(lowerBoundInput, selectablePoliticCards.size());
+            indexSelectedCard = player.getBroker().askInputNumber(lowerBoundInput, selectablePoliticCards.size());
 
             if (indexSelectedCard > 0)
                 selectedPoliticCards.add(selectablePoliticCards.remove(indexSelectedCard - 1)); // -1 for array positioning

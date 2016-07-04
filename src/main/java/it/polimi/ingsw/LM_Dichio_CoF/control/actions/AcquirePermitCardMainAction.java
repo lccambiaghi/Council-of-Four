@@ -9,6 +9,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import static it.polimi.ingsw.LM_Dichio_CoF_PlayerSide.InputHandler.inputNumber;
 
@@ -55,7 +56,7 @@ public class AcquirePermitCardMainAction extends Action {
         do {
             chosenPoliticCards = choosePoliticCardsUntilEligible(usablePoliticCards);
             satisfactionCost = calculateSatisfactionCost(chosenPoliticCards);
-            if (satisfactionCost >=0)
+            if (player.getRichness() - satisfactionCost >=0)
                 eligibleSet=true;
             else
                 player.getBroker().println(Message.notEnoughRichnessForThisSet());
@@ -79,21 +80,24 @@ public class AcquirePermitCardMainAction extends Action {
 
         ArrayList <PoliticCard> usableCards = new ArrayList<>();
 
-        for (PoliticCard politicCard: playerHand)
-            if (politicCard.getCardColor()== Color.Multicolor) {
+        for (Iterator<PoliticCard> iterator = playerHand.iterator(); iterator.hasNext(); ) {
+            PoliticCard politicCard = iterator.next();
+            if (politicCard.getCardColor() == Color.Multicolor) {
                 usableCards.add(politicCard);
-                playerHand.remove(politicCard);
+                iterator.remove();
             }
+        }
 
         for (Councillor councillor : chosenBalcony.getArrayListCouncillor()) {
             boolean councillorSatisfied = false;
-            while (!councillorSatisfied)
-                for (PoliticCard politicCard : playerHand)
-                    if (councillor.getColor() == politicCard.getCardColor()) {
-                        usableCards.add(politicCard);
-                        playerHand.remove(politicCard);
-                        councillorSatisfied = true;
-                    }
+            for (Iterator<PoliticCard> iterator = playerHand.iterator(); iterator.hasNext(); ) {
+                PoliticCard politicCard = iterator.next();
+                if (councillor.getColor() == politicCard.getCardColor() && !councillorSatisfied ) {
+                    usableCards.add(politicCard);
+                    iterator.remove();
+                    councillorSatisfied = true;
+                }
+            }
         }
 
         return usableCards;
@@ -159,7 +163,7 @@ public class AcquirePermitCardMainAction extends Action {
 
             player.getBroker().println(Message.choosePoliticCard(selectablePoliticCards));
 
-            indexSelectedCard = inputNumber(lowerBoundInput, selectablePoliticCards.size());
+            indexSelectedCard = player.getBroker().askInputNumber(lowerBoundInput, selectablePoliticCards.size());
 
             if (indexSelectedCard > 0)
                 selectedPoliticCards.add(selectablePoliticCards.remove(indexSelectedCard - 1)); // -1 for array positioning

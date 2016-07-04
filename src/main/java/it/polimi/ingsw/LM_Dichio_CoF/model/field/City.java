@@ -29,7 +29,6 @@ public class City {
 		this.regionName = regionName;
 		this.cityColor=cityColor;
 		arrayListEmporium = new ArrayList<>();
-		colorBonusSatisfied=false;
 
 		int numberBonus;
 		Random random = new Random();
@@ -62,6 +61,7 @@ public class City {
 		this.regionName = regionName;
 		this.cityColor=cityColor;
 		this.arrayBonus=cityBonus.toArray(new Bonus[cityBonus.size()]);
+		arrayListEmporium = new ArrayList<>();
 				
 	}
 
@@ -75,6 +75,9 @@ public class City {
 	}
 
 	public boolean isEmporiumAlreadyBuilt(Player player){
+
+		if (arrayListEmporium==null)
+			return false;
 
 		for (int i=0; i< arrayListEmporium.size()-1;i++)
 			if (arrayListEmporium.get(i)==player)

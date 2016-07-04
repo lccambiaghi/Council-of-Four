@@ -15,7 +15,7 @@ public class Constant {
 	public static final int RMI_PORT =1099;
 
 	public static final int TIMER_SECONDS_CHECK_QUEUE_PLAYER = 3;
-	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 20;
+	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 300;
 	public static final int TIMER_SECONDS_NEW_MATCH = 5; //FOR TESTS
 	public static final int PLAYERS_MIN_NUMBER = 2;
 
