@@ -45,7 +45,11 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 	}
 	
 	public int inputNumber(int lowerBound, int upperBound){
-		return InputHandler.inputNumber(lowerBound, upperBound);
+		return playerSide.getInputHandler().inputNumber(lowerBound, upperBound);
+	}
+	
+	public void stopInputNumber(){
+		playerSide.getInputHandler().stopInputNumber();
 	}
 	
 	

@@ -21,6 +21,8 @@ public interface RMIPlayerSideInterface extends Remote {
 	
 	public int inputNumber(int lowerBound, int upperBound) throws RemoteException;
 	
+	public void stopInputNumber() throws RemoteException;
+	
 	public void print(String string) throws RemoteException;
 	
 	public void println(String string) throws RemoteException;
