@@ -9,11 +9,7 @@ public enum BonusName {
     Nobility(1),
     Victory(5),
     Cards(3),
-    MainMove(1),
-    BuiltCityBonus(1),
-    FaceUpPermitCard(1),
-    OwnedPermitCardBonus(1),
-    TwoBuiltCitiesDifferentBonus(1);
+    MainMove(1);
 
     private int maxIncrement;
 
@@ -26,12 +22,12 @@ public enum BonusName {
 
     public static BonusName getRandomPermitCardBonusName(){
     	Random random = new Random();
-    	return values()[random.nextInt(values().length-4)];
+    	return values()[random.nextInt(values().length)];
     }
     
     public static BonusName getRandomCityBonusName(){
     	Random random = new Random();
-    	return values()[random.nextInt(values().length-5)];
+    	return values()[random.nextInt(values().length-1)];
     }
 
     /* This method checks if the String parameter is a bonusName */
