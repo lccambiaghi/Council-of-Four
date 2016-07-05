@@ -51,6 +51,7 @@ public class Constant {
 	public static final int PERMIT_CARD_CITIES_NUMBER_MAX =3;
 	public static final int PERMIT_CARD_CITIES_NUMBER_MIN =1;
 	public static final int CITIES_PER_REGION_MIN =5; //?????
+	public static final int INITIALLY_KING_CITY = 9;
 
 	//moves cost
 	public static final int PERMIT_CARD_CHANGE_ASSISTANT_COST = 1;
