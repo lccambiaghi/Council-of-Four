@@ -70,13 +70,13 @@ public class Constant {
 	//nobility bonuses
 	public static final Bonus[][] NOBILITY_CELL_BONUSES = {
 			   {new Bonus(BonusName.Richness, 2), new Bonus(BonusName.Victory, 2)},
-			   {new Bonus(BonusName.BuiltCityBonus, 1)},
+			   {new Bonus(BonusName.Assistant, 1)},
 			   {new Bonus(BonusName.MainMove, 1)},
 			   {new Bonus(BonusName.Victory, 3), new Bonus(BonusName.Cards, 1)},
-			   {new Bonus(BonusName.FaceUpPermitCard, 1)},
+			   {new Bonus(BonusName.Cards, 2)},
 			   {new Bonus(BonusName.Victory, 5), new Bonus(BonusName.Assistant, 1)},
-			   {new Bonus(BonusName.OwnedPermitCardBonus, 1)},
-			   {new Bonus(BonusName.TwoBuiltCitiesDifferentBonus, 1)},
+			   {new Bonus(BonusName.MainMove, 1)},
+			   {new Bonus(BonusName.Richness, 4)},
 			   {new Bonus(BonusName.Victory, 8)},
 			   {new Bonus(BonusName.Victory, 2)},
 			   {new Bonus(BonusName.Victory, 3)},
