@@ -72,7 +72,7 @@ public class CreateConfigurations{
 				for (int j=cityName.ordinal()+1; j<CityName.getCityNameFromIndex(cityNumber).ordinal(); j++){
 					System.out.print(CityName.getCityNameFromIndex(j).toString()+" ");
 				}
-				Character[] input=inputHandler.inputCity(cityName,CityName.getCityNameFromIndex(cityNumber-1));
+				Character[] input=InputHandler.inputCity(cityName,CityName.getCityNameFromIndex(cityNumber-1));
 				for (int j=0; j<input.length;j++){
 					    cityLinksMatrix[i][CityName.valueOf(String.valueOf(input[j])).ordinal()]=1;				    
 					}
@@ -138,8 +138,10 @@ public class CreateConfigurations{
 		if(config.isCityBonusRandom()==false){
 		    ArrayList<CityBonus> arrayListCityBonus[] = new ArrayList[cityNumber];
 		    for (int i=0; i<arrayListCityBonus.length; i++){
+		    	if(i!=Constant.INITIALLY_KING_CITY){
 		    	arrayListCityBonus[i] = new ArrayList<>();
 		    	arrayListCityBonus[i]=askForBonus(i);
+		    	}
 			}
 		    config.setArrayListCityBonus(arrayListCityBonus);
 		}else{
