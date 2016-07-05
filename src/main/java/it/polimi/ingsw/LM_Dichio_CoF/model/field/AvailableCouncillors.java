@@ -14,19 +14,6 @@ public class AvailableCouncillors {
 	
 	private ArrayList <Councillor> arrayListCouncillor;
 
-	// NON POSSO METTERLO SINGLETON :( o si? :D
-	/*
-	private static AvailableCouncillors instance = null;
-	private AvailableCouncillors() { }
-	public static AvailableCouncillors getInstance() {
-		if (instance == null) {
-			instance = new AvailableCouncillors();
-			createList();
-		}
-		return instance;
-	}
-	*/
-
 	/* The constructor creates councillors in order in the arrayList and then
 	  shuffles it */
 	public AvailableCouncillors(){
