@@ -22,6 +22,7 @@ public class Field {
 	private Route victoryRoute;
 	private NobilityRoute nobilityRoute;
 	private Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
+	private Deque<Integer> kingRewardTiles;
 	
 	private King king;
 	
@@ -43,6 +44,12 @@ public class Field {
 	/* This method creates arrayCity[config.numberCities] assigning cities their color,
 	 	then assigns them to the respective region  */
 	private void createCitiesAndRegions(){
+
+		kingRewardTiles.push(Constant.FIFTH_KING_REWARD_VICTORY_INCREMENT);
+		kingRewardTiles.push(Constant.FOURTH_KING_REWARD_VICTORY_INCREMENT);
+		kingRewardTiles.push(Constant.THIRD_KING_REWARD_VICTORY_INCREMENT);
+		kingRewardTiles.push(Constant.SECOND_KING_REWARD_VICTORY_INCREMENT);
+		kingRewardTiles.push(Constant.FIRST_KING_REWARD_VICTORY_INCREMENT);
 
 		int numberCities = config.getNumberCities();
 
@@ -247,4 +254,7 @@ public class Field {
 
 	public King getKing(){return king;}
 
+	public Deque<Integer> getKingRewardTiles() {
+		return kingRewardTiles;
+	}
 }

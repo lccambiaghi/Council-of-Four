@@ -149,57 +149,9 @@ public class BuildEmporiumPermitCardMainAction extends Action {
         		+ chosenCity.getCityName().toString() + " City.";
 
 		//check on bonus tiles
-		if(isEligibleForColorTile()){
+		checkBonusTiles();
 
-			int increment;
-
-			switch (chosenCity.getCityColor()){
-				case Blue:
-					increment= Constant.BLUE_BONUS_TILE_VICTORY_INCREMENT;
-					break;
-				case Bronze:
-					increment= Constant.BRONZE_BONUS_TILE_VICTORY_INCREMENT;
-					break;
-				case Silver:
-					increment= Constant.SILVER_BONUS_TILE_VICTORY_INCREMENT;
-					break;
-				case Gold:
-					increment= Constant.GOLD_BONUS_TILE_VICTORY_INCREMENT;
-					break;
-				case Red:
-					increment= Constant.RED_BONUS_TILE_VICTORY_INCREMENT;
-					break;
-				default:
-					increment=0; //should never be reached
-			}
-
-			player.setRichness(player.getRichness()+increment);
-
-			for(City city: field.getArrayCity())
-				if(city.getCityColor() == chosenCity.getCityColor())
-					city.setColorBonusSatisfied(true);
-
-			resultMsg = resultMsg + "\nDoing so, he acquired "
-					+ chosenCity.getCityColor().toString() +
-					" Bonus Tile.";
-
-		}
-
-		if(isEligibleForRegionTile()){
-
-			player.setRichness(player.getRichness()+Constant.REGION_TILE_VICTORY_INCREMENT);
-
-			int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
-			Region chosenRegion = match.getField().getRegionFromIndex(chosenRegionIndex);
-			chosenRegion.setRegionBonusSatisfied(true);
-
-			resultMsg = resultMsg + "\nDoing so, he acquired "
-					+ chosenCity.getRegionName().toString() +
-					" Bonus Tile.";
-
-		}
-
-    }
+	}
 
 	/* Queue of adjacent built cities. It starts only with chosenCity.
 		Elements of queue are removed and analysed one at a time.
@@ -239,9 +191,82 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 	}
 
+	private void checkBonusTiles() {
+
+		int playerRichness = player.getRichness();
+
+		int increment;
+
+		Deque <Integer> kingRewardTiles = match.getField().getKingRewardTiles();
+
+		if(isEligibleForColorTile()){
+
+			switch (chosenCity.getCityColor()){
+				case Blue:
+					increment= Constant.BLUE_BONUS_TILE_VICTORY_INCREMENT;
+					break;
+				case Bronze:
+					increment= Constant.BRONZE_BONUS_TILE_VICTORY_INCREMENT;
+					break;
+				case Silver:
+					increment= Constant.SILVER_BONUS_TILE_VICTORY_INCREMENT;
+					break;
+				case Gold:
+					increment= Constant.GOLD_BONUS_TILE_VICTORY_INCREMENT;
+					break;
+				case Red:
+					increment= Constant.RED_BONUS_TILE_VICTORY_INCREMENT;
+					break;
+				default:
+					increment=0; //should never be reached
+			}
+
+			player.setRichness(playerRichness+increment);
+
+			for(City city: match.getField().getArrayCity())
+				if(city.getCityColor() == chosenCity.getCityColor())
+					city.setColorBonusSatisfied(true);
+
+			resultMsg = resultMsg + "\nDoing so, he acquired "
+					+ chosenCity.getCityColor().toString() +
+					" Bonus Tile.";
+
+			if(kingRewardTiles.peekFirst()!=null) {
+				increment = kingRewardTiles.pollFirst();
+				player.setRichness(playerRichness + kingRewardTiles.pollFirst());
+				resultMsg = resultMsg + "\n He also acquired "
+						+ increment + " victory points thanks to King's Reward Tile";
+			}
+
+		}
+
+		if(isEligibleForRegionTile()){
+
+			player.setRichness(playerRichness +Constant.REGION_TILE_VICTORY_INCREMENT);
+
+			int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
+			Region chosenRegion = match.getField().getRegionFromIndex(chosenRegionIndex);
+			chosenRegion.setRegionBonusSatisfied(true);
+
+			resultMsg = resultMsg + "\nDoing so, he acquired "
+					+ chosenCity.getRegionName().toString() +
+					" Bonus Tile.";
+
+			if(kingRewardTiles.peekFirst()!=null) {
+				increment = kingRewardTiles.pollFirst();
+				player.setRichness(playerRichness + kingRewardTiles.pollFirst());
+				resultMsg = resultMsg + "\n He also acquired "
+						+ increment + " victory points thanks to King's Reward Tile";
+			}
+
+		}
+
+	}
+
 	private boolean isEligibleForRegionTile() {
 
 		int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
+
 		Region chosenRegion = match.getField().getRegionFromIndex(chosenRegionIndex);
 
 		if(chosenRegion.isRegionBonusSatisfied())
