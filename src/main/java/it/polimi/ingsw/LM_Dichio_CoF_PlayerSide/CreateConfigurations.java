@@ -10,12 +10,27 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityBonus;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityName;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
+/**
+ * This class is used to interact with the first player of the match, it allows to choose
+ * how many custom parameters he wants into the match. 
+ * In detail the user can choose the number of the cities, the minimum and maximum values
+ * of the bonuses that he wants on the Permit Cards, if he wants play with pre-configured
+ * maps or create his personal map (connecting each city) and if the bonuses of the cities
+ * are random or if he wants choose them.
+ * 
+ */
+
 public class CreateConfigurations{
 	
 	private PlayerSide playerSide;
 	private Configurations config;
 	private InputHandler inputHandler;
 	
+	/**
+	 * Constructor of the class
+	 * @param playerSide: 
+	 * @param inputHandler: 
+	 */
 	public CreateConfigurations(PlayerSide playerSide, InputHandler inputHandler){ 
 		this.playerSide=playerSide;
 		this.inputHandler=inputHandler;
@@ -94,34 +109,6 @@ public class CreateConfigurations{
 				System.out.println();
 			}
 			
-			/*{
-				{0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-				{0,	0,	1,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	1,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	1,	0,	1,	0,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	1,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1},
-				{0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0}
-			};
-			/*
-    		 * This fir cycle is for making the matrix specular,
-    		 * because in the txt file it is only upper triangular set
-    		 */
-			/*for(int i=0; i<cityNumber; i++){
-				for(int j=i; j<cityNumber;j++){
-					cityLinksMatrix[j][i]=cityLinksMatrix[i][j];
-				}
-			}*/
-			
-			
 		}else{
 			System.out.println("Select the difficulty (from lower to higher links)");
 			System.out.println("1. low number of linked cities");
@@ -158,7 +145,12 @@ public class CreateConfigurations{
 		return config;
 	}
 	
-	
+	/**
+	 * This method is used to select which level of connections the players wants among
+	 * the cities. 
+	 * @param inputNumber: a number among 1 and 3, inserted by the player
+	 * @return: the char combined to the input level
+	 */
 	private char chooseDifficulty(int inputNumber) {
 		char difficulty;
 		switch (inputNumber){
@@ -173,6 +165,14 @@ public class CreateConfigurations{
 		}
 		return difficulty;
 	}
+	
+	/**
+	 * It's the method used to interact with the player about the bonuses that he wants 
+	 * to set in each city. If the player doesn't want bonuses or if he wants to chage 
+	 * the city he can insert 0.
+	 * @param i: the index of the city in the @Link arrayCity
+	 * @return ArrayList CityBonus: all the bonuses set for the input city  
+	 */	
 	
 	private ArrayList <CityBonus> askForBonus (int i){
 		CityName cityName = CityName.getCityNameFromIndex(i) ;
@@ -209,6 +209,12 @@ public class CreateConfigurations{
 		while (choice!=0);
 		return cityBonus;
 	}
+	
+	/**
+	 * This method return the number of the city that will be in the game
+	 * @param choice: the value inserted by the user among 1 and 3
+	 * @return the effective number of the cities
+	 */
 
 	private int citiesNumber(int choice){
 		int numberCitiesMatch;
