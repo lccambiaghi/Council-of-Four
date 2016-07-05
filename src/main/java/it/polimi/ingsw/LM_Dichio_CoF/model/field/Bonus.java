@@ -81,6 +81,8 @@ public class Bonus {
 				for (int i=0; i<increment; i++)
 					player.addPoliticCard(new PoliticCard());
 				break;
+			case MainMove:
+				player.setMainActionsLeft(increment);
 		}
 
 	}
