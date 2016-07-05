@@ -25,8 +25,6 @@ public class Match {
 	public Match(ArrayList<Player> arrayListPlayer) {
 		
 		this.arrayListPlayer = arrayListPlayer;
-		
-		//Collections.shuffle(arrayListPlayer); //per adesso testiamo solo il primo giocatore
 
 		Configurations config = readFileConfigurations();
 		
@@ -37,8 +35,6 @@ public class Match {
 		field = new Field(config, arrayListPlayer);
 
 		market = new Market (arrayListPlayer,field);
-		
-		//controlMatch = new ControlMatch(this);
 
 		infoMatch = new InfoMatch(this);
 		
