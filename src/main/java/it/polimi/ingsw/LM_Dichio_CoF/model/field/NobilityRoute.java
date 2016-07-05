@@ -80,12 +80,13 @@ public class NobilityRoute implements Route{
 	/* This method increases/decreases the specified player's nobilityMap of the increment specified */
 	public void movePlayer(int increment, Player player){
 		int oldValue = nobilityMap.get(player);
-		NobilityRouteBonus bonus;
+		
 		for(int i=1; i<=increment && (oldValue+i < Constant.NOBILITY_MAX+1); i++){
 			nobilityMap.replace(player, oldValue+i);
 			if(arrayNobilityRouteCell[oldValue+i].hasBonus()){
-				bonus = new NobilityRouteBonus();
-				bonus.applyBonus(player, field);
+				for(Bonus bonus : arrayNobilityRouteCell[oldValue+i].getArrayBonus()){
+					bonus.applyBonus(player, field);
+				}
 			}	
 		}
 	}
