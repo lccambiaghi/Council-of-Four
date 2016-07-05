@@ -47,6 +47,14 @@ public class Constant {
 	public static final int SILVER_BONUS_TILE_VICTORY_INCREMENT = 12;
 	public static final int GOLD_BONUS_TILE_VICTORY_INCREMENT = 20;
 
+	public static final int NUMBER_KING_REWARD_TILES = 5;
+	public static final int FIRST_KING_REWARD_VICTORY_INCREMENT = 25;
+	public static final int SECOND_KING_REWARD_VICTORY_INCREMENT = 18;
+	public static final int THIRD_KING_REWARD_VICTORY_INCREMENT = 12;
+	public static final int FOURTH_KING_REWARD_VICTORY_INCREMENT = 7;
+	public static final int FIFTH_KING_REWARD_VICTORY_INCREMENT = 3;
+
+
 	//support
 	public static final int PERMIT_CARD_CITIES_NUMBER_MAX =3;
 	public static final int PERMIT_CARD_CITIES_NUMBER_MIN =1;
