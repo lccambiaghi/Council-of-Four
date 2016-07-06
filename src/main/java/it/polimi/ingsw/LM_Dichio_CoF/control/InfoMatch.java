@@ -106,8 +106,8 @@ public class InfoMatch {
 		println();
 		println("You have...");
 		printPolitcCards();
-		println("- Richness points: "+ field.getRichnessRoute().getPosition(player));
-		println("- Victory points: "+ field.getVictoryRoute().getPosition(player));
+		println("- Richness points: "+ player.getRichness());
+		println("- Victory points: "+ player.getVictory());
 		println("- Nobility points: "+ field.getNobilityRoute().getPosition(player));
 		printAssistantNumber();
 		printPermitCards();
@@ -274,8 +274,8 @@ public class InfoMatch {
 		println("Players status:");
 		for(Player player: arrayListPlayer){
 			println(player.getNickname() + ": " + 
-					"Richness [" + field.getRichnessRoute().getPosition(player) + "], "+
-					"Victory [" + field.getVictoryRoute().getPosition(player) + "], " +
+					"Richness [" + player.getRichness() + "], "+
+					"Victory [" + player.getVictory() + "], " +
 					"Nobility [" +field.getNobilityRoute().getPosition(player) + "]");
 		}
 		println();

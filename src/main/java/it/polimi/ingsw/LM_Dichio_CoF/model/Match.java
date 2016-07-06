@@ -79,7 +79,7 @@ public class Match {
 	private void giveInitialPoliticCards(ArrayList<Player> arrayListPlayer){
 		for (Player player : arrayListPlayer)
 			for (int itCard = 0; itCard < Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++)
-				player.addPoliticCard(new PoliticCard());
+				player.addPoliticCard(new PoliticCard(Color.getRandomColor()));
 	}
 	
 	private void giveInitialAssistants(ArrayList<Player> arrayListPlayer){

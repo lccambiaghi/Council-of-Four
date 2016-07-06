@@ -18,8 +18,6 @@ public class Field {
 	private Balcony[] arrayBalcony;
 	private AvailableCouncillors availableCouncillors;
 	private ArrayList<Player> arrayListPlayer;
-	private Route richnessRoute;
-	private Route victoryRoute;
 	private NobilityRoute nobilityRoute;
 	private Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
 	private Deque<Integer> kingRewardTiles;
@@ -217,14 +215,12 @@ public class Field {
 		arrayBalcony[0] = new Balcony (availableCouncillors, RegionName.Sea.toString()+"Balcony");
 		arrayBalcony[1] = new Balcony (availableCouncillors, RegionName.Hill.toString()+"Balcony");
 		arrayBalcony[2] = new Balcony (availableCouncillors, RegionName.Mountain.toString()+"Balcony");
-		arrayBalcony[3] = new KingBalcony (availableCouncillors, "KingBalcony");
+		arrayBalcony[3] = new Balcony (availableCouncillors, "KingBalcony");
 	}
 	
 	/* This method creates the three routes and assign them to the field's variables*/
 	private void createRoutes(){
 		
-		this.richnessRoute = new RichnessRoute(arrayListPlayer);
-		this.victoryRoute = new VictoryRoute(arrayListPlayer);
 		if(config.isNobilityBonusRandom()){
 			this.nobilityRoute = new NobilityRoute(arrayListPlayer, config.getNobilityBonusNumber());
 		}else{
@@ -248,9 +244,7 @@ public class Field {
 
 	public AvailableCouncillors getAvailableCouncillors() {return availableCouncillors; }
 
-	public Route getRichnessRoute() {return richnessRoute;}
-	public Route getNobilityRoute() {return nobilityRoute;}
-	public Route getVictoryRoute() {return victoryRoute;}
+	public NobilityRoute getNobilityRoute() {return nobilityRoute;}
 
 	public King getKing(){return king;}
 

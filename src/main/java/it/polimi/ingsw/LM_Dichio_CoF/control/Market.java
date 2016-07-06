@@ -4,15 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.Map.Entry;
 
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.Bonus;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.Field;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.Route;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingAssistants;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingObject;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingPermitCard;
@@ -209,10 +204,10 @@ public class Market {
 	}
 	
 	private boolean canBuy(int price, Player playerTurn, Player sellingPlayer) throws InterruptedException{
-		Route richnessRoute = field.getRichnessRoute();
 		if(checkIfEnoughRichness(playerTurn, price)){
-			richnessRoute.movePlayer(price, sellingPlayer);
-			richnessRoute.movePlayer(-price, playerTurn);
+			int oldRichness = sellingPlayer.getRichness();
+			sellingPlayer.addRichness(price);
+			playerTurn.decrementRichness(price);
 			return true;
 		}
 		playerTurn.getBroker().println(Message.deniedBuying());
@@ -220,9 +215,8 @@ public class Market {
 	}
 	
 	private boolean checkIfEnoughRichness(Player playerTurn, int payed) {
-		Route richnessRoute = field.getRichnessRoute();
 
-		if (richnessRoute.getPosition(playerTurn)<payed)
+		if (playerTurn.getRichness()<payed)
 			return false;
 		else
 			return true;
