@@ -42,8 +42,8 @@ public class GameSide {
 	private Object lockWaitingRoom;
 	
 	private final Object lockArrayListPlayer = new Object();
-	private final Object lockWaitingRoomAvailable = new Object();
-	
+	public final Object lockWaitingRoomFromGameSide = new Object();
+
 	private boolean waitingRoomAvailable=false;
 	
 	public GameSide() {
@@ -99,11 +99,9 @@ public class GameSide {
 		}
 	}
 	
-	
-	
-	
 	public void startHandlePlayer(GameSide gameSide, Player player){
 		HandlePlayer hp = new HandlePlayer(gameSide, player);
+		System.out.println("A new player has connected");
 		hp.start();
 	}
 	
@@ -118,60 +116,77 @@ public class GameSide {
 		}
 		
 		public void run(){
+			
 			try {
+				
 				player.getBroker().login(gameSide);
+				
+				putPlayerInArrayLists();
+				
 				putPlayerInWaitingRoom();
+				
 			}catch (DisconnectedException e){
 				System.out.println("The player trying to login has disconnected!");
 			}
 		}
 		
-		private void putPlayerInWaitingRoom(){
+		private void putPlayerInArrayLists(){
 			synchronized (lockArrayListPlayer) {
 				player.setConnected(true);
 				arrayListPlayer.add(player);
 				arrayListAllPlayer.add(player);
 			}
-			
-			synchronized (lockWaitingRoomAvailable) {
+		}
+		
+		private void putPlayerInWaitingRoom(){
+			synchronized (lockWaitingRoomFromGameSide) {
+				
 				if(!waitingRoomAvailable){
-					waitingRoomAvailable=true;
+					
 					waitingRoom = new WaitingRoom(gameSide, player);
 					waitingRoom.start();
+					
 					lockWaitingRoom=waitingRoom.getLockWaitingRoom();
+					
+					waitingRoomAvailable=true;
+					
+					try {
+						
+						synchronized (lockWaitingRoom) {
+							lockWaitingRoom.wait();
+						}
+						
+					} catch (InterruptedException e) {}
+					
+					
 				}else{
+					
 					waitingRoom.addPlayerToWaitingRoom(player);
+					
 				}
-				try {
-					synchronized (lockWaitingRoom) {
-						lockWaitingRoom.wait();
-					}
-				} catch (InterruptedException e) {}
+				
 			}
 		}
 	
 	}
 	
 	public boolean isNicknameInUse(String nickname){
-		for(Player player: getArrayListAllPlayer()){
-			if(player.getNickname().equals(nickname))
-				return true;
+		synchronized (lockArrayListPlayer) {
+			for(Player player: arrayListAllPlayer){
+				if(player.getNickname().equals(nickname))
+					return true;
+			}
+			return false;
 		}
-		return false;
-	}
-	
-	public ArrayList<Player> getArrayListPlayer() {
-		synchronized(lockArrayListPlayer){
-			return arrayListPlayer;
-		}
-	}
-	
-	public ArrayList<Player> getArrayListAllPlayer() {
-		return arrayListAllPlayer;
 	}
 	
 	public void setWaitingRoomAvailable(boolean waitingRoomAvailable) {
 		this.waitingRoomAvailable = waitingRoomAvailable;
 	}
+	
+	public Object getLockWaitingRoomFromGameSide() {
+		return lockWaitingRoomFromGameSide;
+	}
+
 	
 }
