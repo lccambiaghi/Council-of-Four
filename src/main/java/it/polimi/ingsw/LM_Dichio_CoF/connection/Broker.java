@@ -19,6 +19,10 @@ public class Broker {
 	public void login(GameSide gameSide) throws DisconnectedException{
 		connectionWithPlayer.login(gameSide);
 	}
+	
+	public boolean isCustomConfig() throws DisconnectedException{
+		return isCustomConfig();
+	}
 			
 	public Configurations getConfigurations() throws DisconnectedException{
 		return connectionWithPlayer.getConfigurations();

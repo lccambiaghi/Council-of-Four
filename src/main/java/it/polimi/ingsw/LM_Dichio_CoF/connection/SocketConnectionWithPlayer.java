@@ -92,6 +92,11 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		playersMaxNumber = Integer.parseInt(receiveString());
 		return playersMaxNumber;
 	}
+	
+	public boolean isCustomConfig() throws DisconnectedException{
+		sendString("SOCKETisCustomConfig");
+		return Boolean.valueOf(receiveString());
+	}
 			
 	public Configurations getConfigurations() throws DisconnectedException{
 		Configurations config = null;

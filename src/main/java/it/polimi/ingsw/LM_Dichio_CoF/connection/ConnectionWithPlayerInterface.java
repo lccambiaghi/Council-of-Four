@@ -10,6 +10,8 @@ public interface ConnectionWithPlayerInterface {
 	
 	public void login(GameSide gameSide) throws DisconnectedException;
 	
+	public boolean isCustomConfig() throws DisconnectedException;
+	
 	public Configurations getConfigurations() throws DisconnectedException;
 	
 	public void askInputNumber(int lowerBound, int upperBound) throws DisconnectedException;

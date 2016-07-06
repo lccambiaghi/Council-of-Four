@@ -47,6 +47,16 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 			disconnectionHandler();
 		}
 	}
+	
+	public boolean isCustomConfig() throws DisconnectedException{
+		boolean bool = false;
+		try {
+			bool = rmiPlayerSide.isCustomConfig();
+		} catch (RemoteException e) {
+			disconnectionHandler();
+		}
+		return bool;
+	}
 			
 	public Configurations getConfigurations() throws DisconnectedException{
 		Configurations config = null;

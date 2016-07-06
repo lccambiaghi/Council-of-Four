@@ -17,6 +17,8 @@ public interface RMIPlayerSideInterface extends Remote {
 	
 	public String receiveString () throws RemoteException;
 	
+	public boolean isCustomConfig() throws RemoteException;
+	
 	public Object getConfigurationsAsObject() throws RemoteException;
 	
 	public int inputNumber(int lowerBound, int upperBound) throws RemoteException;
