@@ -13,6 +13,13 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingObject;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingPermitCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.SellingPoliticCard;
 
+/**
+ * This class control the market operations. It interacts with the player asking them what they
+ * want to sell and then what they want to buy. 
+ * When a player sells an object it's added to an arraylist of SellingObject, an useful
+ * abstract class that is in the model package.
+ */
+
 public class Market {
 
 	private SellingObject sellingObject;
@@ -35,6 +42,16 @@ public class Market {
 				
 		startBuying(arrayListSellingObjects);
 	}
+
+	/**
+	 * This is the method that ask to the player which object he would like to sell. 
+	 * First of all it verify that the user, identified by the turm parameter, has something
+	 * to sell. Then there is an HashMap used to create an interactive list of items,
+	 * for example if the player doesn't have Assistants he won't see "Assistants" on his
+	 * monitor, so he can't select it. 
+	 * @param turn
+	 * @throws InterruptedException
+	 */
 	
 	private void startSelling(int turn) throws InterruptedException{
 		int choice;
@@ -92,7 +109,14 @@ public class Market {
 			playerTurn.getBroker().println(Message.deniedSelling());
 		}
 	}
-	
+	/**
+	 * This method read the value inserted by the player and call the right method to
+	 * ask to the player the physical object. When it has finished the object is added
+	 * to the arraylist of selling object
+	 * @param playerTurn
+	 * @param type: it could be "PoliticCard", "PermitCard" or "Assistants"
+	 * @throws InterruptedException
+	 */
 	private void selectObject(Player playerTurn, String type) throws InterruptedException{	
 		
 		PermitCard chosenPermitCard;
@@ -121,6 +145,15 @@ public class Market {
 		arrayListSellingObjects.add(sellingObject);
 		
 	}
+	/**
+	 * The method askPoliticCard iterates on the Politic Cards of the user and he has to select
+	 * a value from an lowerbound to an upperbound. After that he has to choose the price of the
+	 * object.  
+	 * @param playerTurn
+	 * @return 
+	 * @throws InterruptedException
+	 */
+	
 	private PoliticCard askPoliticCard(Player playerTurn) throws InterruptedException{
 		ArrayList <PoliticCard> playerPoliticCards = playerTurn.getArrayListPoliticCard();
 		
@@ -132,7 +165,15 @@ public class Market {
 		playerTurn.getArrayListPoliticCard().remove(chosenPoliticCard);
 		return sellingPoliticCard;
 	}
-	
+	/**
+	 * 
+	 * The method askPermitCard iterates on the Politic Cards of the user and he has to select
+	 * a value from an lowerbound to an upperbound. After that he has to choose the price of the
+	 * object.  
+	 * @param playerTurn
+	 * @return 
+	 * @throws InterruptedException
+	 */
 	private PermitCard askPermitCard(Player playerTurn) throws InterruptedException{
 		ArrayList <PermitCard> playerPermitCards = playerTurn.getArrayListPermitCard();
 		
@@ -145,7 +186,15 @@ public class Market {
 		
 		return sellingPermitCard;
 	}
-	
+	/**
+	 * The method askAssistants shows to the player how many assistants he has; then the player
+	 * has to insert a number of the assistants that he would like to sell.
+	 * After that he has to choose the price of them.
+	 *   
+	 * @param playerTurn
+	 * @return 
+	 * @throws InterruptedException
+	 */
 	private int askAssistant(Player playerTurn) throws InterruptedException{
 		playerTurn.getBroker().println(Message.chooseAssistants(playerTurn));
 	
@@ -159,6 +208,17 @@ public class Market {
 		playerTurn.getBroker().println(Message.askPrice());
 		return playerTurn.getBroker().askInputNumber(1, 20);
 	}
+	
+	/**
+	 * This is the method used to buy an object. When the selling phase is finished
+	 * start this method and first of all it clone the arrayList of players and shuffles it,
+	 * because we need random turns. Then it ask to the first player if he wants to buy something
+	 * and if the answer is positive, it shows all the objects that are in the arraylist.
+	 * The player can choose one of them or quit the market. If it hasn't money and he cannot
+	 * buy nothing, he can presses 0 and quits the buying phase.
+	 * @param arrayListSelingObjects
+	 * @throws InterruptedException
+	 */
 	
 	private void startBuying(ArrayList <SellingObject> arrayListSelingObjects) throws InterruptedException{
 		ArrayList <Player> arrayListPlayerMarket = arrayListPlayer;
@@ -202,10 +262,17 @@ public class Market {
 		while ((turn % arrayListPlayerMarket.size()) != 0);
 		
 	}
-	
+	/**
+	 * The method verify if the buyer has the sufficient richness to buy the object, then 
+	 * it provides to set the new values of the richness for the buyer and the seller.
+	 * @param price
+	 * @param playerTurn: the buyer
+	 * @param sellingPlayer
+	 * @return true if he has sufficient money, false otherwise
+	 * @throws InterruptedException
+	 */
 	private boolean canBuy(int price, Player playerTurn, Player sellingPlayer) throws InterruptedException{
 		if(checkIfEnoughRichness(playerTurn, price)){
-			int oldRichness = sellingPlayer.getRichness();
 			sellingPlayer.addRichness(price);
 			playerTurn.decrementRichness(price);
 			return true;
