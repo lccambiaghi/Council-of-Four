@@ -15,6 +15,7 @@ import java.util.Timer;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
 import it.polimi.ingsw.LM_Dichio_CoF.control.GameSide;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 
 public class PlayerSide {
@@ -39,6 +40,7 @@ public class PlayerSide {
 	private SocketListener socketListener;
 
 	private Configurations config;
+	private boolean customConfig;
 	
 	public PlayerSide() {
 		
@@ -50,6 +52,9 @@ public class PlayerSide {
 		 * Method of the client
 		 * It already controls the input, that can only be "s" or "r"
 		 */
+		
+		chooseToCreateConfigurations();
+		
 		chooseConnection();
 		
 		if(typeOfConnection=='s'){
@@ -73,8 +78,22 @@ public class PlayerSide {
 			this.typeOfConnection='r';
 	}
 
-	protected char getTypeOfConnection() {
-		return typeOfConnection;
+	private void chooseToCreateConfigurations(){
+		
+		System.out.println("Do you want to create your own configurations?\n"
+				+ "1. Yes\n"
+				+ "2. No");
+		int choice = inputHandler.inputNumber(1, 2);
+		
+		if(choice==1){
+			CreateConfigurations cc = new CreateConfigurations(this, inputHandler);
+			cc.startCreating();
+			config = cc.getConfigurations();
+			customConfig = true;
+		}else{
+			customConfig = false;
+		}
+		
 	}
 	
 	public void login(){
@@ -109,13 +128,6 @@ public class PlayerSide {
 	}
 	
 	public Object getConfigurationsAsObject(){
-		
-		CreateConfigurations cc = new CreateConfigurations(this, inputHandler);
-		
-		config = cc.getCustomConfig();
-		
-		//System.out.println("(FOR THE MOMENT) the standard configurations will be used");
-		//setStandardConfigurations();
 		return config;
 	}
 	
@@ -123,29 +135,8 @@ public class PlayerSide {
 		return inputHandler;
 	}
 	
-	//DEPRECATED
-	private void setStandardConfigurations(){
-		
-		FileInputStream fileInputStream = null;
-		ObjectInputStream objectInputStream = null;
-		try {
-
-			//This part permit to read the file of the standard configurations
-			fileInputStream = new FileInputStream("./src/playerConfigurations/standardConfig");
-	        objectInputStream = new ObjectInputStream(fileInputStream);
-	        this.config = (Configurations) objectInputStream.readObject();
-		
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}finally{
-			try {
-				fileInputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	public boolean isCustomConfig(){
+		return customConfig;
 	}
 	
 }
