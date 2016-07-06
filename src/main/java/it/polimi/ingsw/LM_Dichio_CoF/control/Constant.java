@@ -22,8 +22,8 @@ public class Constant {
 	//timers
 	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 300;
 	public static final int TIMER_SECONDS_NEW_MATCH = 20; 
-	public static final int TIMER_SECONDS_WAITING_PLAYERS_MAX_NUMBER = 10;
-	public static final int TIMER_SECONDS_WAITING_CONFIGURATIONS = 120;
+	public static final int TIMER_SECONDS_WAITING_PLAYERS_MAX_NUMBER = 5;
+	public static final int TIMER_SECONDS_WAITING_CONFIGURATIONS = 5;
 
 	//assumptions
 	public static final int CITIES_NUMBER_LOW = 15;
