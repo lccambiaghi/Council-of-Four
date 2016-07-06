@@ -21,7 +21,7 @@ public class Broker {
 	}
 	
 	public boolean isCustomConfig() throws DisconnectedException{
-		return isCustomConfig();
+		return connectionWithPlayer.isCustomConfig();
 	}
 			
 	public Configurations getConfigurations() throws DisconnectedException{
