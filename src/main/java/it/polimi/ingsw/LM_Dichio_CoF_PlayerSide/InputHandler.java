@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LM_Dichio_CoF_PlayerSide;
 
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,47 +10,29 @@ public class InputHandler {
 
 	private Scanner in;
 	private boolean stopped = false;
+	private Thread t;
 	
 	public InputHandler(){	}
 	
 	public void stopInputNumber(){
 		stopped=true;
-		System.out.println("STOPPED");
+		System.out.println("The signal to stop has been received, but I don't know how to do it...");
 	}
 	
-	private void checkIfInput() throws InterruptedException{
-		boolean goOn = true;
-		while(goOn){
-			if(in.hasNextLine()){
-				goOn = false;
-			}else{
-
-				System.out.println("DIO CANE");
-				Thread.sleep(20000);
-				if(stopped){
-					stopped=false;
-					throw new InterruptedException();
-				}	
-			}
-		}
-	}
-	
-	public int inputNumber(int lowerBound, int upperBound){ //TODO throws RemoteException + spostare nella classe della CLI
-
+	public int inputNumber(int lowerBound, int upperBound){
+		
 		int inputNumber = 0;
-		try{
+		//try{
 			
 			in = new Scanner(System.in);
-		
+			
 			boolean eligibleInput=false;
 	
 			do {
 				
-				checkIfInput();
 				while(!in.hasNextInt()){
 					System.out.println("Insert an integer value!");
 					in.nextLine();
-					checkIfInput();
 				}
 				inputNumber=in.nextInt();
 				in.nextLine();
@@ -61,12 +44,15 @@ public class InputHandler {
 										+ " and " + upperBound);
 			} while(!eligibleInput);
 			
-		}catch (InterruptedException e) {
-			System.out.println("Too late!");
-		}
+		//}catch (InterruptedException e) {
+			//System.out.println("Too late!");
+		//}
+		
 		return inputNumber;
 		
 	}
+	
+	
 	public static Character[] inputCity (CityName currentCity, CityName lastCity){
 		Scanner in = new Scanner(System.in);
 		String string;
@@ -107,4 +93,6 @@ public class InputHandler {
 		Character [] result = temp.toArray(new Character [temp.size()]);
 		return result;
 	}
+	
+	
 }
