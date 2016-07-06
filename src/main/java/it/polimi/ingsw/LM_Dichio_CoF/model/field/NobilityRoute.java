@@ -5,7 +5,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 
 import java.util.*;
 
-public class NobilityRoute implements Route{
+public class NobilityRoute{
 
 	private Map <Player,Integer> nobilityMap = new HashMap<>();
 
