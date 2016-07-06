@@ -1,6 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 
 public class Bonus {
@@ -19,14 +20,8 @@ public class Bonus {
 	/* The constructor (2)
 	  If String in input corresponds to a bonusName, then it creates the corresponding bonus
 	  with specified increment */
-	public Bonus(String bonusName, int increment){
-		
-		if(BonusName.containString(bonusName)){
-			 this.bonusName = BonusName.stringToBonusName(bonusName);
-			 this.increment=increment;
-		}
-		
-	}
+
+	
 
 	public BonusName getBonusName() {
 		return bonusName;
@@ -53,29 +48,26 @@ public class Bonus {
 
 	public void applyBonus(Player player, Field field) {
 
-		Route richnessRoute;
-		Route nobilityRoute;
-		Route victoryRoute;
-
+		NobilityRoute nobilityRoute;
+		
 		switch (bonusName){
 			case Assistant:
 				player.addAssistant(increment);
 				break;
 			case Richness:
-				richnessRoute = field.getRichnessRoute();
-				richnessRoute.movePlayer(increment,player);
+				player.addRichness(increment);
 				break;
 			case Nobility:
 				nobilityRoute = field.getNobilityRoute();
 				nobilityRoute.movePlayer(increment, player);
 				break;
 			case Victory:
-				victoryRoute = field.getVictoryRoute();
-				victoryRoute.movePlayer(increment, player);
+				player.addVictory(increment);
 				break;
 			case Cards:
-				for (int i=0; i<increment; i++)
-					player.addPoliticCard(new PoliticCard());
+				for (int i=0; i<increment; i++){
+					player.addPoliticCard(new PoliticCard(Color.getRandomColor()));
+				}
 				break;
 			case MainMove:
 				player.setMainActionsLeft(increment);
