@@ -9,15 +9,21 @@ public class Constant {
 	
 	public static final boolean test = false;
 	
+	//socket connection
 	public static final int SOCKET_PORT =3000;
 	
+	//rmi connection
 	public static final String RMI_REGISTRY_ADDRESS = "127.0.0.1";
 	public static final int RMI_PORT =1099;
 
-	public static final int TIMER_SECONDS_CHECK_QUEUE_PLAYER = 3;
-	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 300;
-	public static final int TIMER_SECONDS_NEW_MATCH = 10; //FOR TESTS
 	public static final int PLAYERS_MIN_NUMBER = 2;
+	public static final int PLAYERS_MAX_NUMBER = 8;
+	
+	//timers
+	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 300;
+	public static final int TIMER_SECONDS_NEW_MATCH = 20; 
+	public static final int TIMER_SECONDS_WAITING_PLAYERS_MAX_NUMBER = 10;
+	public static final int TIMER_SECONDS_WAITING_CONFIGURATIONS = 120;
 
 	//assumptions
 	public static final int CITIES_NUMBER_LOW = 15;
