@@ -7,14 +7,6 @@ public class Bonus {
 
 	BonusName bonusName;
 	int increment;
-		
-	public BonusName getBonusName() {
-		return bonusName;
-	}
-
-	public int getIncrement() {
-		return increment;
-	}
 	
 	public Bonus(){}
 	
@@ -35,7 +27,15 @@ public class Bonus {
 		}
 		
 	}
-	
+
+	public BonusName getBonusName() {
+		return bonusName;
+	}
+
+	public int getIncrement() {
+		return increment;
+	}
+
 	/* This method checks if BonusName of calling bonus is present in arrayBonus (parameter) */
 	public boolean bonusNameIsIn(Bonus[] arrayBonus){
 		
@@ -45,10 +45,6 @@ public class Bonus {
 					return true;
 		}
 		return false;
-	}
-
-	public void setBonusName(BonusName bonusName) {
-		this.bonusName = bonusName;
 	}
 
 	public void setIncrement(int increment) {

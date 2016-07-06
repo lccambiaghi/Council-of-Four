@@ -1,10 +1,10 @@
 package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class AvailableCouncillors {
 
@@ -49,19 +49,6 @@ public class AvailableCouncillors {
 		}
 
 		return null;
-
-	}
-
-	public boolean checkIfColorAvailable(Color color){
-
-		Councillor councillor;
-
-		for (Councillor anArrayListCouncillor : arrayListCouncillor) {
-			if (anArrayListCouncillor.getColor() == color)
-				return true;
-		}
-
-		return false;
 
 	}
 

@@ -1,18 +1,16 @@
 package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+
+import java.util.*;
 
 public class NobilityRoute implements Route{
 
 	private Map <Player,Integer> nobilityMap = new HashMap<>();
+
 	private NobilityRouteCell [] arrayNobilityRouteCell = new NobilityRouteCell[Constant.NOBILITY_MAX+1];
+
 	private Field field;
 	
 	/* The constructor (1) assigns creates nobilityMap with every player

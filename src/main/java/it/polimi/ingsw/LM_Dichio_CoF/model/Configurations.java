@@ -1,14 +1,9 @@
 package it.polimi.ingsw.LM_Dichio_CoF.model;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityBonus;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.CityBonus;
 
 public class Configurations implements Serializable{
 
@@ -17,20 +12,18 @@ public class Configurations implements Serializable{
 	private int permitCardBonusNumberMin;
 	private int permitCardBonusNumberMax;
 	
-	boolean nobilityBonusRandom;
+	private boolean nobilityBonusRandom;
 
-	int nobilityBonusNumber; //how many bonus the user wants on the nobilityRoute
+	private int nobilityBonusNumber; //how many bonus the user wants on the nobilityRoute
 
-	boolean cityLinksPreconfigured;
+	private boolean cityLinksPreconfigured;
 	private char difficulty; // e, n, h
-	int cityLinksMatrix[][];
+	private int[][] cityLinksMatrix;
 
-	boolean cityBonusRandom;
+	private boolean cityBonusRandom;
 	private int cityBonusNumberMin;
 	private int cityBonusNumberMax;
-    private ArrayList<CityBonus> arrayListCityBonus[];
-
-	public Configurations(){}
+	private ArrayList<CityBonus>[] arrayListCityBonus;
 
 	public char getDifficulty() {
 		return difficulty;
@@ -131,6 +124,5 @@ public class Configurations implements Serializable{
 	public void setNobilityBonusNumber(int nobilityBonusNumber) {
 		this.nobilityBonusNumber = nobilityBonusNumber;
 	}
-	
-	
+
 }

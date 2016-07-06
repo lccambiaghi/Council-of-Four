@@ -1,14 +1,10 @@
 package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
-import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class City {
@@ -40,7 +36,7 @@ public class City {
 					config.getCityBonusNumberMin();
 			
 			if(numberBonus!=0){
-				arrayBonus = CityBonus.getArrayBonusCity(numberBonus);
+				arrayBonus = CityBonus.createArrayCityBonus(numberBonus);
 			}
 		}	
 	}	
@@ -97,15 +93,9 @@ public class City {
 	public CityName getCityName() {
 		return cityName;
 	}
-	public void setCityName(CityName cityName) {
-		this.cityName = cityName;
-	}
 	
 	public RegionName getRegionName() {
 		return regionName;
-	}
-	public void setRegionName(RegionName regionName) {
-		this.regionName = regionName;
 	}
 	
 	public City[] getNearbyCity() {

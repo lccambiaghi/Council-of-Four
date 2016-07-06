@@ -12,6 +12,7 @@ public class King {
 	public City getCurrentCity() {
 		return currentCity;
 	}
+
 	public void setCurrentCity(City newCity) {
 		currentCity =newCity;
 	}

@@ -1,16 +1,15 @@
 package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
-import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
-
 public class RichnessRoute implements Route {
 
     private Map<Player, Integer> richnessMap = new HashMap<>();
-    //private HashMap<Player, Integer> richnessMap;
 
     /* The constructor creates richnessMap assigning initial richness to every player */
     public RichnessRoute (ArrayList<Player> arrayListPlayer) {

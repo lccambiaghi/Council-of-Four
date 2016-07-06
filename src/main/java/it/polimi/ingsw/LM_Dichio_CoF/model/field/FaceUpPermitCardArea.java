@@ -6,21 +6,21 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.Configurations;
 public class FaceUpPermitCardArea {
 	
 	private PermitCard[] arrayPermitCard;
-	private City[] arrayCity;
+	private City[] arrayBuildableCities;
 	private Configurations config;
 
-	/* The constructor receives the arrayCity belonging to a region and
+	/* The constructor receives the arrayBuildableCities belonging to a region and
 	  initializes the arrayPermitCard with FACE_UP_PERMIT_CARD_PER_REGION_NUMBER
 	  permit cards */
-	public FaceUpPermitCardArea(City[] arrayCity, Configurations config){
+	public FaceUpPermitCardArea(City[] arrayBuildableCities, Configurations config){
 		
-		this.arrayCity=arrayCity;
+		this.arrayBuildableCities = arrayBuildableCities;
 		this.config=config;
 		
 		arrayPermitCard = new PermitCard[Constant.FACE_UP_PERMIT_CARD_PER_REGION_NUMBER];
 		
 		for(int i=0; i< arrayPermitCard.length; i++){
-			arrayPermitCard[i]= new PermitCard(arrayCity, config);
+			arrayPermitCard[i]= new PermitCard(arrayBuildableCities, config);
 		}
 		
 	}
@@ -37,7 +37,7 @@ public class FaceUpPermitCardArea {
 	}
 
 	public void replacePermitCard(int index){
-		arrayPermitCard[index]=new PermitCard(arrayCity, config);
+		arrayPermitCard[index]=new PermitCard(arrayBuildableCities, config);
 	}
 
 	public PermitCard[] getArrayPermitCard(){

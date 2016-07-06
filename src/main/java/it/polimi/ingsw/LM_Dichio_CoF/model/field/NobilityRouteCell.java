@@ -2,7 +2,8 @@ package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 public class NobilityRouteCell {
 	
-	int index;
+	private int index;
+
 	private Bonus [] arrayBonus;
 
 	/* The constructor creates the NobilityRouteCell, assigning it index and
@@ -25,8 +26,4 @@ public class NobilityRouteCell {
 		this.index=index;
 	}
 
-	public int getIndex() {
-		return index;
-	}
-	
 }

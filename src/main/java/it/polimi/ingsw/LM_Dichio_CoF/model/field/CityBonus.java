@@ -1,12 +1,9 @@
 package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class CityBonus extends Bonus implements Serializable{
-	
-	ArrayList <CityBonus> arrayListCityBonus = new ArrayList <> ();
 	
 	/* The constructor assigns a random bonus name and assigns a random increment*/
 	public CityBonus(){
@@ -27,13 +24,13 @@ public class CityBonus extends Bonus implements Serializable{
 	}
 	
 	/* This method is static.
-	 * It returns an array of "differentBonus" different types of bonus */
-	public static Bonus[] getArrayBonusCity(int differentBonus){
+	 * It returns an array of different types of bonus of the specified size */
+	public static Bonus[] createArrayCityBonus(int size){
 		
-		Bonus[] arrayBonus = new Bonus[differentBonus];
+		Bonus[] arrayBonus = new Bonus[size];
 		Bonus bonus;
 		
-		for(int i=0; i < differentBonus; i++){
+		for(int i=0; i < size; i++){
 			do 
 				bonus = new CityBonus();
 			while(bonus.bonusNameIsIn(arrayBonus));
@@ -41,13 +38,6 @@ public class CityBonus extends Bonus implements Serializable{
 		}
 		
 		return arrayBonus;
-	}
-	
-	public ArrayList <CityBonus> setArrayListCityBonus (CityBonus bonus){
-		
-		arrayListCityBonus.add(bonus);
-		return arrayListCityBonus;
-		
 	}
 	
 }

@@ -10,8 +10,6 @@ public enum Color {
 	Pink, 
 	Purple,
 	Multicolor;
-	
-	/* The constructor assigns rgb*/
 
 	public static Color getRandomColor(){
 		Random random = new Random ();
