@@ -24,8 +24,6 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 		this.gameSide=gameSide;
 		this.rmiPlayerSide=rmiPlayerSide;
 		
-		System.out.println("A new player has connected");
-		
 		player = new Player('r');
 		
 		Broker b = new Broker(this, player);
