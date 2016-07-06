@@ -3,20 +3,7 @@ package it.polimi.ingsw.LM_Dichio_CoF.model.field;
 import java.io.Serializable;
 import java.util.Random;
 
-public class CityBonus extends Bonus implements Serializable{
-	
-	/* The constructor assigns a random bonus name and assigns a random increment*/
-	public CityBonus(){
-		
-		Random random = new Random();
-		
-		this.bonusName = BonusName.getRandomCityBonusName();
-		
-		int maxIncrement = bonusName.getMaxIncrement(bonusName);
-		
-		this.increment = random.nextInt(maxIncrement)+1;
-				
-	}
+public class CityBonus extends Bonus implements Serializable{	
 	
 	public CityBonus(BonusName name, int increment){
 		this.bonusName=name;
@@ -31,8 +18,13 @@ public class CityBonus extends Bonus implements Serializable{
 		Bonus bonus;
 		
 		for(int i=0; i < size; i++){
-			do 
-				bonus = new CityBonus();
+			do {
+				Random random = new Random();
+				BonusName bonusName = BonusName.getRandomCityBonusName();
+				int maxIncrement = BonusName.getMaxIncrement(bonusName);
+				int increment = random.nextInt(maxIncrement)+1;				
+				bonus = new CityBonus(bonusName, increment);
+			}
 			while(bonus.bonusNameIsIn(arrayBonus));
 			arrayBonus[i]=bonus;
 		}
