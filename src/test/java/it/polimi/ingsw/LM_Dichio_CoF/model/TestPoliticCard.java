@@ -15,7 +15,7 @@ public class TestPoliticCard {
 		
 		ArrayList <PoliticCard> initiallyHandCards = new ArrayList <PoliticCard> ();
 		for (int i=0; i<6; i++){
-			PoliticCard card = new PoliticCard();
+			PoliticCard card = new PoliticCard(Color.getRandomColor());
 			initiallyHandCards.add(card);
 		}
 		
