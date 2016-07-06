@@ -1,6 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import it.polimi.ingsw.LM_Dichio_CoF.control.actions.*;
+import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
@@ -26,7 +27,7 @@ public class Turn implements Runnable{
 	public void run(){
 		
 		// Draw a card
-		player.addPoliticCard(new PoliticCard());
+		player.addPoliticCard(new PoliticCard(Color.getRandomColor()));
 					
 		//Set actions 
 		player.setMainActionsLeft(1);
