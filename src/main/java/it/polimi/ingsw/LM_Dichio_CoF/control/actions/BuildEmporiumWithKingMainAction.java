@@ -176,8 +176,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
      */
     private int calculateSatisfactionCost(ArrayList<PoliticCard> arrayListPoliticCards, int minimumKingCost) {
 
-        Route richnessRoute = match.getField().getRichnessRoute();
-        int playerRichness= richnessRoute.getPosition(player);
+        int playerRichness= player.getRichness();
 
         int numberMulticolor=0;
         for (PoliticCard politicCard:arrayListPoliticCards )
@@ -248,9 +247,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         Field field=match.getField();
 
-        Route richnessRoute = field.getRichnessRoute();
-
-        richnessRoute.movePlayer(-(satisfactionCost+kingCost), player);
+        player.decrementRichness(satisfactionCost+kingCost);
 
         for (PoliticCard politicCard : chosenPoliticCards)
             player.discardPoliticCard(politicCard);

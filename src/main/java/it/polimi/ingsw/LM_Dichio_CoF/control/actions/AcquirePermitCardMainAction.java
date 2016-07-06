@@ -107,8 +107,7 @@ public class AcquirePermitCardMainAction extends Action {
 		Second call: if the specified set is eligible, the method returns what the player has to pay */
     private int calculateSatisfactionCost(ArrayList<PoliticCard> usablePoliticCards) {
 
-        Route richnessRoute = match.getField().getRichnessRoute();
-        int playerRichness= richnessRoute.getPosition(player);
+        int playerRichness= player.getRichness();
 
         int numberMulticolor=0;
         for (PoliticCard politicCard:usablePoliticCards )
@@ -183,8 +182,7 @@ public class AcquirePermitCardMainAction extends Action {
 
         //decrease richness
         Field field = match.getField();
-        Route richnessRoute=field.getRichnessRoute();
-        richnessRoute.movePlayer(-satisfactionCost, player);
+        player.decrementRichness(satisfactionCost);
 
         //applying bonuses
         FaceUpPermitCardArea faceUpPermitCardArea=chosenRegion.getFaceUpPermitCardArea();

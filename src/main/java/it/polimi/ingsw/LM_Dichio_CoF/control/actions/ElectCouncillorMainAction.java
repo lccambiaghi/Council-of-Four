@@ -78,10 +78,7 @@ public class ElectCouncillorMainAction extends Action {
 
         chosenBalcony.electCouncillor(chosenCouncillor,availableCouncillors);
 
-        Route richnessRoute = match.getField().getRichnessRoute();
-
-        richnessRoute.movePlayer(Constant.ELECTION_RICHNESS_INCREMENT, player);
-
+        player.addRichness(Constant.ELECTION_RICHNESS_INCREMENT);
         resultMsg= "Player "+ player.getNickname() + " elected a + " +
                 chosenCouncillor.getColor() + " Councillor in " +
                 chosenBalcony.getNameBalcony() + ".\n";

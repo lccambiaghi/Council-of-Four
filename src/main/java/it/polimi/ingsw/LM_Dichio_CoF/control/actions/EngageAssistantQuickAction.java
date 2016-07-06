@@ -4,7 +4,6 @@ import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Message;
 import it.polimi.ingsw.LM_Dichio_CoF.control.Player;
 import it.polimi.ingsw.LM_Dichio_CoF.model.Match;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.Route;
 
 public class EngageAssistantQuickAction extends Action {
 
@@ -19,9 +18,7 @@ public class EngageAssistantQuickAction extends Action {
     @Override
     public boolean preliminarySteps() throws InterruptedException{
 
-        Route richnessRoute = match.getField().getRichnessRoute();
-
-		if(richnessRoute.getPosition(player)<Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST){
+		if(player.getRichness()<Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST){
 
             player.getBroker().println(Message.notEnoughAssistant());
 
@@ -35,10 +32,8 @@ public class EngageAssistantQuickAction extends Action {
 
     @Override
     public void execute(){
-
-    	Route richnessRoute = match.getField().getRichnessRoute();
     
-    	richnessRoute.movePlayer(-(Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST),player);
+    	player.decrementRichness(Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST);
 
         player.addAssistant(1);
 		
