@@ -32,6 +32,10 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 		return string;
 	}
 	
+	public boolean isCustomConfig(){
+		return playerSide.isCustomConfig();
+	}
+	
 	public Object getConfigurationsAsObject(){
 		return playerSide.getConfigurationsAsObject();
 	}
