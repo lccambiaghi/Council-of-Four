@@ -26,26 +26,6 @@ public enum BonusName {
     	return values()[random.nextInt(values().length-1)];
     }
 
-    /* This method checks if the String parameter is a bonusName */
-    public static boolean containString(String test) {
-
-        for (BonusName bonusName : BonusName.values()) {
-            if (bonusName.name().equals(test)) {
-            	return true;
-            }
-        }
-        return false;
-    }
-    
-    public static BonusName stringToBonusName(String test) {
-
-        for (BonusName bonusName : BonusName.values()) {
-            if (bonusName.name().equals(test)) {
-            	return bonusName;
-            }
-        }
-		return null;
-    }
 
     public static int getMaxIncrement(BonusName bonusName){return bonusName.maxIncrement;}
 
