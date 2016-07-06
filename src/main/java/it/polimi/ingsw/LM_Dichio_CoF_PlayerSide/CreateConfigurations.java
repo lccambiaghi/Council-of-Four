@@ -34,10 +34,15 @@ public class CreateConfigurations{
 	public CreateConfigurations(PlayerSide playerSide, InputHandler inputHandler){ 
 		this.playerSide=playerSide;
 		this.inputHandler=inputHandler;
-		this.config = new Configurations();
 	}
 	
-	public Configurations getCustomConfig(){
+	public Configurations getConfigurations(){
+		return config;
+	}
+	
+	public Configurations startCreating(){
+		
+		this.config = new Configurations();
 		
 		System.out.println("How many cities would you like to have in your match?");
 		System.out.println("1. 15 Cities");
