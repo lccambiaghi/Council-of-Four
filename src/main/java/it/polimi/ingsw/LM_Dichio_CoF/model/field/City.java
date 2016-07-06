@@ -41,15 +41,8 @@ public class City {
 		}	
 	}	
 
-	/* Costruttore nuovo: riceve in ingresso la mappa con i bonus e gli incrementi
-	 * Crea un arraylist di bonus (unico modo per gestire la dinamicità dei valori
-	 * perchè non sappiamo quanti bonus l'utente inserirà. L'iterator scorre la mappa
-	 * fin tanto che c'è un elemento. Passa poi i valori al nuovo costruttore dei Bonus 
-	 * che riceve la stringa e l'incremento, dopo di che aggiunge il bonus all'arrayList
-	 * di Bonus della città
-	 */
 
-	/* Assigned bonus constructor: it receives bonusMap, it creates arrayListBonusCity
+	/* Assigned bonus constructor: it receives arrayList of CityBonus, it creates arrayListBonusCity
 	  and assigns them to the city */
 	public City (ArrayList <CityBonus> cityBonus, CityName cityName, RegionName regionName, CityColor cityColor){
 
