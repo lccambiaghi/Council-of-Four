@@ -24,7 +24,8 @@ public class Player{
 	
 	private int richness;
 	private int assistant;
-
+	private int victory;
+	
 	private ArrayList <PoliticCard> arrayListPoliticCard= new ArrayList<>();
 
 	private ArrayList <PermitCard> arrayListPermitCard = new ArrayList<>();
@@ -57,6 +58,12 @@ public class Player{
 		this.broker=broker;
 	}
 	
+	
+	
+	
+	public int getVictory() {return victory;}
+	public void setVictory(int victory) {this.victory = victory;}
+	public void addVictory(int increment){this.setRichness(this.getRichness()+increment);}
 	public String getNickname() {return nickname;}
 	public void setNickname(String nickname) {this.nickname = nickname;}
 	
@@ -68,7 +75,17 @@ public class Player{
 	
 	public int getRichness() {return richness;}
 	public void setRichness(int richness) {this.richness = richness;}
-
+	public void addRichness(int increment){
+		if (this.getRichness()+increment>Constant.RICHNESS_MAX){
+			this.setRichness(Constant.RICHNESS_MAX);
+		}
+		else
+			this.setRichness(this.getRichness()+increment);
+	}
+	public void decrementRichness(int decrement) {
+		this.setRichness(this.getRichness()-decrement);
+	}
+	
 	public int getAssistant() {	return assistant;}
 	public void setAssistant(int assistant) {this.assistant = assistant;}
 	public void addAssistant(int increment)	{assistant +=increment;}
