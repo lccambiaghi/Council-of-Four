@@ -52,7 +52,6 @@ public class Match {
 		
 		try {
 			
-			//il salvataggio per ora è in locale, dovrà essere inviato al server quando ci sarà la connessione
 			fileInputStream = new FileInputStream("./src/configurations/config");
 			
 			// create an ObjectInputStream for the file we created before
