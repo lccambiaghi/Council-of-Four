@@ -65,9 +65,8 @@ public class Bonus {
 				player.addVictory(increment);
 				break;
 			case Cards:
-				for (int i=0; i<increment; i++){
+				for (int i=0; i<increment; i++)
 					player.addPoliticCard(new PoliticCard(Color.getRandomColor()));
-				}
 				break;
 			case MainMove:
 				player.setMainActionsLeft(increment);

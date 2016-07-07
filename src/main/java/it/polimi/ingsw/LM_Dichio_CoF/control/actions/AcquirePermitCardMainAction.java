@@ -30,7 +30,11 @@ public class AcquirePermitCardMainAction extends Action {
 
         Balcony[] arrayBalcony=field.getArrayBalcony();
 
-        player.getBroker().println(Message.chooseBalcony(arrayBalcony));
+        Balcony[] arrayBalconyWithoutKingBalcony= new Balcony[arrayBalcony.length-1];
+
+        System.arraycopy(arrayBalcony, 0, arrayBalconyWithoutKingBalcony, 0, arrayBalcony.length - 1);
+
+        player.getBroker().println(Message.chooseBalcony(arrayBalconyWithoutKingBalcony));
 
         int chosenIndex = player.getBroker().askInputNumber(1, 3) -1; //-1 for array positioning
 
@@ -63,7 +67,7 @@ public class AcquirePermitCardMainAction extends Action {
         PermitCard[] choosablePermitCards = chosenRegion.getFaceUpPermitCardArea().getArrayPermitCard();
         ArrayList<PermitCard> arrayListChoosablePermitCards = new ArrayList<>(Arrays.asList(choosablePermitCards));
 
-        player.getBroker().println(Message.choosePermitCard(arrayListChoosablePermitCards));
+        player.getBroker().println(Message.choosePermitCardNoBonus(arrayListChoosablePermitCards));
         indexChosenPermitCard = player.getBroker().askInputNumber(1, choosablePermitCards.length)-1;
 
         return true;

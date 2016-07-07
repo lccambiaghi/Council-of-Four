@@ -47,7 +47,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         if (calculateSatisfactionCost(usablePoliticCards, minimumKingCost) < 1) {
 
-            player.getBroker().println(Message.notEnoughRichnessForThisSet());
+            player.getBroker().println(Message.notEligibleForMove());
 
             return false;
         }
@@ -255,6 +255,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
         field.getKing().setCurrentCity(chosenCity);
 
         chosenCity.buildEmporium(player);
+        player.getArrayListEmporiumBuilt().add(chosenCity);
 
         resultMsg="Player " + player.getNickname() + " has moved the king to " +
                 chosenCity.getCityName().toString() + " city and built an emporium there.";

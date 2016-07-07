@@ -92,6 +92,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 	 *  This method puts buildableCities in front,
 	 *  so we can use the input of the user to pick the corresponding city
 	 *  */
+	//TODO FIX
 	private int sortBuildableCities(PermitCard permitCard) {
 
 		City[] arrayCity = permitCard.getArrayBuildableCities();
@@ -135,6 +136,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 		Field field=match.getField();
 
 		chosenCity.buildEmporium(player);
+		player.getArrayListEmporiumBuilt().add(chosenCity);
 
 		player.usePermitCard(chosenPermitCard);
 
@@ -150,6 +152,20 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		//check on bonus tiles
 		checkBonusTiles();
+
+		checkIfLastEmporium();
+
+	}
+
+	private void checkIfLastEmporium() {
+
+		if(player.getArrayListEmporiumBuilt().size() == Constant.NUMBER_EMPORIUMS_TO_WIN){
+
+			player.setVictory(player.getVictory() + Constant.VICTORY_INCREMENT_LAST_EMPORIUM);
+
+			match.setGameOver(true);
+
+		}
 
 	}
 

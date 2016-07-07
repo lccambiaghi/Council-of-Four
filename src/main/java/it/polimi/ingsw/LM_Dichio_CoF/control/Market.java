@@ -177,7 +177,7 @@ public class Market {
 	private PermitCard askPermitCard(Player playerTurn) throws InterruptedException{
 		ArrayList <PermitCard> playerPermitCards = playerTurn.getArrayListPermitCard();
 		
-		playerTurn.getBroker().println(Message.choosePermitCard_noBonus(playerPermitCards));
+		playerTurn.getBroker().println(Message.choosePermitCardNoBonus(playerPermitCards));
 
 		int chosenPermitCard = playerTurn.getBroker().askInputNumber(1, playerPermitCards.size())-1;
 		

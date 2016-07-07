@@ -2,10 +2,7 @@ package it.polimi.ingsw.LM_Dichio_CoF.control;
 
 import it.polimi.ingsw.LM_Dichio_CoF.model.Color;
 import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.Balcony;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.Bonus;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.City;
-import it.polimi.ingsw.LM_Dichio_CoF.model.field.PermitCard;
+import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 
 import java.util.ArrayList;
@@ -94,7 +91,7 @@ public final class Message {
 		message.append("Choose a Balcony:");
 
 		for(int i=0; i<arrayBalcony.length; i++)
-			message.append(i+1).append(" ").append(arrayBalcony[i].getNameBalcony());
+			message.append("\n").append(i+1).append(" ").append(arrayBalcony[i].getNameBalcony());
 
 		return message.toString();
 
@@ -104,13 +101,13 @@ public final class Message {
 
 		StringBuilder message= new StringBuilder();
 
-		message.append("Choose a Building Permit Tile:\n");
+		message.append("Choose a Building Permit Tile:");
 
 		for(int i=0; i<arrayListPermitCard.size(); i++) {
 
 			PermitCard permitCard = arrayListPermitCard.get(i);
 
-			message.append(i+1).append(". \nBuildable Cities:\n");
+			message.append("\n").append(i+1).append(". \nBuildable Cities:\n");
 
 			for (City buildableCity : permitCard.getArrayBuildableCities())
 				message.append(buildableCity.getCityName()).append(" ");
@@ -152,6 +149,23 @@ public final class Message {
 
 	}
 
+	public static String choosePermitCardNoBonus(ArrayList <PermitCard> playerPermitCards){
+		StringBuilder message = new StringBuilder ();
+
+		message.append("Choose a Permit Card:\n Your Cards: ");
+
+		for (int i=0; i<playerPermitCards.size(); i++){
+			PermitCard permitCard = playerPermitCards.get(i);
+
+			message.append("\n").append(i+1).append(". \nBuildable Cities:\n");
+			for (City buildableCity : permitCard.getArrayBuildableCities()){
+				message.append(buildableCity.getCityName()).append(" ");
+			}
+		}
+
+		return message.toString();
+
+	}
 
 	public static String chooseDestinationCity(City[] arrayCity){
 		StringBuilder message = new StringBuilder();
@@ -169,10 +183,10 @@ public final class Message {
 
 		StringBuilder message= new StringBuilder();
 
-		message.append("Where would you like to build the emporium?\n");
+		message.append("Where would you like to build the emporium?");
 
 		for(int i=0; i<numberBuildableCities; i++)
-			message.append(i+1).append(" ").append(arrayBuildableCity[i]);
+			message.append("\n").append(i+1).append(" ").append(arrayBuildableCity[i].getCityName());
 
 		return message.toString();
 
@@ -198,22 +212,6 @@ public final class Message {
 
 	}
 
-
-	public static String choosePoliticsCards(ArrayList<PoliticCard> arrayListPoliticCard){
-
-		StringBuilder message= new StringBuilder();
-
-		for(int i=0; i<arrayListPoliticCard.size(); i++)
-			message.append(i+1).append(" ").append(arrayListPoliticCard.get(i).getCardColor()).append("\n");
-
-		return message.toString();
-
-	}
-
-	public static String choosePermitCards_1_2(){
-		return ("Which Permit Tile do you want take, 1 or 2?");
-	}
-
 	public static String youCantBuild(){
 		return ("You either have no Business Permit Tiles" +
 				" or you have already built in every city they avail you to. " +
@@ -233,29 +231,12 @@ public final class Message {
 
 	}
 
-	public static String askHowManyPoliticsCards(){
-		return ("How many Politic Cards do you want to use?");
-	}
-
-	public static String selectAnotherPoliticsCardsSet(){
-		return("You don't have these cards in your hand. Select an other set");
-	}
-
 	public static String notEnoughRichnessForThisSet(){
 		return ("You don't have enough richness to use this set. Please select another one.");
 	}
 
 	public static String notEnoughAssistant(){
 		return ("You don't have enough assistants to perform this move. Please select another one.");
-	}
-
-	public static String notEnoughPoliticsCards(){
-		return ("You don't have enough Politics Card\n" +
-				"Please choose another main move.");
-	}
-
-	public static String notEnoughPoliticsCardsAndRichness(){
-		return ("You don't have enough Politics Cards and Richness at the same time");
 	}
 
 	public static String turnOf(Player player){
@@ -322,10 +303,11 @@ public final class Message {
 	public static String youWon(){
 		return ("You won the match!");
 	}
+
 	public static String choosePoliticCard(ArrayList <PoliticCard> playerPoliticCards){
 		StringBuilder message = new StringBuilder();		
 		
-		message.append("Which Politics Tile would you like to sell?");
+		message.append("Which Politics Cards would you like to use?");
 
 		for (int i=0; i<playerPoliticCards.size(); i++){
 			message.append("\n").append(i+1).append(". ")
@@ -335,21 +317,9 @@ public final class Message {
 
 	}
 
-	public static String choosePermitCard_noBonus(ArrayList <PermitCard> playerPermitCards){
-		StringBuilder message = new StringBuilder ();
-		
-		message.append("Which Business Permit Tile would you like to sell?\n Your Cards: ");
+	public static String chooseSellingObject(Player player, SellingObject sellingObject){
 
-		for (int i=0; i<playerPermitCards.size(); i++){
-			PermitCard permitCard = playerPermitCards.get(i);
-
-			message.append(i+1).append(". \nBuildable Cities:\n");
-			for (City buildableCity : permitCard.getArrayBuildableCities()){
-				message.append(buildableCity.getCityName()).append(" ");
-			}
-		}
-
-		return message.toString();
+		return "";
 
 	}
 
@@ -390,7 +360,9 @@ public final class Message {
 		.append("The price is: ").append(price).append(" coins");
 		
 		return message.toString();
-	}	
+
+	}
+
 	public static String skipBuying (){
 		String message = "0. Exit from the buying step";
 		return message;

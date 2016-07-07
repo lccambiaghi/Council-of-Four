@@ -51,6 +51,8 @@ public class Constant {
 	public static final int BRONZE_BONUS_TILE_VICTORY_INCREMENT = 8;
 	public static final int SILVER_BONUS_TILE_VICTORY_INCREMENT = 12;
 	public static final int GOLD_BONUS_TILE_VICTORY_INCREMENT = 20;
+	public static final int NUMBER_EMPORIUMS_TO_WIN = 10;
+	public static final int VICTORY_INCREMENT_LAST_EMPORIUM = 3;
 
 	public static final int NUMBER_KING_REWARD_TILES = 5;
 	public static final int FIRST_KING_REWARD_VICTORY_INCREMENT = 25;
@@ -58,7 +60,6 @@ public class Constant {
 	public static final int THIRD_KING_REWARD_VICTORY_INCREMENT = 12;
 	public static final int FOURTH_KING_REWARD_VICTORY_INCREMENT = 7;
 	public static final int FIFTH_KING_REWARD_VICTORY_INCREMENT = 3;
-
 
 	//support
 	public static final int PERMIT_CARD_CITIES_NUMBER_MAX =3;
@@ -72,7 +73,6 @@ public class Constant {
 	public static final int ASSISTANT_ENGAGEMENT_RICHNESS_COST = 3;
 	public static final int ELECTION_ASSISTANT_COST = 1;
 	public static final int ADDITIONAL_MAIN_MOVE_ASSISTANT_COST = 3;
-	public static final int MAXIMUM_COST_TO_BUY_PERMIT_TILES = 10;
 
 	//color distributions
 	public static final CityColor[][] CITIES_COLOR = {

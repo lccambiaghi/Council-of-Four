@@ -57,18 +57,11 @@ public class Player{
 	public void setBroker(Broker broker) {
 		this.broker=broker;
 	}
-	
-	
-	
-	
-	public int getVictory() {return victory;}
-	public void setVictory(int victory) {this.victory = victory;}
-	public void addVictory(int increment){this.setRichness(this.getRichness()+increment);}
+
+	public void addVictory(int increment){victory+=increment;}
+
 	public String getNickname() {return nickname;}
 	public void setNickname(String nickname) {this.nickname = nickname;}
-	
-	public char getTypeOfConnection() {return typeOfConnection;}
-	public void setTypeOfConnection(char typeOfConnection) {this.typeOfConnection = typeOfConnection;}
 	
 	public boolean isConnected() {return connected;}
 	public void setConnected(boolean connected) {this.connected = connected;}
@@ -111,6 +104,14 @@ public class Player{
 
 	public boolean isQuickActionDone() {return quickActionDone;}
 	public void setQuickActionDone(boolean quickActionDone) {this.quickActionDone = quickActionDone;}
-	
-	
+
+
+	public int getVictory() {
+		return victory;
+	}
+
+	public void setVictory(int victory) {
+		this.victory = victory;
+	}
+
 }

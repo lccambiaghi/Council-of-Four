@@ -128,7 +128,7 @@ public class InfoMatch {
 		
 		println();
 		City chosenCity= arrayCity[indexCity];
-		println("- City: "+ chosenCity.getCityName());
+		println("- City: "+ chosenCity.getCityName().toString());
 		println("- Color: "+ chosenCity.getCityColor());
 		print("- Bonus: ");
 		if(!chosenCity.hasBonus()){
@@ -323,7 +323,8 @@ public class InfoMatch {
 		}
 		println();
 	}
-	
+
+
 	
 
 }

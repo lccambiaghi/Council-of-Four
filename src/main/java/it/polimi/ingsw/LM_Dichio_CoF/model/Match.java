@@ -17,10 +17,14 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 public class Match {
 
 	private ArrayList<Player> arrayListPlayer;
+
 	private Field field;
+
 	private Market market;
 
 	private InfoMatch infoMatch;
+
+	private boolean gameOver;
 	
 	public Match(ArrayList<Player> arrayListPlayer) {
 		
@@ -96,4 +100,12 @@ public class Match {
 	public InfoMatch getInfoMatch() {return infoMatch;}
 
 	public Market getMarket() { return market; }
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
 }
