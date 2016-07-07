@@ -43,26 +43,24 @@ public class WaitingRoom extends Thread{
 		
 		lockWaitingRoomFromGameSide = gameSide.getLockWaitingRoomFromGameSide();
 		
-		boolean onTime = askForNumberPlayers();
+		boolean destroy = false;
 		
-		if(onTime){
+		try {
 			
-			try {
-				if(firstPlayer.getBroker().isCustomConfig())
-					askForConfigurations();
-			} catch (DisconnectedException e) {
-				e.printStackTrace();
-			}
+			askForNumberPlayersAndConfig();
 			
-		}else{
-			
-			playersMaxNumber=Constant.PLAYERS_MAX_NUMBER;
-	
+		} catch (DisconnectedException e1) {
+			gameSide.removePlayerFromArrayList(firstPlayer);
+			gameSide.setWaitingRoomAvailable(false);
+			destroy=true;
 		}
 		
 		synchronized (lockWaitingRoom) {
 			lockWaitingRoom.notify();
 		}
+		
+		if(destroy)
+			return;
 		
 		while(!timeToPlay){
 			
@@ -74,91 +72,66 @@ public class WaitingRoom extends Thread{
 			} catch (InterruptedException e) {}
 			
 		}
-		
-		try {
-			Broadcast.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+
+		Broadcast.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
 		
 		controlMatch = new ControlMatch(arrayListPlayerMatch);
-		try {
-			controlMatch.startMatch();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+	
+		controlMatch.startMatch();
 		
 	}
 	
-	public boolean askForNumberPlayers(){
+	public void askForNumberPlayersAndConfig() throws DisconnectedException{
 		
 		Thread t = new Thread(new Runnable(){
 			public void run(){
 				try {
 					firstPlayer.getBroker().println("You are the first player!\n"
-							+ "Insert the number of players you want to play with.\n"
-							+ "Min: "+Constant.PLAYERS_MIN_NUMBER+", Max: "+Constant.PLAYERS_MAX_NUMBER+"\n"
-							+ "(You have "+Constant.TIMER_SECONDS_WAITING_CONFIGURATIONS+" seconds)");
-					playersMaxNumber = firstPlayer.getBroker().askInputNumber(2, 8);	
+							+ "You have "+Constant.TIMER_SECONDS_WAITING_CONFIGURATIONS+" seconds to answer:");
+					askForNumberPlayers();
+					if(firstPlayer.getBroker().isCustomConfig())
+						askForConfigurations();
 				} catch (InterruptedException e) {
 					try {
-						firstPlayer.getBroker().println("You'll play using the standard players number and configurations");
+						firstPlayer.getBroker().println("You'll play using the standard max players number and configurations");
 					} catch (InterruptedException e1) {}
-				}
+				} catch (DisconnectedException e) {}
 				
 			}			
 			
 		});
 		t.start();
 		
-
 		waitForTimer(t, Constant.TIMER_SECONDS_WAITING_CONFIGURATIONS);
+		
+		if(!firstPlayer.isConnected())
+			throw new DisconnectedException();
 		
 		/**
 		 * If the timer has expired and the player hasn't set the number of players
 		 */
 		if(t.isAlive()){
 			t.interrupt();
-			return false;
-		}else{
-			return true;
+			playersMaxNumber=Constant.PLAYERS_MAX_NUMBER;
 		}
 		
 	}
 	
-	private void askForConfigurations(){
-
-		Thread t = new Thread(new Runnable(){
-			public void run(){
-				try {
-					firstPlayer.getBroker().println("Do you want to play with last configurations used?\n"
-							+ "(You have "+Constant.TIMER_SECONDS_WAITING_CONFIGURATIONS+" seconds)");
-					firstPlayer.getBroker().println(Message.chooseYesOrNo_1_2());
-					int choice = firstPlayer.getBroker().askInputNumber(1, 2);
-					if(choice==2){
-						try {
-							config = firstPlayer.getBroker().getConfigurations();
-							saveFileConfigurations(config);
-						} catch (DisconnectedException e) {}
-					}
-				} catch (InterruptedException e) {
-					try {
-						firstPlayer.getBroker().println("Too late! You'll play with last configurations used");
-					} catch (InterruptedException e1) {}
-				}
-				
-			}			
-			
-		});
-		t.start();
+	private void askForNumberPlayers() throws InterruptedException{
+		firstPlayer.getBroker().println("Insert the max number of players you want to play with.\n"
+				+ "Min: " +Constant.PLAYERS_MIN_NUMBER+ ", Max: "+ Constant.PLAYERS_MAX_NUMBER);
+		playersMaxNumber = firstPlayer.getBroker().askInputNumber(2, 8);
+	}
+	
+	
+	private void askForConfigurations() throws DisconnectedException, InterruptedException{
 		
-		waitForTimer(t, Constant.TIMER_SECONDS_WAITING_CONFIGURATIONS);
-		
-		/**
-		 * If the timer has expired and the player hasn't set the configurations
-		 */
-		if(t.isAlive()){	
-			t.interrupt();
+		firstPlayer.getBroker().println("Do you want to play with last configurations used?\n");
+		firstPlayer.getBroker().println(Message.chooseYesOrNo_1_2());
+		int choice = firstPlayer.getBroker().askInputNumber(1, 2);
+		if(choice==2){
+			config = firstPlayer.getBroker().getConfigurations();
+			saveFileConfigurations(config);
 		}
 	
 	}
