@@ -28,8 +28,6 @@ public class GameSide {
 		new GameSide();
     }
 	
-	
-	private static ArrayList<Player> arrayListPlayer = new ArrayList<Player>();
 	private static ArrayList<Player> arrayListAllPlayer = new ArrayList<Player>();
 
 	private RMIGameSideInterface rmiGameSide;
@@ -121,54 +119,63 @@ public class GameSide {
 				
 				player.getBroker().login(gameSide);
 				
-				putPlayerInArrayLists();
+				putPlayerInArrayList(player);
 				
-				putPlayerInWaitingRoom();
+				putPlayerInWaitingRoom(player);
 				
 			}catch (DisconnectedException e){
 				System.out.println("The player trying to login has disconnected!");
 			}
 		}
-		
-		private void putPlayerInArrayLists(){
-			synchronized (lockArrayListPlayer) {
-				player.setConnected(true);
-				arrayListPlayer.add(player);
-				arrayListAllPlayer.add(player);
-			}
-		}
-		
-		private void putPlayerInWaitingRoom(){
-			synchronized (lockWaitingRoomFromGameSide) {
-				
-				if(!waitingRoomAvailable){
-					
-					waitingRoom = new WaitingRoom(gameSide, player);
-					waitingRoom.start();
-					
-					lockWaitingRoom=waitingRoom.getLockWaitingRoom();
-					
-					waitingRoomAvailable=true;
-					
-					try {
-						
-						synchronized (lockWaitingRoom) {
-							lockWaitingRoom.wait();
-						}
-						
-					} catch (InterruptedException e) {}
-					
-					
-				}else{
-					
-					waitingRoom.addPlayerToWaitingRoom(player);
-					
-				}
-				
-			}
-		}
 	
 	}
+	
+	public void putPlayerInArrayList(Player player){
+		synchronized (lockArrayListPlayer) {
+			player.setConnected(true);
+			arrayListAllPlayer.add(player);
+		}
+	}
+	
+	public void removePlayerFromArrayList(Player player){
+		synchronized (lockArrayListPlayer) {
+			for(int i = 0; i<arrayListAllPlayer.size(); i++){
+				if(arrayListAllPlayer.get(i).equals(player))
+					arrayListAllPlayer.remove(i);
+			}
+		}
+	}
+	
+	private void putPlayerInWaitingRoom(Player player){
+		synchronized (lockWaitingRoomFromGameSide) {
+			
+			if(!waitingRoomAvailable){
+				
+				waitingRoom = new WaitingRoom(this, player);
+				waitingRoom.start();
+				
+				lockWaitingRoom=waitingRoom.getLockWaitingRoom();
+				
+				waitingRoomAvailable=true;
+				
+				try {
+					
+					synchronized (lockWaitingRoom) {
+						lockWaitingRoom.wait();
+					}
+					
+				} catch (InterruptedException e) {}
+				
+				
+			}else{
+				
+				waitingRoom.addPlayerToWaitingRoom(player);
+				
+			}
+			
+		}
+	}
+	
 	
 	public boolean isNicknameInUse(String nickname){
 		synchronized (lockArrayListPlayer) {
