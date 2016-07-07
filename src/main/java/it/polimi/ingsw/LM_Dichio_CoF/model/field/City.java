@@ -49,7 +49,10 @@ public class City {
 		this.cityName = cityName;
 		this.regionName = regionName;
 		this.cityColor=cityColor;
-		this.arrayBonus=cityBonus.toArray(new Bonus[cityBonus.size()]);
+		if(cityBonus!=null)
+			this.arrayBonus=cityBonus.toArray(new Bonus[cityBonus.size()]);
+		else
+			this.arrayBonus=null;
 		arrayListEmporium = new ArrayList<>();
 				
 	}
