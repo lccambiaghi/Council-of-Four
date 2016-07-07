@@ -39,7 +39,7 @@ public class ControlMatch {
 		return ps;
 	}
 
-	public void startMatch() throws InterruptedException{
+	public void startMatch(){
 
 		int playerNumber=0;
 
