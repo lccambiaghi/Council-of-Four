@@ -32,9 +32,11 @@ public class Match {
 
 		Configurations config = readFileConfigurations();
 		
-		giveInitialPoliticCards(this.arrayListPlayer);
+		giveInitialPoliticCards();
 
-		giveInitialAssistants(this.arrayListPlayer);
+		giveInitialAssistants();
+		
+		giveInitialRichness();
 		
 		field = new Field(config, arrayListPlayer);
 
@@ -79,16 +81,22 @@ public class Match {
 		return null;
 	}
 		
-	private void giveInitialPoliticCards(ArrayList<Player> arrayListPlayer){
+	private void giveInitialPoliticCards(){
 		for (Player player : arrayListPlayer)
 			for (int itCard = 0; itCard < Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++)
 				player.addPoliticCard(new PoliticCard(Color.getRandomColor()));
 	}
 	
-	private void giveInitialAssistants(ArrayList<Player> arrayListPlayer){
+	private void giveInitialAssistants(){
 		for(int itPlayer = 0, numberAssistants = Constant.ASSISTANT_INITIAL_FIRST_PLAYER;
 			itPlayer<arrayListPlayer.size(); itPlayer++, numberAssistants++)
 				arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
+	}
+	
+	private void giveInitialRichness(){
+		for(int itPlayer = 0, numberRichness = Constant.RICHNESS_INITIAL_FIRST_PLAYER;
+				itPlayer<arrayListPlayer.size(); itPlayer++, numberRichness++)
+					arrayListPlayer.get(itPlayer).setRichness(numberRichness);
 	}
 
 	public Field getField(){

@@ -164,7 +164,7 @@ public class InfoMatch {
 				println("Permit Card " + (j+1) + ":");
 				print("- Buildable Cities: ");
 				for(City city: arrayPermitCard[j].getArrayBuildableCities())
-					print(city.getCityName() + " ");
+					print(city.getCityName().toString() + " ");
 				println();
 				print("- Bonus: ");
 				if(!arrayPermitCard[j].hasBonus()){
@@ -232,7 +232,7 @@ public class InfoMatch {
 	private void printCityLinks() throws InterruptedException{
 		List<Integer>[] arrayCityLinks = field.getArrayCityLinks();
 		for(int i=0; i<arrayCityLinks.length; i++){
-			print(arrayCity[i].getCityName() + ": ");
+			print(arrayCity[i].getCityName().toString() + ": ");
 			for(int j=0;j<arrayCityLinks[i].size();j++){
 			    print(arrayCity[arrayCityLinks[i].get(j)].getCityName().toString());
 			    if(j!=arrayCityLinks[i].size()-1)
@@ -304,7 +304,7 @@ public class InfoMatch {
 				PermitCard permitCard =  arrayListPermitCard.get(i);
 				print(i+1 + ". Buildable Cities: ");
 				for(City city: permitCard.getArrayBuildableCities())
-					print(city.getCityName() + " ");
+					print(city.getCityName().toString() + " ");
 				println();
 			}
 		}
@@ -317,7 +317,7 @@ public class InfoMatch {
 			println("-- none --");
 		else{
 			for(City city: player.getArrayListEmporiumBuilt()){
-				print(city.getCityName() + " ");
+				print(city.getCityName().toString() + " ");
 			}
 			println();
 		}
