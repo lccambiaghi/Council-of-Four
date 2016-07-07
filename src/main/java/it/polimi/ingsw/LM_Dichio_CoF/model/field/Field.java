@@ -20,7 +20,7 @@ public class Field {
 	private ArrayList<Player> arrayListPlayer;
 	private NobilityRoute nobilityRoute;
 	private Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
-	private Deque<Integer> kingRewardTiles;
+	private Deque<Integer> kingRewardTiles = new ArrayDeque<>();
 	
 	private King king;
 	
