@@ -155,7 +155,7 @@ public final class Message {
 		message.append("Choose a city:");
 
 		for(int i=0; i<arrayCity.length; i++)
-			message.append("\n").append(i+1).append(" ").append(arrayCity[i].getCityName());
+			message.append("\n").append(i+1).append(" ").append(arrayCity[i].getCityName().toString());
 
 		return message.toString();
 

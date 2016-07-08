@@ -67,7 +67,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
         int chosenIndex = player.getBroker().askInputNumber(1, movableCities.size());
 
         Iterator itCities = movableCities.entrySet().iterator();
-        for (int i = 1; i <= chosenIndex; i++)
+        for (int i = 1; i < chosenIndex; i++)
             itCities.next();
         Map.Entry chosenEntry = (Map.Entry) itCities.next();
 
