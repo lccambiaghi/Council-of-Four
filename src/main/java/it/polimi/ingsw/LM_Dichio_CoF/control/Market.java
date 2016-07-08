@@ -230,8 +230,8 @@ public class Market {
 			Player playerTurn=arrayListPlayerMarket.get(turn);
 			playerTurn.getBroker().println(Message.chooseToBuySomething_1_2());
 			if(playerTurn.getBroker().askInputNumber(1,2)==1){
-				playerTurn.getBroker().println(Message.skipBuying());
 				playerTurn.getBroker().println(Message.askObjectToBuy());
+				playerTurn.getBroker().println(Message.skipBuying());
 				for (int i=0; i<arrayListSelingObjects.size();i++){
 					playerTurn.getBroker().println((i+1)+ ". " + arrayListSellingObjects.get(i).getObjectInfo());
 				}
@@ -250,8 +250,9 @@ public class Market {
 							buyingSuccessful=true;
 						}
 						else {
-							
 							buyingSuccessful=false;
+							playerTurn.getBroker().println(Message.askObjectToBuy());
+							playerTurn.getBroker().println(Message.skipBuying());
 						}
 					}
 				}
