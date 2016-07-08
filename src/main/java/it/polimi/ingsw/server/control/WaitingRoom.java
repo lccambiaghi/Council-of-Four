@@ -17,10 +17,9 @@ public class WaitingRoom extends Thread{
 	private Configurations config = null;
 	
 	private int numPlayers;
-	private CountDown countDown;
+	private ControlTimer controlTimer;
 	
 	private boolean timeToPlay = false;
-	private boolean canGoWithCountDown = false;
 	
 	private ArrayList<Player> arrayListPlayerMatch = new ArrayList<Player>();
 	
@@ -100,7 +99,8 @@ public class WaitingRoom extends Thread{
 		});
 		t.start();
 		
-		waitForTimer(t, Constant.TIMER_SECONDS_WAITING_CONFIGURATIONS);
+		
+		new ControlTimer().waitForThreadUntilTimerExpires(t, Constant.TIMER_SECONDS_WAITING_CONFIGURATIONS);
 		
 		if(!firstPlayer.isConnected())
 			throw new DisconnectedException();
@@ -161,13 +161,18 @@ public class WaitingRoom extends Thread{
 	}
 	
 	private void startCountDown(){
-		countDown = new CountDown(Constant.TIMER_SECONDS_NEW_MATCH);
+		new ControlTimer().startCountDown(Constant.TIMER_SECONDS_NEW_MATCH);
 	}
 	
+	
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean isCountDownFinished(){
 		synchronized (lockWaitingRoomFromGameSide) {
-			if(countDown!=null){
-				if(countDown.isTimeFinished()){
+			if(controlTimer!=null){
+				if(controlTimer.isCountDownFinished()){
 					gameSide.setWaitingRoomAvailable(false);
 					return true;
 				}
@@ -176,6 +181,11 @@ public class WaitingRoom extends Thread{
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @param config
+	 */
 	private void saveFileConfigurations(Configurations config){
 		
 		FileOutputStream fileOutputStream = null;
@@ -190,25 +200,6 @@ public class WaitingRoom extends Thread{
 		}
 
 
-	}
-	
-	private void waitForTimer(Thread t, int seconds){
-		/**
-		 * This "while" permits to check every second if the timer
-		 * to set configurations has expired
-		 */
-		long startTime = System.currentTimeMillis();
-		long endTime = startTime + (seconds)*1000;
-		while (System.currentTimeMillis() < endTime) {
-		    try {
-		         Thread.sleep(1000);  // Sleep 1 second
-		         
-		         // If the player has set players before the timer expires
-		         if(!t.isAlive())
-		        	 break;
-		         
-		    } catch (InterruptedException e) {}	
-		}
 	}
 	
 	public Object getLockWaitingRoom(){ return lockWaitingRoom; }
