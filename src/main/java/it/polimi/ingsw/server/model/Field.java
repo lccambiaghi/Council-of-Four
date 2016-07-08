@@ -74,6 +74,7 @@ public class Field {
 				if (cityName.equals(Constant.KING_CITY_INITIAL)) {
 					if (config.isCityBonusRandom()) {
 						arrayCity[cityIndex] = new City(config, cityName, regionName, CityColor.Purple);
+						this.king = new King(arrayCity[cityIndex]);
 					}
 					else{
 						arrayCity[cityIndex] = new City(config.getArrayListCityBonus()[cityIndex], cityName, regionName, CityColor.Purple);

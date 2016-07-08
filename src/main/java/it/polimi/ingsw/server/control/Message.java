@@ -149,12 +149,13 @@ public final class Message {
 	}
 
 	public static String chooseDestinationCity(City[] arrayCity){
+
 		StringBuilder message = new StringBuilder();
 		
-		message.append("Choose a city:\n");
+		message.append("Choose a city:");
 
 		for(int i=0; i<arrayCity.length; i++)
-			message.append(i+1).append(" ").append(arrayCity[i]);
+			message.append("\n").append(i+1).append(" ").append(arrayCity[i].getCityName());
 
 		return message.toString();
 
@@ -184,6 +185,7 @@ public final class Message {
 		int i=1;
 		while (itCities.hasNext()) {
 			Map.Entry city = (Map.Entry) itCities.next();
+			//TODO stampa nome città
 			message.append(i).append(". ").append(city.getKey()).append(" Cost: ").append(city.getValue()).append("\n");
 			i++;
 		}

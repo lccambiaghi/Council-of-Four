@@ -15,8 +15,6 @@ public class PlayerSide {
 	
 	private String nickname;
 	
-	private RMIGameSideInterface rmiGameSide;
-	
 	private char typeOfConnection;
 	
 	private SocketConnection socketConnection;
@@ -24,8 +22,6 @@ public class PlayerSide {
 	private RMIConnection rmiConnection;
 	
 	private InputHandler inputHandler;
-
-	private SocketListener socketListener;
 
 	private Configurations config;
 	private boolean customConfig;
@@ -47,7 +43,7 @@ public class PlayerSide {
 		
 		if(typeOfConnection=='s'){
 			socketConnection = new SocketConnection(this);
-			socketListener = new SocketListener(this, socketConnection);
+			new SocketListener(this, socketConnection);
 		}else{
 			rmiConnection = new RMIConnection(this);
 		}

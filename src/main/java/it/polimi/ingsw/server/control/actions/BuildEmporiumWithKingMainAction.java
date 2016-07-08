@@ -221,6 +221,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
             if(numberSelectedCards==1)
                 lowerBoundInput = 0;
 
+            //TODO FIX
             if(numberSelectedCards>=1)
                 player.getBroker().println("0. [Done] ");
 
