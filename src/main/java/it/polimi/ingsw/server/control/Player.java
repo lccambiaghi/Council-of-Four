@@ -15,12 +15,11 @@ public class Player{
 
 	private char typeOfConnection;
 	
-	private ConnectionWithPlayerInterface connectionWithPlayer;
-	
 	private Broker broker;
 	
 	// variables of the game
-	private boolean connected;
+	private boolean connected = true;
+	private boolean messageDisconnectedSent = false;
 	
 	private int richness;
 	private int assistant;
@@ -49,13 +48,14 @@ public class Player{
 		this.broker=broker;
 	}
 
-	public void addVictory(int increment){victory+=increment;}
-
 	public String getNickname() {return nickname;}
 	public void setNickname(String nickname) {this.nickname = nickname;}
 	
 	public boolean isConnected() {return connected;}
 	public void setConnected(boolean connected) {this.connected = connected;}
+	
+	public boolean isMessageDisconnectedSent() {return messageDisconnectedSent;}
+	public void setMessageDisconnectedSent(boolean messageDisconnectedSent) {this.messageDisconnectedSent = messageDisconnectedSent;	}
 	
 	public int getRichness() {return richness;}
 	public void setRichness(int richness) {this.richness = richness;}
@@ -74,6 +74,8 @@ public class Player{
 	public void setAssistant(int assistant) {this.assistant = assistant;}
 	public void addAssistant(int increment)	{assistant +=increment;}
 	public void decrementAssistant(int decrement)	{assistant -=decrement;}
+	
+	public void addVictory(int increment){victory+=increment;}
 	
 	public ArrayList<PoliticCard> getArrayListPoliticCard() {return arrayListPoliticCard;}
 	public void addPoliticCard(PoliticCard politicCard) {arrayListPoliticCard.add(politicCard);}
