@@ -24,37 +24,45 @@ import it.polimi.ingsw.server.model.SellingPoliticCard;
  * abstract class that is in the model package.
  */
  
-public class MarketHandler {
+public class ControlMarket {
  
     private ArrayList <Player> arrayListPlayers;
-    public ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
+    private ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
     private Match match;
+    private Action action;
+    private int turn;
    
-    public MarketHandler (ArrayList<Player> arrayListPlayer, Match match){
+    public ControlMarket (ArrayList<Player> arrayListPlayer, Match match){
         this.arrayListPlayers = new ArrayList<Player>(arrayListPlayer);
         this.match=match;
     }
    
     public void startMarket () throws InterruptedException{
-        int turn = 0;
-        Action action;
+        
+    	startSelling();
        
-        do {
+        startBuying();
+        
+    } 
+    
+    private void startSelling() throws InterruptedException{
+    	
+    	turn = 0;
+    	do {
             action = new MarketSellAction(match, arrayListPlayers.get(turn));
             if (action.preliminarySteps()) {
                 action.execute();
-                broadcastOthers(action.getResultMsg(), arrayListPlayers, arrayListPlayers.get(turn));
+                Broadcast.printlnBroadcastOthers(action.getResultMsg(), arrayListPlayers, arrayListPlayers.get(turn));
             }
             turn++;
         }
         while ((turn % arrayListPlayers.size()) != 0);
-       
-        startBuying();
-    }  
+    	
+    }
    
-    public void startBuying () throws InterruptedException{
-        int turn = 0;
-        Action action;
+    private void startBuying () throws InterruptedException{
+    	
+        turn = 0;
         ArrayList <Player> arrayListPlayerBuyPhase = new ArrayList <> (arrayListPlayers);
         Collections.shuffle(arrayListPlayerBuyPhase);
        
@@ -62,7 +70,7 @@ public class MarketHandler {
             action = new MarketBuyAction(match, arrayListPlayerBuyPhase.get(turn));
             if (action.preliminarySteps()) {
                 action.execute();
-                broadcastOthers(action.getResultMsg(), arrayListPlayerBuyPhase, arrayListPlayerBuyPhase.get(turn));
+                Broadcast.printlnBroadcastOthers(action.getResultMsg(), arrayListPlayerBuyPhase, arrayListPlayerBuyPhase.get(turn));
             }
             turn++;
         }
@@ -73,15 +81,8 @@ public class MarketHandler {
         return arrayListSellingObjects;
     }
    
-    public void addArrayListSellingObject(SellingObject sellingObject){
+    public void addSellingObjectToArrayList(SellingObject sellingObject){
         arrayListSellingObjects.add(sellingObject);
-    }
-    private void broadcastOthers(String string, ArrayList<Player> players, Player playerNot) throws InterruptedException{
-        //FOR_TEST
-        if(Constant.test)
-            System.out.println(string);
-        else
-            Broadcast.printlnBroadcastOthers(string, players, playerNot);
     }
    
 }
