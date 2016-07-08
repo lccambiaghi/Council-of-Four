@@ -14,12 +14,10 @@ public class ControlMatch {
 	private ArrayList<Player> playersConnected;
 
 	private boolean gameOver;
+	private boolean lastRound;
 
 	private boolean goMarket;
-	private Turn turn;
 
-	private long startTime;
-	private long endTime;
 
 	public ControlMatch(ArrayList<Player> arrayListPlayer){
 
@@ -31,20 +29,10 @@ public class ControlMatch {
 
 	}
 
-	private ArrayList<Player> getPlayersConnected(){
-		ArrayList<Player> ps = new ArrayList<>();
-		for(Player p: allPlayers){
-			p.isConnected();
-				ps.add(p);
-		}
-		return ps;
-	}
 
 	public void startMatch(){
 
 		int playerNumber=0;
-
-		boolean lastRound = false;
 
 		do {
 
@@ -98,17 +86,30 @@ public class ControlMatch {
 
 				}
 
-			}else if(!lastRound){
+			}else if(!lastRound) {
 
-				goMarket=false;
+				goMarket = false;
 
 				marketHandler();
 
-			}
+			}else //if(lastRound)
+				player.setLastTurnDone(true);
 
-		}while(!gameOver && (!lastRound && !player.isLastTurnDone()));
+		}while(!gameOver || !player.isLastTurnDone());
 
 		//final steps
+
+	}
+
+	private ArrayList<Player> getPlayersConnected(){
+
+		ArrayList<Player> ps = new ArrayList<>();
+
+		for(Player p: allPlayers)
+			if(p.isConnected())
+				ps.add(p);
+
+		return ps;
 
 	}
 	
@@ -118,8 +119,8 @@ public class ControlMatch {
 			Broadcast.printlnBroadcastOthers(Message.turnOf(player), playersConnected, player);
 			player.getBroker().println(Message.yourTurn(Constant.TIMER_SECONDS_TO_PERFORM_ACTION));
 		}catch (InterruptedException e) {}
-		
-		turn = new Turn(match, player, allPlayers);
+
+		Turn turn = new Turn(match, player, allPlayers);
 		Thread turnThread = new Thread(turn);
 		turnThread.start();
 		
@@ -135,13 +136,9 @@ public class ControlMatch {
 	}
 	
 	private void marketHandler(){
-		
-		try {
-			
-			Broadcast.printlnBroadcastAll("The market has started!", playersConnected);
-			market.startMarket();
-			
-		} catch (InterruptedException e) {}
+
+		Broadcast.printlnBroadcastAll("The market has started!", playersConnected);
+		market.startMarket();
 		
 	}
 

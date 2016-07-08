@@ -365,4 +365,9 @@ public final class Message {
 		return "There aren't object on sale in the market";
 	}
 
+	public static String lastRoundHasStarted(Player player) {
+
+		return player.getNickname() + " has built the last emporium. Last round has started.";
+
+	}
 }

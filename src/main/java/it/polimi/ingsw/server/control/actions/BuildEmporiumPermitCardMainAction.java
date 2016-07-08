@@ -99,6 +99,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 	 *  This method puts buildableCities in front,
 	 *  so we can use the input of the user to pick the corresponding city
 	 *  */
+	//TODO DEBUG
 	private int sortBuildableCities(PermitCard permitCard) {
 
 		City[] arrayCity = permitCard.getArrayBuildableCities();

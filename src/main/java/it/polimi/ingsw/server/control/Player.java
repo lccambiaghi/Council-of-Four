@@ -14,13 +14,14 @@ public class Player{
 	private String nickname;
 
 	private char typeOfConnection;
-	
+
 	private Broker broker;
 	
 	// variables of the game
 	private boolean connected = true;
 	private boolean messageDisconnectedSent = false;
-	
+	private boolean lastTurnDone;
+
 	private int richness;
 	private int assistant;
 	private int victory;
@@ -56,7 +57,7 @@ public class Player{
 	
 	public boolean isMessageDisconnectedSent() {return messageDisconnectedSent;}
 	public void setMessageDisconnectedSent(boolean messageDisconnectedSent) {this.messageDisconnectedSent = messageDisconnectedSent;	}
-	
+
 	public int getRichness() {return richness;}
 	public void setRichness(int richness) {this.richness = richness;}
 	public void addRichness(int increment){
@@ -76,7 +77,7 @@ public class Player{
 	public void decrementAssistant(int decrement)	{assistant -=decrement;}
 	
 	public void addVictory(int increment){victory+=increment;}
-	
+
 	public ArrayList<PoliticCard> getArrayListPoliticCard() {return arrayListPoliticCard;}
 	public void addPoliticCard(PoliticCard politicCard) {arrayListPoliticCard.add(politicCard);}
 	public void discardPoliticCard(PoliticCard politicCard){arrayListPoliticCard.remove(politicCard);}
@@ -108,4 +109,11 @@ public class Player{
 		this.victory = victory;
 	}
 
+	public boolean isLastTurnDone() {
+		return lastTurnDone;
+	}
+
+	public void setLastTurnDone(boolean lastTurnDone) {
+		this.lastTurnDone = lastTurnDone;
+	}
 }
