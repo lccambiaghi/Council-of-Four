@@ -43,70 +43,72 @@ public class ControlMatch {
 	public void startMatch(){
 
 		int playerNumber=0;
+
 		boolean lastRound = false;
 
 		do {
 
 			playersConnected = getPlayersConnected();
 
-			if(!atLeastTwoPlayersConnected()){
+			if(!atLeastTwoPlayersConnected()) {
 
-				gameOver=true;
+				gameOver = true;
 
-			}else{
-
-				do{
-
-					//If it's the last player of the group
-					if(playerNumber==allPlayers.size()){
-
-						playerNumber=0;
-
-						goMarket=true;
-
-						break;
-
-					}else{
-
-						player=allPlayers.get(playerNumber);
-
-						playerNumber++;
-
-					}
-
-				}while(!player.isConnected());
-
-				if(!goMarket){
-
-					turnHandler();
-
-					// TODO controllo sul giocatore per il numero di empori
-					if(true) {
-
-						lastRound = true;
-
-						// per ogni giocatore tranne il corrente lastTurnDone=false
-						// il corrente ha lTD=true
-
-						Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOut(player), playersConnected, player);
-
-					}
-					if(!player.isConnected()){
-						Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOut(player), playersConnected, player);
-					}
-
-				}else if(goMarket  && !lastRound){
-
-					goMarket=false;
-
-					marketHandler();
-
-				}
-
+				break;
 
 			}
 
-		}while(!gameOver);
+			do{
+				//If it's the last player of the group
+				if(playerNumber==allPlayers.size()){
+
+					playerNumber=0;
+
+					goMarket=true;
+
+					break;
+
+				}else{
+
+					player=allPlayers.get(playerNumber);
+
+					playerNumber++;
+
+				}
+
+			}while(!player.isConnected());
+
+			if(!goMarket){
+
+				turnHandler();
+
+				if(player.getArrayListEmporiumBuilt().size() == Constant.NUMBER_EMPORIUMS_TO_WIN) {
+
+					lastRound = true;
+
+					player.setLastTurnDone(true);
+
+					Broadcast.printlnBroadcastOthers(Message.lastRoundHasStarted(player), playersConnected, player);
+
+				}
+
+				if(!player.isConnected()){
+
+					Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOut(player), playersConnected, player);
+
+				}
+
+			}else if(!lastRound){
+
+				goMarket=false;
+
+				marketHandler();
+
+			}
+
+		}while(!gameOver && (!lastRound && !player.isLastTurnDone()));
+
+		//final steps
 
 	}
 	
