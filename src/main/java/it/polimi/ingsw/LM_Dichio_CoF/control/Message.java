@@ -307,8 +307,12 @@ public final class Message {
 		
 	public static String getInfoPermitCard (PermitCard sellingPermitCard, int price){
 
-		return "With this permitcard you can build in: " + sellingPermitCard.getArrayBuildableCities() +
-				" The price is: " + price + " coins";
+		StringBuilder message= new StringBuilder();
+		
+		message.append("PermitCard - Buildable Cities: ").append(sellingPermitCard.getArrayBuildableCities().toString())
+		.append("\nThe price is: ").append(price).append(" coins");
+		
+		return message.toString();
 	}
 	
 	public static String getInfoPoliticCard (PoliticCard sellingPoliticCard, int price){
