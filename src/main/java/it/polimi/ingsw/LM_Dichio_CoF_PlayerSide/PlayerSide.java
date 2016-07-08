@@ -36,7 +36,7 @@ public class PlayerSide {
 	private RMIConnection rmiConnection;
 	
 	private InputHandler inputHandler;
-	
+
 	private SocketListener socketListener;
 
 	private Configurations config;

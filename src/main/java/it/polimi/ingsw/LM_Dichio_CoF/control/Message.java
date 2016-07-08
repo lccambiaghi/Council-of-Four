@@ -7,6 +7,7 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public final class Message {
@@ -19,14 +20,6 @@ public final class Message {
 		return ("\n --- THE MATCH HAS STARTED! ---\n ");
 	}
 
-	public static String waitTurn(){
-		return("It's not your turn yet, wait...");
-	}
-
-	public static String play(Player player){
-		return ("It's your turn!");
-	}
-
 	public static String chooseInfoOrAction_1_2(){
 		return "What would you like to do?\n" +
 				"1. Get info of the match\n" +
@@ -34,18 +27,14 @@ public final class Message {
 	}
 
 	public static String chooseInfo_0_6(){
-		return("Choose the info you want\n"+
+		return "Choose the info you want\n"+
 			"0. [Back to menu]\n" +
 			"1. Your goods\n" +
 			"2. All cities\n" +
 			"3. Other players status\n" +
 			"4. Balconies and councillors\n" +
 			"5. All regions\n" +
-			"6. Specific city");
-	}
-
-	public static String chooseCityFromIndex(){
-		return ("Choose a city inserting the corresponding index");
+			"6. Specific city";
 	}
 
 	public static String ifQuickAction(){
@@ -53,35 +42,34 @@ public final class Message {
 	}
 
 	public static String chooseYesOrNo_1_2(){
-		return("1. Yes\n" +
-			"2. No");
+		return "1. Yes\n2. No";
 	}
 
 	public static String notEligibleForMove(){
-		return("You are not eligible to perform this move. Please choose another one.");
+		return "You are not eligible to perform this move. Please choose another one.";
 	}
 
 	public static String chooseQuickAction_1_4(){
-		return("Which Quick Action would you like to do?\n" +
+		return "Which Quick Action would you like to do?\n" +
 			"1. Engage an Assistant\n" +
 			"2. Change Building Permit Tiles for a Region\n" +
 			"3. Send an Assistant to Elect a Councillor\n" +
-			"4. Perform an additional Main Action");
+			"4. Perform an additional Main Action";
 	}
 
 	public static String chooseMainAction_1_4(){
-		return("Which Main Action would you like to do?\n" +
+		return "Which Main Action would you like to do?\n" +
 			"1. Elect a Councillor\n" +
 			"2. Acquire a Permit Tile\n" +
 			"3. Build an Emporium using a Permit Tile\n" +
-			"4. Build an Emporium with the Help of the King");
+			"4. Build an Emporium with the Help of the King";
 	}
 
 	public static String chooseRegion_1_3(){
-		return ("Choose a region\n" +
+		return "Choose a region\n" +
 			"1. Sea\n" +
 			"2. Hill\n" +
-			"3. Mountain");
+			"3. Mountain";
 	}
 
 	public static String chooseBalcony(Balcony[] arrayBalcony){
@@ -123,25 +111,20 @@ public final class Message {
 
 	}
 
-	public static String choosePermitCard(ArrayList<PermitCard> arrayListPermitCard, int index){
+	public static String choosePermitCardNoBonus(List<PermitCard> arrayListPermitCard, int index){
 
 		StringBuilder message= new StringBuilder();
 
-		message.append("Choose a Building Permit Tile:\n");
+		message.append("Choose a Building Permit Tile:");
 
 		for(int i=0; i<index; i++) {
 
 			PermitCard permitCard = arrayListPermitCard.get(i);
 
-			message.append(i+1).append(". \nBuildable Cities:\n");
+			message.append("\n").append(i+1).append(". Buildable Cities:");
 
 			for (City buildableCity : permitCard.getArrayBuildableCities())
-				message.append(buildableCity.getCityName()).append(" ");
-
-			message.append("\nBonus:\n");
-
-			for (Bonus bonus : permitCard.getArrayBonus())
-				message.append(bonus.getBonusName()).append(" ").append(bonus.getIncrement()).append("   ");
+				message.append(" ").append(buildableCity.getCityName());
 
 		}
 
@@ -149,7 +132,7 @@ public final class Message {
 
 	}
 
-	public static String choosePermitCardNoBonus(ArrayList <PermitCard> playerPermitCards){
+	public static String choosePermitCardNoBonus(List <PermitCard> playerPermitCards){
 		StringBuilder message = new StringBuilder ();
 
 		message.append("Choose a Permit Card:\n Your Cards: ");
@@ -192,7 +175,6 @@ public final class Message {
 
 	}
 
-	// Overloading
 	public static String chooseDestinationCity(Map<City, Integer> movableCities){
 
 		StringBuilder message= new StringBuilder();
@@ -213,9 +195,9 @@ public final class Message {
 	}
 
 	public static String youCantBuild(){
-		return ("You either have no Business Permit Tiles" +
+		return "You either have no Business Permit Tiles" +
 				" or you have already built in every city they avail you to. " +
-				"Please choose another main move");
+				"Please choose another main move";
 	}
 
 	public static String askCouncillorColor(ArrayList<Color> choosableColors){
@@ -225,87 +207,76 @@ public final class Message {
 		message.append("What color would you like the new councillor to be?");
 
 		for(int i=0; i<choosableColors.size(); i++)
-			message.append(i+1).append(" ").append(choosableColors.get(i));
+			message.append("\n").append(i+1).append(".").append(" ").append(choosableColors.get(i));
 
 		return message.toString();
 
 	}
 
 	public static String notEnoughRichnessForThisSet(){
-		return ("You don't have enough richness to use this set. Please select another one.");
+		return "You don't have enough richness to use this set. Please select another one.";
 	}
 
 	public static String notEnoughAssistant(){
-		return ("You don't have enough assistants to perform this move. Please select another one.");
+		return "You don't have enough assistants to perform this move. Please select another one.";
 	}
 
 	public static String turnOf(Player player){
-		StringBuilder message= new StringBuilder();
-		
-		message.append("Turn of: ").append(player.getNickname());
-		
-		return message.toString();
+
+		return "Turn of: " + player.getNickname();
 	}
 
 	public static String yourTurn(int  seconds){
-		StringBuilder message = new StringBuilder();
-		message.append("It's your turn! You have ").append(seconds).append(" seconds!");
-		return message.toString();
+		return "It's your turn! You have " + seconds + " seconds!";
 	}
 
-	public static String playerHasBeenKickedOff(Player player){
-		StringBuilder message = new StringBuilder();
-		message.append("Player ").append(player.getNickname()).append(" has been kicked off!");
-		return message.toString();
+	public static String playerHasBeenKickedOut(Player player){
+		return "Player " + player.getNickname() + " has been kicked out!";
 	}
 
 	public static String chooseToSellSomething_1_2(){		
-		return ("Would you like to sell something?\n" +
+		return "Would you like to sell something?\n" +
 				"1. Yes\n" +
-				"2. No");
+				"2. No";
 	}
 	public static String chooseToBuySomething_1_2(){
-		return ("Would you like to buy something?\n" +
+		return "Would you like to buy something?\n" +
 				"1. Yes\n" +
-				"2. No");
+				"2. No";
 	}
 
 	public static String askForObject(){
-		return ("Which object would you like to sell?");
-	}
-	public static String askObjectToBuy(){
-		return ("Which object would you like to buy?");
-	}
-	public static String permitCard(int counter){
-		StringBuilder message = new StringBuilder();
-		message.append(counter).append(". Permit Card");
-		
-		return message.toString();
-	}
-	public static String politicCard(int counter){	
-		StringBuilder message = new StringBuilder();
-		message.append(counter).append(". Politic Card");
-		
-		return message.toString();
-	}
-	public static String assistants(int counter){
-		StringBuilder message = new StringBuilder();
-		message.append(counter).append(". Assistants");
-		
-		return message.toString();
-	}
-	public static String deniedSelling (){
-		return ("You can't sell nothing");
-	}
-	public static String deniedBuying (){
-		return ("You can't buy this object");
-	}
-	public static String youWon(){
-		return ("You won the match!");
+		return "Which object would you like to sell?";
 	}
 
-	public static String choosePoliticCard(ArrayList <PoliticCard> playerPoliticCards){
-		StringBuilder message = new StringBuilder();		
+	public static String askObjectToBuy(){
+		return "Which object would you like to buy?";
+	}
+
+	public static String permitCard(int counter){ return String.valueOf(counter) + ". Permit Card"; }
+
+	public static String politicCard(int counter){
+
+		return String.valueOf(counter) + ". Politic Card";
+
+	}
+	public static String assistants(int counter){
+
+		return String.valueOf(counter) + ". Assistants";
+	}
+	public static String deniedSelling (){
+		return "You can't sell nothing";
+	}
+	public static String deniedBuying (){
+		return "You can't buy this object";
+	}
+	public static String youWon(){
+		return "You won the match!";
+	}
+
+	public static String choosePoliticCard(List <PoliticCard> playerPoliticCards){
+
+		StringBuilder message = new StringBuilder();
 		
 		message.append("Which Politics Cards would you like to use?");
 
@@ -324,48 +295,37 @@ public final class Message {
 	}
 
 	public static String chooseAssistants (Player player){
-		StringBuilder message = new StringBuilder();
-		message.append("How many assistants would you like to sell? You have: ")
-				.append(player.getAssistant()).append(" assistants");
-		return message.toString();
+
+		return "How many assistants would you like to sell? You have: " +
+				player.getAssistant() + " assistants";
 
 	}
 
 	public static String askPrice (){
-		return ("Which price would you like to sell it for?");
+		return "Which price would you like to sell it for?";
 	}
 		
 	public static String getInfoPermitCard (PermitCard sellingPermitCard, int price){
-		StringBuilder message= new StringBuilder();
-		
-		message.append("With this permitcard you can build in: ").append(sellingPermitCard.getArrayBuildableCities())
-		.append(" The price is: ").append(price).append(" coins");
-		
-		return message.toString();
+
+		return "With this permitcard you can build in: " + sellingPermitCard.getArrayBuildableCities() +
+				" The price is: " + price + " coins";
 	}
 	
 	public static String getInfoPoliticCard (PoliticCard sellingPoliticCard, int price){
-		StringBuilder message= new StringBuilder();
-		
-		message.append("Politic Card Color:").append(" ").append(sellingPoliticCard.getCardColor()).append(". ")
-		.append("The price is: ").append(price).append(" coins");
-		
-		return message.toString();
+
+		return "Politic Card Color:" + " " + sellingPoliticCard.getCardColor() + ". " +
+				"The price is: " + price + " coins";
 	}
 	
 	public static String getInfoAssistants (int sellingAssistants, int price){
-		StringBuilder message= new StringBuilder();
-		
-		message.append("Number of Assistants: ").append(sellingAssistants).append(". ")
-		.append("The price is: ").append(price).append(" coins");
-		
-		return message.toString();
+
+		return "Number of Assistants: " + sellingAssistants + ". " +
+				"The price is: " + price + " coins";
 
 	}
 
 	public static String skipBuying (){
-		String message = "0. Exit from the buying step";
-		return message;
+		return "0. Exit from the buying step";
 	}
 	
 }

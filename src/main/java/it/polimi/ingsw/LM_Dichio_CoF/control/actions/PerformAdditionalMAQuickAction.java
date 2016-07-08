@@ -33,7 +33,7 @@ public class PerformAdditionalMAQuickAction extends Action {
     @Override
     public void execute(){
 
-        player.setMainActionsLeft(player.getMainActionsLeft() + 1);
+        player.addMainActionLeft(1);
 
         player.decrementAssistant(Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST);
 		

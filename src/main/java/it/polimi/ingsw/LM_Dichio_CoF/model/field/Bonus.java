@@ -17,12 +17,6 @@ public class Bonus {
 			this.increment=increment;
 	}
 
-	/* The constructor (2)
-	  If String in input corresponds to a bonusName, then it creates the corresponding bonus
-	  with specified increment */
-
-	
-
 	public BonusName getBonusName() {
 		return bonusName;
 	}
@@ -40,10 +34,6 @@ public class Bonus {
 					return true;
 		}
 		return false;
-	}
-
-	public void setIncrement(int increment) {
-		this.increment = increment;
 	}
 
 	public void applyBonus(Player player, Field field) {
@@ -69,7 +59,7 @@ public class Bonus {
 					player.addPoliticCard(new PoliticCard(Color.getRandomColor()));
 				break;
 			case MainMove:
-				player.setMainActionsLeft(increment);
+				player.addMainActionLeft(increment);
 		}
 
 	}

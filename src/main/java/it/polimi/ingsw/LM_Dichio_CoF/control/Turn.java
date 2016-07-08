@@ -68,21 +68,21 @@ public class Turn implements Runnable{
 				match.getInfoMatch().printInfoPlayer(player);
 				break;
 			case 2:
-				match.getInfoMatch().printInfoAllCities(player);
+				match.getInfoMatch().printInfoAllCities();
 				break;
 			case 3:
-				match.getInfoMatch().printInfoAllPlayers(player);
+				match.getInfoMatch().printInfoAllPlayers();
 				break;
 			case 4:
-				match.getInfoMatch().printInfoBalconies(player);
+				match.getInfoMatch().printInfoBalconies();
 				break;
 			case 5:
-				match.getInfoMatch().printInfoRegions(player);
+				match.getInfoMatch().printInfoRegions();
 				break;
 			case 6:
 				City[] arrayCity = match.getField().getArrayCity();
 				player.getBroker().println(Message.chooseDestinationCity(arrayCity));
-				match.getInfoMatch().printInfoCity(player, player.getBroker().askInputNumber(1, arrayCity.length)-1); //array positioning
+				match.getInfoMatch().printInfoCity(player.getBroker().askInputNumber(1, arrayCity.length)-1); //array positioning
 				break;
 			}
 		}
@@ -179,29 +179,12 @@ public class Turn implements Runnable{
 		
 		if (action.preliminarySteps()) {
 			action.execute();
-			player.setMainActionsLeft(player.getMainActionsLeft() - 1);
+			player.decrementMainActionLeft(1);
 			broadcastOthers(action.getResultMsg(), players, player);
 		}
 
 		actionsLeftHandler();
 		
-	}
-	
-	//ONLY FOR TESTS
-	private void println(String string, Player player) throws InterruptedException{
-		//FOR_TEST
-		if(Constant.test)
-			System.out.println(string);
-		else
-			player.getBroker().println(string);
-	}
-
-	private void broadcastAll(String string, ArrayList<Player> players) throws InterruptedException{
-		//FOR_TEST
-		if(Constant.test)
-			System.out.println(string);
-		else
-			Broadcast.printlnBroadcastAll(string, players);
 	}
 
 	private void broadcastOthers(String string, ArrayList<Player> players, Player playerNot) throws InterruptedException{

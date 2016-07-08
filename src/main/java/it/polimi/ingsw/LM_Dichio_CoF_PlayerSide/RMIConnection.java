@@ -8,6 +8,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import it.polimi.ingsw.LM_Dichio_CoF.connection.RMIGameSideInterface;
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
 
 public class RMIConnection {
 
@@ -25,7 +26,7 @@ public class RMIConnection {
 	private void lookUpForRegistry(){
 		try {
 			System.out.println("I'm looking up for the registry...");
-			rmiGameSide = (RMIGameSideInterface)Naming.lookup("rmi://127.0.0.1:1099/CoF");
+			rmiGameSide = (RMIGameSideInterface)Naming.lookup(Constant.RMI_REGISTRY_LOOKUP_ADDRESS);
 			System.out.println("Done!");
 		} catch (RemoteException e) {
 			System.out.println("Error in RMI connection " + e);

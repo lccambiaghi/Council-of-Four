@@ -20,6 +20,7 @@ public class ElectCouncillorMainAction extends Action {
         this.match=match;
 
         this.player=player;
+
     }
 
     @Override
@@ -36,8 +37,11 @@ public class ElectCouncillorMainAction extends Action {
         ArrayList<Color> choosableColors = getChoosableColors();
 
         if (choosableColors.isEmpty()){
+
             player.getBroker().println(Message.notEligibleForMove());
+
             return false;
+
         }
 
         player.getBroker().println(Message.askCouncillorColor(choosableColors));
@@ -79,7 +83,7 @@ public class ElectCouncillorMainAction extends Action {
         chosenBalcony.electCouncillor(chosenCouncillor,availableCouncillors);
 
         player.addRichness(Constant.ELECTION_RICHNESS_INCREMENT);
-        resultMsg= "Player "+ player.getNickname() + " elected a + " +
+        resultMsg= "Player "+ player.getNickname() + " elected a " +
                 chosenCouncillor.getColor() + " Councillor in " +
                 chosenBalcony.getNameBalcony() + ".\n";
 

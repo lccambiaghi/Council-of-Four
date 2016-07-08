@@ -62,8 +62,6 @@ public class Field {
 		// ristruttura ciclo: king fuori e guarda design patter proxy
 		// proxy: crea city prima e inizializza i parametri nel ciclo(??)
 
-
-
 		for(int itRegion = 0, itColor=0; itRegion<Constant.REGIONS_NUMBER; itRegion++){
 
 			RegionName regionName = RegionName.getRegionNameFromIndex(itRegion);
@@ -227,7 +225,13 @@ public class Field {
 			this.nobilityRoute = new NobilityRoute(arrayListPlayer);
 		}
 		nobilityRoute.setField(this);
-		
+
+		for (int i = 0; i < arrayListPlayer.size(); i++) {
+			Player player = arrayListPlayer.get(i);
+			player.setRichness(Constant.RICHNESS_INITIAL_FIRST_PLAYER + i);
+			player.setVictory(Constant.VICTORY_INITIAL_FIRST_PLAYER);
+		}
+
 	}
 	
 	public City[] getArrayCity(){

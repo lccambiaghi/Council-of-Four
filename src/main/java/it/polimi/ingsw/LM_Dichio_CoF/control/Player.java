@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Player{
 	
 	private String nickname;
-	
+
 	private char typeOfConnection;
 	
 	private ConnectionWithPlayerInterface connectionWithPlayer;
@@ -36,18 +36,9 @@ public class Player{
 	
 	private ArrayList <City>  arrayListEmporiumBuilt = new ArrayList<>();
 
-	
 	/* The constructor assigns to the player the type of connection */
 	public Player(char typeOfConnection){
 		this.typeOfConnection=typeOfConnection;
-	}
-	
-	public ConnectionWithPlayerInterface getConnectionWithPlayer() {
-		return connectionWithPlayer;
-	}
-
-	public void setConnectionWithPlayer(ConnectionWithPlayerInterface connectionWithPlayer) {
-		this.connectionWithPlayer = connectionWithPlayer;
 	}
 	
 	public Broker getBroker() {
@@ -100,7 +91,9 @@ public class Player{
 	public void addCityEmporiumBuilt (City city){arrayListEmporiumBuilt.add(city);}
 
 	public int getMainActionsLeft() {return mainActionsLeft;}
-	public void setMainActionsLeft(int mainActionsLeft) {this.mainActionsLeft = mainActionsLeft;}
+	public void setMainActionsLeft(int mainActionsLeft) {this.mainActionsLeft=mainActionsLeft;}
+	public void addMainActionLeft(int increment) {mainActionsLeft += increment;}
+	public void decrementMainActionLeft(int decrement) {mainActionsLeft -= decrement;}
 
 	public boolean isQuickActionDone() {return quickActionDone;}
 	public void setQuickActionDone(boolean quickActionDone) {this.quickActionDone = quickActionDone;}
@@ -109,7 +102,6 @@ public class Player{
 	public int getVictory() {
 		return victory;
 	}
-
 	public void setVictory(int victory) {
 		this.victory = victory;
 	}

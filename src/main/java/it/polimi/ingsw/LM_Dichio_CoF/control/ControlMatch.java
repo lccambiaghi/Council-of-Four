@@ -12,13 +12,14 @@ public class ControlMatch {
 	
 	private final ArrayList<Player> allPlayers;
 	private ArrayList<Player> playersConnected;
-	
-	private boolean gameOver;
+
 	private boolean goMarket;
 	private Turn turn;
 	
 	private long startTime;
 	private long endTime;
+
+	private int lastTurnCounter;
 
 	public ControlMatch(ArrayList<Player> arrayListPlayer){
 
@@ -31,12 +32,15 @@ public class ControlMatch {
 	}
 	
 	private ArrayList<Player> getPlayersConnected(){
+
 		ArrayList<Player> ps = new ArrayList<Player>();
-		for(Player p: allPlayers){
-			p.isConnected();
+
+		for(Player p: allPlayers)
+			if(p.isConnected())
 				ps.add(p);
-		}
+
 		return ps;
+
 	}
 
 	public void startMatch(){
@@ -49,7 +53,9 @@ public class ControlMatch {
 			
 			if(!atLeastTwoPlayersConnected()){
 				
-				gameOver=true;
+				match.setGameOver(true);
+
+				lastTurnCounter=playersConnected.size()-1;
 
 			}else{
 				
@@ -61,12 +67,15 @@ public class ControlMatch {
 					if(playerNumber==allPlayers.size()){
 						
 						playerNumber=0;
+
 						goMarket=true;
+
 						break;
 						
 					}else{
 						
 						player=allPlayers.get(playerNumber);
+
 						playerNumber++;
 					}
 				
@@ -77,20 +86,24 @@ public class ControlMatch {
 					turnHandler();
 					
 					if(!player.isConnected()){
-						Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOff(player), playersConnected, player);
+						Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOut(player), playersConnected, player);
 					}
 				
 				}else{
 					
 					goMarket=false;
+
 					marketHandler();
 					
 				}
-				
-	
+
 			}
 			
-		}while(!gameOver);
+		}while(!match.isGameOver() && lastTurnCounter<playersConnected.size()-1);
+
+		//check on victory points
+
+
 
 	}
 	

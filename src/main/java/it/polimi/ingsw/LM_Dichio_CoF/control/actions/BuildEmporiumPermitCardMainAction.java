@@ -37,7 +37,8 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		ArrayList<PermitCard> playerPermitCards = player.getArrayListPermitCard();
 
-		player.getBroker().println(Message.choosePermitCard(playerPermitCards, usablePermitCards));
+		//TODO FIX NO BONUS può stare su una riga
+		player.getBroker().println(Message.choosePermitCardNoBonus(playerPermitCards, usablePermitCards));
 
 		chosenPermitCard = playerPermitCards.get(player.getBroker().askInputNumber(1,usablePermitCards)-1); //array positioning
 

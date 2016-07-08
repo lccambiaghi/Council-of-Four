@@ -11,9 +11,11 @@ public class Constant {
 	
 	//socket connection
 	public static final int SOCKET_PORT =3000;
+	public static final String SOCKET_ADDRESS ="localhost";
 	
 	//rmi connection
 	public static final String RMI_REGISTRY_ADDRESS = "127.0.0.1";
+	public static final String RMI_REGISTRY_LOOKUP_ADDRESS = "rmi://127.0.0.1:1099/CoF";
 	public static final int RMI_PORT =1099;
 
 	public static final int PLAYERS_MIN_NUMBER = 2;
@@ -41,6 +43,7 @@ public class Constant {
 	public static final int POLITIC_CARDS_INITIAL_NUMBER =6;
 	public static final int ASSISTANT_INITIAL_FIRST_PLAYER = 1;
 	public static final int RICHNESS_INITIAL_FIRST_PLAYER =10;
+	public static final int VICTORY_INITIAL_FIRST_PLAYER =0;
 	public static final int RICHNESS_MAX =20;
 	public static final int NOBILITY_MAX =20;
 	public static final int VICTORY_MAX =100;

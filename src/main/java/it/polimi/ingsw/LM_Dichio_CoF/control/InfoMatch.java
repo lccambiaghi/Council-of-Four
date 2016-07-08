@@ -9,33 +9,29 @@ import it.polimi.ingsw.LM_Dichio_CoF.model.PoliticCard;
 import it.polimi.ingsw.LM_Dichio_CoF.model.field.*;
 
 public class InfoMatch {
+
+	private Field field;
 	
+	private City[] arrayCity;
+	private ArrayList<Player> arrayListPlayer;
 	
+	private Player player;
 	
-	Match match;
-	Field field;
-	
-	City[] arrayCity;
-	List <Integer>[] arrayCityLinks; 
-	ArrayList<Player> arrayListPlayer;
-	
-	Player player;
-	
-	int[] posLow =  
+	private int[] posLow =
 		   	{1,	0, 	4, 	-3, 6, 	0, 	9, 	-3,	11,	0,	14,	-1,
 			0,	0,	0,	-3,	0,	0,	0,	-3,	0,	0,	0,	-1,
 		   	2, 	0, 	5, 	-3, 7, 	0,	10, -3,	12,	0,	15,	-1,
 			0,	0,	0,	-3,	0,	0,	0,	-3,	0,	0,	0,	-1,
 			0, 	3, 	0, 	-3, 0, 	8, 	0, 	-3,	 0,	13,	0,	-2};
 	
-	int[] posMedium =
+	private int[] posMedium =
 			{1,	0,	4,	-3,	7,	0,	10,	-3,	13,	0,	16,	-1,
 			0,	0,	0,	-3,	0,	0,	0,	-3,	0,	0,	0,	-1,
 			2,	0,	5,	-3,	8,	0,	11,	-3,	14,	0,	17,	-1,
 			0,	0,	0,	-3,	0,	0,	0,	-3,	0,	0,	0,	-1,
 			3,	0,	6,	-3,	9,	0,	12,	-3,	15,	0,	18,	-2};
 	
-	int[] posHigh =
+	private int[] posHigh =
 			{1,	0,	5,	-3,	8,	0,	12,	-3,	15,	0,	19,	-1,
 			0,	4,	0,	-3,	0,	11,	0,	-3,	0,	18,	0,	-1,		
 			2,	0,	6,	-3,	9,	0,	13,	-3,	16,	0,	20,	-1,
@@ -44,28 +40,21 @@ public class InfoMatch {
 	
 	
 	private void print(String string) throws InterruptedException{
-		
-		//FOR_TEST
-		if(Constant.test)
-			System.out.print(string);
-		else
-			player.getBroker().print(string);
+
+		player.getBroker().print(string);
+
 	}
 	
 	private void println() throws InterruptedException{
-		//FOR_TEST
-		if(Constant.test)
-			System.out.println();
-		else
-			player.getBroker().println("");
+
+		player.getBroker().println("");
+
 	}
 	
 	private void println(String string) throws InterruptedException{
-		//FOR_TEST
-		if(Constant.test)
-			System.out.println(string);
-		else
-			player.getBroker().println(string);
+
+		player.getBroker().println(string);
+
 	}
 	
 	public void setPlayer(Player player){
@@ -74,27 +63,25 @@ public class InfoMatch {
 	
 	
 	public InfoMatch(Match match){
-		this.match = match;
 		this.field = match.getField();
 		this.arrayListPlayer = match.getArrayListPlayer();
 		this.arrayCity = field.getArrayCity();
-		this.arrayCityLinks = field.getArrayCityLinks();	
 	}
 	
-	public void printInfoAllCities(Player player) throws InterruptedException{
+	public void printInfoAllCities() throws InterruptedException{
 		println();
 		printCities();
 		printCityLinks();
 		println();
 	}
 	
-	public void printInfoAllPlayers(Player player) throws InterruptedException{
+	public void printInfoAllPlayers() throws InterruptedException{
 		println();
 		printPlayersInRoutes();
 		println();
 	}
 	
-	public void printInfoBalconies(Player player) throws InterruptedException{
+	public void printInfoBalconies() throws InterruptedException{
 		println();
 		printBalconies();
 		printAvailableCouncillors();
@@ -116,15 +103,7 @@ public class InfoMatch {
 		
 	}
 	
-	public void printCityAndIndex(Player player) throws InterruptedException{
-		println();
-		for(int i=0; i<arrayCity.length; i++){
-			println((i+1) +". City: " +arrayCity[i].getCityName());
-		}
-		println();
-	}
-	
-	public void printInfoCity(Player player, int indexCity) throws InterruptedException{
+	public void printInfoCity(int indexCity) throws InterruptedException{
 		
 		println();
 		City chosenCity= arrayCity[indexCity];
@@ -153,7 +132,7 @@ public class InfoMatch {
 		println();
 	}
 	
-	public void printInfoRegions(Player player) throws InterruptedException{
+	public void printInfoRegions() throws InterruptedException{
 		println();
 		for(int i=0; i<Constant.REGIONS_NUMBER; i++){
 			Region region = field.getRegionFromIndex(i);
@@ -187,21 +166,22 @@ public class InfoMatch {
 		int[] positions;
 		
 		switch(arrayCity.length){
-		case Constant.CITIES_NUMBER_LOW:
-			positions=posLow;
-			break;
-		case Constant.CITIES_NUMBER_MEDIUM:
-			positions=posMedium;
-			break;
-		case Constant.CITIES_NUMBER_HIGH:
-			positions=posHigh;
-			break;
-		default:{
-			println("ERROR");
-			positions=null;
+			case Constant.CITIES_NUMBER_LOW:
+				positions=posLow;
+				break;
+			case Constant.CITIES_NUMBER_MEDIUM:
+				positions=posMedium;
+				break;
+			case Constant.CITIES_NUMBER_HIGH:
+				positions=posHigh;
+				break;
+			default:{
+				println("ERROR");
+				positions=null;
+			}
 		}
-		}
-		
+
+		//TODO FIX
 		for(int pos: positions){
 			switch(pos){
 			case	0:
@@ -272,11 +252,11 @@ public class InfoMatch {
 	
 	private void printPlayersInRoutes() throws InterruptedException{
 		println("Players status:");
-		for(Player player: arrayListPlayer){
-			println(player.getNickname() + ": " + 
-					"Richness [" + player.getRichness() + "], "+
-					"Victory [" + player.getVictory() + "], " +
-					"Nobility [" +field.getNobilityRoute().getPosition(player) + "]");
+		for(Player aPlayer: arrayListPlayer){
+			println(aPlayer.getNickname() + ": " +
+					"Richness [" + aPlayer.getRichness() + "], "+
+					"Victory [" + aPlayer.getVictory() + "], " +
+					"Nobility [" +field.getNobilityRoute().getPosition(aPlayer) + "]");
 		}
 		println();
 	}
@@ -296,7 +276,7 @@ public class InfoMatch {
 	private void printPermitCards() throws InterruptedException{
 		print("- Permit cards: ");
 		ArrayList<PermitCard> arrayListPermitCard = player.getArrayListPermitCard();
-		if(arrayListPermitCard.size()==0)
+		if(arrayListPermitCard.isEmpty())
 			println("-- none --");
 		else{
 			println();
@@ -313,7 +293,7 @@ public class InfoMatch {
 	private void printYourCities() throws InterruptedException{
 		print("- Emporiums built in these cities: ");
 		ArrayList<City> arrayListEmporiumBuilt = player.getArrayListEmporiumBuilt();
-		if(arrayListEmporiumBuilt.size()==0)
+		if(arrayListEmporiumBuilt.isEmpty())
 			println("-- none --");
 		else{
 			for(City city: player.getArrayListEmporiumBuilt()){

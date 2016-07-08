@@ -1,5 +1,7 @@
 package it.polimi.ingsw.LM_Dichio_CoF_PlayerSide;
 
+import it.polimi.ingsw.LM_Dichio_CoF.control.Constant;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -10,8 +12,8 @@ public class SocketConnection {
 
 	PlayerSide playerSide;
 	
-	private final static String ADDRESS = "localhost";
-	private final static int SOCKET_PORT = 3000;
+	private final static String ADDRESS = Constant.SOCKET_ADDRESS;
+	private final static int SOCKET_PORT = Constant.SOCKET_PORT;
 	
 	private Socket mySocket;
 	private Scanner inSocket;

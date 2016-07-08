@@ -67,7 +67,7 @@ public class AcquirePermitCardMainAction extends Action {
         PermitCard[] choosablePermitCards = chosenRegion.getFaceUpPermitCardArea().getArrayPermitCard();
         ArrayList<PermitCard> arrayListChoosablePermitCards = new ArrayList<>(Arrays.asList(choosablePermitCards));
 
-        player.getBroker().println(Message.choosePermitCardNoBonus(arrayListChoosablePermitCards));
+        player.getBroker().println(Message.choosePermitCard(arrayListChoosablePermitCards));
         indexChosenPermitCard = player.getBroker().askInputNumber(1, choosablePermitCards.length)-1;
 
         return true;
