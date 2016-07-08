@@ -26,18 +26,20 @@ import it.polimi.ingsw.server.model.SellingPoliticCard;
  
 public class ControlMarket {
  
-    private ArrayList <Player> arrayListPlayers;
+    private ArrayList <Player> players;
+    private ArrayList <Player> playersConnected;
     private ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
     private Match match;
     private Action action;
     private int turn;
+    private Player player;
    
     public ControlMarket (ArrayList<Player> arrayListPlayer, Match match){
-        this.arrayListPlayers = new ArrayList<Player>(arrayListPlayer);
+        this.players = new ArrayList<Player>(arrayListPlayer);
         this.match=match;
     }
    
-    public void startMarket () throws InterruptedException{
+    public void startMarket (){
         
     	startSelling();
        
@@ -45,38 +47,101 @@ public class ControlMarket {
         
     } 
     
-    private void startSelling() throws InterruptedException{
+    private void startSelling(){
     	
     	turn = 0;
     	do {
-            action = new MarketSellAction(match, arrayListPlayers.get(turn));
-            if (action.preliminarySteps()) {
-                action.execute();
-                Broadcast.printlnBroadcastOthers(action.getResultMsg(), arrayListPlayers, arrayListPlayers.get(turn));
-            }
+    		
+    		player=players.get(turn);
+    		
+    		if(player.isConnected()){
+    			action = new MarketSellAction(match, player);
+            	turnMarketHandler();
+            	
+    		}else if(!player.isMessageDisconnectedSent()){
+        		Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOut(player), players, player);
+        		player.setMessageDisconnectedSent(true);
+        	}
+    		
             turn++;
         }
-        while ((turn % arrayListPlayers.size()) != 0);
+        while ((turn % players.size()) != 0);
     	
     }
    
-    private void startBuying () throws InterruptedException{
+    private void startBuying (){
     	
         turn = 0;
-        ArrayList <Player> arrayListPlayerBuyPhase = new ArrayList <> (arrayListPlayers);
-        Collections.shuffle(arrayListPlayerBuyPhase);
+        ArrayList <Player> playersBuyPhase = new ArrayList <> (players);
+        Collections.shuffle(playersBuyPhase);
        
         do {
-            action = new MarketBuyAction(match, arrayListPlayerBuyPhase.get(turn));
-            if (action.preliminarySteps()) {
-                action.execute();
-                Broadcast.printlnBroadcastOthers(action.getResultMsg(), arrayListPlayerBuyPhase, arrayListPlayerBuyPhase.get(turn));
-            }
+        	
+        	player = playersBuyPhase.get(turn);
+        	
+        	if(player.isConnected()){
+	            action = new MarketBuyAction(match, player);
+	            turnMarketHandler();
+	            
+        	}else if(!player.isMessageDisconnectedSent()){
+        		Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOut(player), playersBuyPhase, player);
+        		player.setMessageDisconnectedSent(true);
+        	}
+        	
             turn++;
         }
-        while ((turn % arrayListPlayerBuyPhase.size()) != 0);      
+        while ((turn % playersBuyPhase.size()) != 0);      
     }
- 
+    
+    private void turnMarketHandler(){
+    	
+    	Thread turnMarketThread = new Thread(new Runnable(){
+    		public void run() {
+	    		try {
+					if (action.preliminarySteps()){
+					    action.execute();
+			    		Broadcast.printlnBroadcastOthers(action.getResultMsg(), players, player);
+					}
+				} catch (InterruptedException e) {}
+    		}
+		});
+    	turnMarketThread.start();
+    	
+    	new ControlTimer().waitForThreadUntilTimerExpires(turnMarketThread, Constant.TIMER_SECONDS_MARKET_ACTION);
+    	
+    	if(turnMarketThread.isAlive()){
+    		turnMarketThread.interrupt();
+    	}
+    	
+    	if(!player.isConnected()){
+    		Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOut(player), players, player);
+    		player.setMessageDisconnectedSent(true);
+    	}
+    	
+    }
+    
+    private ArrayList<Player> getPlayersConnected(){
+		ArrayList<Player> ps = new ArrayList<>();
+		for(Player p: players){
+			p.isConnected();
+				ps.add(p);
+		}
+		return ps;
+	}
+    
+    private boolean atLeastTwoPlayersConnected(){
+		if(playersConnected==null){
+			return false;
+		}else if(playersConnected.size()==1){
+			try {
+				playersConnected.get(0).getBroker().println(Message.youWon());
+			} catch (InterruptedException e) {}
+			return false;
+		}else{
+			return true;
+		}
+	}
+    
     public ArrayList<SellingObject> getArrayListSellingObjects() {
         return arrayListSellingObjects;
     }
