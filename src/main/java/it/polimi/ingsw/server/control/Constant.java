@@ -25,6 +25,7 @@ public class Constant {
 	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 300;
 	public static final int TIMER_SECONDS_NEW_MATCH = 20; 
 	public static final int TIMER_SECONDS_WAITING_CONFIGURATIONS = 10;
+	public static final int TIMER_SECONDS_MARKET_ACTION = 40;
 
 	//assumptions
 	public static final int CITIES_NUMBER_LOW = 15;
