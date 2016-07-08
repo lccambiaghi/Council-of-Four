@@ -6,7 +6,7 @@ import java.util.Collections;
 
 public class ControlMatch {
 
-	private final Market market;
+	private final MarketHandler market;
 	private Match match;
 	private Player player;
 	
