@@ -27,10 +27,11 @@ import it.polimi.ingsw.server.model.SellingPoliticCard;
 public class ControlMarket {
  
     private ArrayList <Player> players;
-    private ArrayList <Player> playersConnected;
+    
     private ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
     private Match match;
     private Action action;
+    
     private int turn;
     private Player player;
    
@@ -41,9 +42,11 @@ public class ControlMarket {
    
     public void startMarket (){
         
-    	startSelling();
-       
-        startBuying();
+    	if(atLeastTwoPlayersConnected()){
+    		startSelling();
+    		if(atLeastTwoPlayersConnected())
+    			startBuying();
+    	}
         
     } 
     
@@ -123,19 +126,15 @@ public class ControlMarket {
     private ArrayList<Player> getPlayersConnected(){
 		ArrayList<Player> ps = new ArrayList<>();
 		for(Player p: players){
-			p.isConnected();
+			if(p.isConnected())
 				ps.add(p);
 		}
 		return ps;
 	}
     
     private boolean atLeastTwoPlayersConnected(){
-		if(playersConnected==null){
-			return false;
-		}else if(playersConnected.size()==1){
-			try {
-				playersConnected.get(0).getBroker().println(Message.youWon());
-			} catch (InterruptedException e) {}
+    	ArrayList<Player> playersConnected = getPlayersConnected();
+		if((playersConnected==null)||(playersConnected.size()==1)){
 			return false;
 		}else{
 			return true;
