@@ -161,7 +161,8 @@ public class WaitingRoom extends Thread{
 	}
 	
 	private void startCountDown(){
-		new ControlTimer().startCountDown(Constant.TIMER_SECONDS_NEW_MATCH);
+		controlTimer = new ControlTimer();
+		controlTimer.startCountDown(Constant.TIMER_SECONDS_NEW_MATCH);
 	}
 	
 	
