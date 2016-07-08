@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.control.actions;
 
-import com.sun.tools.internal.jxc.ap.Const;
 import it.polimi.ingsw.server.control.Constant;
 import it.polimi.ingsw.server.control.Message;
 import it.polimi.ingsw.server.control.Player;
