@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.control.actions;
 
+import com.sun.tools.internal.jxc.ap.Const;
 import it.polimi.ingsw.server.control.Constant;
 import it.polimi.ingsw.server.control.Message;
 import it.polimi.ingsw.server.control.Player;
@@ -21,9 +22,16 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
     }
 
-	//TODO aggiungi controllo su numero empori (anche King)
     @Override
     public boolean preliminarySteps() throws InterruptedException{
+
+		if (player.getArrayListEmporiumBuilt().size() == Constant.NUMBER_EMPORIUMS_TO_WIN){
+
+			player.getBroker().println(Message.youCantBuildMaxEmporium());
+
+			return false;
+
+		}
 
 		int usablePermitCards = sortPermitCards();
 

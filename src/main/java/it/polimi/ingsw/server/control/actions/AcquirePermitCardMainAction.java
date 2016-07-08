@@ -46,7 +46,7 @@ public class AcquirePermitCardMainAction extends Action {
             return false;
         }
 
-        if (calculateSatisfactionCost(usablePoliticCards)<1){
+        if (calculateSatisfactionCost(usablePoliticCards)<0){
             player.getBroker().println(Message.notEligibleForMove());
             return false;
         }
@@ -156,10 +156,7 @@ public class AcquirePermitCardMainAction extends Action {
             if(numberSelectedCards==1)
                 lowerBoundInput = 0;
 
-            if(numberSelectedCards>=1)
-                player.getBroker().println("0. [Done] ");
-
-            player.getBroker().println(Message.choosePoliticCard(selectablePoliticCards));
+            player.getBroker().println(Message.choosePoliticCardWithDone(selectablePoliticCards, numberSelectedCards));
 
             indexSelectedCard = player.getBroker().askInputNumber(lowerBoundInput, selectablePoliticCards.size());
 

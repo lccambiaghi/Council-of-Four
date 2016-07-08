@@ -83,6 +83,37 @@ public final class Message {
 
 	}
 
+	public static String choosePoliticCard(List <PoliticCard> playerPoliticCards){
+
+		StringBuilder message = new StringBuilder();
+
+		message.append("Which Politics Cards would you like to use?");
+
+		for (int i=0; i<playerPoliticCards.size(); i++){
+			message.append("\n").append(i+1).append(". ")
+					.append(playerPoliticCards.get(i).getCardColor().toString());
+		}
+		return message.toString();
+
+	}
+
+	public static String choosePoliticCardWithDone(List <PoliticCard> playerPoliticCards, int numberSelectedCards){
+
+		StringBuilder message = new StringBuilder();
+
+		message.append("Which Politics Cards would you like to use?");
+
+		if(numberSelectedCards>=1)
+			message.append("0. [Done] ");
+
+		for (int i=0; i<playerPoliticCards.size(); i++)
+			message.append("\n").append(i+1).append(". ")
+					.append(playerPoliticCards.get(i).getCardColor().toString());
+
+		return message.toString();
+
+	}
+
 	public static String choosePermitCard(ArrayList<PermitCard> arrayListPermitCard){
 
 		StringBuilder message= new StringBuilder();
@@ -184,10 +215,15 @@ public final class Message {
 
 		int i=1;
 		while (itCities.hasNext()) {
-			Map.Entry city = (Map.Entry) itCities.next();
-			//TODO stampa nome città
-			message.append(i).append(". ").append(city.getKey()).append(" Cost: ").append(city.getValue()).append("\n");
+
+			Map.Entry entryCity = (Map.Entry) itCities.next();
+
+			message.append(i).append(". ").append(((City) entryCity.getKey()).getCityName().toString());
+
+			message.append(" Cost: ").append(entryCity.getValue()).append("\n");
+
 			i++;
+
 		}
 
 		return message.toString();
@@ -197,7 +233,14 @@ public final class Message {
 	public static String youCantBuild(){
 		return "You either have no Business Permit Tiles" +
 				" or you have already built in every city they avail you to. " +
-				"Please choose another main move";
+				"Please choose another main move.";
+	}
+
+	public static String youCantBuildMaxEmporium() {
+
+		return "You have already built the needed number of emporiums to win. " +
+				"Choose another move.";
+
 	}
 
 	public static String askCouncillorColor(ArrayList<Color> choosableColors){
@@ -274,20 +317,6 @@ public final class Message {
 		return "You won the match!";
 	}
 
-	public static String choosePoliticCard(List <PoliticCard> playerPoliticCards){
-
-		StringBuilder message = new StringBuilder();
-		
-		message.append("Which Politics Cards would you like to use?");
-
-		for (int i=0; i<playerPoliticCards.size(); i++){
-			message.append("\n").append(i+1).append(". ")
-			.append(playerPoliticCards.get(i).getCardColor().toString());
-		}
-		return message.toString();
-
-	}
-
 	public static String chooseSellingObject(Player player, SellingObject sellingObject){
 
 		return "";
@@ -331,9 +360,9 @@ public final class Message {
 	public static String skipBuying (){
 		return "0. Exit from the buying step";
 	}
-	
+
 	public static String noMarketElements(){
 		return "There aren't object on sale in the market";
 	}
-	
+
 }

@@ -28,6 +28,14 @@ public class BuildEmporiumWithKingMainAction extends Action {
     @Override
     public boolean preliminarySteps() throws InterruptedException {
 
+        if (player.getArrayListEmporiumBuilt().size() == Constant.NUMBER_EMPORIUMS_TO_WIN){
+
+            player.getBroker().println(Message.youCantBuildMaxEmporium());
+
+            return false;
+
+        }
+
         Map<City, Integer> reachableCities = getReachableCities(0);
 
         int minimumKingCost = reachableCities.entrySet().iterator().next().getValue();
@@ -42,7 +50,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         }
 
-        if (calculateSatisfactionCost(usablePoliticCards, minimumKingCost) < 1) {
+        if (calculateSatisfactionCost(usablePoliticCards, minimumKingCost) < 0) {
 
             player.getBroker().println(Message.notEligibleForMove());
 
@@ -105,18 +113,22 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         int levelCost = 0;
 
-        movableCities.put(arrayCity[indexCurrentCity], levelCost);
-
         while (player.getRichness() - satisfactionCost >= levelCost) {
             while (!visitingLevelQueue.isEmpty()) {
+
                 int visitingCity = visitingLevelQueue.remove();
+
+                //add visiting city to movable cities with cost of visiting level
+                if (!arrayCity[visitingCity].isEmporiumAlreadyBuilt(player))
+                    movableCities.put(arrayCity[visitingCity], levelCost);
+
+                //add cities linked with visiting city to the next level queue
                 for (Integer adjCity : arrayCityLinks[visitingCity])
                     if (!visitedCities[adjCity]) {
                         nextLevelQueue.add(adjCity);
                         visitedCities[adjCity] = true;
-                        if (!arrayCity[adjCity].isEmporiumAlreadyBuilt(player))
-                            movableCities.put(arrayCity[adjCity], levelCost);
                     }
+
             }
             while (!nextLevelQueue.isEmpty())
                 visitingLevelQueue.add(nextLevelQueue.remove());
@@ -221,11 +233,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
             if(numberSelectedCards==1)
                 lowerBoundInput = 0;
 
-            //TODO FIX
-            if(numberSelectedCards>=1)
-                player.getBroker().println("0. [Done] ");
-
-            player.getBroker().println(Message.choosePoliticCard(selectablePoliticCards));
+            player.getBroker().println(Message.choosePoliticCardWithDone(selectablePoliticCards, numberSelectedCards));
 
             indexSelectedCard = player.getBroker().askInputNumber(lowerBoundInput, selectablePoliticCards.size());
 
