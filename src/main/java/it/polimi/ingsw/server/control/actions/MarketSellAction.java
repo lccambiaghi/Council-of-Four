@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.polimi.ingsw.server.control.MarketHandler;
+import it.polimi.ingsw.server.control.ControlMarket;
 import it.polimi.ingsw.server.control.Message;
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.server.model.Match;
@@ -184,9 +184,9 @@ public class MarketSellAction extends Action{
    
     @Override
     public void execute(){
-        MarketHandler market = match.getMarket();
+        ControlMarket market = match.getMarket();
        
-        market.addArrayListSellingObject(sellingObject);
+        market.addSellingObjectToArrayList(sellingObject);
        
         resultMsg="Player " + player.getNickname() + " added a new object in the market";
        

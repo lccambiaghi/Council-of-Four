@@ -6,7 +6,7 @@ import java.util.Collections;
 
 public class ControlMatch {
 
-	private final MarketHandler market;
+	private final ControlMarket market;
 	private Match match;
 	private Player player;
 	
@@ -121,22 +121,7 @@ public class ControlMatch {
 		Thread turnThread = new Thread(turn);
 		turnThread.start();
 		
-		/**
-		 * This "while" permits to check every second if the timer
-		 * to perform the action has expired
-		 */
-		startTime = System.currentTimeMillis();
-		endTime = startTime + (Constant.TIMER_SECONDS_TO_PERFORM_ACTION)*1000;
-		while (System.currentTimeMillis() < endTime) {
-		    try {
-		         Thread.sleep(1000);  // Sleep 1 second
-		         
-		         // If the player has finished his turn before the timer expires
-		         if(!turnThread.isAlive())
-		        	 break;
-		         
-		    } catch (InterruptedException e) {}	
-		}
+		new ControlTimer().waitForThreadUntilTimerExpires(turnThread, Constant.TIMER_SECONDS_TO_PERFORM_ACTION);
 		
 		/**
 		 * If the timer has expired and the player hasn't completed an action

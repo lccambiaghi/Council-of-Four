@@ -7,7 +7,7 @@ import java.util.*;
 
 import it.polimi.ingsw.server.control.Constant;
 import it.polimi.ingsw.server.control.InfoMatch;
-import it.polimi.ingsw.server.control.MarketHandler;
+import it.polimi.ingsw.server.control.ControlMarket;
 import it.polimi.ingsw.server.control.Player;
 
 
@@ -17,7 +17,7 @@ public class Match {
 
 	private Field field;
 
-	private MarketHandler market;
+	private ControlMarket market;
 
 	private InfoMatch infoMatch;
 	
@@ -35,7 +35,7 @@ public class Match {
 		
 		field = new Field(config, arrayListPlayer);
 
-		market = new MarketHandler (arrayListPlayer, this);
+		market = new ControlMarket (arrayListPlayer, this);
 
 		infoMatch = new InfoMatch(this);
 		
@@ -102,6 +102,6 @@ public class Match {
 	
 	public InfoMatch getInfoMatch() {return infoMatch;}
 
-	public MarketHandler getMarket() { return market; }
+	public ControlMarket getMarket() { return market; }
 
 }
