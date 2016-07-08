@@ -37,7 +37,6 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		ArrayList<PermitCard> playerPermitCards = player.getArrayListPermitCard();
 
-		//TODO FIX NO BONUS può stare su una riga
 		player.getBroker().println(Message.choosePermitCardNoBonus(playerPermitCards, usablePermitCards));
 
 		chosenPermitCard = playerPermitCards.get(player.getBroker().askInputNumber(1,usablePermitCards)-1); //array positioning
@@ -93,7 +92,6 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 	 *  This method puts buildableCities in front,
 	 *  so we can use the input of the user to pick the corresponding city
 	 *  */
-	//TODO FIX
 	private int sortBuildableCities(PermitCard permitCard) {
 
 		City[] arrayCity = permitCard.getArrayBuildableCities();

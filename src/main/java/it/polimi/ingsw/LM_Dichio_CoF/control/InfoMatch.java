@@ -172,16 +172,11 @@ public class InfoMatch {
 			case Constant.CITIES_NUMBER_MEDIUM:
 				positions=posMedium;
 				break;
-			case Constant.CITIES_NUMBER_HIGH:
+			default: // high
 				positions=posHigh;
 				break;
-			default:{
-				println("ERROR");
-				positions=null;
-			}
 		}
 
-		//TODO FIX
 		for(int pos: positions){
 			switch(pos){
 			case	0:

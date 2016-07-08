@@ -226,12 +226,6 @@ public class Field {
 		}
 		nobilityRoute.setField(this);
 
-		for (int i = 0; i < arrayListPlayer.size(); i++) {
-			Player player = arrayListPlayer.get(i);
-			player.setRichness(Constant.RICHNESS_INITIAL_FIRST_PLAYER + i);
-			player.setVictory(Constant.VICTORY_INITIAL_FIRST_PLAYER);
-		}
-
 	}
 	
 	public City[] getArrayCity(){
