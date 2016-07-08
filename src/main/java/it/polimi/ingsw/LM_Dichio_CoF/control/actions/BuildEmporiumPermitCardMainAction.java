@@ -152,20 +152,6 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 		//check on bonus tiles
 		checkBonusTiles();
 
-		checkIfLastEmporium();
-
-	}
-
-	private void checkIfLastEmporium() {
-
-		if(player.getArrayListEmporiumBuilt().size() == Constant.NUMBER_EMPORIUMS_TO_WIN){
-
-			player.setVictory(player.getVictory() + Constant.VICTORY_INCREMENT_LAST_EMPORIUM);
-
-			match.setGameOver(true);
-
-		}
-
 	}
 
 	/* Queue of adjacent built cities. It starts only with chosenCity.

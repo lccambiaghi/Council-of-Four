@@ -13,34 +13,30 @@ public class ControlMatch {
 	private final ArrayList<Player> allPlayers;
 	private ArrayList<Player> playersConnected;
 
+	private boolean gameOver;
 	private boolean goMarket;
 	private Turn turn;
-	
+
 	private long startTime;
 	private long endTime;
-
-	private int lastTurnCounter;
 
 	public ControlMatch(ArrayList<Player> arrayListPlayer){
 
 		Collections.shuffle(arrayListPlayer);
-		
+
 		this.allPlayers =arrayListPlayer;
 		this.match=Match.MatchFactory(arrayListPlayer);
 		this.market=match.getMarket();
-	
+
 	}
-	
+
 	private ArrayList<Player> getPlayersConnected(){
-
-		ArrayList<Player> ps = new ArrayList<Player>();
-
-		for(Player p: allPlayers)
-			if(p.isConnected())
+		ArrayList<Player> ps = new ArrayList<>();
+		for(Player p: allPlayers){
+			p.isConnected();
 				ps.add(p);
-
+		}
 		return ps;
-
 	}
 
 	public void startMatch(){
@@ -48,62 +44,53 @@ public class ControlMatch {
 		int playerNumber=0;
 
 		do {
-			
-			playersConnected = getPlayersConnected();
-			
-			if(!atLeastTwoPlayersConnected()){
-				
-				match.setGameOver(true);
 
-				lastTurnCounter=playersConnected.size()-1;
+			playersConnected = getPlayersConnected();
+
+			if(!atLeastTwoPlayersConnected()){
+
+				gameOver=true;
 
 			}else{
-				
+
 				//CHECK IF LAST EMPORIUM BUILT
-					
+
 				do{
-				
+
 					//If it's the last player of the group
 					if(playerNumber==allPlayers.size()){
-						
+
 						playerNumber=0;
-
 						goMarket=true;
-
 						break;
-						
-					}else{
-						
-						player=allPlayers.get(playerNumber);
 
+					}else{
+
+						player=allPlayers.get(playerNumber);
 						playerNumber++;
 					}
-				
+
 				}while(!player.isConnected());
-				
+
 				if(!goMarket){
-					
+
 					turnHandler();
-					
+
 					if(!player.isConnected()){
 						Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOut(player), playersConnected, player);
 					}
-				
-				}else{
-					
-					goMarket=false;
 
+				}else{
+
+					goMarket=false;
 					marketHandler();
-					
+
 				}
 
+
 			}
-			
-		}while(!match.isGameOver() && lastTurnCounter<playersConnected.size()-1);
 
-		//check on victory points
-
-
+		}while(!gameOver);
 
 	}
 	

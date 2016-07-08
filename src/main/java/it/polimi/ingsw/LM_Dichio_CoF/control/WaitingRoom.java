@@ -186,15 +186,12 @@ public class WaitingRoom extends Thread{
 			fileOutputStream = new FileOutputStream("./src/configurations/config");
 			objectOutputStream = new ObjectOutputStream(fileOutputStream);
 			objectOutputStream.writeObject(config);
+			fileOutputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();	
-		}finally{
-			try {
-				fileOutputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
+
+
 	}
 	
 	private void waitForTimer(Thread t, int seconds){

@@ -23,8 +23,6 @@ public class Match {
 	private Market market;
 
 	private InfoMatch infoMatch;
-
-	private boolean gameOver;
 	
 	public Match(ArrayList<Player> arrayListPlayer) {
 		
@@ -109,11 +107,4 @@ public class Match {
 
 	public Market getMarket() { return market; }
 
-	public boolean isGameOver() {
-		return gameOver;
-	}
-
-	public void setGameOver(boolean gameOver) {
-		this.gameOver = gameOver;
-	}
 }
