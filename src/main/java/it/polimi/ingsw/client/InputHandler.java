@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,32 +10,32 @@ public class InputHandler {
 
 	private Scanner in;
 	private boolean stopped = false;
-	private Thread t;
 	
 	public InputHandler(){	}
 	
 	public void stopInputNumber(){
 		stopped=true;
-		System.out.println("The signal to stop has been received, but I don't know how to do it...");
 	}
 	
 	public int inputNumber(int lowerBound, int upperBound){
 		
 		int inputNumber = 0;
-		//try{
-			
-			in = new Scanner(System.in);
+		in = new Scanner(System.in);
+		
+		try{
+	
+			String s;
 			
 			boolean eligibleInput=false;
 	
 			do {
 				
-				while(!in.hasNextInt()){
+				s = readWithSleep();
+				while(!isInteger(s)){
 					System.out.println("Insert an integer value!");
-					in.nextLine();
+					s = readWithSleep();
 				}
-				inputNumber=in.nextInt();
-				in.nextLine();
+				inputNumber=Integer.parseInt(s);
 	
 				if(inputNumber>=lowerBound && inputNumber<=upperBound)
 					eligibleInput=true;
@@ -43,12 +44,41 @@ public class InputHandler {
 										+ " and " + upperBound);
 			} while(!eligibleInput);
 			
-		//}catch (InterruptedException e) {
-			//System.out.println("Too late!");
-		//}
+		}catch (InterruptedException e) {
+			System.out.println("Too late!");
+		}catch (IOException e1){
+			e1.printStackTrace();
+		}
 		
 		return inputNumber;
 		
+	}
+	
+	private boolean isInteger(String s){
+		try{
+			Integer.parseInt(s);
+			return true;
+		}
+		catch(NumberFormatException e){
+			return false;
+		}
+	}
+	
+	private String readWithSleep() throws InterruptedException, IOException{
+		boolean go = true;
+		while(go){
+			if(System.in.available() > 0){
+				go=false;
+				return in.nextLine();
+			}else{
+				Thread.sleep(100);
+				if(stopped){
+					stopped=false;
+					throw new InterruptedException();
+				}
+			}
+		}
+		return null;
 	}
 	
 	
