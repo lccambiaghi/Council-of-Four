@@ -332,4 +332,8 @@ public final class Message {
 		return "0. Exit from the buying step";
 	}
 	
+	public static String noMarketElements(){
+		return "There aren't object on sale in the market";
+	}
+	
 }

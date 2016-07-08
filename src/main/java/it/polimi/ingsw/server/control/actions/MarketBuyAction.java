@@ -30,10 +30,14 @@ public class MarketBuyAction extends Action {
      */
      
     @Override
-    public boolean preliminarySteps() throws InterruptedException{
+    public boolean preliminarySteps() throws InterruptedException{    	
         boolean buyingSuccessful;
         arrayListSellingObjects = match.getMarket().getArrayListSellingObjects();
  
+        if(arrayListSellingObjects.size()==0){
+        	player.getBroker().println(Message.noMarketElements());
+        	return false;
+        }
         player.getBroker().println(Message.chooseToBuySomething_1_2());
         if(player.getBroker().askInputNumber(1,2)==1){
             player.getBroker().println(Message.askObjectToBuy());
@@ -63,8 +67,7 @@ public class MarketBuyAction extends Action {
             while(!buyingSuccessful);
             return true;
         }
-        else
-            return false;
+        return false;
     }
    
     /**

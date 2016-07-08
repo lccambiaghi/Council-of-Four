@@ -75,12 +75,13 @@ public class MarketSellAction extends Action{
                 }
                 choice= player.getBroker().askInputNumber(1, counter);
                 selectObject(player, itemsMenu.get(choice));
+                return true;
             }
         }else{
-            player.getBroker().println(Message.deniedSelling());
-            return false;
+	        player.getBroker().println(Message.deniedSelling());
+	        return false;
         }
-        return true;
+        return false;
     }
    
     /**
