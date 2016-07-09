@@ -5,8 +5,17 @@ import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.utils.Constant;
 import it.polimi.ingsw.utils.Message;
 
+/**
+ * Preliminary steps: the method checks if the player has enough assistants
+ *
+ * Execute: the method adds an additional main action to the player
+ */
 public class PerformAdditionalMAQuickAction extends Action {
 
+    /**
+     * @param match : the match in which the move is being executed
+     * @param player : the player who executes the move
+     */
     public PerformAdditionalMAQuickAction(Match match, Player player){
 
         this.match=match;
@@ -38,7 +47,7 @@ public class PerformAdditionalMAQuickAction extends Action {
         player.decrementAssistant(Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST);
 		
 		resultMsg="Player "+ player.getNickname() +" paid " +  Constant.ADDITIONAL_MAIN_MOVE_ASSISTANT_COST
-                + " assistants in order to perform an additional main action";
+                + " assistants in order to gain an additional main action";
 
     }
     

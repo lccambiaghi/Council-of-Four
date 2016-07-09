@@ -7,12 +7,22 @@ import it.polimi.ingsw.utils.Message;
 
 import java.util.ArrayList;
 
+/**
+ * Preliminary steps: the method checks which color the player can choose.
+ * In the unlikely event this list is empty, the player cannot perform the move
+ *
+ * Execute: the councillor is elected and the "fallen" councillor is put in availableCouncillors
+ */
 public class ElectCouncillorMainAction extends Action {
 
     private Balcony chosenBalcony;
 
     private Color chosenCouncillorColor;
 
+    /**
+     * @param match : the match in which the move is being executed
+     * @param player : the player who executes the move
+     */
     public ElectCouncillorMainAction(Match match, Player player){
 
         this.match=match;
@@ -50,6 +60,11 @@ public class ElectCouncillorMainAction extends Action {
 
     }
 
+    /**
+     * This method collects all the different colors of availableCouncillors
+     *
+     * @return list of colors the player can choose
+     */
     private ArrayList<Color> getChoosableColors() {
 
         ArrayList<Councillor> availableCouncillors = match.getField().getAvailableCouncillors().getArrayListCouncillor();

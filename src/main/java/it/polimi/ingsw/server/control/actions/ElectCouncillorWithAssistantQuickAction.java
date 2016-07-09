@@ -12,12 +12,21 @@ import it.polimi.ingsw.server.model.Field;
 
 import java.util.ArrayList;
 
+/**
+ * Preliminary steps: the method checks if the player has enough assistants
+ *
+ * Execute: the councillor is elected and the "fallen" councillor is put in availableCouncillors
+ */
 public class ElectCouncillorWithAssistantQuickAction extends Action {
 
 	private Balcony chosenBalcony;
 
 	private Color chosenCouncillorColor;
-	
+
+    /**
+     * @param match : the match in which the move is being executed
+     * @param player : the player who executes the move
+     */
     public ElectCouncillorWithAssistantQuickAction(Match match, Player player){
 
         this.match=match;
@@ -63,6 +72,11 @@ public class ElectCouncillorWithAssistantQuickAction extends Action {
 
     }
 
+    /**
+     * This method collects all the different colors of availableCouncillors
+     *
+     * @return list of colors the player can choose
+     */
     private ArrayList<Color> getChoosableColors() {
 
         ArrayList<Councillor> availableCouncillors = match.getField().getAvailableCouncillors().getArrayListCouncillor();

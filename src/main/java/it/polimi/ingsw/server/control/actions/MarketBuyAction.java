@@ -12,7 +12,11 @@ public class MarketBuyAction extends Action {
     public SellingObject possibleBuyedObject;
     public int choosenObject;
     public ArrayList <SellingObject> arrayListSellingObjects;
-   
+
+    /**
+     * @param match : the match in which the move is being executed
+     * @param player : the player who executes the move
+     */
     public MarketBuyAction (Match match, Player player){
         this.match=match;
         this.player=player;

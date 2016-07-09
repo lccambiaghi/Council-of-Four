@@ -18,7 +18,11 @@ import it.polimi.ingsw.utils.Message;
 public class MarketSellAction extends Action{
 	 
     private SellingObject sellingObject;
-   
+
+    /**
+     * @param match : the match in which the move is being executed
+     * @param player : the player who executes the move
+     */
     public MarketSellAction (Match match, Player player){
             this.match=match;
             this.player=player;

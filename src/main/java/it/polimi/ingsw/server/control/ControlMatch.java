@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ControlMatch {
-
 	private final ControlMarket market;
 	private Match match;
 	private Player player;
@@ -87,13 +86,14 @@ public class ControlMatch {
 
 		}while(!gameOver);
 
+		//TODO TEST
 		assignVictoryPointsBecauseNobility();
 		
 		assignVictoryPointsBecausePermitCards();
 
 		player = electWinner();
 
-		Broadcast.printlnBroadcastAll("Player " + player.getNickname() + "has won the match!", playersConnected);
+		Broadcast.printlnBroadcastAll("Player " + player.getNickname() + " has won the match!", playersConnected);
 
 		//classifica punti vittoria?
 

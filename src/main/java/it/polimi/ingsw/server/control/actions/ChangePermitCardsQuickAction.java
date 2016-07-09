@@ -8,10 +8,19 @@ import it.polimi.ingsw.server.model.Region;
 import it.polimi.ingsw.utils.Constant;
 import it.polimi.ingsw.utils.Message;
 
+/**
+ * Preliminary steps: checks that the player has enough assistants to perform the move
+ *
+ * Execute: change the permit cards of the chosen region, decrements assistants of the player
+ */
 public class ChangePermitCardsQuickAction extends Action {
 
 	private Region chosenRegion;
-	
+
+	/**
+	 * @param match : the match in which the move is being executed
+	 * @param player : the player who executes the move
+	 */
     public ChangePermitCardsQuickAction(Match match, Player player){
 
 		this.match=match;

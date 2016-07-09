@@ -8,16 +8,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
+/**
+ * Preliminary steps: the method ensures that there exists a set of cards that the player
+ * can use to satisfy the council of the chosenRegion
+ *
+ * Execute: discards chosen politicCards, decrements richness by satisfactionCost,
+ * acquires chosenPermitCard and applies its bonuses
+ */
 public class AcquirePermitCardMainAction extends Action {
 
     private Region chosenRegion;
+
     private ArrayList<PoliticCard> chosenPoliticCards;
+
     private int satisfactionCost;
+
     private int indexChosenPermitCard;
 
+    /**
+     * @param match : the match in which the move is being executed
+     * @param player : the player who executes the move
+     */
     public AcquirePermitCardMainAction(Match match, Player player){
+
         this.match=match;
+
         this.player=player;
+
     }
 
     @Override
@@ -35,7 +52,7 @@ public class AcquirePermitCardMainAction extends Action {
 
         int chosenIndex = player.getBroker().askInputNumber(1, 3) -1; //-1 for array positioning
 
-        Balcony chosenBalcony = field.getBalconyFromIndex(chosenIndex); //-1 for array positioning
+        Balcony chosenBalcony = field.getBalconyFromIndex(chosenIndex);
 
         chosenRegion = field.getRegionFromIndex(chosenIndex);
 
@@ -95,8 +112,13 @@ public class AcquirePermitCardMainAction extends Action {
 
     }
 
-    /* First it adds Multicolor cards to usable cards, then for each councillor,
-	   if it finds a matching color card, it adds it and goes to next councillor */
+    /**
+     * First the method adds Multicolor cards to usable cards.
+     * Then, for each councillor, if it finds a matching color card, it adds it and goest to next councillor
+     *
+     * @param chosenBalcony balcony whose council is to be satisfied
+     * @return potential politics card the player can use to satisfy the council
+     */
     private ArrayList<PoliticCard> getUsablePoliticCards(Balcony chosenBalcony) {
 
         ArrayList <PoliticCard> playerHand = new ArrayList<>(player.getArrayListPoliticCard());
@@ -127,9 +149,15 @@ public class AcquirePermitCardMainAction extends Action {
 
     }
 
-    /* First call: if a set of cards that allows the player to perform the move exists,
-		the method returns a positive number.
-		Second call: if the specified set is eligible, the method returns what the player has to pay */
+    /**
+     * First call: if a set of cards that allows the player to perform the move exists,
+     * the method returns a positive number.
+     *
+     * Second call: if the specified set is eligible, the method returns what the player has to pay
+     *
+     * @param usablePoliticCards politic cards the player wants to use to satisfy council
+     * @return cost the player has to pay to perform the move
+     */
     private int calculateSatisfactionCost(ArrayList<PoliticCard> usablePoliticCards) {
 
         int playerRichness= player.getRichness();
@@ -164,6 +192,13 @@ public class AcquirePermitCardMainAction extends Action {
 
     }
 
+    /**
+     * The method asks the user to select a set of politics card to satisfy the council among usablePolitcCards
+     *
+     * @param usablePoliticCards potential politics cards the player can select
+     * @return chosen politics cards
+     * @throws InterruptedException
+     */
     private ArrayList<PoliticCard> choosePoliticCardsUntilEligible(ArrayList<PoliticCard> usablePoliticCards) throws InterruptedException {
 
         ArrayList<PoliticCard> selectablePoliticCards = new ArrayList<>(usablePoliticCards);

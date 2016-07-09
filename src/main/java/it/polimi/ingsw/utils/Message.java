@@ -261,6 +261,10 @@ public final class Message {
 		return "You don't have enough richness to use this set. Please select another one.";
 	}
 
+	public static String notEnoughRichness() {
+		return "You don't have enough richness to perform this move. Please choose another one.";
+	}
+
 	public static String notEnoughAssistant(){
 		return "You don't have enough assistants to perform this move. Please select another one.";
 	}

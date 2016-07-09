@@ -7,6 +7,13 @@ import it.polimi.ingsw.utils.Message;
 
 import java.util.*;
 
+/**
+ * Preliminary Steps: checks if there exists a reachable city and a set of politics cards
+ * such that kingCost + satisfactionCost <= playerRichness
+ *
+ * Execute: decrement richness, discard chosen politics cards, moves king to
+ * chosen city, build emporium, apply bonuses to adjacent cities
+ */
 public class BuildEmporiumWithKingMainAction extends Action {
 
     private ArrayList<PoliticCard> chosenPoliticCards;
@@ -17,6 +24,10 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     private City chosenCity;
 
+    /**
+     * @param match : the match in which the move is being executed
+     * @param player : the player who executes the move
+     */
     public BuildEmporiumWithKingMainAction(Match match, Player player) {
 
         this.match = match;
@@ -100,6 +111,13 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         chosenCity.buildEmporium(player);
 
+        ArrayList<City> nearbyBuiltCities = getAdjacentBuiltCities(chosenCity);
+
+        //TODO TEST
+        for (City city: nearbyBuiltCities)
+            for (Bonus bonus : city.getArrayBonus())
+                bonus.applyBonus(player, field);
+
         resultMsg="Player " + player.getNickname() + " has moved the king to " +
                 chosenCity.getCityName().toString() + " city and built an emporium there.";
 
@@ -110,8 +128,13 @@ public class BuildEmporiumWithKingMainAction extends Action {
     }
 
     /**
-     * First call: get every reachable buildableCity assuming the player pays 0 for election
+     * First call: get every reachable buildableCity assuming the player pays 0 for election. Doing so,
+     * the first entry's value is the minimumKingCost
+     *
      * Second call: get every reachable buildableCity given that the player has to pay for satisfaction
+     *
+     * @param satisfactionCost cost the player has to pay for the satisfaction of the council
+     * @return a Map containing the reachable city and the cost to reach it
      */
     private Map<City, Integer> getReachableCities(int satisfactionCost) {
 
@@ -162,8 +185,13 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     }
 
-    /* First it adds Multicolor cards to usable cards, then for each councillor,
-	   if it finds a matching color card, it adds it and goes to next councillor */
+    /**
+     * First the method adds Multicolor cards to usable cards
+     *
+     * Then, for each councillor, if it finds a matching color card, it adds it and goest to next councillor
+     *
+     * @return potential politics card the player can use to satisfy the council
+     */
     private ArrayList<PoliticCard> getUsablePoliticCards() {
 
         Balcony[] arrayBalcony = match.getField().getArrayBalcony();
@@ -201,10 +229,12 @@ public class BuildEmporiumWithKingMainAction extends Action {
     /**
      * First call: if a set of cards that allows the player to perform the move exists,
      * the method returns a positive number.
+     *
      * Second call: if the specified set is eligible, the method returns what the player has to pay
+     *
      * @param arrayListPoliticCards politic cards the player wants to use to satisfy council
      * @param minimumKingCost minimum cost the player has to pay to move the king
-     * @return
+     * @return cost the player has to pay to perform the move
      */
     private int calculateSatisfactionCost(ArrayList<PoliticCard> arrayListPoliticCards, int minimumKingCost) {
 
@@ -240,6 +270,13 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     }
 
+    /**
+     * The method asks the user to select a set of politics card to satisfy the council among usablePolitcCards
+     *
+     * @param usablePoliticCards potential politics cards the player can select
+     * @return chosen politics cards
+     * @throws InterruptedException
+     */
     private ArrayList<PoliticCard> choosePoliticCardsUntilEligible(ArrayList<PoliticCard> usablePoliticCards) throws InterruptedException {
 
         ArrayList<PoliticCard> selectablePoliticCards = new ArrayList<>(usablePoliticCards);
@@ -268,6 +305,50 @@ public class BuildEmporiumWithKingMainAction extends Action {
         } while (indexSelectedCard > 0 && numberSelectedCards < 4);
 
         return selectedPoliticCards;
+
+    }
+
+    /**
+     * This method returns cities adjacent to chosenCity.
+     * It handles a queue of adjacent built cities which starts only with chosenCity.
+     * Elements of queue are removed and analysed one at a time.
+     * If a city is linked to the analysed element of the queue and emporium is present,
+     * the city is also added to the queue
+     *
+     * @param chosenCity city in which the player wants to build the emporium
+     * @return adjacent cities to chosenCity
+     */
+    private ArrayList<City> getAdjacentBuiltCities(City chosenCity) {
+
+        int indexChosenCity = chosenCity.getCityName().ordinal();
+
+        List<Integer>[] arrayCityLinks = match.getField().getArrayCityLinks();
+
+        Queue<Integer> toVisitQueue = new LinkedList<>();
+        toVisitQueue.add(indexChosenCity);
+
+        boolean[] visitedCities = new boolean[arrayCityLinks.length];
+        visitedCities[indexChosenCity] = true;
+
+        ArrayList<City> nearbyBuiltCities = new ArrayList<>();
+
+        City[] arrayCity=match.getField().getArrayCity();
+
+        while (!toVisitQueue.isEmpty()) {
+
+            int visitingCity = toVisitQueue.remove();
+
+            nearbyBuiltCities.add(arrayCity[visitingCity]);
+
+            for (Integer adjacentCity : arrayCityLinks[visitingCity])
+                if (arrayCity[adjacentCity].isEmporiumAlreadyBuilt(player) && !visitedCities[adjacentCity]) {
+                    toVisitQueue.add(adjacentCity);
+                    visitedCities[adjacentCity] = true;
+                }
+
+        }
+
+        return nearbyBuiltCities;
 
     }
 
@@ -343,6 +424,10 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     }
 
+    /**
+     * This method checks if the player has built in every city of the chosenRegion
+     * @return true if eligible, false if not
+     */
     private boolean isEligibleForRegionTile() {
 
         int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
@@ -362,6 +447,10 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     }
 
+    /**
+     * This method checks if the player has built in every city of the chosenCity card color
+     * @return true if eligible, false if not
+     */
     private boolean isEligibleForColorTile() {
 
         if(chosenCity.isColorBonusSatisfied() || chosenCity.getCityColor()==CityColor.Purple)

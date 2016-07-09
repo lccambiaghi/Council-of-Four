@@ -5,8 +5,17 @@ import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.utils.Constant;
 import it.polimi.ingsw.utils.Message;
 
+/**
+ * Preliminary steps: the method checks if the player has enough richness
+ *
+ * Execute: adds the assistant to the player and decrease his richness
+ */
 public class EngageAssistantQuickAction extends Action {
 
+    /**
+     * @param match : the match in which the move is being executed
+     * @param player : the player who executes the move
+     */
     public EngageAssistantQuickAction(Match match, Player player){
 
         this.match=match;
@@ -20,7 +29,7 @@ public class EngageAssistantQuickAction extends Action {
 
 		if(player.getRichness()<Constant.ASSISTANT_ENGAGEMENT_RICHNESS_COST){
 
-            player.getBroker().println(Message.notEnoughAssistant());
+            player.getBroker().println(Message.notEnoughRichness());
 
             return false;
 

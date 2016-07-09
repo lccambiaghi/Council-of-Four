@@ -7,12 +7,23 @@ import it.polimi.ingsw.utils.Message;
 
 import java.util.*;
 
+/**
+ * Preliminary steps: checks if there exists a permitCard - among all of the player's - which allows the player to build
+ * in a city where he has not yet built.
+ *
+ * Execute: build the emporium in the chosenCity, applies bonuses to adjacent cities,
+ * discards used permitCard,
+ */
 public class BuildEmporiumPermitCardMainAction extends Action {
 
 	private PermitCard chosenPermitCard;
 
 	private City chosenCity;
 
+	/**
+	 * @param match : the match in which the move is being executed
+	 * @param player : the player who executes the move
+	 */
 	public BuildEmporiumPermitCardMainAction(Match match, Player player){
 
 		this.match=match;
@@ -69,7 +80,6 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		player.usePermitCard(chosenPermitCard);
 
-		// applying bonuses
 		ArrayList<City> nearbyBuiltCities = getAdjacentBuiltCities(chosenCity);
 
 		for (City city: nearbyBuiltCities)
@@ -79,7 +89,6 @@ public class BuildEmporiumPermitCardMainAction extends Action {
         resultMsg="Player "+player.getNickname() +" has built an emporium in "
         		+ chosenCity.getCityName().toString() + " City.";
 
-		//check on bonus tiles
 		checkBonusTiles();
 
 	}
@@ -92,7 +101,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		ArrayList<PermitCard> playerPermitCards = player.getArrayListPermitCard();
 
-		int usablePermitCards=0;
+		int numberUsablePermitCards=0;
 
 		for (int i = 0; i < playerPermitCards.size(); i++) {
 
@@ -104,9 +113,9 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 				if (!arrayCity[j].isEmporiumAlreadyBuilt(player)) {
 
-					Collections.swap(playerPermitCards, i, usablePermitCards);
+					Collections.swap(playerPermitCards, i, numberUsablePermitCards);
 
-					usablePermitCards++;
+					numberUsablePermitCards++;
 
 					break;
 
@@ -115,7 +124,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		}
 
-		return usablePermitCards;
+		return numberUsablePermitCards;
 
 	}
 
@@ -160,10 +169,16 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 	}
 
-	/* Queue of adjacent built cities. It starts only with chosenCity.
-		Elements of queue are removed and analysed one at a time.
-		If a city is linked to the analysed element of the queue and emporium is present,
-		the city is also added to the queue */
+	/**
+	 * This method returns cities adjacent to chosenCity.
+	 * It handles a queue of adjacent built cities which starts only with chosenCity.
+	 * Elements of queue are removed and analysed one at a time.
+	 * If a city is linked to the analysed element of the queue and emporium is present,
+	 * the city is also added to the queue
+	 *
+	 * @param chosenCity city in which the player wants to build the emporium
+	 * @return adjacent cities to chosenCity
+     */
 	private ArrayList<City> getAdjacentBuiltCities(City chosenCity) {
 
 		int indexChosenCity = chosenCity.getCityName().ordinal();
@@ -270,6 +285,11 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 	}
 
+	/**
+	 * This method checks if the player has built in every city of the chosenRegion
+	 *
+	 * @return true if eligible, false if not
+     */
 	private boolean isEligibleForRegionTile() {
 
 		int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
@@ -289,6 +309,11 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 	}
 
+	/**
+	 * This method checks if the player has built in every city of the chosenCity card color
+	 *
+	 * @return true if eligible, false if not
+     */
 	private boolean isEligibleForColorTile() {
 
 		if(chosenCity.isColorBonusSatisfied() || chosenCity.getCityColor()== CityColor.Purple)
