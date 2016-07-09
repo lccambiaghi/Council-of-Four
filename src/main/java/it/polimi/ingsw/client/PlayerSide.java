@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
@@ -27,20 +28,33 @@ public class PlayerSide {
 	private RMIConnection rmiConnection;
 	
 	private InputHandler inputHandler;
+	
+	private Scanner in;
+	
+	public Object lockScanner = new Object();
+	public Thread threadScanner;
 
 	private Configurations config;
 	private boolean customConfig;
 	
 	public PlayerSide() {
 		
-		inputHandler = new InputHandler();
+		initializeScanner();
 		
 		chooseToCreateConfigurations();
 		
 		chooseConnection();
 	
 	}
+	
+	private void initializeScanner(){
 		
+		in = new Scanner(System.in);
+		threadScanner = new Thread(new ScannerHandler());
+		threadScanner.start();
+		inputHandler = new InputHandler(in, lockScanner, threadScanner);
+		
+	}
 	
 	private void chooseConnection(){
 		
@@ -82,12 +96,14 @@ public class PlayerSide {
 	}
 	
 	public void login(){
+		
+		threadScanner.interrupt();
+		
 		boolean logged = false;
 		String nickname = null;
-		Scanner input = new Scanner(System.in);
 		while(!logged){
 			System.out.println(MessageClient.enterYourNickname());
-			nickname = input.nextLine();
+			nickname = in.nextLine();
 			if(typeOfConnection=='s'){
 				socketConnection.sendStringTS(nickname);
 				String received = socketConnection.receiveStringFS();
@@ -106,6 +122,10 @@ public class PlayerSide {
 		}
 		this.nickname=nickname;
 		System.out.println(MessageClient.loginSuccesfully());
+		
+		synchronized (lockScanner) {
+			lockScanner.notify();
+		}
 	}
 	
 	public String getNickname(){
@@ -122,6 +142,30 @@ public class PlayerSide {
 	
 	public boolean isCustomConfig(){
 		return customConfig;
+	}
+	
+	class ScannerHandler implements Runnable{
+		public void run() {
+			try{
+				while(true){
+					try {
+						while(true){
+							if(System.in.available() > 0)
+								in.nextLine();
+							Thread.sleep(100);
+						}
+					} catch (InterruptedException e) {
+						synchronized (lockScanner) {
+							try {
+								lockScanner.wait();
+							} catch (InterruptedException e1) {
+								//IMPOSSIBLE TO REACH
+							}
+						}
+					}
+				}
+			}catch (IOException e) {}
+		}
 	}
 	
 }

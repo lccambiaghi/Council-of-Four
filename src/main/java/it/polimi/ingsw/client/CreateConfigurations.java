@@ -90,7 +90,7 @@ public class CreateConfigurations{
 				for (int j=cityName.ordinal()+1; j<CityName.getCityNameFromIndex(cityNumber).ordinal(); j++){
 					System.out.print(CityName.getCityNameFromIndex(j).toString()+" ");
 				}
-				Character[] input=InputHandler.inputCity(cityName,CityName.getCityNameFromIndex(cityNumber-1));
+				Character[] input=inputHandler.inputCity(cityName,CityName.getCityNameFromIndex(cityNumber-1));
 				for (int j=0; j<input.length;j++){
 					    cityLinksMatrix[i][CityName.valueOf(String.valueOf(input[j])).ordinal()]=1;				    
 					}

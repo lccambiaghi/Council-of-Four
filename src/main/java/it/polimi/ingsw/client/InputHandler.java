@@ -11,7 +11,14 @@ public class InputHandler {
 	private Scanner in;
 	private boolean stopped = false;
 	
-	public InputHandler(){	}
+	public Object lockScanner = new Object();
+	public Thread threadScanner;
+	
+	public InputHandler(Scanner in, Object lockScanner, Thread threadScanner){
+		this.in=in;
+		this.lockScanner=lockScanner;
+		this.threadScanner=threadScanner;
+	}
 	
 	public void stopInputNumber(){
 		stopped=true;
@@ -20,10 +27,11 @@ public class InputHandler {
 	public int inputNumber(int lowerBound, int upperBound){
 		
 		int inputNumber = 0;
-		in = new Scanner(System.in);
 		
 		try{
-	
+			
+			threadScanner.interrupt();
+			
 			String s;
 			
 			boolean eligibleInput=false;
@@ -48,6 +56,10 @@ public class InputHandler {
 			System.out.println("Too late!");
 		}catch (IOException e1){
 			e1.printStackTrace();
+		}
+		
+		synchronized (lockScanner) {
+			lockScanner.notify();
 		}
 		
 		return inputNumber;
@@ -82,8 +94,10 @@ public class InputHandler {
 	}
 	
 	
-	public static Character[] inputCity (CityName currentCity, CityName lastCity){
-		Scanner in = new Scanner(System.in);
+	public Character[] inputCity (CityName currentCity, CityName lastCity){
+		
+		threadScanner.interrupt();
+		
 		String string;
 		boolean correct=true;
 		ArrayList <Character> temp;
@@ -119,8 +133,13 @@ public class InputHandler {
 			}
 		}while(!correct);
 		
+		synchronized (lockScanner) {
+			lockScanner.notify();
+		}
+		
 		Character [] result = temp.toArray(new Character [temp.size()]);
 		return result;
+	
 	}
 	
 	
