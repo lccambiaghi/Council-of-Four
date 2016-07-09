@@ -3,6 +3,10 @@ package it.polimi.ingsw.server.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This class is where the configurable parameters of the game are stored.
+ * It offers the methods to set and to get these parameters
+ */
 public class Configurations implements Serializable{
 
 	private int citiesNumber;
