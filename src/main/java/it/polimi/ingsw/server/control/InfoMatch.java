@@ -37,19 +37,19 @@ public class InfoMatch {
 			3,	0,	7,	-3,	10,	0,	14,	-3,	17,	0,	21,	-2};
 	
 	
-	private void print(String string) throws InterruptedException{
+	private void print(String string){
 
 		player.getBroker().print(string);
 
 	}
 	
-	private void println() throws InterruptedException{
+	private void println(){
 
 		player.getBroker().println("");
 
 	}
 	
-	private void println(String string) throws InterruptedException{
+	private void println(String string){
 
 		player.getBroker().println(string);
 
