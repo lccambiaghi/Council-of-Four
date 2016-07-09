@@ -111,7 +111,6 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 	}
 	
 	private void disconnectionHandler() throws DisconnectedException{
-		player.setConnected(false);
 		throw new DisconnectedException();
 	}
 	

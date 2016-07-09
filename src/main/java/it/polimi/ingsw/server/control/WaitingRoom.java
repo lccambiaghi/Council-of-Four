@@ -44,12 +44,10 @@ public class WaitingRoom extends Thread{
 		lockWaitingRoomFromGameSide = gameSide.getLockWaitingRoomFromGameSide();
 		
 		boolean destroy = false;
-		
-		try {
 			
-			askForNumberPlayersAndConfig();
+		askForNumberPlayersAndConfig();
 			
-		} catch (DisconnectedException e1) {
+		if(!firstPlayer.isConnected()){
 			gameSide.removePlayerFromArrayList(firstPlayer);
 			gameSide.setWaitingRoomAvailable(false);
 			destroy=true;
@@ -81,21 +79,23 @@ public class WaitingRoom extends Thread{
 		
 	}
 	
-	public void askForNumberPlayersAndConfig() throws DisconnectedException{
+	public void askForNumberPlayersAndConfig(){
 		
 		Thread t = new Thread(new Runnable(){
 			public void run(){
+				
 				try {
 					firstPlayer.getBroker().println("You are the first player!\n"
 							+ "You have "+Constant.TIMER_SECONDS_WAITING_CONFIGURATIONS+" seconds to answer:");
 					askForNumberPlayers();
 					if(firstPlayer.getBroker().isCustomConfig())
 						askForConfigurations();
+					
 				} catch (InterruptedException e) {
-					try {
-						firstPlayer.getBroker().println("You'll play using the standard max players number and configurations");
-					} catch (InterruptedException e1) {}
-				} catch (DisconnectedException e) {}
+					firstPlayer.getBroker().println("You'll play using the standard max players number and configurations");
+				}finally{
+					firstPlayer.getBroker().println("You are waiting for other players to join you!");
+				}
 				
 			}			
 			
@@ -104,9 +104,6 @@ public class WaitingRoom extends Thread{
 		
 		
 		new ControlTimer().waitForThreadUntilTimerExpires(t, Constant.TIMER_SECONDS_WAITING_CONFIGURATIONS);
-		
-		if(!firstPlayer.isConnected())
-			throw new DisconnectedException();
 		
 		/**
 		 * If the timer has expired and the player hasn't set the number of players
@@ -125,12 +122,12 @@ public class WaitingRoom extends Thread{
 	}
 	
 	
-	private void askForConfigurations() throws DisconnectedException, InterruptedException{
+	private void askForConfigurations() throws InterruptedException{
 		
-		firstPlayer.getBroker().println("Do you want to play with last configurations used?\n");
+		firstPlayer.getBroker().println("Do you want to play with the configurations you have created?\n");
 		firstPlayer.getBroker().println(Message.chooseYesOrNo_1_2());
 		int choice = firstPlayer.getBroker().askInputNumber(1, 2);
-		if(choice==2){
+		if(choice==1){
 			config = firstPlayer.getBroker().getConfigurations();
 			saveFileConfigurations(config);
 		}
@@ -155,11 +152,7 @@ public class WaitingRoom extends Thread{
 			
 		}	
 		
-		try {
-			
-			player.getBroker().println(Message.waitForMatch());
-			
-		} catch (InterruptedException e) {}
+		player.getBroker().println(Message.waitForMatch());
 		
 	}
 	

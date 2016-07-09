@@ -6,18 +6,14 @@ public class Broadcast {
 
 	public static void printlnBroadcastAll(String string, ArrayList<Player> players){
 		for(Player p: players){
-			try {
-				p.getBroker().println(string);
-			} catch (InterruptedException e) {}
+			p.getBroker().println(string);
 		}
 	}
 	
 	public static void printlnBroadcastOthers(String string,  ArrayList<Player> players, Player playerNot){
 		for(Player p: players){
 			if(!p.equals(playerNot))
-				try {
-					p.getBroker().println(string);
-				} catch (InterruptedException e) {}
+				p.getBroker().println(string);
 		}
 	}
 }

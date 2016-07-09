@@ -19,12 +19,30 @@ public class Broker {
 		connectionWithPlayer.login(gameSide);
 	}
 	
-	public boolean isCustomConfig() throws DisconnectedException{
-		return connectionWithPlayer.isCustomConfig();
+	public boolean isCustomConfig() throws InterruptedException{
+		
+		interruptedExceptionLauncher();
+		
+		boolean bool = false;
+		try {
+			bool = connectionWithPlayer.isCustomConfig();
+		} catch (DisconnectedException e) {
+			player.setConnected(false);
+		}
+		return bool;
 	}
 			
-	public Configurations getConfigurations() throws DisconnectedException{
-		return connectionWithPlayer.getConfigurations();
+	public Configurations getConfigurations() throws InterruptedException{
+		
+		interruptedExceptionLauncher();
+		
+		Configurations config = null;
+		try {
+			config = connectionWithPlayer.getConfigurations();
+		} catch (DisconnectedException e) {
+			player.setConnected(false);
+		}
+		return config;
 	}
 	
 	public int askInputNumber(int lowerBound, int upperBound) throws InterruptedException{
@@ -36,8 +54,7 @@ public class Broker {
 		    	 try {
 					connectionWithPlayer.askInputNumber(lowerBound, upperBound);
 				} catch (DisconnectedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					player.setConnected(false);
 				}
 		     }
 		});  
@@ -50,8 +67,7 @@ public class Broker {
 				try {
 					connectionWithPlayer.stopInputNumber();
 				} catch (DisconnectedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					player.setConnected(false);
 				}
 				throw new InterruptedException();
 			}
@@ -59,19 +75,17 @@ public class Broker {
 		return connectionWithPlayer.getIntResult();
 	}
 	
-	public void print(String string) throws InterruptedException{
+	public void print(String string){
 		
-		interruptedExceptionLauncher();
 		 try {
 			connectionWithPlayer.print(string);
 		} catch (DisconnectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			player.setConnected(false);
 		}
 		
 	}
 	
-	public void println(String string) throws InterruptedException{
+	public void println(String string){
 		CharSequence newLine = "\n";
 		if(string.contains(newLine)){
 			String[] arrayString = string.split("\n");
@@ -82,15 +96,12 @@ public class Broker {
 		}
 	}
 	
-	private void printlnReal(String string) throws InterruptedException{
-		
-		interruptedExceptionLauncher();
+	private void printlnReal(String string){
 		
 		try {
 			connectionWithPlayer.println(string);
 		} catch (DisconnectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			player.setConnected(false);
 		}
 		
 	}

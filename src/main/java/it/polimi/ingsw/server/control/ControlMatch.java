@@ -119,10 +119,8 @@ public class ControlMatch {
 	
 	private void turnHandler(){
 		
-		try{
-			Broadcast.printlnBroadcastOthers(Message.turnOf(player), playersConnected, player);
-			player.getBroker().println(Message.yourTurn(Constant.TIMER_SECONDS_TO_PERFORM_ACTION));
-		}catch (InterruptedException e) {}
+		Broadcast.printlnBroadcastOthers(Message.turnOf(player), playersConnected, player);
+		player.getBroker().println(Message.yourTurn(Constant.TIMER_SECONDS_TO_PERFORM_ACTION));
 
 		Turn turn = new Turn(match, player, allPlayers);
 		Thread turnThread = new Thread(turn);
@@ -150,9 +148,7 @@ public class ControlMatch {
 		if(playersConnected==null){
 			return false;
 		}else if(playersConnected.size()==1){
-			try {
-				playersConnected.get(0).getBroker().println(Message.youWon());
-			} catch (InterruptedException e) {}
+			playersConnected.get(0).getBroker().println(Message.youWon());
 			return false;
 		}else{
 			return true;
