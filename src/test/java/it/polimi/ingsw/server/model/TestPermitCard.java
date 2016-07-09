@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.model.field;
+package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.City;
 import it.polimi.ingsw.server.model.PermitCard;

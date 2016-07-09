@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.model.field;
+package it.polimi.ingsw.server.model;
 
 import static org.junit.Assert.*;
 
