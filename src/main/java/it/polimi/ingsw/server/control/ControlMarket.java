@@ -86,13 +86,14 @@ public class ControlMarket {
         turn = 0;
         ArrayList <Player> playersBuyPhase = new ArrayList <> (players);
         Collections.shuffle(playersBuyPhase);
-        Broadcast.printlnBroadcastAll(Message.sellingPhase(), players);
+        Broadcast.printlnBroadcastAll(Message.buyingPhase(), players);
        
         do {
         	
         	player = playersBuyPhase.get(turn);
         	
         	if(player.isConnected()){
+        		Broadcast.printlnBroadcastOthers(Message.turnOf(player), players, player);
 	            action = new MarketBuyAction(match, player);
 	            turnMarketHandler();
 	            
@@ -111,6 +112,7 @@ public class ControlMarket {
     	Thread turnMarketThread = new Thread(new Runnable(){
     		public void run() {
 	    		try {
+	    			player.getBroker().println(Message.yourTurn(Constant.TIMER_SECONDS_MARKET_ACTION));
 					if (action.preliminarySteps()){
 					    action.execute();
 			    		Broadcast.printlnBroadcastOthers(action.getResultMsg(), players, player);
