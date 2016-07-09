@@ -113,7 +113,6 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         ArrayList<City> nearbyBuiltCities = getAdjacentBuiltCities(chosenCity);
 
-        //TODO TEST
         for (City city: nearbyBuiltCities)
         	if(city.hasBonus())
         		for (Bonus bonus : city.getArrayBonus())
