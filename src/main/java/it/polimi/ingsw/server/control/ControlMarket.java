@@ -46,9 +46,13 @@ public class ControlMarket {
     public void startMarket (){
         
     	if(atLeastTwoPlayersConnected()){
+    		Broadcast.printlnBroadcastAll(Message.marketHasStarted(), players);
     		startSelling();
+    		
     		if(atLeastTwoPlayersConnected())
     			startBuying();
+    		
+    		Broadcast.printlnBroadcastAll(Message.markedHasFinished(), players);
     	}
         
     } 

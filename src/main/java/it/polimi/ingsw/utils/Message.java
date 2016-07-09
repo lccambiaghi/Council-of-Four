@@ -331,15 +331,19 @@ public final class Message {
 	 */
 	
 	public static String marketHasStarted(){
-		return "Market has started!";
+		return "\n --- THE MARKET HAS STARTED --- \n";
+	}
+	
+	public static String markedHasFinished(){
+		return "\n --- THE MARKED HAS FINISHED --- \n";
 	}
 	
 	public static String sellingPhase(){
-		return "Selling Phase has started";
+		return "Selling Phase\n";
 	}
 	
 	public static String buyingPhase(){
-		return "Buying Phase has started";
+		return "Buying Phase\n";
 	}
 	
 	public static String chooseToSellSomething_1_2(){		
