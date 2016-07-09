@@ -4,21 +4,25 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestPoliticCard {
 
+	ArrayList <PoliticCard> initiallyHandCards;
+	
+	@Before
+	public void init(){
+		initiallyHandCards = new ArrayList <> ();
+	}
+	
 	@Test
 	public void InitiallyHandCards() {
 		
-		ArrayList <PoliticCard> initiallyHandCards = new ArrayList <PoliticCard> ();
 		for (int i=0; i<6; i++){
 			PoliticCard card = new PoliticCard(Color.getRandomColor());
+			assertNotNull(card);
 			initiallyHandCards.add(card);
-		}
-		
-		for(PoliticCard card : initiallyHandCards){
-			System.out.println(card.getCardColor());
 		}
 		
 		assertEquals(6, initiallyHandCards.size());

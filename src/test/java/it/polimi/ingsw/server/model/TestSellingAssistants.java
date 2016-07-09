@@ -9,28 +9,32 @@ import org.junit.Test;
 
 import it.polimi.ingsw.server.control.Player;
 
-public class TestSellingObject {
-	
+public class TestSellingAssistants {
+
 	ArrayList <SellingObject> arrayListSellingObject;
 	ArrayList <Player> arrayListPlayers;
-	SellingPoliticCard sellingPoliticCard;
+	SellingAssistants sellingAssistants;
+	Player player;
 	
 	@Before
 	public void init(){
 		arrayListPlayers = createArrayListPlayer();
-		arrayListSellingObject = new ArrayList <> ();
-		Player player = arrayListPlayers.get(0);
-		sellingPoliticCard = new SellingPoliticCard(player.getArrayListPoliticCard().get(0), player, 10);
-		arrayListSellingObject.add(sellingPoliticCard);
+		player = arrayListPlayers.get(0);
+		sellingAssistants = new SellingAssistants(player.getAssistant(), player, 4);
 		
 	}
 	
 	@Test
-	public void sellingElements (){
-		assertNotNull(arrayListSellingObject);
-		assertEquals(1, arrayListSellingObject.size());
-		assertEquals(arrayListPlayers.get(0),arrayListSellingObject.get(0).getOwner());
-		assertEquals(10,arrayListSellingObject.get(0).getPrice());
+	public void sellingPolitic (){
+		assertNotNull(sellingAssistants);
+		assertEquals(arrayListPlayers.get(0),sellingAssistants.getOwner());
+		assertEquals(4,sellingAssistants.getPrice());
+	}
+	
+	@Test
+	public void add (){
+		sellingAssistants.addToPlayer(arrayListPlayers.get(1));
+		assertEquals(3, arrayListPlayers.get(1).getAssistant());		
 	}
 
 	private ArrayList <Player> createArrayListPlayer() {
@@ -45,7 +49,7 @@ public class TestSellingObject {
 
 		Player player2 = new Player('s');
 		player2.setNickname("B");
-		player.setAssistant(2);
+		player.setAssistant(0);
 		player.setRichness(11);
 		arrayListPlayer.add(player2);
 
@@ -57,4 +61,5 @@ public class TestSellingObject {
 		
 		return arrayListPlayer;
 	}
+	
 }

@@ -1,8 +1,5 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.model.City;
-import it.polimi.ingsw.server.model.PermitCard;
-
 import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
@@ -11,50 +8,70 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestPermitCard {
-	
-	private Configurations config;
-	private PermitCard permitCard;
-	private City[] arrayCity;
+import it.polimi.ingsw.server.control.Player;
+
+public class TestSellingPermitCard {
+
+	ArrayList <SellingObject> arrayListSellingObject;
+	ArrayList <Player> arrayListPlayers;
+	SellingPermitCard sellingPermitCard;
+	Configurations config;
 	
 	@Before
-	public void init (){
+	public void init(){
 		config = configurations();
+		arrayListPlayers = createArrayListPlayer();
+		Player player = arrayListPlayers.get(0);
+		sellingPermitCard = new SellingPermitCard(player.getArrayListPermitCard().get(0), player, 5);
 		
+	}
+	
+	@Test
+	public void sellingPolitic (){
+		assertNotNull(sellingPermitCard);
+		assertEquals(arrayListPlayers.get(0),sellingPermitCard.getOwner());
+		assertEquals(5,sellingPermitCard.getPrice());
+	}
+	
+	@Test
+	public void add (){
+		sellingPermitCard.addToPlayer(arrayListPlayers.get(1));
+		assertTrue(arrayListPlayers.get(1).getArrayListPermitCard().size()==1);		
+	}
+
+	private ArrayList <Player> createArrayListPlayer() {
+		ArrayList <Player> arrayListPlayer = new ArrayList <>();		
 		int n = config.getNumberCities()/3;
-		arrayCity= new City[config.getNumberCities()/3];
+		City[] arrayCity= new City[config.getNumberCities()/3];
 		for(int i=0; i<n; i++){
 			arrayCity[i] = new City(config, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
 		}
-		permitCard = new PermitCard (arrayCity, config);
-		
-	}
-	
-	
-	
-	@Test
-	public void constructor() {
-		City [] arrayBuildableCities = permitCard.getArrayBuildableCities();
-		Bonus [] arrayBonus = permitCard.getArrayBonus();
-		
-		assertNotNull(permitCard);
-		assertNotNull(arrayBonus);
-		assertTrue(Arrays.asList(arrayCity).containsAll(Arrays.asList(arrayBuildableCities)));
-		assertTrue(arrayBonus.length>=0);
-		
-		
-		
-	}
-	
-	
+		Player player = new Player('s');
+		player.setNickname("A");
+		player.setAssistant(3);
+		player.setRichness(10);
+		player.getArrayListPermitCard().add(new PermitCard (arrayCity, config));
+		arrayListPlayer.add(player);
 
-	
-	
+		Player player2 = new Player('s');
+		player2.setNickname("B");
+		player.setAssistant(2);
+		player.setRichness(11);
+		arrayListPlayer.add(player2);
+
+		Player player3 = new Player('s');
+		player3.setNickname("C");
+		player.setAssistant(3);
+		player.setRichness(12);
+		arrayListPlayer.add(player3);
+		
+		return arrayListPlayer;
+	}
+
 	private Configurations configurations(){
 		Configurations config = new Configurations();
 		/*
@@ -196,5 +213,5 @@ public class TestPermitCard {
 		
 	}
 	
-
+	
 }

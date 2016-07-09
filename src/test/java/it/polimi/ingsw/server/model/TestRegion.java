@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.server.TestCases;
-
 public class TestRegion {
 
 	private Configurations config;

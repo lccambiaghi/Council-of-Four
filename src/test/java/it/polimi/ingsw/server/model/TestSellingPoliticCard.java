@@ -9,8 +9,8 @@ import org.junit.Test;
 
 import it.polimi.ingsw.server.control.Player;
 
-public class TestSellingObject {
-	
+public class TestSellingPoliticCard {
+
 	ArrayList <SellingObject> arrayListSellingObject;
 	ArrayList <Player> arrayListPlayers;
 	SellingPoliticCard sellingPoliticCard;
@@ -18,19 +18,22 @@ public class TestSellingObject {
 	@Before
 	public void init(){
 		arrayListPlayers = createArrayListPlayer();
-		arrayListSellingObject = new ArrayList <> ();
 		Player player = arrayListPlayers.get(0);
-		sellingPoliticCard = new SellingPoliticCard(player.getArrayListPoliticCard().get(0), player, 10);
-		arrayListSellingObject.add(sellingPoliticCard);
+		sellingPoliticCard = new SellingPoliticCard(player.getArrayListPoliticCard().get(0), player, 1);
 		
 	}
 	
 	@Test
-	public void sellingElements (){
-		assertNotNull(arrayListSellingObject);
-		assertEquals(1, arrayListSellingObject.size());
-		assertEquals(arrayListPlayers.get(0),arrayListSellingObject.get(0).getOwner());
-		assertEquals(10,arrayListSellingObject.get(0).getPrice());
+	public void sellingPolitic (){
+		assertNotNull(sellingPoliticCard);
+		assertEquals(arrayListPlayers.get(0),sellingPoliticCard.getOwner());
+		assertEquals(1,sellingPoliticCard.getPrice());
+	}
+	
+	@Test
+	public void add (){
+		sellingPoliticCard.addToPlayer(arrayListPlayers.get(1));
+		assertTrue(arrayListPlayers.get(1).getArrayListPoliticCard().size()==1);		
 	}
 
 	private ArrayList <Player> createArrayListPlayer() {
@@ -57,4 +60,5 @@ public class TestSellingObject {
 		
 		return arrayListPlayer;
 	}
+	
 }

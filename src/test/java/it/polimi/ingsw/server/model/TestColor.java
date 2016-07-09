@@ -4,11 +4,19 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.server.model.Color;
 
 public class TestColor {
+
+	ArrayList <Color> arrayListColors;
+	
+	@Before
+	public void init(){
+		arrayListColors = new ArrayList <Color> ();
+	}
 
 	@Test
 	public void getRandomColor() {
@@ -16,7 +24,6 @@ public class TestColor {
 		// defined as enum in the class Colors (6 colors)
 		
 		Color color;
-		ArrayList <Color> ColorsArrayList = new ArrayList <Color> ();  
 		
 		// I create an ArrayList of Colors and I will assign an object
 		// to it if it isn't present in the same arraylist
@@ -25,11 +32,10 @@ public class TestColor {
 		// and in addict there is the print that confirm this opinion
 		 for (int i = 0; i < 50; i++) {
 			 color = Color.getRandomColor();
-			 if (!(ColorsArrayList.contains(color))){
-				 ColorsArrayList.add(color);
-				 System.out.printf("color[%d] = %s%n", i, color);
+			 if (!(arrayListColors.contains(color))){
+				 arrayListColors.add(color);
 				 }
 		 }
-		 assertEquals(7,ColorsArrayList.size());
+		 assertEquals(7,arrayListColors.size());
 }
 }
