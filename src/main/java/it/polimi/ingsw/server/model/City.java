@@ -70,7 +70,7 @@ public class City {
 		if (arrayListEmporium==null)
 			return false;
 
-		for (int i=0; i< arrayListEmporium.size()-1;i++)
+		for (int i=0; i< arrayListEmporium.size();i++)
 			if (arrayListEmporium.get(i)==player)
 				return true;
 
