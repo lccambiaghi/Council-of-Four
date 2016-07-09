@@ -7,34 +7,25 @@ import java.util.Scanner;
 import it.polimi.ingsw.client.connection.RMIConnection;
 import it.polimi.ingsw.client.connection.SocketConnection;
 import it.polimi.ingsw.client.connection.SocketListener;
-import it.polimi.ingsw.server.connection.RMIGameSideInterface;
 import it.polimi.ingsw.server.model.Configurations;
-import it.polimi.ingsw.utils.Message;
 import it.polimi.ingsw.utils.MessageClient;
 
 public class PlayerSide {
-
 	
-	public static void main (String[] args){
-		new PlayerSide();
-	}
+	private Object lock = new Object();
 	
 	private String nickname;
 	
 	private char typeOfConnection;
 	
 	private SocketConnection socketConnection;
-	
 	private RMIConnection rmiConnection;
 	
+	private Scanner in;
 	private InputHandler inputHandler;
 	
-	private Scanner in;
-	
-	private Object lock = new Object();
-	
-	public boolean freeScanner;
-	public Thread threadScanner;
+	private boolean freeScanner;
+	private Thread threadScanner;
 
 	private Configurations config;
 	private boolean customConfig;
@@ -103,7 +94,6 @@ public class PlayerSide {
 		setFreeScanner(false);
 		
 		boolean logged = false;
-		String nickname = null;
 		while(!logged){
 			System.out.println(MessageClient.enterYourNickname());
 			nickname = in.nextLine();
@@ -123,7 +113,6 @@ public class PlayerSide {
 				System.out.println(MessageClient.nicknameAlreadyInUse());
 			}
 		}
-		this.nickname=nickname;
 		System.out.println(MessageClient.loginSuccesfully());
 		
 		setFreeScanner(true);
@@ -147,19 +136,25 @@ public class PlayerSide {
 	}
 	
 	class ScannerHandler implements Runnable{
+		@Override
 		public void run() {
-			while(true){
+			boolean go = true;
+			while(go){
 				while(isFreeScanner()){
 					synchronized (lock) {
 						try {
 							if(System.in.available()>0)
 								in.nextLine();
-						} catch (IOException e) {}
+						} catch (IOException e) {
+							go=false;
+						}
 					}
 				}
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -174,6 +169,14 @@ public class PlayerSide {
 		synchronized (lock) {
 			return freeScanner;
 		}
+	}
+	
+	/**
+	 * The main launches the playerSide
+	 * @param args
+	 */
+	public static void main (String[] args){
+		new PlayerSide();
 	}
 	
 }
