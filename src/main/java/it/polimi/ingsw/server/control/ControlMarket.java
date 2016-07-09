@@ -56,11 +56,13 @@ public class ControlMarket {
     private void startSelling(){
     	
     	turn = 0;
+    	Broadcast.printlnBroadcastAll(Message.sellingPhase(), players);
     	do {
     		
     		player=players.get(turn);
     		
     		if(player.isConnected()){
+    			Broadcast.printlnBroadcastOthers(Message.turnOf(player), players, player);
     			action = new MarketSellAction(match, player);
             	turnMarketHandler();
             	
@@ -80,6 +82,7 @@ public class ControlMarket {
         turn = 0;
         ArrayList <Player> playersBuyPhase = new ArrayList <> (players);
         Collections.shuffle(playersBuyPhase);
+        Broadcast.printlnBroadcastAll(Message.sellingPhase(), players);
        
         do {
         	
