@@ -4,42 +4,47 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import it.polimi.ingsw.server.TestCases;
 import it.polimi.ingsw.server.control.Player;
-
-import it.polimi.ingsw.server.model.Bonus;
 import it.polimi.ingsw.server.model.NobilityRoute;
 import it.polimi.ingsw.server.model.NobilityRouteCell;
+import it.polimi.ingsw.utils.Constant;
+
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestNobilityRoute {
-
+	
+	private NobilityRoute nobilityRoute;
+	private NobilityRoute customNobilityRoute;
+	private ArrayList <Player> arrayListPlayer;
+	
+	@Before
+	public void init (){		
+		arrayListPlayer = createArrayListPlayer();
+		
+		nobilityRoute = new NobilityRoute(arrayListPlayer);
+		customNobilityRoute = new NobilityRoute (arrayListPlayer, 5);
+	}
+	
+	@Test
+	public void nobilityInitialize (){
+		assertNotNull(nobilityRoute);
+		assertNotNull(customNobilityRoute);
+		
+		assertEquals(Constant.NOBILITY_MAX+1, nobilityRoute.getArrayNobilityRouteCell().length);
+	}
+	
 	@Test
 	public void initialNobility() {
 		
-		TestCases testCases = new TestCases();
-		
-		ArrayList <Player> arrayListPlayer;
-		arrayListPlayer=testCases.arrayListPlayer();
-		
-		NobilityRoute nobilityRoute = new NobilityRoute(arrayListPlayer);
-		
 		for(Player player : arrayListPlayer)
-			System.out.println(player.getNickname()+ " " + nobilityRoute.getPosition(player));
-		
-		assertEquals(3, arrayListPlayer.size());
+			assertEquals(0, nobilityRoute.getPosition(player));
 	}
 
 	@Test
 	public void movePlayer() {
 
-		TestCases testCases = new TestCases();
-
-		ArrayList <Player> arrayListPlayer =testCases.arrayListPlayer();
-
 		int[] arrayPosition = new int[arrayListPlayer.size()];
-
-		NobilityRoute nobilityRoute = new NobilityRoute(arrayListPlayer);
 
 		int i=10;
 		for(Player player : arrayListPlayer){
@@ -50,7 +55,6 @@ public class TestNobilityRoute {
 		int j=0;
 		for(Player player : arrayListPlayer){
 			arrayPosition[j] = nobilityRoute.getPosition(player);
-			System.out.println(arrayPosition[j]);
 			j++;
 		}
 
@@ -59,53 +63,58 @@ public class TestNobilityRoute {
 	
 	@Test
 	public void standardBonuses(){
-		
-		TestCases testCases = new TestCases();
-		ArrayList <Player> arrayListPlayer =testCases.arrayListPlayer();
-		NobilityRoute nobilityRoute = new NobilityRoute(arrayListPlayer);
-		
 		NobilityRouteCell[] arrayNobilityRouteCell = nobilityRoute.getArrayNobilityRouteCell();
+		
+		int counter=0;
 		
 		for (NobilityRouteCell a : arrayNobilityRouteCell){
 			if (a.hasBonus()){
-				for(Bonus bonus : a.getArrayBonus()){
-					System.out.print(bonus.getBonusName()+" "+bonus.getIncrement()+" ");
-				}
-				System.out.println();
-				System.out.println();
-			}
-			else {
-				System.out.println(0);
-				System.out.println();
+				counter++;
 			}
 		}
-		
-		System.out.println("\n\n\n");
-	
+		assertEquals(Constant.NOBILITY_CELL_BONUSES.length, counter);
 	}
 
 	@Test
 	public void randomBonuses(){
+		NobilityRouteCell[] arrayNobilityRouteCell = customNobilityRoute.getArrayNobilityRouteCell();
 		
-		TestCases testCases = new TestCases();
-		ArrayList <Player> arrayListPlayer =testCases.arrayListPlayer();
-		NobilityRoute nobilityRoute = new NobilityRoute(arrayListPlayer, 5);
-		
-		NobilityRouteCell[] arrayNobilityRouteCell = nobilityRoute.getArrayNobilityRouteCell();
-		
+		int counter=0;
+		int counterNoBonus=0;
 		for (NobilityRouteCell a : arrayNobilityRouteCell){
 			if (a.hasBonus()){
-				for(Bonus bonus : a.getArrayBonus()){
-					System.out.print(bonus.getBonusName()+" "+bonus.getIncrement()+" ");
-				}
-				System.out.println();
-				System.out.println();
+				counter++;
 			}
-			else {
-				System.out.println(0);
-				System.out.println();
-			}
+			else
+				counterNoBonus++;
 		}
+		assertEquals(5, counter);
+		assertEquals(Constant.NOBILITY_MAX+1-5, counterNoBonus);
 	
 	}
+	
+	private ArrayList <Player> createArrayListPlayer() {
+		ArrayList <Player> arrayListPlayer = new ArrayList <>();		
+		
+		Player player = new Player('s');
+		player.setNickname("A");
+		player.setAssistant(3);
+		player.setRichness(10);
+		arrayListPlayer.add(player);
+
+		Player player2 = new Player('s');
+		player2.setNickname("B");
+		player.setAssistant(2);
+		player.setRichness(11);
+		arrayListPlayer.add(player2);
+
+		Player player3 = new Player('s');
+		player3.setNickname("C");
+		player.setAssistant(3);
+		player.setRichness(12);
+		arrayListPlayer.add(player3);
+		
+		return arrayListPlayer;
+	}
+
 }

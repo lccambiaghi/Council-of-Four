@@ -10,14 +10,24 @@ import it.polimi.ingsw.server.model.Councillor;
 import it.polimi.ingsw.server.model.RegionName;
 import it.polimi.ingsw.utils.Constant;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestBalcony {
 	
-	AvailableCouncillors availableCouncillors = new AvailableCouncillors();
-	Balcony balcony1 = new Balcony (availableCouncillors, RegionName.Sea.toString()+"Balcony");
-	ArrayList<Councillor> arrayListCouncillor1=balcony1.getArrayListCouncillor();
-	ArrayList <Councillor> arrayListAvailableCouncillors = availableCouncillors.getArrayListCouncillor();
+	AvailableCouncillors availableCouncillors;
+	Balcony balcony1;
+	ArrayList<Councillor> arrayListCouncillor1;
+	ArrayList <Councillor> arrayListAvailableCouncillors;
+	
+	@Before
+	public void init (){
+		availableCouncillors = new AvailableCouncillors();
+		balcony1 = new Balcony (availableCouncillors, RegionName.Sea.toString()+"Balcony");
+		arrayListCouncillor1=balcony1.getArrayListCouncillor();
+		arrayListAvailableCouncillors = availableCouncillors.getArrayListCouncillor();	
+	}
+	
 	
 	@Test
 	public void councilorsInBalcony() {

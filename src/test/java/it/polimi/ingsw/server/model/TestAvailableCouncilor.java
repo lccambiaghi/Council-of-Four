@@ -8,12 +8,21 @@ import it.polimi.ingsw.server.model.AvailableCouncillors;
 import it.polimi.ingsw.server.model.Councillor;
 import it.polimi.ingsw.utils.Constant;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestAvailableCouncilor {
 
-	private AvailableCouncillors availableCouncillors = new AvailableCouncillors();
-	private ArrayList<Councillor> arrayListCouncillor = availableCouncillors.getArrayListCouncillor();
+	private AvailableCouncillors availableCouncillors;
+	private ArrayList<Councillor> arrayListCouncillor;
+	private Councillor c;
+	
+	@Before
+	public void init (){
+		availableCouncillors = new AvailableCouncillors();
+		arrayListCouncillor = availableCouncillors.getArrayListCouncillor();
+	}
+	
 	
 	@Test
 	public void initialCouncilors() {
@@ -22,6 +31,7 @@ public class TestAvailableCouncilor {
 		 * list of councilers that are created the first time
 		 */
 		ArrayList <Color> arrayListColors = new ArrayList <>();
+		
 		for (int i=0; i<7; i++){
 			arrayListColors.add(Color.getColorFromIndex(i));
 		}		
@@ -36,16 +46,18 @@ public class TestAvailableCouncilor {
 	}
 	
 	@Test
-	public void addAndRemoveAvalilableCouncillor(){
-		Councillor c = arrayListCouncillor.remove(Constant.COUNCILLORS_NUMBER_TOTAL-1);
+	public void addAvalilableCouncillor(){
+		c = arrayListCouncillor.remove(Constant.COUNCILLORS_NUMBER_TOTAL-1);
 		assertEquals(Constant.COUNCILLORS_NUMBER_TOTAL-1, arrayListCouncillor.size());
 		arrayListCouncillor.add(c);
 		assertEquals(Constant.COUNCILLORS_NUMBER_TOTAL, arrayListCouncillor.size());
-		
+	}
+	
+	@Test
+	public void removeCouncillor (){
 		c = availableCouncillors.removeAvailableCouncillor(Color.getColorFromIndex(0));
 		assertEquals(Color.getColorFromIndex(0), c.getColor());
 		assertEquals("White", c.getColor().toString());
 	}
-	
 
 }
