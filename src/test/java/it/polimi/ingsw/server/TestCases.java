@@ -41,7 +41,7 @@ public class TestCases {
 	}
 
 	public Match match(){
-		return Match.MatchFactory(arrayListPlayer());
+		return new Match(arrayListPlayer());
 	}
 	
 	public ArrayList <Player> arrayListPlayer() {
