@@ -79,7 +79,7 @@ public class ElectCouncillorWithAssistantQuickAction extends Action {
      */
     private ArrayList<Color> getChoosableColors() {
 
-        ArrayList<Councillor> availableCouncillors = match.getField().getAvailableCouncillors().getArrayListCouncillor();
+        ArrayList<Councillor> availableCouncillors = (ArrayList<Councillor>) match.getField().getAvailableCouncillors().getArrayListCouncillor();
 
         boolean[] seen = new boolean[Constant.COLORS_NUMBER];
 

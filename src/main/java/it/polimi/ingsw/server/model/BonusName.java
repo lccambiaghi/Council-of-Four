@@ -13,7 +13,6 @@ public enum BonusName {
 
     private int maxIncrement;
 
-    /* The constructor assigns the increment to the bonus*/
     BonusName(int maxIncrement) {this.maxIncrement=maxIncrement;}
 
     public static BonusName getRandomPermitCardBonusName(){
@@ -26,7 +25,10 @@ public enum BonusName {
     	return values()[random.nextInt(values().length-1)];
     }
 
-
+    /**
+     * @param bonusName to query
+     * @return max increment the bonus allows to apply
+     */
     public static int getMaxIncrement(BonusName bonusName){return bonusName.maxIncrement;}
 
 	public static BonusName getBonusNameFromIndex(int index){ return values()[index]; }

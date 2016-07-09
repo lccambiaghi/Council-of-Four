@@ -2,38 +2,53 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.control.Player;
 
+/**
+ * Bonus class offers methods useful for the creation phase of the field
+ * and those to apply bonuses to players
+ */
 public class Bonus {
 
 	BonusName bonusName;
+
 	int increment;
-	
-	public Bonus(){}
-	
-	/* The constructor (1) assigns the specified bonusName and increment to the newly created bonus*/
+
+
+	public Bonus(){
+		/**
+		 * Default constructor, offered to implement the subclasses
+		 */
+	}
+
+	/**
+	 * @param bonusName assigned to the newly created bonus
+	 * @param increment assigned to the newly created bonus
+     */
 	public Bonus(BonusName bonusName, int increment){
 			this.bonusName=bonusName;
 			this.increment=increment;
 	}
 
-	public BonusName getBonusName() {
-		return bonusName;
-	}
-
-	public int getIncrement() {
-		return increment;
-	}
-
-	/* This method checks if BonusName of calling bonus is present in arrayBonus (parameter) */
+	/**
+	 * This method checks if this.bonusName is present in arrayBonus
+	 *
+	 * @param arrayBonus in which to look for this.bonusName
+	 * @return true if found, false if not
+     */
+	/*  */
 	public boolean bonusNameIsIn(Bonus[] arrayBonus){
-		
-		for(int i=0; i<arrayBonus.length; i++){
-			if(arrayBonus[i]!=null)
-				if(bonusName==arrayBonus[i].getBonusName())
-					return true;
-		}
+
+		for (Bonus bonus : arrayBonus)
+			if (bonus != null && bonusName == bonus.getBonusName())
+				return true;
+
 		return false;
+
 	}
 
+	/**
+	 * @param player whom to apply the bonus
+	 * @param field in which apply changes
+     */
 	public void applyBonus(Player player, Field field) {
 
 		NobilityRoute nobilityRoute;
@@ -56,9 +71,18 @@ public class Bonus {
 				for (int i=0; i<increment; i++)
 					player.addPoliticCard(new PoliticCard(Color.getRandomColor()));
 				break;
-			case MainMove:
+			default: //case MainMove:
 				player.addMainActionLeft(increment);
 		}
 
 	}
+
+	public BonusName getBonusName() {
+		return bonusName;
+	}
+
+	public int getIncrement() {
+		return increment;
+	}
+
 }

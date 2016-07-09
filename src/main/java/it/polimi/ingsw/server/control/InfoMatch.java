@@ -118,7 +118,7 @@ public class InfoMatch {
 			}
 		}
 		print("- Emporiums built by: ");
-		ArrayList<Player> arrayListEmporium = chosenCity.getArrayListEmporium();
+		ArrayList<Player> arrayListEmporium = (ArrayList<Player>) chosenCity.getArrayListEmporium();
 		if(arrayListEmporium==null){
 			print("-- none --");
 		}else{
@@ -222,7 +222,7 @@ public class InfoMatch {
 		Balcony[] arrayBalconies = field.getArrayBalcony();
 		for(Balcony balcony: arrayBalconies){
 			println( balcony.getNameBalcony() + ":");
-			ArrayList<Councillor> arrayListCouncillor = balcony.getArrayListCouncillor();
+			ArrayList<Councillor> arrayListCouncillor = (ArrayList<Councillor>) balcony.getArrayListCouncillor();
 			for(Councillor councillor: arrayListCouncillor){
 				print("-> " + councillor.getColor() + "  ");
 			}
@@ -235,7 +235,7 @@ public class InfoMatch {
 	private void printAvailableCouncillors() throws InterruptedException{
 		
 		println();
-		ArrayList<Councillor> arrayListCouncillor = field.getAvailableCouncillors().getArrayListCouncillor();
+		ArrayList<Councillor> arrayListCouncillor = (ArrayList<Councillor>) field.getAvailableCouncillors().getArrayListCouncillor();
 		println("Available councillors:");
 		for(Councillor councillor: arrayListCouncillor){
 			print(councillor.getColor() + "  ");

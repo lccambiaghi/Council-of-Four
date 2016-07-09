@@ -20,7 +20,7 @@ public class TestAvailableCouncilor {
 	@Before
 	public void init (){
 		availableCouncillors = new AvailableCouncillors();
-		arrayListCouncillor = availableCouncillors.getArrayListCouncillor();
+		arrayListCouncillor = (ArrayList<Councillor>) availableCouncillors.getArrayListCouncillor();
 	}
 	
 	

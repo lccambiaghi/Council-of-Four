@@ -2,25 +2,30 @@ package it.polimi.ingsw.server.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import it.polimi.ingsw.utils.Constant;
 
+/**
+ * This class handles the arrayList of availableCouncillors.
+ *
+ * It offers methods to add and remove them from this list.
+ */
 public class AvailableCouncillors {
-
-	/* Singleton DESIGN PATTERN
-	   The constructor is private, so that it is inaccessible from outside,
-	   Once the class is created for the first time, the method "createList()" is invoked */
 	
 	private ArrayList <Councillor> arrayListCouncillor;
 
-	/* The constructor creates councillors in order in the arrayList and then
-	  shuffles it */
+	/**
+	 * The constructor creates the arrayList initially containing all availableCouncillors.
+	 * Number of colours are set through a constant.
+	 * Every colour has the same cardinality.
+	 */
 	public AvailableCouncillors(){
-		arrayListCouncillor = new ArrayList<Councillor>();
+		arrayListCouncillor = new ArrayList<>();
 		int councilorsPerColor = Constant.COUNCILLORS_NUMBER_TOTAL /Constant.COLORS_NUMBER;
 
 		for(int i = 0; i< Constant.COUNCILLORS_NUMBER_TOTAL; i++){
-			int indexOfColor =(i/councilorsPerColor);
+			int indexOfColor = i/councilorsPerColor;
 			Councillor councillor = new Councillor(Color.getColorFromIndex(indexOfColor));
 			arrayListCouncillor.add(councillor);
 		}
@@ -28,35 +33,40 @@ public class AvailableCouncillors {
 		Collections.shuffle(arrayListCouncillor);
 	}
 
+	/**
+	 * @param councillor to be added to availableCouncillors
+     */
 	public void addAvailableCouncillor(Councillor councillor){
 		arrayListCouncillor.add(councillor);
 	}
 
-	/* This method returns the first Councillor of the ArrayList, removing it */
+	/**
+	 * @return councillor removed
+     */
 	public Councillor removeAvailableCouncillor(){ return arrayListCouncillor.remove(0);}
 
 	//Overloading
-	/* This method returns the Councillor of the specified color if present, else null */
+
+	/**
+	 * @param color of councillor to be removed
+	 * @return councillor removed
+     */
 	public Councillor removeAvailableCouncillor(Color color) {
 
 		Councillor councillor;
-		// If checkIfColorAvailable(Color color)
+
 		for (int i = 0; i < arrayListCouncillor.size(); i++) {
 			councillor = arrayListCouncillor.get(i);
 			if (councillor.getColor() == color)
 				return arrayListCouncillor.remove(i);
 		}
 
-		return null;
+		return null; //should never be reached
 
 	}
 
-	public ArrayList<Councillor> getArrayListCouncillor() {
+	public List<Councillor> getArrayListCouncillor() {
 		return arrayListCouncillor;
 	}
-
-
-
-
 
 }

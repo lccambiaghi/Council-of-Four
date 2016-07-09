@@ -24,8 +24,8 @@ public class TestBalcony {
 	public void init (){
 		availableCouncillors = new AvailableCouncillors();
 		balcony1 = new Balcony (availableCouncillors, RegionName.Sea.toString()+"Balcony");
-		arrayListCouncillor1=balcony1.getArrayListCouncillor();
-		arrayListAvailableCouncillors = availableCouncillors.getArrayListCouncillor();	
+		arrayListCouncillor1= (ArrayList<Councillor>) balcony1.getArrayListCouncillor();
+		arrayListAvailableCouncillors = (ArrayList<Councillor>) availableCouncillors.getArrayListCouncillor();
 	}
 	
 	
@@ -36,9 +36,9 @@ public class TestBalcony {
 		Balcony balcony3 = new Balcony (availableCouncillors, RegionName.Mountain.toString()+"Balcony");
 		Balcony balcony4 = new Balcony (availableCouncillors, "KingBalcony");
 		
-		ArrayList<Councillor> arrayListCouncillor2 = balcony2.getArrayListCouncillor();
-		ArrayList<Councillor> arrayListCouncillor3 = balcony3.getArrayListCouncillor();
-		ArrayList<Councillor> arrayListCouncillor4 = balcony4.getArrayListCouncillor();
+		ArrayList<Councillor> arrayListCouncillor2 = (ArrayList<Councillor>) balcony2.getArrayListCouncillor();
+		ArrayList<Councillor> arrayListCouncillor3 = (ArrayList<Councillor>) balcony3.getArrayListCouncillor();
+		ArrayList<Councillor> arrayListCouncillor4 = (ArrayList<Councillor>) balcony4.getArrayListCouncillor();
 		
 		assertEquals(4, arrayListCouncillor1.size());
 		assertEquals(4, arrayListCouncillor2.size());
