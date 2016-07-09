@@ -8,6 +8,8 @@ import it.polimi.ingsw.client.connection.SocketConnection;
 import it.polimi.ingsw.client.connection.SocketListener;
 import it.polimi.ingsw.server.connection.RMIGameSideInterface;
 import it.polimi.ingsw.server.model.Configurations;
+import it.polimi.ingsw.utils.Message;
+import it.polimi.ingsw.utils.MessageClient;
 
 public class PlayerSide {
 
@@ -36,33 +38,36 @@ public class PlayerSide {
 		chooseToCreateConfigurations();
 		
 		chooseConnection();
-		
-		if(typeOfConnection=='s'){
-			socketConnection = new SocketConnection(this);
-			new SocketListener(this, socketConnection);
-		}else{
-			rmiConnection = new RMIConnection(this);
-		}
 	
 	}
 		
 	
 	private void chooseConnection(){
-		System.out.println("Choose connection:\n"
-				+ "1. Socket\n"
-				+ "2. RMI");
+		
+		System.out.println(MessageClient.chooseConnection_1_2());
 		int choice = inputHandler.inputNumber(1, 2);
-		if(choice==1)
+		
+		if(choice==1){
 			this.typeOfConnection='s';
-		else
+			handleSocketConnection();
+		}else{
 			this.typeOfConnection='r';
+			handleRMIConnection();
+		}
+	}
+	
+	private void handleSocketConnection(){
+		socketConnection = new SocketConnection(this);
+		new SocketListener(this, socketConnection);
+	}
+	
+	private void handleRMIConnection(){
+		rmiConnection = new RMIConnection(this);
 	}
 
 	private void chooseToCreateConfigurations(){
 		
-		System.out.println("Do you want to create your own configurations?\n"
-				+ "1. Yes\n"
-				+ "2. No");
+		System.out.println(MessageClient.chooseToCreateConfigurations_1_2());
 		int choice = inputHandler.inputNumber(1, 2);
 		
 		if(choice==1){
@@ -81,7 +86,7 @@ public class PlayerSide {
 		String nickname = null;
 		Scanner input = new Scanner(System.in);
 		while(!logged){
-			System.out.println("Enter your nickname");
+			System.out.println(MessageClient.enterYourNickname());
 			nickname = input.nextLine();
 			if(typeOfConnection=='s'){
 				socketConnection.sendStringTS(nickname);
@@ -96,11 +101,11 @@ public class PlayerSide {
 				}
 			}
 			if(!logged){
-				System.out.println("Nickname already in use, enter another one");
+				System.out.println(MessageClient.nicknameAlreadyInUse());
 			}
 		}
 		this.nickname=nickname;
-		System.out.println("Logged!");
+		System.out.println(MessageClient.loginSuccesfully());
 	}
 	
 	public String getNickname(){
