@@ -278,24 +278,6 @@ public final class Message {
 		return "Player " + player.getNickname() + " has been kicked out!";
 	}
 
-	public static String chooseToSellSomething_1_2(){		
-		return "Would you like to sell something?\n" +
-				"1. Yes\n" +
-				"2. No";
-	}
-	public static String chooseToBuySomething_1_2(){
-		return "Would you like to buy something?\n" +
-				"1. Yes\n" +
-				"2. No";
-	}
-
-	public static String askForObject(){
-		return "Which object would you like to sell?";
-	}
-
-	public static String askObjectToBuy(){
-		return "Which object would you like to buy?";
-	}
 
 	public static String permitCard(int counter){ return String.valueOf(counter) + ". Permit Card"; }
 
@@ -307,34 +289,9 @@ public final class Message {
 	public static String assistants(int counter){
 
 		return String.valueOf(counter) + ". Assistants";
-	}
-	public static String deniedSelling (){
-		return "You can't sell nothing";
-	}
-	public static String deniedBuying (){
-		return "You can't buy this object";
-	}
-	public static String youWon(){
-		return "You won the match!";
-	}
-
-	public static String chooseSellingObject(Player player, SellingObject sellingObject){
-
-		return "";
-
-	}
-
-	public static String chooseAssistants (Player player){
-
-		return "How many assistants would you like to sell? You have: " +
-				player.getAssistant() + " assistants";
-
-	}
-
-	public static String askPrice (){
-		return "Which price would you like to sell it for?";
-	}
 		
+	}
+	
 	public static String getInfoPermitCard (PermitCard sellingPermitCard, int price){
 
 		StringBuilder message= new StringBuilder();
@@ -357,7 +314,69 @@ public final class Message {
 				"The price is: " + price + " coins";
 
 	}
+	
+	public static String youWon(){
+		return "You won the match!";
+	}
+	
+	public static String lastRoundHasStarted(Player player) {
 
+		return player.getNickname() + " has built the last emporium. Last round has started.";
+
+	}
+	
+	
+	/*
+	 * MARKET MESSAGES
+	 */
+	
+	public static String marketHasStarted(){
+		return "Market has started!";
+	}
+	
+	public static String sellingPhase(){
+		return "Selling Phase has started";
+	}
+	
+	public static String buyingPhase(){
+		return "Buying Phase has started";
+	}
+	
+	public static String chooseToSellSomething_1_2(){		
+		return "Would you like to sell something?\n" +
+				"1. Yes\n" +
+				"2. No";
+	}
+	public static String chooseToBuySomething_1_2(){
+		return "Would you like to buy something?\n" +
+				"1. Yes\n" +
+				"2. No";
+	}
+
+	public static String askForObject(){
+		return "Which object would you like to sell?";
+	}
+
+	public static String askObjectToBuy(){
+		return "Which object would you like to buy?";
+	}
+	
+	public static String deniedSelling (){
+		return "You can't sell nothing";
+	}
+	public static String deniedBuying (){
+		return "You can't buy this object";
+	}
+
+	public static String chooseNumberAssistantsToSell (Player player){
+		return "How many assistants would you like to sell? You have: " +
+				player.getAssistant() + " assistants";
+	}
+
+	public static String askPrice (){
+		return "Which price would you like to sell it for?";
+	}
+	
 	public static String skipBuying (){
 		return "0. Exit from the buying step";
 	}
@@ -366,9 +385,4 @@ public final class Message {
 		return "There aren't object on sale in the market";
 	}
 
-	public static String lastRoundHasStarted(Player player) {
-
-		return player.getNickname() + " has built the last emporium. Last round has started.";
-
-	}
 }

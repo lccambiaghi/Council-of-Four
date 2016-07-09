@@ -170,7 +170,7 @@ public class MarketSellAction extends Action{
      * @throws InterruptedException
      */
     private int askAssistant(Player playerTurn) throws InterruptedException{
-        playerTurn.getBroker().println(Message.chooseAssistants(playerTurn));
+        playerTurn.getBroker().println(Message.chooseNumberAssistantsToSell(playerTurn));
    
         int chosenAssistants= playerTurn.getBroker().askInputNumber(1, playerTurn.getAssistant());
        
