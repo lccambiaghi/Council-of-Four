@@ -36,18 +36,11 @@ public class Player{
 	private ArrayList <City>  arrayListEmporiumBuilt = new ArrayList<>();
 
 
-	/* The constructor assigns to the player the type of connection */
-	public Player(char typeOfConnection){
-		char typeOfConnection1 = typeOfConnection;
-	}
+	/* Constructor */
+	public Player(){}
 	
-	public Broker getBroker() {
-		return broker;
-	}
-	
-	public void setBroker(Broker broker) {
-		this.broker=broker;
-	}
+	public Broker getBroker() {return broker;}
+	public void setBroker(Broker broker) {this.broker=broker;}
 
 	public String getNickname() {return nickname;}
 	public void setNickname(String nickname) {this.nickname = nickname;}

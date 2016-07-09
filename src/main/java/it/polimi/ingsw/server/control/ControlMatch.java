@@ -136,10 +136,13 @@ public class ControlMatch {
 
 		ArrayList<Player> ps = new ArrayList<>();
 
-		for(Player p: allPlayers)
-			if(p.isConnected())
+		for(Player p: allPlayers){
+			if(p.isConnected()){
 				ps.add(p);
-
+			}else if(!p.isMessageDisconnectedSent()){
+				Broadcast.printlnBroadcastOthers(Message.playerHasBeenKickedOut(p), allPlayers, p);
+			}
+		}
 		return ps;
 
 	}

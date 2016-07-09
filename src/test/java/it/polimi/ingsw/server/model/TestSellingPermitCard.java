@@ -50,20 +50,20 @@ public class TestSellingPermitCard {
 		for(int i=0; i<n; i++){
 			arrayCity[i] = new City(config, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
 		}
-		Player player = new Player('s');
+		Player player = new Player();
 		player.setNickname("A");
 		player.setAssistant(3);
 		player.setRichness(10);
 		player.getArrayListPermitCard().add(new PermitCard (arrayCity, config));
 		arrayListPlayer.add(player);
 
-		Player player2 = new Player('s');
+		Player player2 = new Player();
 		player2.setNickname("B");
 		player.setAssistant(2);
 		player.setRichness(11);
 		arrayListPlayer.add(player2);
 
-		Player player3 = new Player('s');
+		Player player3 = new Player();
 		player3.setNickname("C");
 		player.setAssistant(3);
 		player.setRichness(12);

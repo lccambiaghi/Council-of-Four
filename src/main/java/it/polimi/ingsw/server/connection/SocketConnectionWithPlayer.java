@@ -30,7 +30,7 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		this.gameSide=gameSide;
 		this.playerSocket=clientSocket;
 		
-		player = new Player('s');
+		player = new Player();
 		
 		openSocketStream();
 		

@@ -40,20 +40,20 @@ public class TestSellingAssistants {
 	private ArrayList <Player> createArrayListPlayer() {
 		ArrayList <Player> arrayListPlayer = new ArrayList <>();		
 		
-		Player player = new Player('s');
+		Player player = new Player();
 		player.setNickname("A");
 		player.setAssistant(3);
 		player.setRichness(10);
 		player.getArrayListPoliticCard().add(new PoliticCard(Color.getRandomColor()));
 		arrayListPlayer.add(player);
 
-		Player player2 = new Player('s');
+		Player player2 = new Player();
 		player2.setNickname("B");
 		player.setAssistant(0);
 		player.setRichness(11);
 		arrayListPlayer.add(player2);
 
-		Player player3 = new Player('s');
+		Player player3 = new Player();
 		player3.setNickname("C");
 		player.setAssistant(3);
 		player.setRichness(12);
