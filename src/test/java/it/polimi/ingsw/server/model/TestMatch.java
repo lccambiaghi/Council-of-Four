@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import static org.junit.Assert.*;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,8 +10,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import it.polimi.ingsw.server.control.Player;
+import it.polimi.ingsw.utils.Constant;
 
 public class TestMatch {
 
@@ -25,7 +29,46 @@ public class TestMatch {
 		match = new Match(arrayListPlayers);
 	}
 	
-
+	@Test
+	public void matchCreation(){
+		assertNotNull(match);
+		assertEquals(3, arrayListPlayers.size());
+	}
+	
+	@Test
+	public void initialCards (){
+		for(Player player : arrayListPlayers)
+			assertEquals(Constant.POLITIC_CARDS_INITIAL_NUMBER, player.getArrayListPoliticCard().size());		
+	}
+	
+	@Test
+	public void initialRichness (){
+		for(int i=0; i<arrayListPlayers.size(); i++){
+			assertEquals(Constant.RICHNESS_INITIAL_FIRST_PLAYER+i, arrayListPlayers.get(i).getRichness());		
+		}
+	}
+	
+	@Test
+	public void initialAssistants (){
+		for(int i=0; i<arrayListPlayers.size(); i++){
+			assertEquals(Constant.ASSISTANT_INITIAL_FIRST_PLAYER+i, arrayListPlayers.get(i).getAssistant());		
+		}
+	}
+	
+	@Test
+	public void fieldCreation(){
+		assertNotNull(match.getField());
+	}
+	
+	@Test
+	public void marketCreation(){
+		assertNotNull(match.getMarket());
+	}
+	
+	@Test
+	public void infoCreation(){
+		assertNotNull(match.getInfoMatch());
+	}
 	
 	
 	private ArrayList <Player> createArrayListPlayer() {
