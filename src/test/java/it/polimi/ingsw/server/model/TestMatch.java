@@ -1,14 +1,5 @@
 package it.polimi.ingsw.server.model;
 
-
-import it.polimi.ingsw.server.control.Player;
-import it.polimi.ingsw.server.model.City;
-import it.polimi.ingsw.server.model.FaceUpPermitCardArea;
-
-import it.polimi.ingsw.utils.Constant;
-
-import static org.junit.Assert.*;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,61 +8,43 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import org.junit.Before;
-import org.junit.Test;
 
-public class TestFaceUpPermitCardArea {
+import it.polimi.ingsw.server.control.Player;
+
+public class TestMatch {
 
 	private Configurations config;
-	private FaceUpPermitCardArea faceUpPermitCardArea;
-	private ArrayList <Player> arrayListPlayer; 
+	private Match match;
+	private ArrayList <Player> arrayListPlayers;
 	
 	@Before
-	public void init() {
+	public void init (){
+		config = configurations ();
+		arrayListPlayers = createArrayListPlayer();
+	
+		match = new Match(arrayListPlayers);
+	}
+	
+
+	
+	
+	private ArrayList <Player> createArrayListPlayer() {
+		ArrayList <Player> arrayListPlayer = new ArrayList <>();		
 		
-		config = configurations();
-		arrayListPlayer = createArrayListPlayer();
-		int n = config.getNumberCities()/3;
-		City[] arrayCity= new City[config.getNumberCities()/3];
-		for(int i=0; i<n; i++){
-			arrayCity[i] = new City(config, CityName.getCityNameFromIndex(i), RegionName.Sea, CityColor.Blue);
-		}
+		Player player = new Player();
+		player.setNickname("A");
+		arrayListPlayer.add(player);
+
+		Player player2 = new Player();
+		player2.setNickname("B");
+		arrayListPlayer.add(player2);
+
+		Player player3 = new Player();
+		player3.setNickname("C");
+		arrayListPlayer.add(player3);
 		
-		faceUpPermitCardArea = new FaceUpPermitCardArea(arrayCity, config);		
+		return arrayListPlayer;
 	}
-	
-	@Test
-	public void constructor (){
-		assertNotNull(faceUpPermitCardArea);
-		assertEquals(Constant.FACE_UP_PERMIT_CARD_PER_REGION_NUMBER, 
-				faceUpPermitCardArea.getArrayPermitCard().length);
-	}
-	
-	@Test
-	public void permitCards(){
-		for (PermitCard permitCard : faceUpPermitCardArea.getArrayPermitCard()){
-			assertNotNull(permitCard);
-		}
-	}
-	
-	@Test
-	public void acquirePermitCard() {
-		Player player = arrayListPlayer.get(1);
-		PermitCard chosenPermitCard=faceUpPermitCardArea.acquirePermitCard(0);
-		assertNotNull(chosenPermitCard);
-		
-		player.getArrayListPermitCard().add(chosenPermitCard);
-		assertEquals(1, player.getArrayListPermitCard().size());
-	}
-	
-	@Test
-	public void replacePermitCard() {
-		faceUpPermitCardArea.replacePermitCard(1);
-		assertNotNull(faceUpPermitCardArea.getArrayPermitCard()[1]);
-		assertEquals(2, faceUpPermitCardArea.getArrayPermitCard().length);
-		
-	}
-	
-	
 	
 	private Configurations configurations(){
 		Configurations config = new Configurations();
@@ -213,30 +186,4 @@ public class TestFaceUpPermitCardArea {
 		}
 		
 	}
-	
-	private ArrayList <Player> createArrayListPlayer() {
-		ArrayList <Player> arrayListPlayer = new ArrayList <>();		
-		
-		Player player = new Player();
-		player.setNickname("A");
-		player.setAssistant(3);
-		player.setRichness(10);
-		player.getArrayListPoliticCard().add(new PoliticCard(Color.getRandomColor()));
-		arrayListPlayer.add(player);
-
-		Player player2 = new Player();
-		player2.setNickname("B");
-		player.setAssistant(0);
-		player.setRichness(11);
-		arrayListPlayer.add(player2);
-
-		Player player3 = new Player();
-		player3.setNickname("C");
-		player.setAssistant(3);
-		player.setRichness(12);
-		arrayListPlayer.add(player3);
-		
-		return arrayListPlayer;
-	}
-	
 }
