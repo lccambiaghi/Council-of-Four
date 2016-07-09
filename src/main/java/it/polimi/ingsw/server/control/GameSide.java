@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.connection.RMIGameSideInterface;
 import it.polimi.ingsw.server.connection.SocketConnectionWithPlayer;
 import it.polimi.ingsw.utils.Constant;
 import it.polimi.ingsw.utils.DisconnectedException;
+import it.polimi.ingsw.utils.Message;
 
 public class GameSide {
 
@@ -88,8 +89,12 @@ public class GameSide {
 	}
 	
 	public void startHandlePlayer(GameSide gameSide, Player player){
+		
 		HandlePlayer hp = new HandlePlayer(gameSide, player);
-		System.out.println("A new player has connected");
+		
+		if(!player.isLogged())
+			System.out.println("A new player has connected");
+		
 		hp.start();
 	}
 	
@@ -108,11 +113,19 @@ public class GameSide {
 			try {
 				
 				if(!player.isLogged()){
+					
 					player.getBroker().login(gameSide);
 					player.setLogged(true);
-				}
 				
-				putPlayerInArrayList(player);
+					putPlayerInArrayList(player);
+					
+				}else{
+					
+					if(askToPlayAgain(player) == false){
+						removePlayerFromArrayList(player);
+						return;
+					}
+				}
 				
 				putPlayerInWaitingRoom(player);
 				
@@ -128,6 +141,19 @@ public class GameSide {
 			player.setConnected(true);
 			arrayListAllPlayer.add(player);
 		}
+	}
+	
+	private boolean askToPlayAgain(Player player){
+		player.getBroker().println(Message.askToPlayAgain());
+		player.getBroker().println(Message.chooseYesOrNo_1_2());
+		int choice = 2;
+		try {
+			choice = player.getBroker().askInputNumber(1, 2);
+		} catch (InterruptedException e) {}
+		if(choice==1)
+			return true;
+		else
+			return false;
 	}
 	
 	public void removePlayerFromArrayList(Player player){

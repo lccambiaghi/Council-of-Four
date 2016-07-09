@@ -77,7 +77,21 @@ public class WaitingRoom extends Thread{
 	
 		controlMatch.startMatch();
 		
+		removeInactivePlayersAndHandleActiveOnes();
+		
 	}
+	
+	private void removeInactivePlayersAndHandleActiveOnes(){
+		Player p;
+		for(int i=0; i<arrayListPlayerMatch.size(); i++){
+			p=arrayListPlayerMatch.get(i);
+			if(!p.isConnected())
+				gameSide.removePlayerFromArrayList(p);
+			else
+				gameSide.startHandlePlayer(gameSide, p);
+		}
+	}
+	
 	
 	/**
 	 * 

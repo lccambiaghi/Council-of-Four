@@ -11,6 +11,10 @@ import java.util.Map;
 
 public final class Message {
 
+	public static String askToPlayAgain(){
+		return "Do you want to play again?";
+	}
+	
 	public static String waitForMatch(){
 		return ("You have been selected for a match, wait a moment...");
 	}
