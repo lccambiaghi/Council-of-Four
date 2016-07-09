@@ -110,7 +110,12 @@ public class City {
 	/**
 	 * @return true if the city has bonus, false otherwise
      */
-	public boolean hasBonus(){return arrayBonus.length > 0;	}
+	public boolean hasBonus(){
+		if(arrayBonus==null || arrayBonus.length==0)
+			return false;
+		else 
+			return true;
+	}
 	public Bonus[] getArrayBonus() {
 		return arrayBonus;
 	}
