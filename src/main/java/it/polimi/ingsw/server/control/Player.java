@@ -17,6 +17,7 @@ public class Player{
 	
 	// variables of the game
 	private boolean connected = true;
+	private boolean logged = false;
 	private boolean messageDisconnectedSent = false;
 	private boolean lastTurnDone;
 
@@ -53,6 +54,9 @@ public class Player{
 	
 	public boolean isConnected() {return connected;}
 	public void setConnected(boolean connected) {this.connected = connected;}
+	
+	public boolean isLogged() {return logged;}
+	public void setLogged(boolean logged) {this.logged = logged;}
 	
 	public boolean isMessageDisconnectedSent() {return messageDisconnectedSent;}
 	public void setMessageDisconnectedSent(boolean messageDisconnectedSent) {this.messageDisconnectedSent = messageDisconnectedSent;	}

@@ -107,7 +107,10 @@ public class GameSide {
 			
 			try {
 				
-				player.getBroker().login(gameSide);
+				if(!player.isLogged()){
+					player.getBroker().login(gameSide);
+					player.setLogged(true);
+				}
 				
 				putPlayerInArrayList(player);
 				
