@@ -123,6 +123,7 @@ public class GameSide {
 					
 					if(askToPlayAgain(player) == false){
 						removePlayerFromArrayList(player);
+						player.getBroker().println(Message.sayByeBye());
 						return;
 					}
 				}

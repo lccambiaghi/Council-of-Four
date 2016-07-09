@@ -15,6 +15,10 @@ public final class Message {
 		return "Do you want to play again?";
 	}
 	
+	public static String sayByeBye(){
+		return "It has been a pleasure having you as a player, BYE BYE!";
+	}
+	
 	public static String waitForMatch(){
 		return ("You have been selected for a match, wait a moment...");
 	}
