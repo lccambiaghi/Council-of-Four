@@ -10,6 +10,17 @@ import it.polimi.ingsw.client.connection.SocketListener;
 import it.polimi.ingsw.server.model.Configurations;
 import it.polimi.ingsw.utils.MessageClient;
 
+/**
+ * This class contains the main that launches the client.
+ *	
+ * initializeScanner: open the scanner and starts a thread that discard every input not asked
+ * 
+ * chooseToCreateConfigurations: the method asks the user whether he wants to create the configurations
+ * or not; if yes it saves the created ones in the variable "config"
+ *
+ * chooseConnection: the method permits the user to choose the type of connection through which he wants
+ * to connect to the server: Socket or RMI
+ */
 public class PlayerSide {
 	
 	private Object lock = new Object();
@@ -30,6 +41,9 @@ public class PlayerSide {
 	private Configurations config;
 	private boolean customConfig;
 	
+	/**
+	 * Constructor: it starts to communicate with the user and then with the server
+	 */
 	public PlayerSide() {
 		
 		initializeScanner();
@@ -40,6 +54,10 @@ public class PlayerSide {
 	
 	}
 	
+	/**
+	 * Initialize the scanner that starts reading from "System.in".
+	 * It also creates the object InputHandler and the thread that discards every input not asked
+	 */
 	private void initializeScanner(){
 		
 		freeScanner=true;
@@ -50,6 +68,10 @@ public class PlayerSide {
 		
 	}
 	
+	/**
+	 * The method asks through "inputNumber" the type of connection wanted by the user and calls
+	 * the corresponding method that handle the type of connection
+	 */
 	private void chooseConnection(){
 		
 		System.out.println(MessageClient.chooseConnection_1_2());
@@ -64,6 +86,10 @@ public class PlayerSide {
 		}
 	}
 	
+	/**
+	 * The method assign to "socketConnection" a new SocketConnection and starts listening through
+	 * the socket port with SocketListener
+	 */
 	private void handleSocketConnection(){
 		socketConnection = new SocketConnection(this);
 		new SocketListener(this, socketConnection);
@@ -73,6 +99,14 @@ public class PlayerSide {
 		rmiConnection = new RMIConnection(this);
 	}
 
+	
+	/**
+	 * The method asks the users if he wants to create configurations.
+	 * 
+	 * If so it creates an object "CreateConfigurations", it starts it, it waits until the configurations
+	 * are completed, it saves them in the variable "config" and sets the boolean "customConfig" to true
+	 * If not it simply sets the "customConfig" to false
+	 */
 	private void chooseToCreateConfigurations(){
 		
 		System.out.println(MessageClient.chooseToCreateConfigurations_1_2());
@@ -89,6 +123,12 @@ public class PlayerSide {
 		
 	}
 	
+	/**
+	 * The method is called remotely and permits the user to login to the server
+	 * It calls
+	 */
+	
+	//TO-DO
 	public void login(){
 		
 		setFreeScanner(false);
