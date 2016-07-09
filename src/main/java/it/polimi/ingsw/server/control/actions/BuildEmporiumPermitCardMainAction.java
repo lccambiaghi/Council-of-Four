@@ -54,7 +54,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		player.getBroker().println(Message.chooseCityToBuild(arrayBuildableCities, buildableCities));
 
-		chosenCity = arrayBuildableCities[player.getBroker().askInputNumber(1, buildableCities)];
+		chosenCity = arrayBuildableCities[player.getBroker().askInputNumber(1, buildableCities) - 1 ]; //-1 for array positioning
 		
 		return true;
 
