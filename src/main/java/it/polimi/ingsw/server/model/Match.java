@@ -53,7 +53,7 @@ public class Match {
 		
 		try {
 			
-			fileInputStream = new FileInputStream("./src/configurations/config");
+			fileInputStream = new FileInputStream(Constant.PATH_FILE_CONFIGURATIONS);
 			
 			// create an ObjectInputStream for the file we created before
 	         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);

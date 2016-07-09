@@ -79,6 +79,9 @@ public class WaitingRoom extends Thread{
 		
 	}
 	
+	/**
+	 * 
+	 */
 	public void askForNumberPlayersAndConfig(){
 		
 		Thread t = new Thread(new Runnable(){
@@ -115,13 +118,20 @@ public class WaitingRoom extends Thread{
 		
 	}
 	
+	/**
+	 * 
+	 * @throws InterruptedException
+	 */
 	private void askForNumberPlayers() throws InterruptedException{
 		firstPlayer.getBroker().println("Insert the max number of players you want to play with.\n"
 				+ "Min: " +Constant.PLAYERS_MIN_NUMBER+ ", Max: "+ Constant.PLAYERS_MAX_NUMBER);
 		playersMaxNumber = firstPlayer.getBroker().askInputNumber(2, 8);
 	}
 	
-	
+	/**
+	 * 
+	 * @throws InterruptedException
+	 */
 	private void askForConfigurations() throws InterruptedException{
 		
 		firstPlayer.getBroker().println("Do you want to play with the configurations you have created?\n");
@@ -134,6 +144,10 @@ public class WaitingRoom extends Thread{
 	
 	}
 	
+	/**
+	 * 
+	 * @param player
+	 */
 	public void addPlayerToWaitingRoom(Player player){
 			
 		arrayListPlayerMatch.add(player);
@@ -156,6 +170,9 @@ public class WaitingRoom extends Thread{
 		
 	}
 	
+	/**
+	 * 
+	 */
 	private void startCountDown(){
 		controlTimer = new ControlTimer();
 		controlTimer.startCountDown(Constant.TIMER_SECONDS_NEW_MATCH);
@@ -188,7 +205,7 @@ public class WaitingRoom extends Thread{
 		FileOutputStream fileOutputStream = null;
 		ObjectOutputStream objectOutputStream = null;
 		try {
-			fileOutputStream = new FileOutputStream("./src/configurations/config");
+			fileOutputStream = new FileOutputStream(Constant.PATH_FILE_CONFIGURATIONS);
 			objectOutputStream = new ObjectOutputStream(fileOutputStream);
 			objectOutputStream.writeObject(config);
 			fileOutputStream.close();

@@ -17,6 +17,9 @@ public class Constant {
 	public static final String RMI_REGISTRY_ADDRESS = "127.0.0.1";
 	public static final String RMI_REGISTRY_LOOKUP_ADDRESS = "rmi://127.0.0.1:1099/CoF";
 	public static final int RMI_PORT =1099;
+	
+	//file configurations
+	public static final String PATH_FILE_CONFIGURATIONS = "./src/configurations/config";
 
 	public static final int PLAYERS_MIN_NUMBER = 2;
 	public static final int PLAYERS_MAX_NUMBER = 8;
