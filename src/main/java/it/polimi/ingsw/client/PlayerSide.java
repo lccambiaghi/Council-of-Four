@@ -31,7 +31,9 @@ public class PlayerSide {
 	
 	private Scanner in;
 	
-	public Object lockScanner = new Object();
+	private Object lock = new Object();
+	
+	public boolean freeScanner;
 	public Thread threadScanner;
 
 	private Configurations config;
@@ -49,10 +51,11 @@ public class PlayerSide {
 	
 	private void initializeScanner(){
 		
+		freeScanner=true;
 		in = new Scanner(System.in);
+		inputHandler = new InputHandler(this, in);
 		threadScanner = new Thread(new ScannerHandler());
 		threadScanner.start();
-		inputHandler = new InputHandler(in, lockScanner, threadScanner);
 		
 	}
 	
@@ -97,13 +100,7 @@ public class PlayerSide {
 	
 	public void login(){
 		
-		threadScanner.interrupt();
-		
-		synchronized (lockScanner) {
-			try {
-				lockScanner.wait();
-			} catch (InterruptedException e) {}
-		}
+		setFreeScanner(false);
 		
 		boolean logged = false;
 		String nickname = null;
@@ -129,9 +126,8 @@ public class PlayerSide {
 		this.nickname=nickname;
 		System.out.println(MessageClient.loginSuccesfully());
 		
-		synchronized (lockScanner) {
-			lockScanner.notify();
-		}
+		setFreeScanner(true);
+		
 	}
 	
 	public String getNickname(){
@@ -152,28 +148,31 @@ public class PlayerSide {
 	
 	class ScannerHandler implements Runnable{
 		public void run() {
-			try{
-				while(true){
-					try {
-						while(true){
-							if(System.in.available() > 0)
+			while(true){
+				while(isFreeScanner()){
+					synchronized (lock) {
+						try {
+							if(System.in.available()>0)
 								in.nextLine();
-							Thread.sleep(100);
-						}
-					} catch (InterruptedException e) {
-						synchronized (lockScanner) {
-							lockScanner.notify();
-						}
-						synchronized (lockScanner) {
-							try {
-								lockScanner.wait();
-							} catch (InterruptedException e1) {
-								//IMPOSSIBLE TO REACH
-							}
-						}
+						} catch (IOException e) {}
 					}
 				}
-			}catch (IOException e) {}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {}
+			}
+		}
+	}
+	
+	public void setFreeScanner(boolean freeScanner){
+		synchronized (lock) {
+			this.freeScanner=freeScanner;
+		}
+	}
+	
+	public boolean isFreeScanner(){
+		synchronized (lock) {
+			return freeScanner;
 		}
 	}
 	

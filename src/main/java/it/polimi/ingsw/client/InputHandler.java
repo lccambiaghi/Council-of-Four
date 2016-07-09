@@ -9,15 +9,13 @@ import it.polimi.ingsw.server.model.CityName;
 public class InputHandler {
 
 	private Scanner in;
+	private PlayerSide playerSide;
+	
 	private boolean stopped = false;
 	
-	public Object lockScanner = new Object();
-	public Thread threadScanner;
-	
-	public InputHandler(Scanner in, Object lockScanner, Thread threadScanner){
+	public InputHandler(PlayerSide playerSide, Scanner in){
+		this.playerSide=playerSide;
 		this.in=in;
-		this.lockScanner=lockScanner;
-		this.threadScanner=threadScanner;
 	}
 	
 	public void stopInputNumber(){
@@ -28,15 +26,9 @@ public class InputHandler {
 		
 		int inputNumber = 0;
 		
+		playerSide.setFreeScanner(false);
+		
 		try{
-			
-			threadScanner.interrupt();
-			
-			synchronized (lockScanner) {
-				try {
-					lockScanner.wait();
-				} catch (InterruptedException e) {}
-			}
 			
 			String s;
 			
@@ -62,10 +54,9 @@ public class InputHandler {
 			System.out.println("Too late!");
 		}catch (IOException e1){
 			e1.printStackTrace();
-		}
 		
-		synchronized (lockScanner) {
-			lockScanner.notify();
+		}finally{
+			playerSide.setFreeScanner(true);
 		}
 		
 		return inputNumber;
@@ -102,14 +93,6 @@ public class InputHandler {
 	
 	public Character[] inputCity (CityName currentCity, CityName lastCity){
 		
-		threadScanner.interrupt();
-		
-		synchronized (lockScanner) {
-			try {
-				lockScanner.wait();
-			} catch (InterruptedException e) {}
-		}
-		
 		String string;
 		boolean correct=true;
 		ArrayList <Character> temp;
@@ -117,6 +100,8 @@ public class InputHandler {
 		int asciiLowerBound= (int) currentCity.toString().charAt(0);
 		int asciiUpperBound= (int) lastCity.toString().charAt(0);;
 				
+		playerSide.setFreeScanner(false);
+		
 		do{
 			correct=true;
 			string = in.nextLine();
@@ -145,9 +130,7 @@ public class InputHandler {
 			}
 		}while(!correct);
 		
-		synchronized (lockScanner) {
-			lockScanner.notify();
-		}
+		playerSide.setFreeScanner(true);
 		
 		Character [] result = temp.toArray(new Character [temp.size()]);
 		return result;
