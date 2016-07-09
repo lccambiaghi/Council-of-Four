@@ -6,6 +6,19 @@ import java.util.Scanner;
 
 import it.polimi.ingsw.server.model.CityName;
 
+
+/**
+ * This class offers methods that handle the input by the client.
+ * 
+ * inputNumber: the method expects the client to insert a integer value between the integer bounds
+ * taken as parameters; it handles incorrect insertions, such as not integers or integers out of bounds
+ * 
+ * inputCity: the method expects the client to insert one or more letters (lower case and upper case)
+ * that represents cities between the bounds taken as parameters; 
+ * it handles incorrect values or repeated ones
+ * 
+ */
+
 public class InputHandler {
 
 	private Scanner in;
@@ -13,15 +26,33 @@ public class InputHandler {
 	
 	private boolean stopped = false;
 	
+	/**
+	 * @param playerSide : the playerSide that creates the object
+	 * @param in : the scanner already created in the playerSide
+	 */
 	public InputHandler(PlayerSide playerSide, Scanner in){
 		this.playerSide=playerSide;
 		this.in=in;
 	}
 	
+	/**
+	 * The method is called remotely and permits to stop the current inputNumber going on
+	 */
 	public void stopInputNumber(){
 		stopped=true;
 	}
 	
+	/**
+	 * 
+	 * First the method takes the scanner setting the boolean "freeScanner" to false.
+	 * Then waits through the scanner for an input and handle incorrect values.
+	 * It catches the InterruptedException thrown by the method "readWithSleep" when
+	 * the boolean "stopped" is set to TRUE remotely.
+	 * 
+	 * @param lowerBound 
+	 * @param upperBound
+	 * @return the choice of the client
+	 */
 	public int inputNumber(int lowerBound, int upperBound){
 		
 		int inputNumber = 0;
@@ -90,7 +121,12 @@ public class InputHandler {
 		return null;
 	}
 	
-	
+	/**
+	 * The method expects the client to insert a string that represents one or more cities 
+	 * @param currentCity
+	 * @param lastCity
+	 * @return
+	 */
 	public Character[] inputCity (CityName currentCity, CityName lastCity){
 		
 		String string;
