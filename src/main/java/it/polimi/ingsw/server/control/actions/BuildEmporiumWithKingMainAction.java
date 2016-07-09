@@ -115,8 +115,9 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         //TODO TEST
         for (City city: nearbyBuiltCities)
-            for (Bonus bonus : city.getArrayBonus())
-                bonus.applyBonus(player, field);
+        	if(city.hasBonus())
+        		for (Bonus bonus : city.getArrayBonus())
+        			bonus.applyBonus(player, field);
 
         resultMsg="Player " + player.getNickname() + " has moved the king to " +
                 chosenCity.getCityName().toString() + " city and built an emporium there.";

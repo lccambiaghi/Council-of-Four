@@ -83,8 +83,9 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 		ArrayList<City> nearbyBuiltCities = getAdjacentBuiltCities(chosenCity);
 
 		for (City city: nearbyBuiltCities)
-			for (Bonus bonus : city.getArrayBonus())
-				bonus.applyBonus(player, field);
+			if(city.hasBonus())
+				for (Bonus bonus : city.getArrayBonus())
+					bonus.applyBonus(player, field);
 
         resultMsg="Player "+player.getNickname() +" has built an emporium in "
         		+ chosenCity.getCityName().toString() + " City.";
