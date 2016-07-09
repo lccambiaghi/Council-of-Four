@@ -3,15 +3,26 @@ package it.polimi.ingsw.server.model;
 import java.io.Serializable;
 import java.util.Random;
 
+/**
+ * This class offers the method to set an array of random bonuses to a city
+ */
 public class CityBonus extends Bonus implements Serializable{	
 	
 	public CityBonus(BonusName name, int increment){
+
 		this.bonusName=name;
+
 		this.increment=increment;
+
 	}
-	
-	/* This method is static.
-	 * It returns an array of different types of bonus of the specified size */
+
+	/**
+	 * This method creates an array of bonuses, having random bonusName
+	 * and random increment, upper bounded by max increment
+	 *
+	 * @param size of the array to create
+	 * @return array of random bonuses
+     */
 	public static Bonus[] createArrayCityBonus(int size){
 		
 		Bonus[] arrayBonus = new Bonus[size];
