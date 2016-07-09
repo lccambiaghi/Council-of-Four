@@ -1,8 +1,10 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.connection;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
+
+import it.polimi.ingsw.client.PlayerSide;
 
 public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideInterface {
 

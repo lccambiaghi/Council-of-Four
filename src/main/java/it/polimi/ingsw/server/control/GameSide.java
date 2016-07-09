@@ -6,10 +6,11 @@ import java.net.Socket;
 import java.rmi.Naming;
 import java.util.ArrayList;
 
-import it.polimi.ingsw.server.connection.DisconnectedException;
 import it.polimi.ingsw.server.connection.RMIGameSide;
 import it.polimi.ingsw.server.connection.RMIGameSideInterface;
 import it.polimi.ingsw.server.connection.SocketConnectionWithPlayer;
+import it.polimi.ingsw.utils.Constant;
+import it.polimi.ingsw.utils.DisconnectedException;
 
 public class GameSide {
 

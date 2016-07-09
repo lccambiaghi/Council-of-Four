@@ -1,12 +1,12 @@
 package it.polimi.ingsw.server.control.actions;
 
-import it.polimi.ingsw.server.control.Constant;
-import it.polimi.ingsw.server.control.Message;
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.server.model.FaceUpPermitCardArea;
 import it.polimi.ingsw.server.model.PermitCard;
 import it.polimi.ingsw.server.model.Region;
+import it.polimi.ingsw.utils.Constant;
+import it.polimi.ingsw.utils.Message;
 
 public class ChangePermitCardsQuickAction extends Action {
 

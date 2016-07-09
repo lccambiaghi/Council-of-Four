@@ -2,10 +2,10 @@ package it.polimi.ingsw.server.control.actions;
 
 import java.util.ArrayList;
 
-import it.polimi.ingsw.server.control.Message;
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.server.model.SellingObject;
+import it.polimi.ingsw.utils.Message;
 
 public class MarketBuyAction extends Action {
 	 

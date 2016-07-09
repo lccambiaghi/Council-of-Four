@@ -1,4 +1,6 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.connection;
+
+import it.polimi.ingsw.client.PlayerSide;
 
 public class SocketListener {
 

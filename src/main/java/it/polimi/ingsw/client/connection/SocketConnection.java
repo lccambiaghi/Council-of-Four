@@ -1,12 +1,13 @@
-package it.polimi.ingsw.client;
-
-import it.polimi.ingsw.server.control.Constant;
+package it.polimi.ingsw.client.connection;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+
+import it.polimi.ingsw.client.PlayerSide;
+import it.polimi.ingsw.utils.Constant;
 
 public class SocketConnection {
 

@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.control.Constant;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
+
+import it.polimi.ingsw.utils.Constant;
 
 public class PermitCard {
 

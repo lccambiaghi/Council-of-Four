@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.control.Constant;
-
 import java.util.ArrayList;
 import java.util.Collections;
+
+import it.polimi.ingsw.utils.Constant;
 
 public class AvailableCouncillors {
 

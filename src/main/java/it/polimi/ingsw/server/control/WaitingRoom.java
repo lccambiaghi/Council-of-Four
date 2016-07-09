@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import it.polimi.ingsw.server.connection.DisconnectedException;
 import it.polimi.ingsw.server.model.Configurations;
+import it.polimi.ingsw.utils.Constant;
+import it.polimi.ingsw.utils.ControlTimer;
+import it.polimi.ingsw.utils.DisconnectedException;
+import it.polimi.ingsw.utils.Message;
 
 public class WaitingRoom extends Thread{
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.control.Constant;
+import it.polimi.ingsw.utils.Constant;
 
 public class FaceUpPermitCardArea {
 	

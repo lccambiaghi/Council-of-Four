@@ -3,6 +3,9 @@ package it.polimi.ingsw.client;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
+import it.polimi.ingsw.client.connection.RMIConnection;
+import it.polimi.ingsw.client.connection.SocketConnection;
+import it.polimi.ingsw.client.connection.SocketListener;
 import it.polimi.ingsw.server.connection.RMIGameSideInterface;
 import it.polimi.ingsw.server.model.Configurations;
 
@@ -28,14 +31,7 @@ public class PlayerSide {
 	
 	public PlayerSide() {
 		
-		System.out.println("I am alive");	
-		
 		inputHandler = new InputHandler();
-		
-		/*
-		 * Method of the client
-		 * It already controls the input, that can only be "s" or "r"
-		 */
 		
 		chooseToCreateConfigurations();
 		
@@ -83,10 +79,10 @@ public class PlayerSide {
 	public void login(){
 		boolean logged = false;
 		String nickname = null;
-		Scanner inCLI = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		while(!logged){
 			System.out.println("Enter your nickname");
-			nickname = inCLI.nextLine();
+			nickname = input.nextLine();
 			if(typeOfConnection=='s'){
 				socketConnection.sendStringTS(nickname);
 				String received = socketConnection.receiveStringFS();

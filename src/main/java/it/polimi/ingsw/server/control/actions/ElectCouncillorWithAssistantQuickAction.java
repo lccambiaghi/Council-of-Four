@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.control.actions;
 
-import it.polimi.ingsw.server.control.Constant;
-import it.polimi.ingsw.server.control.Message;
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.Match;
+import it.polimi.ingsw.utils.Constant;
+import it.polimi.ingsw.utils.Message;
 import it.polimi.ingsw.server.model.AvailableCouncillors;
 import it.polimi.ingsw.server.model.Balcony;
 import it.polimi.ingsw.server.model.Councillor;

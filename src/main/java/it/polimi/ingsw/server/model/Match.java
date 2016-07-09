@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.*;
 
-import it.polimi.ingsw.server.control.Constant;
 import it.polimi.ingsw.server.control.InfoMatch;
 import it.polimi.ingsw.server.control.ControlMarket;
 import it.polimi.ingsw.server.control.Player;
+import it.polimi.ingsw.utils.Constant;
 
 
 public class Match {

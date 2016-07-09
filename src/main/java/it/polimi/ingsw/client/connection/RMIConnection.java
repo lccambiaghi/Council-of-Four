@@ -1,12 +1,13 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.connection;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import it.polimi.ingsw.client.PlayerSide;
 import it.polimi.ingsw.server.connection.RMIGameSideInterface;
-import it.polimi.ingsw.server.control.Constant;
+import it.polimi.ingsw.utils.Constant;
 
 public class RMIConnection {
 

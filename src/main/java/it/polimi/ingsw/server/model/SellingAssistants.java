@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.control.Message;
 import it.polimi.ingsw.server.control.Player;
+import it.polimi.ingsw.utils.Message;
 
 
 public class SellingAssistants extends SellingObject{

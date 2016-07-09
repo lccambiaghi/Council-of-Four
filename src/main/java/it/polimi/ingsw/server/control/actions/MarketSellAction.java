@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.polimi.ingsw.server.control.ControlMarket;
-import it.polimi.ingsw.server.control.Message;
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.server.model.PermitCard;
@@ -14,6 +13,7 @@ import it.polimi.ingsw.server.model.SellingAssistants;
 import it.polimi.ingsw.server.model.SellingObject;
 import it.polimi.ingsw.server.model.SellingPermitCard;
 import it.polimi.ingsw.server.model.SellingPoliticCard;
+import it.polimi.ingsw.utils.Message;
 
 public class MarketSellAction extends Action{
 	 

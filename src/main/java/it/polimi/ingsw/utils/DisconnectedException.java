@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.connection;
+package it.polimi.ingsw.utils;
 
 public class DisconnectedException extends Exception {
 

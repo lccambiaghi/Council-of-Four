@@ -3,8 +3,8 @@ package it.polimi.ingsw.server.connection;
 import java.rmi.*;
 import java.rmi.server.UnicastRemoteObject;
 
+import it.polimi.ingsw.client.connection.RMIPlayerSideInterface;
 import it.polimi.ingsw.server.control.GameSide;
-import it.polimi.ingsw.client.RMIPlayerSideInterface;
 
 public class RMIGameSide extends UnicastRemoteObject implements RMIGameSideInterface{
 	

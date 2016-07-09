@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.control.Constant;
 import it.polimi.ingsw.server.control.Player;
+import it.polimi.ingsw.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.Random;

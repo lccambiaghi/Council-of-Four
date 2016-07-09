@@ -2,11 +2,11 @@ package it.polimi.ingsw.client;
 
 import java.util.*;
 
-import it.polimi.ingsw.server.control.Constant;
 import it.polimi.ingsw.server.model.BonusName;
 import it.polimi.ingsw.server.model.CityBonus;
 import it.polimi.ingsw.server.model.CityName;
 import it.polimi.ingsw.server.model.Configurations;
+import it.polimi.ingsw.utils.Constant;
 
 /**
  * This class is used to interact with the first player of the match, it allows to choose

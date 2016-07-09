@@ -4,11 +4,13 @@ import it.polimi.ingsw.server.control.actions.*;
 import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.server.model.PoliticCard;
+import it.polimi.ingsw.utils.Constant;
+import it.polimi.ingsw.utils.Message;
 import it.polimi.ingsw.server.model.City;
 
-import java.util.ArrayList;
+import static it.polimi.ingsw.utils.Message.chooseInfoOrAction_1_2;
 
-import static it.polimi.ingsw.server.control.Message.chooseInfoOrAction_1_2;
+import java.util.ArrayList;
 
 public class Turn implements Runnable{
 

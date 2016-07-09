@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.control;
+package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.server.model.Bonus;
 import it.polimi.ingsw.server.model.BonusName;

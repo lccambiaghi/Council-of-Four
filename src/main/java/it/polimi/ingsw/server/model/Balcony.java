@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import java.util.ArrayList;
 
-import it.polimi.ingsw.server.control.Constant;
+import it.polimi.ingsw.utils.Constant;
 
 public class Balcony {
 
