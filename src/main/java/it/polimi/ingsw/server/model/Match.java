@@ -41,12 +41,6 @@ public class Match {
 		
 	}
 
-	public static Match MatchFactory(ArrayList<Player> arrayListPlayer){
-
-		return new Match(arrayListPlayer);
-
-	}
-
 	private Configurations readFileConfigurations(){
 
 		FileInputStream fileInputStream = null;

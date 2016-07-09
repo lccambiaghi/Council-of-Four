@@ -27,9 +27,9 @@ public class ControlMatch {
 
 		Collections.shuffle(arrayListPlayer);
 
-		this.allPlayers =arrayListPlayer;
-		this.match=Match.MatchFactory(arrayListPlayer);
-		this.market=match.getMarket();
+		this.allPlayers = arrayListPlayer;
+		this.match = new Match(arrayListPlayer);
+		this.market = match.getMarket();
 
 	}
 
