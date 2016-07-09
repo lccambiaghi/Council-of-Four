@@ -43,11 +43,11 @@ public class InputHandler {
 	}
 	
 	/**
-	 * 
 	 * First the method takes the scanner setting the boolean "freeScanner" to false.
 	 * Then waits through the scanner for an input and handle incorrect values.
 	 * It catches the InterruptedException thrown by the method "readWithSleep" when
 	 * the boolean "stopped" is set to TRUE remotely.
+	 * Finally it releases the scanner setting the boolean "freeScanner" to true.
 	 * 
 	 * @param lowerBound 
 	 * @param upperBound
@@ -94,6 +94,12 @@ public class InputHandler {
 		
 	}
 	
+	/**
+	 * Check if the string taken as parameter is an integer.
+	 * 
+	 * @param s, the string to be checked
+	 * @return true if s is integer, otherwise false 
+	 */
 	private boolean isInteger(String s){
 		try{
 			Integer.parseInt(s);
@@ -104,6 +110,14 @@ public class InputHandler {
 		}
 	}
 	
+	/**
+	 * The method reads from the scanner and returns the string read to the caller.
+	 * If the scanner is empty it sleeps for 0.1 seconds.
+	 * 
+	 * @return the string read through the method "nextLine" of the scanner
+	 * @throws InterruptedException if the boolean "stopped" is set to false
+	 * @throws IOException if the scanner get closed
+	 */
 	private String readWithSleep() throws InterruptedException, IOException{
 		boolean go = true;
 		while(go){
@@ -122,10 +136,14 @@ public class InputHandler {
 	}
 	
 	/**
-	 * The method expects the client to insert a string that represents one or more cities 
-	 * @param currentCity
-	 * @param lastCity
-	 * @return
+	 * First the method takes the scanner setting the boolean "freeScanner" to false.
+	 * The method expects the client to insert a string that represents one or more cities.
+	 * It asks again when the input is incorrect: no input, not-letters or letters out of bounds or repetitions.
+	 * At last it releases the scanner setting the boolean "freeScanner" to true.
+	 * 
+	 * @param currentCity : the first city (excluded) representing the lower bound
+	 * @param lastCity : the last city (included) representing the upper bound
+	 * @return the array of characters (ALL upper case) representing the cities chosen
 	 */
 	public Character[] inputCity (CityName currentCity, CityName lastCity){
 		
@@ -134,7 +152,7 @@ public class InputHandler {
 		ArrayList <Character> temp;
 		
 		int asciiLowerBound= (int) currentCity.toString().charAt(0);
-		int asciiUpperBound= (int) lastCity.toString().charAt(0);;
+		int asciiUpperBound= (int) lastCity.toString().charAt(0);
 				
 		playerSide.setFreeScanner(false);
 		
@@ -168,8 +186,7 @@ public class InputHandler {
 		
 		playerSide.setFreeScanner(true);
 		
-		Character [] result = temp.toArray(new Character [temp.size()]);
-		return result;
+		return temp.toArray(new Character [temp.size()]);
 	
 	}
 	
