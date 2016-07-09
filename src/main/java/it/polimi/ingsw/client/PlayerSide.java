@@ -99,6 +99,12 @@ public class PlayerSide {
 		
 		threadScanner.interrupt();
 		
+		synchronized (lockScanner) {
+			try {
+				lockScanner.wait();
+			} catch (InterruptedException e) {}
+		}
+		
 		boolean logged = false;
 		String nickname = null;
 		while(!logged){
@@ -155,6 +161,9 @@ public class PlayerSide {
 							Thread.sleep(100);
 						}
 					} catch (InterruptedException e) {
+						synchronized (lockScanner) {
+							lockScanner.notify();
+						}
 						synchronized (lockScanner) {
 							try {
 								lockScanner.wait();

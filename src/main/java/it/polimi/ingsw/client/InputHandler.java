@@ -32,6 +32,12 @@ public class InputHandler {
 			
 			threadScanner.interrupt();
 			
+			synchronized (lockScanner) {
+				try {
+					lockScanner.wait();
+				} catch (InterruptedException e) {}
+			}
+			
 			String s;
 			
 			boolean eligibleInput=false;
@@ -97,6 +103,12 @@ public class InputHandler {
 	public Character[] inputCity (CityName currentCity, CityName lastCity){
 		
 		threadScanner.interrupt();
+		
+		synchronized (lockScanner) {
+			try {
+				lockScanner.wait();
+			} catch (InterruptedException e) {}
+		}
 		
 		String string;
 		boolean correct=true;
