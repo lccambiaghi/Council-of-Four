@@ -86,6 +86,29 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     }
 
+    @Override
+    public void execute(){
+
+        Field field=match.getField();
+
+        player.decrementRichness(satisfactionCost+kingCost);
+
+        for (PoliticCard politicCard : chosenPoliticCards)
+            player.discardPoliticCard(politicCard);
+
+        field.getKing().setCurrentCity(chosenCity);
+
+        chosenCity.buildEmporium(player);
+
+        resultMsg="Player " + player.getNickname() + " has moved the king to " +
+                chosenCity.getCityName().toString() + " city and built an emporium there.";
+
+        //check on bonus tiles
+        //TODO TEST
+        checkBonusTiles();
+
+    }
+
     /**
      * First call: get every reachable buildableCity assuming the player pays 0 for election
      * Second call: get every reachable buildableCity given that the player has to pay for satisfaction
@@ -245,29 +268,6 @@ public class BuildEmporiumWithKingMainAction extends Action {
         } while (indexSelectedCard > 0 && numberSelectedCards < 4);
 
         return selectedPoliticCards;
-
-    }
-
-    @Override
-    public void execute(){
-
-        Field field=match.getField();
-
-        player.decrementRichness(satisfactionCost+kingCost);
-
-        for (PoliticCard politicCard : chosenPoliticCards)
-            player.discardPoliticCard(politicCard);
-
-        field.getKing().setCurrentCity(chosenCity);
-
-        chosenCity.buildEmporium(player);
-        player.getArrayListEmporiumBuilt().add(chosenCity);
-
-        resultMsg="Player " + player.getNickname() + " has moved the king to " +
-                chosenCity.getCityName().toString() + " city and built an emporium there.";
-
-        //check on bonus tiles
-        checkBonusTiles();
 
     }
 

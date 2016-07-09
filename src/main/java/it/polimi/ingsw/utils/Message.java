@@ -105,7 +105,7 @@ public final class Message {
 		message.append("Which Politics Cards would you like to use?");
 
 		if(numberSelectedCards>=1)
-			message.append("0. [Done] ");
+			message.append("\n0. [Done] ");
 
 		for (int i=0; i<playerPoliticCards.size(); i++)
 			message.append("\n").append(i+1).append(". ")
@@ -289,64 +289,64 @@ public final class Message {
 	public static String assistants(int counter){
 
 		return String.valueOf(counter) + ". Assistants";
-		
+
 	}
-	
+
 	public static String getInfoPermitCard (PermitCard sellingPermitCard, int price){
 
 		StringBuilder message= new StringBuilder();
-		
+
 		message.append("PermitCard - Buildable Cities: ").append(sellingPermitCard.getArrayBuildableCities().toString())
 		.append("\nThe price is: ").append(price).append(" coins");
-		
+
 		return message.toString();
 	}
-	
+
 	public static String getInfoPoliticCard (PoliticCard sellingPoliticCard, int price){
 
 		return "Politic Card Color:" + " " + sellingPoliticCard.getCardColor() + ". " +
 				"The price is: " + price + " coins";
 	}
-	
+
 	public static String getInfoAssistants (int sellingAssistants, int price){
 
 		return "Number of Assistants: " + sellingAssistants + ". " +
 				"The price is: " + price + " coins";
 
 	}
-	
+
 	public static String youWon(){
 		return "You won the match!";
 	}
-	
+
 	public static String lastRoundHasStarted(Player player) {
 
 		return player.getNickname() + " has built the last emporium. Last round has started.";
 
 	}
-	
-	
+
+
 	/*
 	 * MARKET MESSAGES
 	 */
-	
+
 	public static String marketHasStarted(){
 		return "\n --- THE MARKET HAS STARTED --- \n ";
 	}
-	
+
 	public static String markedHasFinished(){
 		return "\n --- THE MARKED HAS FINISHED --- \n ";
 	}
-	
+
 	public static String sellingPhase(){
 		return "SELLING PHASE\n ";
 	}
-	
+
 	public static String buyingPhase(){
 		return "\nBUYING PHASE\n ";
 	}
-	
-	public static String chooseToSellSomething_1_2(){		
+
+	public static String chooseToSellSomething_1_2(){
 		return "Would you like to sell something?\n" +
 				"1. Yes\n" +
 				"2. No";
@@ -364,7 +364,7 @@ public final class Message {
 	public static String askObjectToBuy(){
 		return "Which object would you like to buy?";
 	}
-	
+
 	public static String deniedSelling (){
 		return "You can't sell nothing";
 	}
@@ -380,7 +380,7 @@ public final class Message {
 	public static String askPrice (){
 		return "Which price would you like to sell it for?";
 	}
-	
+
 	public static String skipBuying (){
 		return "0. Exit from the buying step";
 	}
@@ -388,5 +388,4 @@ public final class Message {
 	public static String noMarketElements(){
 		return "There aren't object on sale in the market";
 	}
-
 }

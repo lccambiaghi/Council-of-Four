@@ -71,6 +71,30 @@ public class AcquirePermitCardMainAction extends Action {
 
     }
 
+    @Override
+    public void execute(){
+
+        //discard politics cards
+        for (PoliticCard politicCard:chosenPoliticCards)
+            player.discardPoliticCard(politicCard);
+
+        //decrease richness
+        Field field = match.getField();
+        player.decrementRichness(satisfactionCost);
+
+        //applying bonuses
+        FaceUpPermitCardArea faceUpPermitCardArea=chosenRegion.getFaceUpPermitCardArea();
+        for (Bonus bonus: faceUpPermitCardArea.getArrayPermitCard()[indexChosenPermitCard].getArrayBonus())
+            bonus.applyBonus(player, field);
+
+        //acquiring permit card and replacing it on the board
+        player.acquirePermitCard(faceUpPermitCardArea.acquirePermitCard(indexChosenPermitCard));
+
+        resultMsg="Player " + player.getNickname() + " has acquired a new Permit Card in " +
+                chosenRegion.getRegionName();
+
+    }
+
     /* First it adds Multicolor cards to usable cards, then for each councillor,
 	   if it finds a matching color card, it adds it and goes to next councillor */
     private ArrayList<PoliticCard> getUsablePoliticCards(Balcony chosenBalcony) {
@@ -168,30 +192,6 @@ public class AcquirePermitCardMainAction extends Action {
         } while (indexSelectedCard > 0 && numberSelectedCards < 4);
 
         return selectedPoliticCards;
-
-    }
-
-    @Override
-    public void execute(){
-
-        //discard politics cards
-        for (PoliticCard politicCard:chosenPoliticCards)
-            player.discardPoliticCard(politicCard);
-
-        //decrease richness
-        Field field = match.getField();
-        player.decrementRichness(satisfactionCost);
-
-        //applying bonuses
-        FaceUpPermitCardArea faceUpPermitCardArea=chosenRegion.getFaceUpPermitCardArea();
-        for (Bonus bonus: faceUpPermitCardArea.getArrayPermitCard()[indexChosenPermitCard].getArrayBonus())
-            bonus.applyBonus(player, field);
-
-        //acquiring permit card and replacing it on the board
-        player.acquirePermitCard(faceUpPermitCardArea.acquirePermitCard(indexChosenPermitCard));
-
-        resultMsg="Player " + player.getNickname() + " has acquired a new Permit Card in " +
-                chosenRegion.getRegionName();
 
     }
 

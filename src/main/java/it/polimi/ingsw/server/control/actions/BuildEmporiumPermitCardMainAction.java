@@ -60,6 +60,30 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
     }
 
+	@Override
+    public void execute(){
+
+		Field field=match.getField();
+
+		chosenCity.buildEmporium(player);
+
+		player.usePermitCard(chosenPermitCard);
+
+		// applying bonuses
+		ArrayList<City> nearbyBuiltCities = getAdjacentBuiltCities(chosenCity);
+
+		for (City city: nearbyBuiltCities)
+			for (Bonus bonus : city.getArrayBonus())
+				bonus.applyBonus(player, field);
+
+        resultMsg="Player "+player.getNickname() +" has built an emporium in "
+        		+ chosenCity.getCityName().toString() + " City.";
+
+		//check on bonus tiles
+		checkBonusTiles();
+
+	}
+
 	/**
 	 *  This method puts usablePermitCards in front,
 	 *  so we can use the input of the user to pick the corresponding card
@@ -134,31 +158,6 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 		}
 
 		return buildableCities;
-
-	}
-
-	@Override
-    public void execute(){
-
-		Field field=match.getField();
-
-		chosenCity.buildEmporium(player);
-		player.getArrayListEmporiumBuilt().add(chosenCity);
-
-		player.usePermitCard(chosenPermitCard);
-
-		// applying bonuses
-		ArrayList<City> nearbyBuiltCities = getAdjacentBuiltCities(chosenCity);
-
-		for (City city: nearbyBuiltCities)
-			for (Bonus bonus : city.getArrayBonus())
-				bonus.applyBonus(player, field);
-
-        resultMsg="Player "+player.getNickname() +" has built an emporium in "
-        		+ chosenCity.getCityName().toString() + " City.";
-
-		//check on bonus tiles
-		checkBonusTiles();
 
 	}
 
