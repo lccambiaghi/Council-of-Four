@@ -2,20 +2,11 @@ package it.polimi.ingsw.server.control;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import it.polimi.ingsw.server.model.PoliticCard;
 import it.polimi.ingsw.server.control.actions.Action;
 import it.polimi.ingsw.server.control.actions.MarketBuyAction;
 import it.polimi.ingsw.server.control.actions.MarketSellAction;
-import it.polimi.ingsw.server.model.Field;
 import it.polimi.ingsw.server.model.Match;
-import it.polimi.ingsw.server.model.PermitCard;
-import it.polimi.ingsw.server.model.SellingAssistants;
 import it.polimi.ingsw.server.model.SellingObject;
-import it.polimi.ingsw.server.model.SellingPermitCard;
-import it.polimi.ingsw.server.model.SellingPoliticCard;
 import it.polimi.ingsw.utils.Constant;
 import it.polimi.ingsw.utils.ControlTimer;
 import it.polimi.ingsw.utils.Message;
@@ -43,6 +34,11 @@ public class ControlMarket {
         this.match=match;
     }
    
+    /**
+     * There is a control on the number of the players, if there are more than two players, 
+     * the market starts and notify all the players.
+     */
+    
     public void startMarket (){
         
     	if(atLeastTwoPlayersConnected()){
@@ -56,6 +52,12 @@ public class ControlMarket {
     	}
         
     } 
+    
+    /**
+     * This method starts the selling phase and manages the turns of the players. For each player
+     * it creates a new Action. Then it launches the threadMarketHandler that manages the timer and the
+     * eventual disconnection by a player.
+     */
     
     private void startSelling(){
     	
