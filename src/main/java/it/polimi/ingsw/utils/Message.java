@@ -37,8 +37,9 @@ public final class Message {
 		message.append("Playing players:");
 		
 		for(int i=0; i<players.size(); i++) 
-			message.append("\n").append(i+1).append(players.get(i).getNickname());
-
+			message.append("\n").append(i+1).append(". ").append(players.get(i).getNickname());
+		
+		message.append("\n");
 		return message.toString();
 
 	}
@@ -168,6 +169,25 @@ public final class Message {
 		return message.toString();
 
 	}
+	
+	/**
+	 * @param playerPoliticCards to print
+	 * @return message
+     */
+	public static String choosePoliticCardToSell(List <PoliticCard> playerPoliticCards){
+
+		StringBuilder message = new StringBuilder();
+
+		message.append("Which Politics Cards would you like to sell?");
+
+		for (int i=0; i<playerPoliticCards.size(); i++){
+			message.append("\n").append(i+1).append(". ")
+					.append(playerPoliticCards.get(i).getCardColor().toString());
+		}
+		return message.toString();
+
+	}
+	
 
 	/**
 	 * @param playerPoliticCards potential cards to print
