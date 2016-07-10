@@ -12,8 +12,8 @@ import it.polimi.ingsw.utils.Constant;
 /**
  * This class permits to connect to the server through socket.
  * In fact it opens the channel of communication with it.
+ * 
  * It offers methods to send strings/objects and receive strings.
- *
  */
 public class SocketConnection {
 	

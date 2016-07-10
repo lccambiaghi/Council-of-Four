@@ -100,6 +100,7 @@ public class PlayerSide {
 	
 	private void handleRMIConnection(){
 		rmiConnection = new RMIConnection(this);
+		rmiConnection.connectToServer();
 	}
 
 	
