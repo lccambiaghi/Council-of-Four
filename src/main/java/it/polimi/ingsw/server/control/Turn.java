@@ -124,12 +124,12 @@ public class Turn implements Runnable{
 			case 5:
 				match.getInfoMatch().printInfoRegions();
 				break;
-			case 6: // case 6
+			case 6:
 				City[] arrayCity = match.getField().getArrayCity();
 				player.getBroker().println(Message.chooseDestinationCity(arrayCity));
 				match.getInfoMatch().printInfoCity(player.getBroker().askInputNumber(1, arrayCity.length)-1); //array positioning
 				break;
-			default: // case 6
+			default: // case 0
 				break;
 			}
 		}
