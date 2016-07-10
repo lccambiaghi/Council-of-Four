@@ -27,6 +27,13 @@ public final class Message {
 	}
 
 	/**
+	 * @return message
+	 */
+	public static String tooLateTurnOver(){
+		return "Too late, your turn is over!";
+	}
+	
+	/**
 	 * @param players whose nickname has to be printed
 	 * @return message
 	 */
