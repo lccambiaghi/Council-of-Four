@@ -136,7 +136,7 @@ public final class Message {
 			message.append("\n").append(i+1).append(". \nBuildable Cities:\n");
 
 			for (City buildableCity : permitCard.getArrayBuildableCities())
-				message.append(buildableCity.getCityName()).append(" ");
+				message.append(buildableCity.getCityName().toString()).append(" ");
 
 			message.append("\nBonus:\n");
 
@@ -162,7 +162,7 @@ public final class Message {
 			message.append("\n").append(i+1).append(". Buildable Cities:");
 
 			for (City buildableCity : permitCard.getArrayBuildableCities())
-				message.append(" ").append(buildableCity.getCityName());
+				message.append(" ").append(buildableCity.getCityName().toString());
 
 		}
 
@@ -180,7 +180,7 @@ public final class Message {
 
 			message.append("\n").append(i+1).append(". \nBuildable Cities:\n");
 			for (City buildableCity : permitCard.getArrayBuildableCities()){
-				message.append(buildableCity.getCityName()).append(" ");
+				message.append(buildableCity.getCityName().toString()).append(" ");
 			}
 		}
 
@@ -208,7 +208,7 @@ public final class Message {
 		message.append("Where would you like to build the emporium?");
 
 		for(int i=0; i<numberBuildableCities; i++)
-			message.append("\n").append(i+1).append(" ").append(arrayBuildableCity[i].getCityName());
+			message.append("\n").append(i+1).append(" ").append(arrayBuildableCity[i].getCityName().toString());
 
 		return message.toString();
 
