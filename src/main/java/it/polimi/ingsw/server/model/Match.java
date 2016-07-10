@@ -26,6 +26,11 @@ public class Match {
 
 	private InfoMatch infoMatch;
 	
+	/**
+	 * It assigns the initially attributes of the players, that it receives as parameter.
+	 * @param arrayListPlayer
+	 */
+	
 	public Match(ArrayList<Player> arrayListPlayer) {
 		
 		this.arrayListPlayer = arrayListPlayer;
@@ -46,6 +51,11 @@ public class Match {
 		
 	}
 
+	/**
+	 * This method read the configurations that are stored into a .txt file, and then it returns the 
+	 * Configurations read.
+	 * @return
+	 */
 	private Configurations readFileConfigurations(){
 
 		FileInputStream fileInputStream = null;
@@ -75,17 +85,30 @@ public class Match {
 		return null;
 	}
 		
+	/**
+	 * For each player of the match it assigns 6 Politic Cards with random colors.
+	 */
 	private void giveInitialPoliticCards(){
 		for (Player player : arrayListPlayer)
 			for (int itCard = 0; itCard < Constant.POLITIC_CARDS_INITIAL_NUMBER; itCard++)
 				player.addPoliticCard(new PoliticCard(Color.getRandomColor()));
 	}
 	
+	/**
+	 * For each player of the match it assigns the number of assistants. The first player of the turn
+	 * will have only one assistant, the second two, and so on.
+	 */
+	
 	private void giveInitialAssistants(){
 		for(int itPlayer = 0, numberAssistants = Constant.ASSISTANT_INITIAL_FIRST_PLAYER;
 			itPlayer<arrayListPlayer.size(); itPlayer++, numberAssistants++)
 				arrayListPlayer.get(itPlayer).setAssistant(numberAssistants);
 	}
+	
+	/**
+	 * For each player of the match it assigns the richness points. The first player of the turn
+	 * will have ten coins, the second eleven, and so on.
+	 */	
 	
 	private void giveInitialRichness(){
 		for(int itPlayer = 0, numberRichness = Constant.RICHNESS_INITIAL_FIRST_PLAYER;
