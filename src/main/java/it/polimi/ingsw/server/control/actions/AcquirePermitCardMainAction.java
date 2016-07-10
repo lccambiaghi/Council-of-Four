@@ -59,12 +59,12 @@ public class AcquirePermitCardMainAction extends Action {
         ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards(chosenBalcony);
 
         if (usablePoliticCards.isEmpty()) {
-            player.getBroker().println(Message.notEligibleForMove());
+            player.getBroker().println(Message.noEligibleSet());
             return false;
         }
 
         if (calculateSatisfactionCost(usablePoliticCards)<0){
-            player.getBroker().println(Message.notEligibleForMove());
+            player.getBroker().println(Message.noEligibleSet());
             return false;
         }
 

@@ -57,7 +57,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         if (usablePoliticCards.isEmpty()) {
 
-            player.getBroker().println(Message.notEligibleForMove());
+            player.getBroker().println(Message.noEligibleSet());
 
             return false;
 
@@ -65,7 +65,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         if (calculateSatisfactionCost(usablePoliticCards, minimumKingCost) < 0) {
 
-            player.getBroker().println(Message.notEligibleForMove());
+            player.getBroker().println(Message.noEligibleSet());
 
             return false;
         }
