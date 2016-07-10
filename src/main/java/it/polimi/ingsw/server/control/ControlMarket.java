@@ -128,6 +128,9 @@ public class ControlMarket {
     	
     	if(turnMarketThread.isAlive()){
     		turnMarketThread.interrupt();
+    		try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {}
     	}
     	
     	if(!player.isConnected()){

@@ -46,7 +46,7 @@ public final class Message {
 		for(int i=0; i<players.size(); i++) 
 			message.append("\n").append(i+1).append(". ").append(players.get(i).getNickname());
 		
-		message.append("\n");
+		message.append("\n ");
 		return message.toString();
 
 	}

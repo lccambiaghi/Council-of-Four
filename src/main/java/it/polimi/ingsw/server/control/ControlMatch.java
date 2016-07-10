@@ -58,6 +58,10 @@ public class ControlMatch {
 	 */
 	public void startMatch(){
 
+		playersConnected = getPlayersConnected();
+		
+		Broadcast.printlnBroadcastAll(Message.playingPlayers(playersConnected), playersConnected);
+		
 		do {
 
 			playersConnected = getPlayersConnected();
@@ -229,6 +233,9 @@ public class ControlMatch {
 	private void marketHandler(){
 
 		market.startMarket();
+		
+		playersConnected = getPlayersConnected();
+		Broadcast.printlnBroadcastAll(Message.playingPlayers(playersConnected), playersConnected);
 
 	}
 
@@ -254,6 +261,9 @@ public class ControlMatch {
 		 */
 		if(turnThread.isAlive()){	
 			turnThread.interrupt();
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {}
 		}
 		
 	}
