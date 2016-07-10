@@ -139,9 +139,7 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		sendString("SOCKETinputNumber");
 		sendString(String.valueOf(lowerBound));
 		sendString(String.valueOf(upperBound));
-		try{
-			this.intResult = Integer.parseInt(receiveString());
-		}catch (IndexOutOfBoundsException e){}
+		this.intResult = Integer.parseInt(receiveString());
 		synchronized (lock) {
 			lock.notify();
 		}
