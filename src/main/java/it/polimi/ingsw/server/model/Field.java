@@ -8,25 +8,43 @@ import java.util.*;
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.utils.Constant;
 
-/* The constructor creates cities, assign them to regions */
+/**
+ * //TODO
+ */
 public class Field {
 
 	private Configurations config;
+
 	private City[] arrayCity;
+
 	private List<Integer>[] arrayCityLinks;// array of Integer Lists
+
 	private Balcony[] arrayBalcony;
+
 	private AvailableCouncillors availableCouncillors;
+
 	private ArrayList<Player> arrayListPlayer;
+
 	private NobilityRoute nobilityRoute;
+
 	private Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
+
 	private Deque<Integer> kingRewardTiles = new ArrayDeque<>();
 	
 	private King king;
-	
-	public Field(Configurations config, ArrayList<Player> arrayListPlayer) {
+
+	/**
+	 * The constructor creates cities, regions, assigns nearby cities,
+	 * creates balconies and routes
+	 *
+	 * @param config to assign to the field
+	 * @param arrayListPlayer to assign to nobility route
+     */
+	public Field(Configurations config, List<Player> arrayListPlayer) {
 		
 		this.config=config;
-		this.arrayListPlayer = arrayListPlayer;
+
+		this.arrayListPlayer = (ArrayList<Player>) arrayListPlayer;
 
 		createCitiesAndRegions();
 		
@@ -38,8 +56,10 @@ public class Field {
 		
 	}
 
-	/* This method creates arrayCity[config.numberCities] assigning cities their color,
-	 	then assigns them to the respective region  */
+	/**
+	 * This method creates arrayCity[config.numberCities] assigning cities their color,
+	 * then assigns them to the respective region
+	 */
 	private void createCitiesAndRegions(){
 
 		kingRewardTiles.push(Constant.FIFTH_KING_REWARD_VICTORY_INCREMENT);
@@ -58,9 +78,7 @@ public class Field {
 
 		CityColor[] arrayCityColor = createArrayCityColor(numberCities);
 
-		// ristruttura ciclo: king fuori e guarda design patter proxy
-		// proxy: crea city prima e inizializza i parametri nel ciclo(??)
-
+		//TODO REFACTOR
 		for(int itRegion = 0, itColor=0; itRegion<Constant.REGIONS_NUMBER; itRegion++){
 
 			RegionName regionName = RegionName.getRegionNameFromIndex(itRegion);
@@ -97,10 +115,15 @@ public class Field {
 
 	}
 
-	/* This method returns an array of randomly orderered CityColors */
+	/**
+	 * This method returns an array of randomly orderered CityColors, according to number of cities
+	 *
+	 * @param numberCities size of the array
+	 * @return array of city colors
+     */
 	private CityColor[] createArrayCityColor(int numberCities){
 
-		CityColor[] arrayCityColor = new CityColor[numberCities];
+		CityColor[] arrayCityColor;
 
 		switch (numberCities) {
 
@@ -112,7 +135,7 @@ public class Field {
 				arrayCityColor= Constant.CITIES_COLOR[1].clone();
 				break;
 
-			case Constant.CITIES_NUMBER_HIGH:
+			default: //case Constant.CITIES_NUMBER_HIGH:
 				arrayCityColor= Constant.CITIES_COLOR[2].clone();
 				break;
 
@@ -123,12 +146,14 @@ public class Field {
 		return arrayCityColor;
 	}
 
-	/* This method assigns to every city in arrayCity the cities that are connected to it
-	  according to (cases):
-	  A. the matrix contained in "config" (case config.isCityLinksPreconfigured()=false)  
-	  B. the matrix contained in the .txt file (selected through difficulty and number of cities)
-	  This second case is managed in "importCityLinksMatrix"
-	  */
+
+	/**
+	 * This method assigns to every city in arrayCity the cities that are connected to it
+	 * according to (cases):
+	 * A. the matrix contained in "config" (case config.isCityLinksPreconfigured()=false)
+	 * B. the matrix contained in the .txt file (selected through difficulty and number of cities)
+	 * This second case is managed in "importCityLinksMatrix"
+	 */
 	private void assignNearbyCities(){
 		
 		int[][] cityLinksMatrix;
@@ -161,8 +186,14 @@ public class Field {
 
 	}
 
-	/* This method imports cityLinksMatrix from the respective .txt file according to parameters passed:
-	  "difficulty" is the first letter of the file, "numberCities" the second one */
+	/**
+	 * This method imports cityLinksMatrix from the respective .txt file according to parameters passed:
+	 * "difficulty" is the first letter of the file, "numberCities" the second one
+	 *
+	 * @param difficulty first letter of the filename to open
+	 * @param numberCities second and third letter of the filename to open
+     * @return city links matrix
+     */
 	private int[][] importCityLinksMatrix(char difficulty , int numberCities){
 		
 		int[][]cityLinksMatrix = new int[numberCities][numberCities];
@@ -233,11 +264,20 @@ public class Field {
 	}
 	public List<Integer>[] getArrayCityLinks() {return arrayCityLinks;}
 
+	/**
+	 * @param index of the region to return
+	 * @return region
+     */
 	public Region getRegionFromIndex (int index){
 		return arrayRegion[index];
 	}
 
 	public Balcony[] getArrayBalcony() {return arrayBalcony;}
+
+	/**
+	 * @param index of the balcony to return
+	 * @return balcony
+     */
 	public Balcony getBalconyFromIndex(int index){return getArrayBalcony()[index];}
 
 	public AvailableCouncillors getAvailableCouncillors() {return availableCouncillors; }

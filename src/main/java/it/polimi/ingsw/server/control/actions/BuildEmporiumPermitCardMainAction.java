@@ -216,7 +216,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 	private void checkBonusTiles() {
 
-		int playerRichness = player.getRichness();
+		int playerVictory = player.getVictory();
 
 		int increment;
 
@@ -244,7 +244,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 					increment=0; //should never be reached
 			}
 
-			player.setRichness(playerRichness+increment);
+			player.addVictory(playerVictory+increment);
 
 			for(City city: match.getField().getArrayCity())
 				if(city.getCityColor() == chosenCity.getCityColor())
@@ -256,7 +256,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 			if(kingRewardTiles.peekFirst()!=null) {
 				increment = kingRewardTiles.pollFirst();
-				player.setRichness(playerRichness + kingRewardTiles.pollFirst());
+				player.addVictory(playerVictory + increment);
 				resultMsg = resultMsg + "\n He also acquired "
 						+ increment + " victory points thanks to King's Reward Tile";
 			}
@@ -265,10 +265,12 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		if(isEligibleForRegionTile()){
 
-			player.setRichness(playerRichness +Constant.REGION_TILE_VICTORY_INCREMENT);
+			player.addVictory(playerVictory +Constant.REGION_TILE_VICTORY_INCREMENT);
 
 			int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
+
 			Region chosenRegion = match.getField().getRegionFromIndex(chosenRegionIndex);
+
 			chosenRegion.setRegionBonusSatisfied(true);
 
 			resultMsg = resultMsg + "\nDoing so, he acquired "
@@ -277,8 +279,8 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 			if(kingRewardTiles.peekFirst()!=null) {
 				increment = kingRewardTiles.pollFirst();
-				player.setRichness(playerRichness + kingRewardTiles.pollFirst());
-				resultMsg = resultMsg + "\n He also acquired "
+				player.addVictory(playerVictory + increment);
+				resultMsg = resultMsg + "\nHe also acquired "
 						+ increment + " victory points thanks to King's Reward Tile";
 			}
 
@@ -287,10 +289,28 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 	}
 
 	/**
-	 * This method checks if the player has built in every city of the chosenRegion
-	 *
+	 * This method checks if the player has built in every city of the chosenCity card color
 	 * @return true if eligible, false if not
-     */
+	 */
+	private boolean isEligibleForColorTile() {
+
+		if(chosenCity.isColorBonusSatisfied() || chosenCity.getCityColor()==CityColor.Purple)
+			return false;
+
+		City[] arrayCity = match.getField().getArrayCity();
+
+		for (City city : arrayCity)
+			if (city.getCityColor() == chosenCity.getCityColor() && !city.isEmporiumAlreadyBuilt(player))
+				return false;
+
+		return true;
+
+	}
+
+	/**
+	 * This method checks if the player has built in every city of the chosenRegion
+	 * @return true if eligible, false if not
+	 */
 	private boolean isEligibleForRegionTile() {
 
 		int chosenRegionIndex=RegionName.getIndex(chosenCity.getRegionName());
@@ -304,26 +324,6 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 		for (City city : arrayCity)
 			if (!city.isEmporiumAlreadyBuilt(player))
-				return false;
-
-		return true;
-
-	}
-
-	/**
-	 * This method checks if the player has built in every city of the chosenCity card color
-	 *
-	 * @return true if eligible, false if not
-     */
-	private boolean isEligibleForColorTile() {
-
-		if(chosenCity.isColorBonusSatisfied() || chosenCity.getCityColor()== CityColor.Purple)
-			return false;
-
-		City[] arrayCity = match.getField().getArrayCity();
-
-		for (City city : arrayCity)
-			if (city.getCityColor() == chosenCity.getCityColor() && !city.isEmporiumAlreadyBuilt(player))
 				return false;
 
 		return true;
