@@ -12,10 +12,6 @@ public interface RMIPlayerSideInterface extends Remote {
 	public void login() throws RemoteException;
 	
 	public String getNickname() throws RemoteException;
-
-	public void sendString( String string) throws RemoteException;
-	
-	public String receiveString () throws RemoteException;
 	
 	public boolean isCustomConfig() throws RemoteException;
 	

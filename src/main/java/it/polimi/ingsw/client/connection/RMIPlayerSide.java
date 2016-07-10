@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.connection;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Scanner;
 
 import it.polimi.ingsw.client.PlayerSide;
 
@@ -20,18 +19,6 @@ public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideI
 	
 	public String getNickname(){
 		return playerSide.getNickname();
-	}
-	
-	public void sendString(String string){
-		System.out.println(string);
-	}
-	
-	public String receiveString (){
-		
-		Scanner inCLI = new Scanner(System.in);
-		//Mi sa che qui ci vuole un controllo sull'input
-		String string = inCLI.nextLine();
-		return string;
 	}
 	
 	public boolean isCustomConfig(){
