@@ -82,7 +82,7 @@ public final class Message {
 			"0. [Back to menu]\n" +
 			"1. Your status\n" +
 			"2. All cities' status\n" +
-			"3. Other players' status\n" +
+			"3. All players' status\n" +
 			"4. Balconies and councillors' status\n" +
 			"5. All regions' status\n" +
 			"6. Specific city's status";
