@@ -24,17 +24,16 @@ public class TestField {
 
 	Configurations config;
 	ArrayList <Player> arrayListPlayer;
-	
+	Field field;
 	@Before
 	public void init(){
 		config=configurations();
 		arrayListPlayer = createArrayListPlayer();
+		field = new Field(config, arrayListPlayer);
 	}
 	
 	@Test
 	public void constructor() {
-		
-		Field field = new Field(config, arrayListPlayer);
 		
 		City[] arrayCity = field.getArrayCity();
 		
@@ -51,12 +50,15 @@ public class TestField {
 				}
 			}
 		}
-		for(Bonus bonus : arrayCity[9].getArrayBonus())
-			System.out.println(bonus.toString());
-		
-		//assertTrue(arrayCity[Constant.KING_CITY_INITIAL.ordinal()].hasBonus());
-		
 	}	
+	
+	@Test
+	public void getRegionFromIndex (){
+		assertTrue(field.getRegionFromIndex(0).getRegionName().equals(RegionName.Sea));
+		assertTrue(field.getRegionFromIndex(1).getRegionName().equals(RegionName.Hill));
+		assertTrue(field.getRegionFromIndex(2).getRegionName().equals(RegionName.Mountain));
+		
+	}
 	
 	private ArrayList <Player> createArrayListPlayer() {
 		ArrayList <Player> arrayListPlayer = new ArrayList <>();		

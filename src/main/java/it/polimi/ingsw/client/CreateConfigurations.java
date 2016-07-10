@@ -60,7 +60,7 @@ public class CreateConfigurations{
 		config.setPermitCardBonusNumberMax(inputHandler.inputNumber(numberBonusesMin, 5));
 		
 		System.out.println("Would you like to play with a random number of bonuses on the Nobility Route?\n"
-				+ "1. Yes 2. No");
+				+ "1. Yes\n2. No");
 		int nobilityBonusRandom=inputHandler.inputNumber(1, 2);
 		if (nobilityBonusRandom==1){
 			config.setNobilityBonusRandom(false);
@@ -73,7 +73,7 @@ public class CreateConfigurations{
 		
 		
 		System.out.println("Would you like to play with preconfigured links?\n"
-				+ "1. Yes 2. No");
+				+ "1. Yes\n2. No");
 		if (inputHandler.inputNumber(1, 2)==2)
 			config.setCityLinksPreconfigured(false);
 		else
@@ -121,7 +121,7 @@ public class CreateConfigurations{
 		}
 		
 		System.out.print("Would you like to play with random bonuses on the cities?\n"
-				+ "1. Yes 2. No");
+				+ "1. Yes\n2. No");
 		if(inputHandler.inputNumber(1, 2)==1)
 			config.setCityBonusRandom(true);
 		
@@ -141,7 +141,7 @@ public class CreateConfigurations{
 			
 			config.setCityBonusNumberMin(numberBonusesMin);
 			System.out.println("How many bonuses would you like to set as maximum on the Cities?\n"
-					+"Insert a value between" + numberBonusesMin + " and 5");
+					+"Insert a value between " + numberBonusesMin + " and 5");
 			config.setCityBonusNumberMax(inputHandler.inputNumber(numberBonusesMin, 5));
 		}
 		
