@@ -111,7 +111,7 @@ public class MarketBuyAction extends Action {
         sellingPlayer.addRichness(price);
         player.decrementRichness(price);
        
-        resultMsg="Player " + player.getNickname() + " buyed an object from the market";
+        resultMsg="Player " + player.getNickname() + " bought an object from the market";
 	       
 	    }
 	   
