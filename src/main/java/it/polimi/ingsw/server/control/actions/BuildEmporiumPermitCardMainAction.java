@@ -111,6 +111,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 	 *  This method puts usablePermitCards in front,
 	 *  so we can use the input of the user to pick the corresponding card
 	 *  */
+	//TODO working?
 	private int sortPermitCards() {
 
 		ArrayList<PermitCard> playerPermitCards = player.getArrayListPermitCard();
@@ -146,6 +147,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 	 *  This method puts buildableCities in front,
 	 *  so we can use the input of the user to pick the corresponding city
 	 *  */
+	//TODO working?
 	private int sortBuildableCities(PermitCard permitCard) {
 
 		City[] arrayCity = permitCard.getArrayBuildableCities();
@@ -270,7 +272,7 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 			if(kingRewardTiles.peekFirst()!=null) {
 				increment = kingRewardTiles.pollFirst();
 				player.addVictory(playerVictory + increment);
-				resultMsg = resultMsg + "\n He also acquired "
+				resultMsg = resultMsg + "\nHe also acquired "
 						+ increment + " victory points thanks to King's Reward Tile";
 			}
 

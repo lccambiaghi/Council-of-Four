@@ -9,7 +9,7 @@ import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.utils.Constant;
 
 /**
- * //TODO
+ * This is the core of the Model
  */
 public class Field {
 
@@ -74,14 +74,15 @@ public class Field {
 		
 		int numberCitiesPerRegion = numberCities/Constant.REGIONS_NUMBER;
 
-		City[] arrayCityPerRegion = new City[numberCitiesPerRegion];
-
 		CityColor[] arrayCityColor = createArrayCityColor(numberCities);
 
 		//TODO REFACTOR
+
 		for(int itRegion = 0, itColor=0; itRegion<Constant.REGIONS_NUMBER; itRegion++){
 
 			RegionName regionName = RegionName.getRegionNameFromIndex(itRegion);
+
+			City[] arrayCityPerRegion = new City[numberCitiesPerRegion];
 
 			for(int itCityPerRegion=0; itCityPerRegion<numberCitiesPerRegion; itCityPerRegion++){
 
@@ -98,15 +99,16 @@ public class Field {
 						arrayCity[cityIndex] = new City(config.getArrayListCityBonus()[cityIndex], cityName, regionName, CityColor.Purple);
 						this.king = new King(arrayCity[cityIndex]);
 					}
-				}
-				else {
+				} else {
 					if (config.isCityBonusRandom())
 						arrayCity[cityIndex] = new City(config, cityName, regionName, arrayCityColor[itColor]);
 					else
 						arrayCity[cityIndex] = new City(config.getArrayListCityBonus()[cityIndex], cityName, regionName, arrayCityColor[itColor]);
 					itColor++;
 				}
+
 				arrayCityPerRegion[itCityPerRegion] = arrayCity[cityIndex];
+
 			}
 
 			arrayRegion[itRegion] = new Region (regionName, arrayCityPerRegion, config);

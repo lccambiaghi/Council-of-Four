@@ -401,6 +401,16 @@ public final class Message {
 	/**
 	 * @return message
      */
+	public static String youCantReachAnyCity() {
+
+		return "Your richness and permit cards don't allow you to reach any city with the king. " +
+				"Please choose another move.";
+
+	}
+
+	/**
+	 * @return message
+     */
 	public static String notEnoughRichnessForThisSet(){
 		return "You don't have enough richness to use this set. Please select another one.";
 	}
@@ -620,6 +630,7 @@ public final class Message {
 	public static String skipBuying (){
 		return "0. Exit from buying phase";
 	}
+
 
 	/**
 	 * @return message
