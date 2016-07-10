@@ -9,7 +9,10 @@ import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.utils.Constant;
 
 /**
- * This is the core of the Model
+ * This is the core of the Model.
+ * The field contains regions, cities, balconies, nobility route, king reward tiles.
+ *
+ * It offers all attributes and methods to access them
  */
 public class Field {
 
