@@ -11,11 +11,17 @@ import it.polimi.ingsw.utils.ControlTimer;
 import it.polimi.ingsw.utils.Message;
 
 /**
+ * This class permits to launch a match when enough players are connected to the match.
  * 
- *
+ * The first player is added through the constructor, the other players through the public method
+ * "addPlayerToWaitingRoom"
+ * 
+ * The class extends Thread because at first it represents the 
  */
 public class WaitingRoom extends Thread{
 
+	private ArrayList<Player> arrayListPlayerMatch = new ArrayList<>();
+	
 	private GameSide gameSide;
 	private Player firstPlayer;
 	
@@ -27,13 +33,17 @@ public class WaitingRoom extends Thread{
 	
 	private boolean timeToPlay = false;
 	
-	private ArrayList<Player> arrayListPlayerMatch = new ArrayList<>();
-	
 	private final Object lockWaitingRoom = new Object();
 	private Object lockWaitingRoomFromGameSide;
 	
 	private ControlMatch controlMatch;
 	
+	/**
+	 * Constructor of the class
+	 * 
+	 * @param gameSide : the caller of the constructor
+	 * @param player : the first player of it that can choose to create the configurations
+	 */
 	public WaitingRoom(GameSide gameSide, Player player) 
 	{
 		this.gameSide=gameSide;
@@ -78,13 +88,19 @@ public class WaitingRoom extends Thread{
 		Broadcast.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
 		
 		controlMatch = new ControlMatch(arrayListPlayerMatch);
-	
 		controlMatch.startMatch();
 		
 		removeInactivePlayersAndHandleActiveOnes();
 		
 	}
 	
+	/**
+	 * The method checks the connection of the players at the end of a match.
+	 * 
+	 * It removes the disconnected ones from the "arrayListAllPlayer" of the GameSide through
+	 * the method "removePlayerFromArrayList".
+	 * It calls the method "startHandlePlayer" in the GameSide if the player is still active
+	 */
 	private void removeInactivePlayersAndHandleActiveOnes(){
 		Player p;
 		for(int i=0; i<arrayListPlayerMatch.size(); i++){
@@ -96,7 +112,12 @@ public class WaitingRoom extends Thread{
 		}
 	}
 	
-	
+	/**
+	 * This method launches a new Thread that asks the player the max number of players he wants in the match
+	 * and if he has created his own configurations if he wants to use them.
+	 * 
+	 * The Thread is interrupted if the timer expires and the last configurations will be used
+	 */
 	private void askForNumberPlayersAndConfig(){
 		
 		Thread t = new Thread(new Runnable(){
@@ -133,8 +154,9 @@ public class WaitingRoom extends Thread{
 	}
 	
 	/**
+	 * The method asks the player the max number of player he wants in the match.
 	 * 
-	 * @throws InterruptedException
+	 * @throws InterruptedException if the timer expires before the player answers
 	 */
 	private void askForNumberPlayers() throws InterruptedException{
 		firstPlayer.getBroker().println("Insert the max number of players you want to play with.\n"
@@ -143,8 +165,11 @@ public class WaitingRoom extends Thread{
 	}
 	
 	/**
+	 * The method asks the player the if he wants to play with the configurations he has created.
+	 * If yes it gets them through the method "getConfigurations".
+	 * If not it returns.
 	 * 
-	 * @throws InterruptedException
+	 * @throws InterruptedException if the timer expires before the player answers
 	 */
 	private void askForConfigurations() throws InterruptedException{
 		
