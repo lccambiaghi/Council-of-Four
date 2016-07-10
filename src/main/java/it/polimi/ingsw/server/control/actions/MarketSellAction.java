@@ -135,7 +135,7 @@ public class MarketSellAction extends Action{
     private PoliticCard askPoliticCard(Player playerTurn) throws InterruptedException{
         ArrayList <PoliticCard> playerPoliticCards = playerTurn.getArrayListPoliticCard();
        
-        playerTurn.getBroker().println(Message.choosePoliticCard(playerPoliticCards));
+        playerTurn.getBroker().println(Message.choosePoliticCardToSell(playerPoliticCards));
        
         int chosenPoliticCard= playerTurn.getBroker().askInputNumber (1, playerPoliticCards.size())-1;
        
