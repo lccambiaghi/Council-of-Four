@@ -187,7 +187,7 @@ public class Broker {
 	}
 	 
 	/**
-	 * The method checks if the Thread has been interrupted and launches the correspondin Exception
+	 * The method checks if the Thread has been interrupted and launches the corresponding Exception
 	 * 
 	 * @throws InterruptedException
 	 */
