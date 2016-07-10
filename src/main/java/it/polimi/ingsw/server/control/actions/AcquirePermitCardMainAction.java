@@ -95,11 +95,11 @@ public class AcquirePermitCardMainAction extends Action {
         for (PoliticCard politicCard:chosenPoliticCards)
             player.discardPoliticCard(politicCard);
 
-        //decrease richness
-        Field field = match.getField();
+        //decrease richnes
         player.decrementRichness(satisfactionCost);
 
         //applying bonuses
+        Field field = match.getField();
         FaceUpPermitCardArea faceUpPermitCardArea=chosenRegion.getFaceUpPermitCardArea();
         for (Bonus bonus: faceUpPermitCardArea.getArrayPermitCard()[indexChosenPermitCard].getArrayBonus())
             bonus.applyBonus(player, field);

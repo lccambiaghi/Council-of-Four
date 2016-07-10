@@ -5,9 +5,11 @@ import it.polimi.ingsw.server.model.BonusName;
 import it.polimi.ingsw.server.model.CityColor;
 import it.polimi.ingsw.server.model.CityName;
 
+/**
+ * This class collects all the constant used in the game to make it easily
+ * editable.
+ */
 public class Constant {
-	
-	public static final boolean test = false;
 	
 	//socket connection
 	public static final int SOCKET_PORT =3000;
@@ -25,7 +27,7 @@ public class Constant {
 	public static final int PLAYERS_MAX_NUMBER = 8;
 	
 	//timers
-	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 300;
+	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 300; //todo change it back
 	public static final int TIMER_SECONDS_NEW_MATCH = 20; 
 	public static final int TIMER_SECONDS_WAITING_CONFIGURATIONS = 10;
 	public static final int TIMER_SECONDS_MARKET_ACTION = 40;
@@ -47,10 +49,8 @@ public class Constant {
 	public static final int POLITIC_CARDS_INITIAL_NUMBER =6;
 	public static final int ASSISTANT_INITIAL_FIRST_PLAYER = 1;
 	public static final int RICHNESS_INITIAL_FIRST_PLAYER =10;
-	public static final int VICTORY_INITIAL_FIRST_PLAYER =0;
 	public static final int RICHNESS_MAX =20;
 	public static final int NOBILITY_MAX =20;
-	public static final int VICTORY_MAX =100;
 	public static final CityName KING_CITY_INITIAL = CityName.J;
 	public static final int REGION_TILE_VICTORY_INCREMENT = 5;
 	public static final int BLUE_BONUS_TILE_VICTORY_INCREMENT = 5;
@@ -58,10 +58,9 @@ public class Constant {
 	public static final int BRONZE_BONUS_TILE_VICTORY_INCREMENT = 8;
 	public static final int SILVER_BONUS_TILE_VICTORY_INCREMENT = 12;
 	public static final int GOLD_BONUS_TILE_VICTORY_INCREMENT = 20;
-	public static final int NUMBER_EMPORIUMS_TO_WIN = 3; //TODO CHANGE IT BACK
+	public static final int NUMBER_EMPORIUMS_TO_WIN = 10;
 
 	//reward tiles' increments
-	public static final int NUMBER_KING_REWARD_TILES = 5;
 	public static final int FIRST_KING_REWARD_VICTORY_INCREMENT = 25;
 	public static final int SECOND_KING_REWARD_VICTORY_INCREMENT = 18;
 	public static final int THIRD_KING_REWARD_VICTORY_INCREMENT = 12;
@@ -77,7 +76,7 @@ public class Constant {
 	//support
 	public static final int PERMIT_CARD_CITIES_NUMBER_MAX =3;
 	public static final int PERMIT_CARD_CITIES_NUMBER_MIN =1;
-	public static final int CITIES_PER_REGION_MIN =5; //?????
+	public static final int CITIES_PER_REGION_MIN =5;
 	public static final int INITIALLY_KING_CITY = 9;
 
 	//moves cost

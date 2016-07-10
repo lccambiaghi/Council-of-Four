@@ -11,27 +11,27 @@ import java.util.ArrayList;
 
 /**
  * This class is designed to handle the turn of the player.
- * 
+ *
  * It implements Runnable because the whole turn of the player has is handled by a Thread.
  * The Player has a specific amount of time to complete his turn: if this timer is over before that
  * the player complete his turn the Thread is interrupted by outside and the Turn finishes.
- * 
- * run : this method add a politic card to the player, set the parameters of the turn and starts 
+ *
+ * run : this method add a politic card to the player, set the parameters of the turn and starts
  * asking the player the actions he wants to do
- * 
+ *
  * infoOrAction : asks the player if he wants to have the info of the match or perform an action
- * 
+ *
  * infoMatch : asks the player which info of the match he wants to have
- * 
+ *
  * actionsLeftHandler : handles the actions the player can do, checking both main action and quick action
  * he can still do
- * 
+ *
  * ifQuickAction : asks the player if he wants to perform a quick action
- * 
+ *
  * quickAction : asks the player which quick action he wants to do
- * 
+ *
  * mainAction : asks the player which main action he wants to do
- * 
+ *
  */
 public class Turn implements Runnable{
 
@@ -43,7 +43,7 @@ public class Turn implements Runnable{
 	
 	/**
 	 * Constructor that creates the Turn
-	 * 
+	 *
 	 * @param match : the match where the player is playing
 	 * @param player : the player of the turn
 	 * @param players : the other players of the match
@@ -75,7 +75,7 @@ public class Turn implements Runnable{
 	/**
 	 * This method asks the player if he wants to have the info of the match or perform a match
 	 * Depending on the choice it calls "infoMatch" or "actionsLeftHandler"
-	 * 
+	 *
 	 * @throws InterruptedException if the timer is over
 	 */
 	private void infoOrAction() throws InterruptedException{
@@ -94,9 +94,9 @@ public class Turn implements Runnable{
 	/**
 	 * This method shows the player the info of the match that he can have.
 	 * Depending on the choice it calls different methods of InfoMatch.
-	 * 
+	 *
 	 * If the choice is "0" it returns to the caller.
-	 * 
+	 *
 	 * @throws InterruptedException if the timer is over
 	 */
 	private void infoMatch() throws InterruptedException{
@@ -138,11 +138,11 @@ public class Turn implements Runnable{
 	}
 
 	/**
-	 * This method handles the actions left to do by the player calling the corresponding method 
+	 * This method handles the actions left to do by the player calling the corresponding method
 	 * "ifQuickAction" or "mainAction".
-	 * 
+	 *
 	 * If the player has completed all the actions it simply returns to the caller.
-	 * 
+	 *
 	 * @throws InterruptedException if the timer is over
 	 */
 	private void actionsLeftHandler() throws InterruptedException{
@@ -162,7 +162,7 @@ public class Turn implements Runnable{
 	 * This methods asks the player if he wants to perform a quick action (because it is not compulsory).
 	 * If yes it calls quickAction, else it checks the main actions left of the player and then it calls
 	 * "mainAction" or simply return.
-	 * 
+	 *
 	 * @throws InterruptedException if the timer is over
 	 */
 	private void ifQuickAction() throws InterruptedException{
@@ -182,13 +182,13 @@ public class Turn implements Runnable{
 	
 	/**
 	 * This method asks the player which quick action he wants to do and create the object of the corresponding Action
-	 * 
+	 *
 	 * Then it calls "action.preliminarySteps".
 	 * If the method returns true it means that the player have enough goods to perform the action,
 	 * it executes the action and broadcasts the result message to the other players.
-	 * 
+	 *
 	 * In any case it ends calling "actionLeftHandler"
-	 * 
+	 *
 	 * @throws InterruptedException if the timer is over
 	 */
 	private void quickAction() throws InterruptedException {
@@ -226,13 +226,13 @@ public class Turn implements Runnable{
 	
 	/**
 	 * This method asks the player which main action he wants to do and create the object of the corresponding Action
-	 * 
+	 *
 	 * Then it calls "action.preliminarySteps".
 	 * If the method returns true it means that the player have enough goods to perform the action,
 	 * it executes the action and broadcasts the result message to the other players.
-	 * 
+	 *
 	 * In any case it ends calling "actionLeftHandler"
-	 * 
+	 *
 	 * @throws InterruptedException if the timer is over
 	 */
 	private void mainAction() throws InterruptedException {
@@ -266,6 +266,10 @@ public class Turn implements Runnable{
 
 		actionsLeftHandler();
 		
+	}
+
+	private void broadcastOthers(String string, ArrayList<Player> players, Player playerNot) throws InterruptedException{
+			Broadcast.printlnBroadcastOthers(string, players, playerNot);
 	}
 	
 }

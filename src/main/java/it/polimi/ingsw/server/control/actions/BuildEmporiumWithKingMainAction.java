@@ -51,7 +51,25 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         Map<City, Integer> reachableCities = getReachableCities(0);
 
-        int minimumKingCost = reachableCities.entrySet().iterator().next().getValue();
+        //TODO fixed?
+        Iterator itReachableCities = reachableCities.entrySet().iterator();
+
+        Map.Entry firstReachableCity;
+
+        int minimumKingCost;
+
+        if(itReachableCities.hasNext()) {
+
+            firstReachableCity = (Map.Entry) itReachableCities.next();
+
+            minimumKingCost = (int) firstReachableCity.getValue();
+
+        } else {
+
+            player.getBroker().println(Message.youCantReachAnyCity());
+
+            return false;
+        }
 
         ArrayList<PoliticCard> usablePoliticCards = getUsablePoliticCards();
 
@@ -68,6 +86,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
             player.getBroker().println(Message.noEligibleSet());
 
             return false;
+
         }
 
         boolean eligibleSet = false;
@@ -154,7 +173,9 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         City[] arrayCity = field.getArrayCity();
 
-        int indexCurrentCity = field.getKing().getCurrentCity().getCityName().ordinal();
+        City currentCity =field.getKing().getCurrentCity();
+
+        int indexCurrentCity = currentCity.getCityName().ordinal();
 
         List<Integer>[] arrayCityLinks = field.getArrayCityLinks();
 
@@ -177,7 +198,9 @@ public class BuildEmporiumWithKingMainAction extends Action {
                 int visitingCity = visitingLevelQueue.remove();
 
                 //add visiting city to movable cities with cost of visiting level
-                if (!arrayCity[visitingCity].isEmporiumAlreadyBuilt(player))
+                //if not already built and enough assistants
+                if (!arrayCity[visitingCity].isEmporiumAlreadyBuilt(player) &&
+                        player.getAssistant()>=arrayCity[visitingCity].getArrayListEmporium().size())
                     movableCities.put(arrayCity[visitingCity], levelCost);
 
                 //add cities linked with visiting city to the next level queue
@@ -430,7 +453,7 @@ public class BuildEmporiumWithKingMainAction extends Action {
             if(kingRewardTiles.peekFirst()!=null) {
                 increment = kingRewardTiles.pollFirst();
                 player.addVictory(playerVictory + increment);
-                resultMsg = resultMsg + "\n He also acquired "
+                resultMsg = resultMsg + "\nHe also acquired "
                         + increment + " victory points thanks to King's Reward Tile";
             }
 

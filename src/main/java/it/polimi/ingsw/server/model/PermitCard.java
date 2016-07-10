@@ -17,11 +17,7 @@ public class PermitCard {
 	public PermitCard(City[] arrayCity, Configurations config) {
 		
 		City[] arrayTotalBuildableCities = arrayCity.clone();
-		
-		/* "numberTotalBuildableCities" contains the MAX number of cities that the permit card
-		 * can permit to build. 
-		 * It depends on the size of arrayTotalBuildableCities, because the more
-		 * it is long, the more "numberTotalBuildableCities" has to be long as well */
+
 		int numberTotalBuildableCities = Constant.PERMIT_CARD_CITIES_NUMBER_MAX +
 				arrayTotalBuildableCities.length - Constant.CITIES_PER_REGION_MIN;
 		
@@ -40,7 +36,6 @@ public class PermitCard {
 
 		/* Now we assign the first "numberActuallyBuildableCities" elements of the array "arrayTotalBuildableCities"
 		  that has been  previously shuffled. */
-		// for(int i=0; i< numberActuallyBuildableCities; i++){ arrayBuildableCities[i]=arrayTotalBuildableCities[i]; }
 		System.arraycopy(arrayTotalBuildableCities, 0, arrayBuildableCities, 0, numberActuallyBuildableCities);
 		
 		/* Now we assign the bonuses that the permit card will have.

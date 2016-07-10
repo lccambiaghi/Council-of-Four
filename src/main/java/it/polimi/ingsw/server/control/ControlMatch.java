@@ -6,33 +6,56 @@ import it.polimi.ingsw.utils.ControlTimer;
 import it.polimi.ingsw.utils.Message;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
+/**
+ * This class handles the control flow of the match.
+ * It handles turns, checks conditions for the end of the match
+ * and determines match's winner
+ */
 public class ControlMatch {
+
 	private final ControlMarket market;
+
 	private Match match;
+
 	private Player player;
 	
 	private final ArrayList<Player> allPlayers;
+
 	private ArrayList<Player> playersConnected;
 
 	private int playerNumber=0;
 
 	private boolean gameOver;
+
 	private boolean lastRound;
 
 	private boolean goMarket;
 
-
-	public ControlMatch(ArrayList<Player> arrayListPlayer){
+	/*
+	 * @param arrayListPlayer initial list of player attending the match
+     */
+	public ControlMatch(List<Player> arrayListPlayer){
 
 		Collections.shuffle(arrayListPlayer);
 
-		this.allPlayers = arrayListPlayer;
-		this.match = new Match(arrayListPlayer);
+		this.allPlayers = (ArrayList<Player>) arrayListPlayer;
+
+		this.match = new Match((ArrayList<Player>) arrayListPlayer);
+
 		this.market = match.getMarket();
 
 	}
 
+	/**
+	 * This is the main method of the match.
+	 * It gets connected players, determines which player has to play,
+	 * determines if market has to be started.
+	 *
+	 * It hecks conditions for the match's end, handles last round
+	 * and determines who is the winner
+	 */
 	public void startMatch(){
 
 		do {
@@ -67,6 +90,8 @@ public class ControlMatch {
 
 						if (player.getArrayListEmporiumBuilt().size() == Constant.NUMBER_EMPORIUMS_TO_WIN && !lastRound) {
 
+							player.addVictory(Constant.VICTORY_INCREMENT_LAST_EMPORIUM);
+
 							lastRound = true;
 
 							Broadcast.printlnBroadcastAll(Message.lastRoundHasStarted(player), playersConnected);
@@ -87,7 +112,6 @@ public class ControlMatch {
 
 		}while(!gameOver);
 
-		//TODO TEST
 		assignVictoryPointsBecauseNobility();
 		
 		assignVictoryPointsBecausePermitCards();
@@ -100,6 +124,14 @@ public class ControlMatch {
 
 	}
 
+	/**
+	 * This method checks which player gets to win
+	 * according to victory points.
+	 *
+	 * It gives victory bonus according to nobility route,
+	 * permitcards and - if necessary - assistants and politcs cards
+	 * @return winner player
+     */
 	private Player electWinner() {
 
 		int max=0;
@@ -200,7 +232,13 @@ public class ControlMatch {
 		market.startMarket();
 
 	}
-	
+
+	/**
+	 * This method handles a single turn of the match.
+	 *
+	 * It checks if turn is completed in time, otherwise it
+	 * interrupts the player, interrupting his ability to participate in the match.
+	 */
 	private void turnHandler(){
 		
 		Broadcast.printlnBroadcastOthers(Message.turnOf(player), playersConnected, player);
@@ -225,7 +263,7 @@ public class ControlMatch {
 	/**
 	 * First it finds max victory points and second max
 	 * Then it counts how many players are first
-	 * Finally it assigns victory points
+	 * Finally it assigns victory points according to these numbers
 	 */
 	private void assignVictoryPointsBecauseNobility() {
 
@@ -281,13 +319,13 @@ public class ControlMatch {
 		if(firstNobilityPlayers.size() == 1)
 			for (Player aPlayer : secondNobilityPlayers)
 				aPlayer.addVictory(Constant.SECOND_NOBILITY_VICTORY_INCREMENT);
-		//else if(numberFirst > 1) no one gains victory points for the second place
+		//else if numberFirst > 1 no one gains victory points for the second place
 
 	}
 
 	/**
-	 * First it finds maximum number of permit cards
-	 * Then it adds victory points
+	 * First it finds maximum number of owned permit cards
+	 * Then it adds victory points to those player/players
 	 */
 	private void assignVictoryPointsBecausePermitCards() {
 

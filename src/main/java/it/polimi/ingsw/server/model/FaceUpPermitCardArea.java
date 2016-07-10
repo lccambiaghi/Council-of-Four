@@ -53,6 +53,7 @@ public class FaceUpPermitCardArea {
 		return chosenPermitCard;
 	}
 
+	//TODO CHECK
 	/**
 	 * @param index of the permit card to be replaced
      */
