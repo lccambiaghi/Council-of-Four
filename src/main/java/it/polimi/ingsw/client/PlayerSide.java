@@ -30,6 +30,7 @@ public class PlayerSide {
 	private char typeOfConnection;
 	
 	private SocketConnection socketConnection;
+	private SocketListener socketListener;
 	private RMIConnection rmiConnection;
 	
 	private Scanner in;
@@ -88,11 +89,12 @@ public class PlayerSide {
 	
 	/**
 	 * The method assign to "socketConnection" a new SocketConnection and starts listening through
-	 * the socket port with SocketListener
+	 * socket with SocketListener
 	 */
 	private void handleSocketConnection(){
 		socketConnection = new SocketConnection(this);
-		new SocketListener(this, socketConnection);
+		socketListener = new SocketListener(this, socketConnection);
+		socketListener.startListening();
 	}
 	
 	private void handleRMIConnection(){

@@ -2,18 +2,39 @@ package it.polimi.ingsw.client.connection;
 
 import it.polimi.ingsw.client.PlayerSide;
 
+/**
+ * The purpose of this class is to listen through socket connection and interpreting
+ * the messages sent by the server, calling the corresponding methods of the playerSide
+ */
 public class SocketListener {
 
-	String message;
-	PlayerSide playerSide;
-	SocketConnection socketConnection;
-	boolean inputStop;
+	private boolean inputStop = false;
 	
+	private String message;
+	private PlayerSide playerSide;
+	private SocketConnection socketConnection;
+	
+	/**
+	 * The constructor of the class
+	 * 
+	 * @param playerSide : the class calling the constructor 
+	 * @param socketConnection : the object that offers the communication methods
+	 */
 	public SocketListener(PlayerSide playerSide, SocketConnection socketConnection){
 		
 		this.socketConnection = socketConnection;
 		this.playerSide=playerSide;
-		this.inputStop=false;
+		
+	}
+		
+	
+	/**
+	 * This method permits to start listening through socket.
+	 * 
+	 * It reads the message sent by the server calling "socketConnection.receiveStringFS"
+	 * and switches it in the correct case
+	 */
+	public void startListening(){
 		
 		while(true){
 			message = socketConnection.receiveStringFS();
@@ -31,16 +52,12 @@ public class SocketListener {
 				socketConnection.sendObjectTS(playerSide.getConfigurationsAsObject());
 				break;
 			
-			case	"SOCKETinputNumber":{
-				int lowerBound = Integer.parseInt(socketConnection.receiveStringFS());
-				int upperBound = Integer.parseInt(socketConnection.receiveStringFS());
-				new HandleInputNumber(lowerBound, upperBound).start();
+			case	"SOCKETinputNumber":
+				inputNumberRequest();
 				break;
-			}
 			
 			case	"SOCKETstopInputNumber":
-				inputStop=true;
-				playerSide.getInputHandler().stopInputNumber();
+				inputNumberStop();
 				break;
 			
 			case	"SOCKETprint":
@@ -58,12 +75,36 @@ public class SocketListener {
 		}
 	}
 	
+	private void inputNumberRequest(){
+		int lowerBound = Integer.parseInt(socketConnection.receiveStringFS());
+		int upperBound = Integer.parseInt(socketConnection.receiveStringFS());
+		new HandleInputNumber(lowerBound, upperBound).start();
+	}
+	
+	private void inputNumberStop(){
+		inputStop=true;
+		playerSide.getInputHandler().stopInputNumber();
+	}
+	
+	
+	/**
+	 * This class extends Thread and permits to wait until the correct input is returned by
+	 * the method "inputNumber". 
+	 * 
+	 * Then it checks if the boolean "inputStop" is true and, if so, sets it to false and returns;
+	 * otherwise it sends to the server the result of "inputNumber"
+	 */
 	class HandleInputNumber extends Thread{
-		int lowerBound, upperBound;
+		
+		int lowerBound;
+		int upperBound;
+		
 		public HandleInputNumber(int lowerBound,int upperBound){
 			this.lowerBound=lowerBound;
 			this.upperBound=upperBound;
 		}
+		
+		@Override
 		public void run(){
 			int result = playerSide.getInputHandler().inputNumber(lowerBound, upperBound);
 			if(!inputStop)
