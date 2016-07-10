@@ -57,7 +57,7 @@ public class GameSide {
 	 */
 	public GameSide() {
 		
-		//initializeRMI();
+		initializeRMI();
 		
 		listenSocket = new ListenSocket(this);
 		listenSocket.start();
