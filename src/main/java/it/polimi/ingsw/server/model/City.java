@@ -13,15 +13,15 @@ import java.util.Random;
  */
 public class City {
 
-	private CityName cityName;
+	private final CityName cityName;
 
-	private RegionName regionName;
+	private final RegionName regionName;
 
 	private Bonus[] arrayBonus;
 
 	private City[] nearbyCity;
 
-	private CityColor cityColor;
+	private final CityColor cityColor;
 
 	private ArrayList<Player> arrayListEmporium;
 
@@ -111,10 +111,7 @@ public class City {
 	 * @return true if the city has bonus, false otherwise
      */
 	public boolean hasBonus(){
-		if(arrayBonus==null || arrayBonus.length==0)
-			return false;
-		else 
-			return true;
+		return !(arrayBonus == null || arrayBonus.length == 0);
 	}
 	public Bonus[] getArrayBonus() {
 		return arrayBonus;

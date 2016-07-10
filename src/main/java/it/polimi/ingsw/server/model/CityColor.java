@@ -10,6 +10,6 @@ public enum CityColor {
     Blue,
     Bronze,
     Gold,
-    Silver;
+    Silver
 
 }

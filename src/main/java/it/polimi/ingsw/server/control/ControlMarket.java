@@ -20,10 +20,10 @@ import it.polimi.ingsw.utils.Message;
  
 public class ControlMarket {
  
-    private ArrayList <Player> players;
+    private final ArrayList <Player> players;
     
     private ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
-    private Match match;
+    private final Match match;
     private Action action;
     
     private int turn;
@@ -148,11 +148,7 @@ public class ControlMarket {
     
     private boolean atLeastTwoPlayersConnected(){
     	ArrayList<Player> playersConnected = getPlayersConnected();
-		if((playersConnected==null)||(playersConnected.size()==1)){
-			return false;
-		}else{
-			return true;
-		}
+		return !((playersConnected == null) || (playersConnected.size() == 1));
 	}
     
     public ArrayList<SellingObject> getArrayListSellingObjects() {

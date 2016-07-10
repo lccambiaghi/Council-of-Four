@@ -19,17 +19,17 @@ import it.polimi.ingsw.utils.Constant;
  */
 
 public class CreateConfigurations{
-	
+
 	private PlayerSide playerSide;
 	private Configurations config;
-	private InputHandler inputHandler;
+	private final InputHandler inputHandler;
 	
 	/**
 	 * Constructor of the class
 	 * @param playerSide: 
 	 * @param inputHandler: 
 	 */
-	public CreateConfigurations(PlayerSide playerSide, InputHandler inputHandler){ 
+	public CreateConfigurations(PlayerSide playerSide, InputHandler inputHandler){
 		this.playerSide=playerSide;
 		this.inputHandler=inputHandler;
 	}
@@ -78,7 +78,7 @@ public class CreateConfigurations{
 			config.setCityLinksPreconfigured(false);
 		else
 			config.setCityLinksPreconfigured(true);
-		if(config.isCityLinksPreconfigured()==false){
+		if(!config.isCityLinksPreconfigured()){
 			int[][]cityLinksMatrix =  new int[cityNumber][cityNumber];
 			
 			
@@ -125,7 +125,7 @@ public class CreateConfigurations{
 		if(inputHandler.inputNumber(1, 2)==1)
 			config.setCityBonusRandom(true);
 		
-		if(config.isCityBonusRandom()==false){
+		if(!config.isCityBonusRandom()){
 		    ArrayList<CityBonus> arrayListCityBonus[] = new ArrayList[cityNumber];
 		    for (int i=0; i<arrayListCityBonus.length; i++){
 		    	if(i!=Constant.INITIALLY_KING_CITY){

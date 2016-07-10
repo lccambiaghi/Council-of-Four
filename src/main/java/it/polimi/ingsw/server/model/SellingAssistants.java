@@ -11,7 +11,7 @@ import it.polimi.ingsw.utils.Message;
 
 public class SellingAssistants extends SellingObject{
 
-	int sellingAssistants;
+	private int sellingAssistants;
 	
 	public SellingAssistants(int numberAssistants, Player player, int price){
 		this.sellingAssistants=numberAssistants;

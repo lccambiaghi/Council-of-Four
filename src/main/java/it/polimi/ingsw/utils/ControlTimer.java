@@ -37,7 +37,7 @@ public class ControlTimer {
 	 * This class extends TimerTask.
 	 * It only sets the boolean "finished" to true when the timer expires
 	 */
-	class TimeIsFinished extends TimerTask{
+	public class TimeIsFinished extends TimerTask{
 		
 		@Override
 		public void run(){

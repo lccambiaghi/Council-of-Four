@@ -7,7 +7,7 @@ import it.polimi.ingsw.client.PlayerSide;
 
 public class RMIPlayerSide extends UnicastRemoteObject implements RMIPlayerSideInterface {
 
-	PlayerSide playerSide;
+	private PlayerSide playerSide;
 	
 	public RMIPlayerSide(PlayerSide playerSide) throws RemoteException {
 		this.playerSide=playerSide;

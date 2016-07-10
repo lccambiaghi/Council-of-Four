@@ -10,9 +10,9 @@ public class FaceUpPermitCardArea {
 	
 	private PermitCard[] arrayPermitCard;
 
-	private City[] arrayBuildableCities;
+	private final City[] arrayBuildableCities;
 
-	private Configurations config;
+	private final Configurations config;
 
 	/**
 	 * The constructor receives the arrayBuildableCities belonging to a region and

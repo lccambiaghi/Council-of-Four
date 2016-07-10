@@ -13,7 +13,7 @@ import it.polimi.ingsw.utils.Constant;
  */
 public class AvailableCouncillors {
 	
-	private ArrayList <Councillor> arrayListCouncillor;
+	private final ArrayList <Councillor> arrayListCouncillor;
 
 	/**
 	 * The constructor creates the arrayList initially containing all availableCouncillors.

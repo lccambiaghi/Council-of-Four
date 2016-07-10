@@ -17,10 +17,10 @@ import it.polimi.ingsw.utils.Message;
  */
 
 public class MarketBuyAction extends Action {
-	 
-    public SellingObject possibleBuyedObject;
-    public int choosenObject;
-    public ArrayList <SellingObject> arrayListSellingObjects;
+
+    private SellingObject possibleBuyedObject;
+    private int choosenObject;
+    private ArrayList <SellingObject> arrayListSellingObjects;
 
     /**
      * @param match : the match in which the move is being executed
@@ -101,11 +101,8 @@ public class MarketBuyAction extends Action {
     }
    
     private boolean checkIfEnoughRichness(Player playerTurn, int payed) {
-   
-        if (playerTurn.getRichness()<payed)
-            return false;
-        else
-            return true;
+
+        return playerTurn.getRichness() >= payed;
  
 }
     

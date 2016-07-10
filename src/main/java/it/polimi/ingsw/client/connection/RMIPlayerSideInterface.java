@@ -9,20 +9,20 @@ public interface RMIPlayerSideInterface extends Remote {
 	/*
 	 * Methods used to connect to the server and to get into a match
 	 */
-	public void login() throws RemoteException;
+	void login() throws RemoteException;
 	
-	public String getNickname() throws RemoteException;
+	String getNickname() throws RemoteException;
 	
-	public boolean isCustomConfig() throws RemoteException;
+	boolean isCustomConfig() throws RemoteException;
 	
-	public Object getConfigurationsAsObject() throws RemoteException;
+	Object getConfigurationsAsObject() throws RemoteException;
 	
-	public int inputNumber(int lowerBound, int upperBound) throws RemoteException;
+	int inputNumber(int lowerBound, int upperBound) throws RemoteException;
 	
-	public void stopInputNumber() throws RemoteException;
+	void stopInputNumber() throws RemoteException;
 	
-	public void print(String string) throws RemoteException;
+	void print(String string) throws RemoteException;
 	
-	public void println(String string) throws RemoteException;
+	void println(String string) throws RemoteException;
 
 }

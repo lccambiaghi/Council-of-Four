@@ -11,7 +11,7 @@ public enum BonusName {
     Cards(3),
     MainMove(1);
 
-    private int maxIncrement;
+    private final int maxIncrement;
 
     BonusName(int maxIncrement) {this.maxIncrement=maxIncrement;}
 

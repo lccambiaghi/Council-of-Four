@@ -219,7 +219,7 @@ public class PlayerSide {
 		}
 	}
 	
-	public boolean isFreeScanner(){
+	private boolean isFreeScanner(){
 		synchronized (lock) {
 			return freeScanner;
 		}

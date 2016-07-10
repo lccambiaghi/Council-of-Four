@@ -12,7 +12,7 @@ import it.polimi.ingsw.utils.Constant;
  */
 public class Balcony {
 
-	private String nameBalcony;
+	private final String nameBalcony;
 
 	private ArrayList<Councillor> arrayListCouncillor = new ArrayList<>();
 

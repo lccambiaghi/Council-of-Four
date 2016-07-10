@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.Color;
  */
 public class Councillor {
 
-	private Color color;
+	private final Color color;
 
 	/**
 	 * @param color of the newly created councillor

@@ -66,7 +66,7 @@ public class RMIConnection {
 	 * @throws NotBoundException
 	 * @throws MalformedURLException
 	 */
-	public void lookUpForRegistry() throws RemoteException, NotBoundException, MalformedURLException{
+	private void lookUpForRegistry() throws RemoteException, NotBoundException, MalformedURLException{
 		
 		System.out.println("I'm looking up for the registry...");
 		rmiGameSide = (RMIGameSideInterface)Naming.lookup(Constant.RMI_REGISTRY_LOOKUP_ADDRESS);

@@ -16,7 +16,7 @@ import it.polimi.ingsw.utils.Constant;
  */
 public class Field {
 
-	private Configurations config;
+	private final Configurations config;
 
 	private City[] arrayCity;
 
@@ -30,7 +30,7 @@ public class Field {
 
 	private NobilityRoute nobilityRoute;
 
-	private Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
+	private final Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
 
 	private Deque<Integer> kingRewardTiles = new ArrayDeque<>();
 	

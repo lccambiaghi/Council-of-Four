@@ -40,7 +40,7 @@ public class GameSide {
 	private final Object lockWaitingRoomFromGameSide = new Object();
 
 	private RMIGameSideInterface rmiGameSide;
-	
+
 	private ServerSocket serverSocket;
 	private ListenSocket listenSocket;
 	

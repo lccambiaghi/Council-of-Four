@@ -17,7 +17,7 @@ public class ControlMatch {
 
 	private final ControlMarket market;
 
-	private Match match;
+	private final Match match;
 
 	private Player player;
 	
