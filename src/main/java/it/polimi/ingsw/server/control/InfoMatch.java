@@ -224,7 +224,7 @@ public class InfoMatch {
 	}
 	
 	private void printKingPosition(){
-		println("King position: " + field.getKing().getCurrentCity().toString());
+		println("King position: " + field.getKing().getCurrentCity().getCityName().toString());
 		println();
 	}
 	
