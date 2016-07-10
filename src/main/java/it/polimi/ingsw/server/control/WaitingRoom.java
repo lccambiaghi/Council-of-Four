@@ -14,9 +14,22 @@ import it.polimi.ingsw.utils.Message;
  * This class permits to launch a match when enough players are connected to the match.
  * 
  * The first player is added through the constructor, the other players through the public method
- * "addPlayerToWaitingRoom"
+ * "addPlayerToWaitingRoom".
  * 
- * The class extends Thread because at first it represents the 
+ * The class extends Thread and uses locks with "wait" and "notify" to synchronize with the GameSide.
+ * 
+ * The first player has only a few seconds (constant in the Constant class) to set the players
+ * max number and, if created, to choose whether send his configurations or not.
+ * If the first player disconnects before these time, WaitingRoom returns, 
+ * setting the boolean "waitingRoomAvailable" of the GameSide to false.
+ * 
+ * The public method "addPlayerToWaitingRoom" is used to add a new player into the WaitingRoom
+ * and checks by itself the number of players already inside.
+ * It also starts the CountDown of 20 seconds (constant in the Constant class).
+ * 
+ * The "run" method of the class checks periodically if it's time to play (enough players or countDown finished).
+ * 
+ * If so it launches a new ControlMatch passing it the arrayList of Players in the waiting room.
  */
 public class WaitingRoom extends Thread{
 
@@ -71,6 +84,9 @@ public class WaitingRoom extends Thread{
 			lockWaitingRoom.notify();
 		}
 		
+		/**
+		 * "destroy" is true if the first player has disconnected
+		 */
 		if(destroy)
 			return;
 		
@@ -85,11 +101,18 @@ public class WaitingRoom extends Thread{
 			
 		}
 
+		
+		/**
+		 * At this point the match can start
+		 */
 		Broadcast.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
 		
 		controlMatch = new ControlMatch(arrayListPlayerMatch);
 		controlMatch.startMatch();
 		
+		/**
+		 * The match has ended
+		 */
 		removeInactivePlayersAndHandleActiveOnes();
 		
 	}
