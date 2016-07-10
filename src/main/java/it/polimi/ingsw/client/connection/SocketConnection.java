@@ -9,54 +9,77 @@ import java.util.Scanner;
 import it.polimi.ingsw.client.PlayerSide;
 import it.polimi.ingsw.utils.Constant;
 
+/**
+ * This class permits to connect to the server through socket.
+ * In fact it opens the channel of communication with it.
+ * It offers methods to send strings/objects and receive strings.
+ *
+ */
 public class SocketConnection {
-
-	PlayerSide playerSide;
 	
-	private final static String ADDRESS = Constant.SOCKET_ADDRESS;
-	private final static int SOCKET_PORT = Constant.SOCKET_PORT;
+	private PlayerSide playerSide;
 	
 	private Socket mySocket;
 	private Scanner inSocket;
 	private PrintWriter outSocket;
 	
+	/**
+	 * Constructor of the class.
+	 * 
+	 * @param playerSide : the object PlayerSide that calls the constructor
+	 */
 	public SocketConnection(PlayerSide playerSide){
 		this.playerSide=playerSide;
-		connectToServer();
 	}
 	
-	private void connectToServer(){
+	/**
+	 * The method instantiates the variable "mySocket" that is used to link to the server.
+	 * Then it opens the channel of communication, creating a Scanner for the out-coming strings
+	 * and a printWriter for the in-coming ones.
+	 * 
+	 * It catches Input/Output exceptions due to lack of connection
+	 */
+	public void connectToServer(){
 		
 		try {
-
-			mySocket = new Socket(ADDRESS, SOCKET_PORT);
-			
-			try {
-				inSocket = new Scanner(mySocket.getInputStream());
-				outSocket = new PrintWriter(mySocket.getOutputStream());
-			} catch (IOException e) {
-				System.out.println("Cannot open channels of communication");
-				e.printStackTrace();
-			}
-			System.out.println("I am connected to the Server");
-			
+			mySocket = new Socket(Constant.SOCKET_ADDRESS, Constant.SOCKET_PORT);
 		} catch (IOException e) {
 			System.out.println("Cannot connect to the Server");
 			e.printStackTrace();
 		}
+		
+		try {
+			inSocket = new Scanner(mySocket.getInputStream());
+			outSocket = new PrintWriter(mySocket.getOutputStream());
+			System.out.println("I am connected to the Server");
+		} catch (IOException e) {
+			System.out.println("Cannot open channels of communication");
+			e.printStackTrace();
+		}
+	
 	}	
 	
-	
+	/**
+	 * Sends a String to the server
+	 * @param string to be sent
+	 */
 	public void sendStringTS(String string){
 		outSocket.println(string);
 		outSocket.flush();
 	}
 	
+	/**
+	 * Receives a String from the Server
+	 * @return the string received
+	 */
 	public String receiveStringFS(){
-		String string = inSocket.nextLine();
-		return string; 
+		return inSocket.nextLine(); 
 	}
 	
+	/**
+	 * Send an object to the server
+	 * @param object to be sent
+	 */
 	public void sendObjectTS(Object object){
 		ObjectOutputStream objectOutputStream = null;
 		try {

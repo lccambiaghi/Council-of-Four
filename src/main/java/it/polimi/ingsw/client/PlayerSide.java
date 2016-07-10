@@ -93,6 +93,7 @@ public class PlayerSide {
 	 */
 	private void handleSocketConnection(){
 		socketConnection = new SocketConnection(this);
+		socketConnection.connectToServer();
 		socketListener = new SocketListener(this, socketConnection);
 		socketListener.startListening();
 	}
