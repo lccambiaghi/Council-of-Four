@@ -8,6 +8,8 @@ import it.polimi.ingsw.utils.Constant;
 
 public class InfoMatch {
 
+	private String noneMsg = "-- none --";
+	
 	private Field field;
 	
 	private City[] arrayCity;
@@ -66,27 +68,28 @@ public class InfoMatch {
 		this.arrayCity = field.getArrayCity();
 	}
 	
-	public void printInfoAllCities() throws InterruptedException{
+	public void printInfoAllCities() {
 		println();
 		printCities();
 		printCityLinks();
+		printKingPosition();
 		println();
 	}
 	
-	public void printInfoAllPlayers() throws InterruptedException{
+	public void printInfoAllPlayers() {
 		println();
 		printPlayersInRoutes();
 		println();
 	}
 	
-	public void printInfoBalconies() throws InterruptedException{
+	public void printInfoBalconies() {
 		println();
 		printBalconies();
 		printAvailableCouncillors();
 		println();	
 	}
 	
-	public void printInfoPlayer(Player player) throws InterruptedException{
+	public void printInfoPlayer(Player player) {
 
 		println();
 		println("You have...");
@@ -101,7 +104,7 @@ public class InfoMatch {
 		
 	}
 	
-	public void printInfoCity(int indexCity) throws InterruptedException{
+	public void printInfoCity(int indexCity) {
 		
 		println();
 		City chosenCity= arrayCity[indexCity];
@@ -109,7 +112,7 @@ public class InfoMatch {
 		println("- Color: "+ chosenCity.getCityColor());
 		print("- Bonus: ");
 		if(!chosenCity.hasBonus()){
-			println("-- none --");
+			println(noneMsg);
 		}else{
 			println();
 			Bonus[] arrayBonus = chosenCity.getArrayBonus();
@@ -120,7 +123,7 @@ public class InfoMatch {
 		print("- Emporiums built by: ");
 		ArrayList<Player> arrayListEmporium = (ArrayList<Player>) chosenCity.getArrayListEmporium();
 		if(arrayListEmporium==null){
-			print("-- none --");
+			print(noneMsg);
 		}else{
 			println();
 			for(Player emporium: arrayListEmporium){
@@ -130,7 +133,7 @@ public class InfoMatch {
 		println();
 	}
 	
-	public void printInfoRegions() throws InterruptedException{
+	public void printInfoRegions() {
 		println();
 		for(int i=0; i<Constant.REGIONS_NUMBER; i++){
 			Region region = field.getRegionFromIndex(i);
@@ -145,7 +148,7 @@ public class InfoMatch {
 				println();
 				print("- Bonus: ");
 				if(!arrayPermitCard[j].hasBonus()){
-					println("-- none --");
+					println(noneMsg);
 				}else{
 					println();
 					Bonus[] arrayBonus = arrayPermitCard[j].getArrayBonus();
@@ -159,7 +162,7 @@ public class InfoMatch {
 		}
 	}
 	
-	private void printCities() throws InterruptedException{
+	private void printCities() {
 		
 		int[] positions;
 		
@@ -197,12 +200,15 @@ public class InfoMatch {
 		
 	}
 	
-	private void printRegions() throws InterruptedException{
+	private void printRegions() {
 		println(" " + RegionName.Sea + "    " + RegionName.Hill + "   " + RegionName.Mountain);
 	}
 	
 	
-	private void printCityLinks() throws InterruptedException{
+	private void printCityLinks() {
+		
+		println("City links:\n ");
+		
 		List<Integer>[] arrayCityLinks = field.getArrayCityLinks();
 		for(int i=0; i<arrayCityLinks.length; i++){
 			print(arrayCity[i].getCityName().toString() + ": ");
@@ -217,7 +223,12 @@ public class InfoMatch {
 		println();
 	}
 	
-	private void printBalconies() throws InterruptedException{
+	private void printKingPosition(){
+		println("King position: " + field.getKing().getCurrentCity().toString());
+		println();
+	}
+	
+	private void printBalconies() {
 		println();
 		Balcony[] arrayBalconies = field.getArrayBalcony();
 		for(Balcony balcony: arrayBalconies){
@@ -232,7 +243,7 @@ public class InfoMatch {
 			
 	}
 	
-	private void printAvailableCouncillors() throws InterruptedException{
+	private void printAvailableCouncillors() {
 		
 		println();
 		ArrayList<Councillor> arrayListCouncillor = (ArrayList<Councillor>) field.getAvailableCouncillors().getArrayListCouncillor();
@@ -243,7 +254,7 @@ public class InfoMatch {
 		println();
 	}
 	
-	private void printPlayersInRoutes() throws InterruptedException{
+	private void printPlayersInRoutes() {
 		println("Players status:");
 		for(Player aPlayer: arrayListPlayer){
 			println(aPlayer.getNickname() + ": " +
@@ -254,7 +265,7 @@ public class InfoMatch {
 		println();
 	}
 	
-	private void printPolitcCards() throws InterruptedException{
+	private void printPolitcCards() {
 		print("- Politic cards: ");
 		for(PoliticCard politicCard: player.getArrayListPoliticCard()){
 			print(politicCard.getCardColor() + " ");
@@ -262,15 +273,15 @@ public class InfoMatch {
 		println();
 	}
 	
-	private void printAssistantNumber() throws InterruptedException{
+	private void printAssistantNumber() {
 		println("- Number of assistants: " + player.getAssistant());
 	}
 	
-	private void printPermitCards() throws InterruptedException{
+	private void printPermitCards() {
 		print("- Permit cards: ");
 		ArrayList<PermitCard> arrayListPermitCard = player.getArrayListPermitCard();
 		if(arrayListPermitCard.isEmpty())
-			println("-- none --");
+			println(noneMsg);
 		else{
 			println();
 			for(int i=0; i<arrayListPermitCard.size(); i++){
@@ -283,11 +294,11 @@ public class InfoMatch {
 		}
 	}
 	
-	private void printYourCities() throws InterruptedException{
+	private void printYourCities() {
 		print("- Emporiums built in these cities: ");
 		ArrayList<City> arrayListEmporiumBuilt = player.getArrayListEmporiumBuilt();
 		if(arrayListEmporiumBuilt.isEmpty())
-			println("-- none --");
+			println(noneMsg);
 		else{
 			for(City city: player.getArrayListEmporiumBuilt()){
 				print(city.getCityName().toString() + " ");
