@@ -3,8 +3,6 @@ package it.polimi.ingsw.utils;
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.server.model.*;
 
-
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -29,16 +27,33 @@ public final class Message {
 	}
 
 	/**
+	 * @param players whose nickname has to be printed
+	 * @return message
+	 */
+	public static String playingPlayers(List<Player> players){
+		
+		StringBuilder message = new StringBuilder();
+		
+		message.append("Playing players:");
+		
+		for(int i=0; i<players.size(); i++) 
+			message.append("\n").append(i+1).append(players.get(i).getNickname());
+
+		return message.toString();
+
+	}
+	
+	/**
 	 * @return message
 	 */
 	public static String waitForMatch(){
-		return ("You have been selected for a match, wait a moment...");
+		return "You have been selected for a match, wait a moment...";
 	}
 	/**
 	 * @return message
 	 */
 	public static String matchStarted(){
-		return ("\n --- THE MATCH HAS STARTED! ---\n ");
+		return "\n --- THE MATCH HAS STARTED! ---\n ";
 	}
 
 	/**
@@ -69,7 +84,7 @@ public final class Message {
 	 * @return message
      */
 	public static String ifQuickAction(){
-		return("Would you like to perform Quick Action?");
+		return "Would you like to perform Quick Action?";
 	}
 
 	/**

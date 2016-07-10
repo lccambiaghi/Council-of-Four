@@ -44,6 +44,8 @@ public class ControlMatch {
 				gameOver = true;
 
 			} else {
+				
+				Broadcast.printlnBroadcastAll(Message.playingPlayers(playersConnected), playersConnected);
 
 				getNextConnectedPlayerAndCheckMarket();
 
