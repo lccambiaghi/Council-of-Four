@@ -1,5 +1,10 @@
 package it.polimi.ingsw.server.model;
 
+/**
+ * 
+ * Enumerations of the Regions Name.
+ *
+ */
 public enum RegionName {
 
 	Sea, Hill, Mountain;

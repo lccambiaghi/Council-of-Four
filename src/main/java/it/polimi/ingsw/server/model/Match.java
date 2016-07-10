@@ -10,6 +10,11 @@ import it.polimi.ingsw.server.control.ControlMarket;
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.utils.Constant;
 
+/**
+ * It is the body of a game. It creates the field based on the configurations that the first player
+ * chose, the market and the info of the match. In addition it sets the initially attributes of the players
+ * as for example the initial politics cards, number of assistants and the positions on the routes.
+ */
 
 public class Match {
 

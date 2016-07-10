@@ -15,6 +15,14 @@ import it.polimi.ingsw.server.model.SellingPermitCard;
 import it.polimi.ingsw.server.model.SellingPoliticCard;
 import it.polimi.ingsw.utils.Message;
 
+/**
+ * Preliminary Steps: the method verifies that the player can sell something, doing a control on his objects.
+ * The hashMap {@link itemsMenu} is used to create a dynamic list of objects and the creation of the object to
+ * sell is based on the choice. 
+ * 
+ * Execute: add the sold object to the arrayList selling Objects
+ */
+
 public class MarketSellAction extends Action{
 	 
     private SellingObject sellingObject;

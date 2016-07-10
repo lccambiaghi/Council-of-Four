@@ -7,6 +7,15 @@ import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.server.model.SellingObject;
 import it.polimi.ingsw.utils.Message;
 
+/**
+ * Preliminary Steps: the method verify that the arrayList of Selling Objects is not empty
+ * then interacts with the player and, if he choose to buy something, verifies that he can buy the object 
+ * effectively.
+ * 
+ * Execute: the method add the bought object to the buyer and decrement his richness, in addition it
+ * increases the richness of the seller, and removes the object from the arrayList of Selling Objects.
+ */
+
 public class MarketBuyAction extends Action {
 	 
     public SellingObject possibleBuyedObject;
@@ -99,7 +108,7 @@ public class MarketBuyAction extends Action {
             return true;
  
 }
-   
+    
     @Override
     public void execute(){ 
         Player sellingPlayer = possibleBuyedObject.getOwner();
