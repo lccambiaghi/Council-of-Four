@@ -72,8 +72,6 @@ public class ControlMatch {
 
 			} else {
 				
-				Broadcast.printlnBroadcastAll(Message.playingPlayers(playersConnected), playersConnected);
-
 				getNextConnectedPlayerAndCheckMarket();
 
 				if (lastRound && player.isLastTurnDone()) {
@@ -261,9 +259,6 @@ public class ControlMatch {
 		 */
 		if(turnThread.isAlive()){	
 			turnThread.interrupt();
-			try {
-				Thread.sleep(300);
-			} catch (InterruptedException e) {}
 		}
 		
 	}

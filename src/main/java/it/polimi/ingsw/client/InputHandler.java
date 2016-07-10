@@ -39,7 +39,7 @@ public class InputHandler {
 	 * The method is called remotely and permits to stop the current inputNumber going on
 	 */
 	public void stopInputNumber(){
-		stopped=true;
+		stopped = true;
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class InputHandler {
 			} while(!eligibleInput);
 			
 		}catch (InterruptedException e) {
-			System.out.println("Too late!");
+			// If the input number is stopped by the server through the variable "input"
 		}catch (IOException e1){
 			e1.printStackTrace();
 		

@@ -573,7 +573,7 @@ public final class Message {
 	 * @return message
      */
 	public static String chooseToSellSomething_1_2(){
-		return "Would you like to sell anything?\n" +
+		return "Would you like to sell something?\n" +
 				"1. Yes\n" +
 				"2. No";
 	}
@@ -582,7 +582,7 @@ public final class Message {
 	 * @return message
      */
 	public static String chooseToBuySomething_1_2(){
-		return "Would you like to buy anything?\n" +
+		return "Would you like to buy something?\n" +
 				"1. Yes\n" +
 				"2. No";
 	}
