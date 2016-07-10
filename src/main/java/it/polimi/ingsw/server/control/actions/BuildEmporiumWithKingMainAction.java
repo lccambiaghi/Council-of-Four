@@ -51,7 +51,6 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
         Map<City, Integer> reachableCities = getReachableCities(0);
 
-        //TODO fixed?
         Iterator itReachableCities = reachableCities.entrySet().iterator();
 
         Map.Entry firstReachableCity;
