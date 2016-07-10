@@ -3,6 +3,13 @@ package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.utils.Message;
 
+/**
+ * This Class extends Selling Object so it inherit all the methods and attributes. In the constructor it
+ * assigns the PoliticCard that a player wants to sell, the owner and the price. Then when an other
+ * player buys it, the method addToPlayer assign the object to him.
+ */
+
+
 public class SellingPoliticCard extends SellingObject{
 
 	PoliticCard sellingPoliticCard;
@@ -12,6 +19,10 @@ public class SellingPoliticCard extends SellingObject{
 		this.owner=player;
 		this.price=price;
 	}
+	
+	/**
+	 * Info on the sold object 
+	 */
 	
 	@Override
 	public String getObjectInfo(){		

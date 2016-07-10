@@ -5,6 +5,16 @@ import it.polimi.ingsw.utils.Constant;
 
 import java.util.*;
 
+/**
+ * Nobility Route class manages the position of the player on the route. First of all it saves all the 
+ * players and the position of them on it. The route is made by cells, so the constructors create 
+ * all the Nobility Route Cell and stores them into an Array. 
+ * The differences between the two constructor is that the first is used when the player don't uses
+ * custom configurations, the second when them are customized, so he can choose how many nobility route cells
+ * wants with bonuses.
+ *
+ */
+
 public class NobilityRoute{
 
 	private Map <Player,Integer> nobilityMap = new HashMap<>();
@@ -13,8 +23,11 @@ public class NobilityRoute{
 
 	private Field field;
 	
-	/* The constructor (1) assigns creates nobilityMap with every player
-	   starting at 0. Then it creates arrayNobilityRouteCell */
+	/**
+	 * The constructor (1) assigns creates nobilityMap with every player
+	 * starting at 0. Then it creates arrayNobilityRouteCell 
+	 * @param arrayListPlayer
+	 */
 	public NobilityRoute(ArrayList<Player> arrayListPlayer){
 
 		for (Player anArrayListPlayer : arrayListPlayer) {
@@ -34,12 +47,16 @@ public class NobilityRoute{
 	
 	}
 	
-	/* The constructor (2) assigns creates nobilityMap with every player
-	   starting at 0. Then it creates arrayNobilityRouteCell.
-	   This last process is different from the first constructor.
-	   It takes nobilityBonusNumber bonuses from the Constant randomly
-	   and puts them in a random order in arrayNobilityRouteCell.
-	   Actually it uses the temporary arrayList arrayListNobilityRouteCell */
+	/**
+	 * The constructor (2) assigns creates nobilityMap with every player
+	 * starting at 0. Then it creates arrayNobilityRouteCell.
+	 * This last process is different from the first constructor.
+	 * It takes nobilityBonusNumber bonuses from the Constant randomly
+	 * and puts them in a random order in arrayNobilityRouteCell.
+	 * @param arrayListPlayer
+	 * @param nobilityBonusNumber: the number of cells with bonuses
+	 * 
+	 */
 	public NobilityRoute(ArrayList<Player> arrayListPlayer, int nobilityBonusNumber){
 		
 		for (Player anArrayListPlayer : arrayListPlayer) {
@@ -75,7 +92,13 @@ public class NobilityRoute{
 	}
 	
 
-	/* This method increases/decreases the specified player's nobilityMap of the increment specified */
+	/**
+	 * This method increases/decreases the specified player's nobilityMap of the increment specified.
+	 * In addict it verify that the destination cell contains some bonuses and if yes, call applyBonus method
+	 * from Bonus Class.
+	 * @param increment
+	 * @param player: the player that needs to increase it points
+	 */
 	public void movePlayer(int increment, Player player){
 		int oldValue = nobilityMap.get(player);
 		

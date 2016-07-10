@@ -6,14 +6,24 @@ import java.util.Random;
 
 import it.polimi.ingsw.utils.Constant;
 
+/**
+ * This class creates the Permit Cards. It receives the city of the region and then with a random
+ * choose the number of cities that will be appear on the Permit Card. Then it assigns the array Bonus to the
+ * Permit Card in a random way too.
+ */
+
 public class PermitCard {
 
 	private City[] arrayBuildableCities;
 
 	private Bonus[] arrayBonus;
 	
-	/* The constructor takes as parameter the array of all possible buildable cities and the config
-	 * Then it create the array of ACTUALLY buildable cities */
+	/**
+	 * The constructor takes as parameter the array of all possible buildable cities and the config
+	 * Then it create the array of ACTUALLY buildable cities
+	 * @param arrayCity: the cities of the Region that invokes the creation of FaceUpPermitCardArea
+	 * @param config: configurations of the match
+	 */
 	public PermitCard(City[] arrayCity, Configurations config) {
 		
 		City[] arrayTotalBuildableCities = arrayCity.clone();
