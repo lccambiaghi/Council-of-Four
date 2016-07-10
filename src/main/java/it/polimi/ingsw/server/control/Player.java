@@ -193,6 +193,21 @@ public class Player{
 	public void setLastTurnDone(boolean lastTurnDone) {this.lastTurnDone = lastTurnDone;}
 	
 
+	// RESET MATCH STATUS
+	
+	public void resetMatchStatus(){
+		
+		arrayListPoliticCard= new ArrayList<>();
+		arrayListPermitCard = new ArrayList<>();
+		arrayListUsedPermitCard = new ArrayList<>();
+		arrayListEmporiumBuilt = new ArrayList<>();
+		richness = 0;
+		assistant = 0;
+		victory = 0;
+		lastTurnDone=false;
+		
+	}
+	
 	// *************************************** //
 	
 }
