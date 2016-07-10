@@ -12,6 +12,13 @@ import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.server.model.Configurations;
 import it.polimi.ingsw.utils.DisconnectedException;
 
+/**
+ * This class implements ConnectionWithPlayerInterface and implements its methods.
+ * 
+ * It bases the communication with the client on Socket:
+ * every method is called by the broker and then adapted to the socket connection sending
+ * a specific flow of strings.
+ */
 public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface{
 	
 	GameSide gameSide;
@@ -25,6 +32,16 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 	
 	private Object lock = new Object();
 
+	/**
+	 * Constructor of the class
+	 * 
+	 * It creates the Player, create a Broker and sets it as parameter of the Player.
+	 * 
+	 * It also calls the method "openSocketStream" to open the channels of communication
+	 * 
+	 * @param rmiPlayerSide : the remote object the class will communicate to
+	 * @param gameSide
+	 */
 	public SocketConnectionWithPlayer(Socket clientSocket, GameSide gameSide){
 		
 		this.gameSide=gameSide;
@@ -43,7 +60,7 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		return player;
 	}
 	
-	public void openSocketStream(){
+	private void openSocketStream(){
 		try {
 			outputSocket = new PrintWriter(playerSocket.getOutputStream());
 			inputSocket = new Scanner(playerSocket.getInputStream());
@@ -150,6 +167,11 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		return lock;
 	}
 	
+	/**
+	 * It closes the socket stream with the client and launches a DisconnectedException
+	 * 
+	 * @throws DisconnectedException
+	 */
 	private void disconnectionHandler() throws DisconnectedException{
 		closeSocketStream();
 		throw new DisconnectedException();
