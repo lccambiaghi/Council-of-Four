@@ -124,11 +124,12 @@ public class PlayerSide {
 	}
 	
 	/**
-	 * The method is called remotely and permits the user to login to the server
-	 * It calls
+	 * The method is called remotely and permits the user to set his nickname and login to the server.
+	 * 
+	 * First it sets the boolean "freeScanner" to false, then, depending on the type of connection,
+	 * it starts interacting with the server until the users insert a valid nickname.
+	 * When it's done the method releases the scanner and returns.
 	 */
-	
-	//TO-DO
 	public void login(){
 		
 		setFreeScanner(false);
@@ -175,7 +176,16 @@ public class PlayerSide {
 		return customConfig;
 	}
 	
+	/**
+	 * This class permits to lock the scanner and discard every input NOT requested of the user.
+	 * It implements "Runnable" and overrides the method "run".
+	 *
+	 * If the scanner is free the method check if it there is input in the stream "System.in"
+	 * through the method "System.in.available".
+	 * It uses a "lock" that permits to control the stream in a Thread-safe way.
+	 */
 	class ScannerHandler implements Runnable{
+		
 		@Override
 		public void run() {
 			boolean go = true;
