@@ -20,6 +20,8 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 	private City chosenCity;
 
+	private int numberAssistantsToPay;
+
 	/**
 	 * @param match : the match in which the move is being executed
 	 * @param player : the player who executes the move
@@ -66,7 +68,16 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 		player.getBroker().println(Message.chooseCityToBuild(arrayBuildableCities, buildableCities));
 
 		chosenCity = arrayBuildableCities[player.getBroker().askInputNumber(1, buildableCities) - 1 ]; //-1 for array positioning
-		
+
+		for(Player otherPlayer : chosenCity.getArrayListEmporium())
+			if(otherPlayer!=player)
+				numberAssistantsToPay++;
+
+		if(numberAssistantsToPay>player.getAssistant()){
+			player.getBroker().println(Message.notEnoughAssistant());
+			return false;
+		}
+
 		return true;
 
     }
@@ -75,6 +86,8 @@ public class BuildEmporiumPermitCardMainAction extends Action {
     public void execute(){
 
 		Field field=match.getField();
+
+		player.decrementAssistant(numberAssistantsToPay);
 
 		chosenCity.buildEmporium(player);
 

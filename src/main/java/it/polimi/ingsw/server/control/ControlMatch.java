@@ -67,7 +67,7 @@ public class ControlMatch {
 
 							lastRound = true;
 
-							Broadcast.printlnBroadcastOthers(Message.lastRoundHasStarted(player), playersConnected, player);
+							Broadcast.printlnBroadcastAll(Message.lastRoundHasStarted(player), playersConnected);
 
 						}
 

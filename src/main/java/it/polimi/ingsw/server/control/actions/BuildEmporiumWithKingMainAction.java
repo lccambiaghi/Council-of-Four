@@ -24,6 +24,8 @@ public class BuildEmporiumWithKingMainAction extends Action {
 
     private City chosenCity;
 
+    private int numberAssistantsToPay;
+
     /**
      * @param match : the match in which the move is being executed
      * @param player : the player who executes the move
@@ -91,6 +93,16 @@ public class BuildEmporiumWithKingMainAction extends Action {
         Map.Entry chosenEntry = (Map.Entry) itCities.next();
 
         chosenCity = (City) chosenEntry.getKey();
+
+        for(Player otherPlayer : chosenCity.getArrayListEmporium())
+            if(otherPlayer!=player)
+                numberAssistantsToPay++;
+
+        if(numberAssistantsToPay>player.getAssistant()){
+            player.getBroker().println(Message.notEnoughAssistant());
+            return false;
+        }
+
         kingCost = (int) chosenEntry.getValue();
 
         return true;
@@ -103,6 +115,8 @@ public class BuildEmporiumWithKingMainAction extends Action {
         Field field=match.getField();
 
         player.decrementRichness(satisfactionCost+kingCost);
+
+        player.decrementAssistant(numberAssistantsToPay);
 
         for (PoliticCard politicCard : chosenPoliticCards)
             player.discardPoliticCard(politicCard);
