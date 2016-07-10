@@ -10,6 +10,10 @@ import it.polimi.ingsw.utils.Constant;
 import it.polimi.ingsw.utils.ControlTimer;
 import it.polimi.ingsw.utils.Message;
 
+/**
+ * 
+ *
+ */
 public class WaitingRoom extends Thread{
 
 	private GameSide gameSide;
@@ -23,7 +27,7 @@ public class WaitingRoom extends Thread{
 	
 	private boolean timeToPlay = false;
 	
-	private ArrayList<Player> arrayListPlayerMatch = new ArrayList<Player>();
+	private ArrayList<Player> arrayListPlayerMatch = new ArrayList<>();
 	
 	private final Object lockWaitingRoom = new Object();
 	private Object lockWaitingRoomFromGameSide;
@@ -38,6 +42,7 @@ public class WaitingRoom extends Thread{
 		this.numPlayers=1;
 	}
 	
+	@Override
 	public void run(){
 		
 		lockWaitingRoomFromGameSide = gameSide.getLockWaitingRoomFromGameSide();
@@ -92,12 +97,10 @@ public class WaitingRoom extends Thread{
 	}
 	
 	
-	/**
-	 * 
-	 */
-	public void askForNumberPlayersAndConfig(){
+	private void askForNumberPlayersAndConfig(){
 		
 		Thread t = new Thread(new Runnable(){
+			@Override
 			public void run(){
 				
 				try {
@@ -114,10 +117,8 @@ public class WaitingRoom extends Thread{
 				}
 				
 			}			
-			
 		});
 		t.start();
-		
 		
 		new ControlTimer().waitForThreadUntilTimerExpires(t, Constant.TIMER_SECONDS_WAITING_CONFIGURATIONS);
 		
@@ -158,8 +159,12 @@ public class WaitingRoom extends Thread{
 	}
 	
 	/**
+	 * This method permits to add a player into the waitingRoom.
+	 * It checks if the max number of player is reached and if so it sets  the boolean "timeToPlaY" to true
+	 * If not it checks if it's the second player added and calls the method "startCountDown"
+	 * Finally it sends a string to the player to tell him to wait for a match
 	 * 
-	 * @param player
+	 * @param player : the player to be added
 	 */
 	public void addPlayerToWaitingRoom(Player player){
 			
@@ -183,9 +188,6 @@ public class WaitingRoom extends Thread{
 		
 	}
 	
-	/**
-	 * 
-	 */
 	private void startCountDown(){
 		controlTimer = new ControlTimer();
 		controlTimer.startCountDown(Constant.TIMER_SECONDS_NEW_MATCH);
@@ -193,8 +195,10 @@ public class WaitingRoom extends Thread{
 	
 	
 	/**
+	 * The method checks if the countDown has finishes and if so it sets the boolean "waitingRoomAvailable" 
+	 * of the GameSide to false.
 	 * 
-	 * @return
+	 * @return true if the countDown has finished, false otherwise
 	 */
 	private boolean isCountDownFinished(){
 		synchronized (lockWaitingRoomFromGameSide) {
@@ -210,8 +214,9 @@ public class WaitingRoom extends Thread{
 	
 	
 	/**
+	 * The method saves the configurations into a file that then will be used by the match
 	 * 
-	 * @param config
+	 * @param config : the configurations to be saved
 	 */
 	private void saveFileConfigurations(Configurations config){
 		
