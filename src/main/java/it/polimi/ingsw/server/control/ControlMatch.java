@@ -120,7 +120,7 @@ public class ControlMatch {
 
 		Broadcast.printlnBroadcastAll("Player " + player.getNickname() + " has won the match!", playersConnected);
 
-		//classifica punti vittoria?
+		resetPlayersStatus();
 
 	}
 
@@ -228,7 +228,6 @@ public class ControlMatch {
 
 	private void marketHandler(){
 
-		Broadcast.printlnBroadcastAll("The market has started!", playersConnected);
 		market.startMarket();
 
 	}
@@ -363,6 +362,11 @@ public class ControlMatch {
 
 		}
 
+	}
+	
+	private void resetPlayersStatus(){
+		for(Player p: playersConnected)
+			p.resetMatchStatus();
 	}
 	
 }
