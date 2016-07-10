@@ -58,7 +58,7 @@ public class Constant {
 	public static final int BRONZE_BONUS_TILE_VICTORY_INCREMENT = 8;
 	public static final int SILVER_BONUS_TILE_VICTORY_INCREMENT = 12;
 	public static final int GOLD_BONUS_TILE_VICTORY_INCREMENT = 20;
-	public static final int NUMBER_EMPORIUMS_TO_WIN = 2; //TODO CHANGE IT BACK
+	public static final int NUMBER_EMPORIUMS_TO_WIN = 3; //TODO CHANGE IT BACK
 
 	//reward tiles' increments
 	public static final int NUMBER_KING_REWARD_TILES = 5;

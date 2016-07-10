@@ -13,13 +13,31 @@ import it.polimi.ingsw.utils.Constant;
 import it.polimi.ingsw.utils.DisconnectedException;
 import it.polimi.ingsw.utils.Message;
 
+/**
+ * This class contains the main that launches the server.
+ * 
+ * initializeRMI: creates the registry and allocate the class rmiGameSide
+ * 
+ * ListenSocket: class that extends thread and permit to listen through socket
+ * 
+ * The whole class is designed to handle the clients who successfully connect to the server:
+ * it permits them to login, it adds them to the "arrayListAllPlayer" and put them in
+ * the first waiting room available.
+ * 
+ * It also handle the players that finish a match and asks them to play again.
+ * 
+ * There is a Thread for every player through all of these processes, so concurrent variables
+ * and methods are synchronized with locks.
+ * 
+ * Moreover there are locks in common with the class WaitingRoom to avoid concurrent accesses to
+ * common variables.
+ *
+ */
 public class GameSide {
-
-	public static void main( String[] args ){
-		new GameSide();
-    }
 	
-	private static ArrayList<Player> arrayListAllPlayer = new ArrayList<Player>();
+	private ArrayList<Player> arrayListAllPlayer = new ArrayList<>();
+	private final Object lockArrayListPlayer = new Object();
+	private final Object lockWaitingRoomFromGameSide = new Object();
 
 	private RMIGameSideInterface rmiGameSide;
 	
@@ -29,22 +47,18 @@ public class GameSide {
 	private WaitingRoom waitingRoom;
 	
 	private Object lockWaitingRoom;
-	
-	private final Object lockArrayListPlayer = new Object();
-	public final Object lockWaitingRoomFromGameSide = new Object();
 
 	private boolean waitingRoomAvailable=false;
 	
+	/**
+	 * Constructor of the class.
+	 * Initializes and locate the RMI registry and starts listening through Socket
+	 * launching a new thread
+	 */
 	public GameSide() {
 		
-		/**
-		 * Initialize and locate the RMI registry
-		 */
 		initializeRMI();
 		
-		/**
-		 * Start listening with Socket with a thread
-		 */
 		listenSocket = new ListenSocket(this);
 		listenSocket.start();
 		
@@ -69,10 +83,21 @@ public class GameSide {
 		}
 	}
 	
+	/**
+	 *  This class creates the ServerSocket and, when the "start" method is invoked,
+	 *  it starts listening through socket.
+	 *  
+	 *  Whenever a client connects it calls the method "startHandlePlayer".
+	 *  
+	 *  The "run" method catches InputOutput exceptions due to lack of connection.
+	 *
+	 */
 	class ListenSocket extends Thread{
 		
 		private GameSide gameSide;
 		public ListenSocket(GameSide gameSide){this.gameSide=gameSide;}
+		
+		@Override
 		public void run(){
 			try {
 				serverSocket = new ServerSocket(Constant.SOCKET_PORT);
@@ -88,6 +113,17 @@ public class GameSide {
 		}
 	}
 	
+	/**
+	 * This method can be called by both the classes of connection:
+	 * "SocketConnectionWithPlayer" and "RMIConnectionWithPlayer"
+	 * 
+	 * It starts a new Thread creating the object "HandlePlayer".
+	 * 
+	 * It also prints in the console if the player has just connected
+	 * 
+	 * @param gameSide : the caller
+	 * @param player : the player to be handled
+	 */
 	public void startHandlePlayer(GameSide gameSide, Player player){
 		
 		HandlePlayer hp = new HandlePlayer(gameSide, player);
@@ -98,6 +134,17 @@ public class GameSide {
 		hp.start();
 	}
 	
+	
+	/**
+	 * This class handles the player through a Thread.
+	 * 
+	 * putPlayerInArrayList : put the player into the arrayList
+	 *  
+	 * askToPlayAgain : asks the player whether he wants to play again or not
+	 * 
+	 * putPlayerInWaitingRoom : it puts the player into the a WaitingRoom available
+	 *
+	 */
 	class HandlePlayer extends Thread{
 		
 		private GameSide gameSide;
@@ -108,10 +155,14 @@ public class GameSide {
 			this.player=player;
 		}
 		
+		@Override
 		public void run(){
 			
 			try {
 				
+				/**
+				 * If the player is not connected yet
+				 */
 				if(!player.isLogged()){
 					
 					player.getBroker().login(gameSide);
@@ -119,9 +170,14 @@ public class GameSide {
 				
 					putPlayerInArrayList(player);
 					
-				}else{
+				}
+				
+				/**
+				 * If the player exit from a match
+				 */
+				else{
 					
-					if(askToPlayAgain(player) == false){
+					if(!askToPlayAgain(player)){
 						removePlayerFromArrayList(player);
 						player.getBroker().println(Message.sayByeBye());
 						return;
@@ -134,29 +190,75 @@ public class GameSide {
 				System.out.println("The player trying to login has disconnected!");
 			}
 		}
-	
-	}
-	
-	public void putPlayerInArrayList(Player player){
-		synchronized (lockArrayListPlayer) {
-			player.setConnected(true);
-			arrayListAllPlayer.add(player);
+		
+		private void putPlayerInArrayList(Player player){
+			synchronized (lockArrayListPlayer) {
+				arrayListAllPlayer.add(player);
+			}
 		}
-	}
+		
+		/**
+		 * The method asks the player if he wants to play again
+		 * 
+		 * @param player 
+		 * @return true if he plays again, otherwise false
+		 */
+		private boolean askToPlayAgain(Player player){
+			player.getBroker().println(Message.askToPlayAgain());
+			player.getBroker().println(Message.chooseYesOrNo_1_2());
+			int choice = 0;
+			try {
+				choice = player.getBroker().askInputNumber(1, 2);
+			} catch (InterruptedException e){}
+			return choice==1;
+		}
+		
+		/**
+		 * This method creates a new WaitingRoom if there's none available, otherwise
+		 * it puts the player in the available one.
+		 * 
+		 * In order to terminate, the method waits for a notify on the "lockWaitingRoom"
+		 * 
+		 * @param player : the player handled
+		 */
+		private void putPlayerInWaitingRoom(Player player){
+			synchronized (lockWaitingRoomFromGameSide) {
+				
+				if(!waitingRoomAvailable){
+					
+					waitingRoom = new WaitingRoom(gameSide, player);
+					waitingRoom.start();
+					
+					lockWaitingRoom=waitingRoom.getLockWaitingRoom();
+					
+					waitingRoomAvailable=true;
+					
+					try {
+						
+						synchronized (lockWaitingRoom) {
+							lockWaitingRoom.wait();
+						}
+						
+					} catch (InterruptedException e) {}
+					
+					
+				}else{
+					
+					waitingRoom.addPlayerToWaitingRoom(player);
+					
+				}
+				
+			}
+		}
+		
+	}	
 	
-	private boolean askToPlayAgain(Player player){
-		player.getBroker().println(Message.askToPlayAgain());
-		player.getBroker().println(Message.chooseYesOrNo_1_2());
-		int choice = 2;
-		try {
-			choice = player.getBroker().askInputNumber(1, 2);
-		} catch (InterruptedException e) {}
-		if(choice==1)
-			return true;
-		else
-			return false;
-	}
-	
+	/**
+	 * The method removes the player from the "arrayListAllPlayer".
+	 * It checks by itself if the player exists
+	 * 
+	 * @param player : the player to be removed
+	 */
 	public void removePlayerFromArrayList(Player player){
 		synchronized (lockArrayListPlayer) {
 			for(int i = 0; i<arrayListAllPlayer.size(); i++){
@@ -166,37 +268,14 @@ public class GameSide {
 		}
 	}
 	
-	private void putPlayerInWaitingRoom(Player player){
-		synchronized (lockWaitingRoomFromGameSide) {
-			
-			if(!waitingRoomAvailable){
-				
-				waitingRoom = new WaitingRoom(this, player);
-				waitingRoom.start();
-				
-				lockWaitingRoom=waitingRoom.getLockWaitingRoom();
-				
-				waitingRoomAvailable=true;
-				
-				try {
-					
-					synchronized (lockWaitingRoom) {
-						lockWaitingRoom.wait();
-					}
-					
-				} catch (InterruptedException e) {}
-				
-				
-			}else{
-				
-				waitingRoom.addPlayerToWaitingRoom(player);
-				
-			}
-			
-		}
-	}
 	
-	
+	/**
+	 * The method checks if the nickname already belongs to a player in the arrayList.
+	 * If so it returns true, otherwise false
+	 * 
+	 * @param nickname : the nickname to be checked
+	 * @return true if it already exists, otherwise false
+	 */
 	public boolean isNicknameInUse(String nickname){
 		synchronized (lockArrayListPlayer) {
 			for(Player player: arrayListAllPlayer){
@@ -206,7 +285,7 @@ public class GameSide {
 			return false;
 		}
 	}
-	
+
 	public void setWaitingRoomAvailable(boolean waitingRoomAvailable) {
 		this.waitingRoomAvailable = waitingRoomAvailable;
 	}
@@ -214,6 +293,14 @@ public class GameSide {
 	public Object getLockWaitingRoomFromGameSide() {
 		return lockWaitingRoomFromGameSide;
 	}
+	
+	/**
+	 * The main launches the gameSide
+	 * @param args
+	 */
+	public static void main( String[] args ){
+		new GameSide();
+    }
 
 	
 }
