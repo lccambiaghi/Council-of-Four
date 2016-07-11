@@ -83,6 +83,7 @@ public class InputHandler {
 			
 		}catch (InterruptedException e) {
 			// If the input number is stopped by the server through the variable "input"
+			Thread.currentThread().interrupt();
 		}catch (IOException e1){
 			e1.printStackTrace();
 		
@@ -119,11 +120,9 @@ public class InputHandler {
 	 * @throws IOException if the scanner get closed
 	 */
 	private String readWithSleep() throws InterruptedException, IOException{
-		boolean go = true;
-		while(go){
+		while(true){
 			if(System.in.available() > 0){
 				if(System.in.available() > 0){
-					go=false;
 					return in.nextLine();
 				}
 			}else{
@@ -134,7 +133,6 @@ public class InputHandler {
 				}
 			}
 		}
-		return null;
 	}
 	
 	/**

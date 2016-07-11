@@ -48,7 +48,7 @@ public class GameSide {
 	 * Initializes and locate the RMI registry and starts listening through Socket
 	 * launching a new thread
 	 */
-	private GameSide() {
+	private void startGameSide() {
 		
 		initializeRMI();
 
@@ -296,7 +296,8 @@ public class GameSide {
 	 * @param args
 	 */
 	public static void main( String[] args ){
-		new GameSide();
+		GameSide gm = new GameSide();
+		gm.startGameSide();
     }
 
 	

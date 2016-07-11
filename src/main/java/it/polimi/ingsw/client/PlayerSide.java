@@ -43,7 +43,7 @@ public class PlayerSide {
 	/**
 	 * Constructor: it starts to communicate with the user and then with the server
 	 */
-	private PlayerSide() {
+	private void startPlayerSide() {
 		
 		initializeScanner();
 		
@@ -228,7 +228,8 @@ public class PlayerSide {
 	 * @param args
 	 */
 	public static void main (String[] args){
-		new PlayerSide();
+		PlayerSide ps = new PlayerSide();
+		ps.startPlayerSide();
 	}
 	
 }
