@@ -69,7 +69,6 @@ public class Match {
 			return (Configurations) objectInputStream.readObject();
 
 		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			// close the stream

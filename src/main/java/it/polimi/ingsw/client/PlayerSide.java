@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.Configurations;
 import it.polimi.ingsw.utils.MessageClient;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
@@ -21,7 +22,7 @@ import java.util.Scanner;
  * chooseConnection: the method permits the user to choose the type of connection through which he wants
  * to connect to the server: Socket or RMI
  */
-public class PlayerSide {
+public class PlayerSide implements Serializable{
 	
 	private final Object lock = new Object();
 	

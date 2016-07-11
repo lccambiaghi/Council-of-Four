@@ -8,6 +8,7 @@ import it.polimi.ingsw.utils.DisconnectedException;
 import it.polimi.ingsw.utils.Message;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.Naming;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
  * common variables.
  *
  */
-public class GameSide {
+public class GameSide implements Serializable{
 	
 	private final ArrayList<Player> arrayListAllPlayer = new ArrayList<>();
 	private final Object lockArrayListPlayer = new Object();

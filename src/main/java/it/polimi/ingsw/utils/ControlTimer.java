@@ -83,7 +83,8 @@ public class ControlTimer {
 		        	 break;
 		         
 		    } catch (InterruptedException e) {
-		    	//Impossible to reach
+				Thread.currentThread().interrupt();
+		    	//Impossible to be reached
 		    }	
 		}
 	}
