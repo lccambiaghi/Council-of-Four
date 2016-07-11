@@ -39,7 +39,7 @@ public class RMIGameSide extends UnicastRemoteObject implements RMIGameSideInter
 	/**
 	 * This method calls the corresponding "isNicknameInUse" of the "gameSide"
 	 * 
-	 * @param string : the string representing the nickname
+	 * @param nickname : the string representing the nickname
 	 * @throws RemoteException if the server disconnects
 	 */
 	public boolean isNicknameInUse(String nickname) throws RemoteException{

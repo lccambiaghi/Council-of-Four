@@ -8,11 +8,11 @@ import it.polimi.ingsw.utils.Message;
 import java.util.ArrayList;
 
 /**
- * Preliminary Steps: the method verify that the arrayList of Selling Objects is not empty
- * then interacts with the player and, if he choose to buy something, verifies that he can buy the object 
- * effectively.
+ * Preliminary Steps: the method verifies that the arrayList of Selling Objects is not empty
+ * then interacts with the player and, if he chooses to buy something, verifies if he can effectively
+ * buy the object.
  * 
- * Execute: the method add the bought object to the buyer and decrement his richness, in addition it
+ * Execute: the method adds the bought object to the buyer and decrements his richness, in addition it
  * increases the richness of the seller, and removes the object from the arrayList of Selling Objects.
  */
 
@@ -33,7 +33,7 @@ public class MarketBuyAction extends Action {
    
     /**
      * This is the method used to buy an object. When the selling phase is finished
-     * start this method and first of all it clone the arrayList of players and shuffles it,
+     * this method is called and first of all it clones the arrayList of players and shuffles it,
      * because we need random turns. Then it ask to the first player if he wants to buy something
      * and if the answer is positive, it shows all the objects that are in the arraylist.
      * The player can choose one of them or quit the market. If it hasn't money and he cannot
@@ -87,7 +87,6 @@ public class MarketBuyAction extends Action {
      * @param price
      * @param playerTurn: the buyer
      * @return true if he has sufficient money, false otherwise
-     * @throws InterruptedException
      */
     private boolean canBuy(int price, Player playerTurn) {
         if(checkIfEnoughRichness(playerTurn, price)){
