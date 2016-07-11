@@ -6,19 +6,16 @@ package it.polimi.ingsw.server.model;
  */
 
 public class NobilityRouteCell {
-	
-	private int index;
+
 	private final Bonus [] arrayBonus;
 
 	/**
 	 * The constructor creates the NobilityRouteCell, assigning it index and
 	 * the array of bonuses both passed as parameters 
-	 * @param index: index of the cell in the arrayNobilityRouteCell in the NobilityRoute class
 	 * @param arrayBonus: the arrayBonus linked to the cell
 	 */
-	public NobilityRouteCell(int index, Bonus[] arrayBonus){
+	public NobilityRouteCell(Bonus[] arrayBonus){
 
-		this.index=index;
 		this.arrayBonus=arrayBonus;
 		
 	}
@@ -28,10 +25,6 @@ public class NobilityRouteCell {
 	
 	public Bonus [] getArrayBonus() {
 		return arrayBonus;
-	}
-	
-	public void setIndex(int index){
-		this.index=index;
 	}
 
 }

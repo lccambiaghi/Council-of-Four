@@ -78,8 +78,4 @@ public class RMIConnection {
 		return rmiGameSide;
 	}
 	
-	public RMIPlayerSideInterface getRMIPlayerSide(){
-		return rmiPlayerSide;
-	}
-	
 }

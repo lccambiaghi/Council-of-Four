@@ -11,11 +11,6 @@ import it.polimi.ingsw.utils.DisconnectedException;
 public interface ConnectionWithPlayerInterface {
 
 	/**
-	 * @return the Player linked to the connection
-	 */
-	Player getPlayer();
-	
-	/**
 	 * This method permit to perform the login with the player
 	 * 
 	 * @param gameSide : the GameSide that calls the method

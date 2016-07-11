@@ -39,14 +39,7 @@ public class GameSide {
 	private final Object lockArrayListPlayer = new Object();
 	private final Object lockWaitingRoomFromGameSide = new Object();
 
-	private RMIGameSideInterface rmiGameSide;
-
-	private ServerSocket serverSocket;
-	private final ListenSocket listenSocket;
-	
 	private WaitingRoom waitingRoom;
-	
-	private Object lockWaitingRoom;
 
 	private boolean waitingRoomAvailable=false;
 	
@@ -58,8 +51,8 @@ public class GameSide {
 	private GameSide() {
 		
 		initializeRMI();
-		
-		listenSocket = new ListenSocket(this);
+
+		ListenSocket listenSocket = new ListenSocket(this);
 		listenSocket.start();
 		
 	}
@@ -71,7 +64,7 @@ public class GameSide {
 			java.rmi.registry.LocateRegistry.createRegistry(Constant.RMI_PORT);
 			
 			System.out.println("Implementing RMIGameSide...");
-			rmiGameSide=new RMIGameSide(this);
+			RMIGameSideInterface rmiGameSide = new RMIGameSide(this);
 			
 			System.out.println("Rebinding...");
 			Naming.rebind("rmi://" + Constant.RMI_REGISTRY_ADDRESS +":" + Constant.RMI_PORT+"/CoF", rmiGameSide);
@@ -100,11 +93,11 @@ public class GameSide {
 		@Override
 		public void run(){
 			try {
-				serverSocket = new ServerSocket(Constant.SOCKET_PORT);
+				ServerSocket serverSocket = new ServerSocket(Constant.SOCKET_PORT);
 				System.out.println("Socket listening on port "+Constant.SOCKET_PORT);
 				while(true){
 					Socket socket = serverSocket.accept();
-					SocketConnectionWithPlayer s = new SocketConnectionWithPlayer(socket, gameSide);
+					SocketConnectionWithPlayer s = new SocketConnectionWithPlayer(socket);
 					startHandlePlayer(gameSide, s.getPlayer());
 				}
 			} catch (IOException e) {
@@ -228,8 +221,8 @@ public class GameSide {
 					
 					waitingRoom = new WaitingRoom(gameSide, player);
 					waitingRoom.start();
-					
-					lockWaitingRoom=waitingRoom.getLockWaitingRoom();
+
+					Object lockWaitingRoom = waitingRoom.getLockWaitingRoom();
 					
 					waitingRoomAvailable=true;
 					

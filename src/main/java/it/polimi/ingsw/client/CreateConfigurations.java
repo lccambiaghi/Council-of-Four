@@ -20,17 +20,14 @@ import it.polimi.ingsw.utils.Constant;
 
 public class CreateConfigurations{
 
-	private final PlayerSide playerSide;
 	private Configurations config;
 	private final InputHandler inputHandler;
 	
 	/**
 	 * Constructor of the class
-	 * @param playerSide: 
-	 * @param inputHandler: 
+	 * @param inputHandler:
 	 */
-	public CreateConfigurations(PlayerSide playerSide, InputHandler inputHandler){
-		this.playerSide=playerSide;
+	public CreateConfigurations(InputHandler inputHandler){
 		this.inputHandler=inputHandler;
 	}
 	

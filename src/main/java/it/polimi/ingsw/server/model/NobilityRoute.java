@@ -42,7 +42,7 @@ public class NobilityRoute{
 				indexBonuses++;
 			}
 		
-			arrayNobilityRouteCell[indexNobility] = new NobilityRouteCell(indexNobility, arrayBonus); 
+			arrayNobilityRouteCell[indexNobility] = new NobilityRouteCell(arrayBonus);
 		}
 	
 	}
@@ -76,18 +76,14 @@ public class NobilityRoute{
 				arrayBonus=matrixNobilityRouteCellBonus[indexBonuses];
 				indexBonuses++;
 			}
-			arrayListNobilityRouteCell.add( new NobilityRouteCell(0, arrayBonus)); 
+			arrayListNobilityRouteCell.add( new NobilityRouteCell(arrayBonus));
 		}
 		Collections.shuffle(arrayListNobilityRouteCell);
 		
 		/*	The first cell cannot (in any way) have bonuses */
-		arrayListNobilityRouteCell.add(0, new NobilityRouteCell(0, null));
+		arrayListNobilityRouteCell.add(0, new NobilityRouteCell(null));
 		
 		arrayNobilityRouteCell = arrayListNobilityRouteCell.toArray(arrayNobilityRouteCell);
-		
-		for (int indexNobility = 0;  indexNobility<Constant.NOBILITY_MAX+1; indexNobility++){
-			arrayNobilityRouteCell[indexNobility].setIndex(indexNobility);
-		}
 		
 	}
 	
@@ -118,10 +114,6 @@ public class NobilityRoute{
 	
 	public NobilityRouteCell[] getArrayNobilityRouteCell(){
 		return arrayNobilityRouteCell;
-	}
-
-	public Field getField() {
-		return field;
 	}
 
 	public void setField(Field field) {

@@ -39,8 +39,7 @@ public class WaitingRoom extends Thread{
 	private final Player firstPlayer;
 	
 	private int playersMaxNumber;
-	private Configurations config = null;
-	
+
 	private int numPlayers;
 	private ControlTimer controlTimer;
 	
@@ -48,9 +47,7 @@ public class WaitingRoom extends Thread{
 	
 	private final Object lockWaitingRoom = new Object();
 	private Object lockWaitingRoomFromGameSide;
-	
-	private ControlMatch controlMatch;
-	
+
 	/**
 	 * Constructor of the class
 	 * 
@@ -106,8 +103,8 @@ public class WaitingRoom extends Thread{
 		 * At this point the match can start
 		 */
 		Broadcast.printlnBroadcastAll(Message.matchStarted(), arrayListPlayerMatch);
-		
-		controlMatch = new ControlMatch(arrayListPlayerMatch);
+
+		ControlMatch controlMatch = new ControlMatch(arrayListPlayerMatch);
 		controlMatch.startMatch();
 		
 		/**
@@ -200,7 +197,7 @@ public class WaitingRoom extends Thread{
 		firstPlayer.getBroker().println(Message.chooseYesOrNo_1_2());
 		int choice = firstPlayer.getBroker().askInputNumber(1, 2);
 		if(choice==1){
-			config = firstPlayer.getBroker().getConfigurations();
+			Configurations config = firstPlayer.getBroker().getConfigurations();
 			saveFileConfigurations(config);
 		}
 	

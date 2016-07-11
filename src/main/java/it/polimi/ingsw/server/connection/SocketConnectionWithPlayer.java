@@ -20,17 +20,15 @@ import it.polimi.ingsw.utils.DisconnectedException;
  * a specific flow of strings.
  */
 public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface{
-	
-	GameSide gameSide;
-	
-	private Player player;
-	private Socket playerSocket;
+
+	private final Player player;
+	private final Socket playerSocket;
 	private Scanner inputSocket;
 	private PrintWriter outputSocket;
 	
 	private int intResult;
 	
-	private Object lock = new Object();
+	private final Object lock = new Object();
 
 	/**
 	 * Constructor of the class
@@ -38,13 +36,10 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 	 * It creates the Player, create a Broker and sets it as parameter of the Player.
 	 * 
 	 * It also calls the method "openSocketStream" to open the channels of communication
-	 * 
-	 * @param rmiPlayerSide : the remote object the class will communicate to
-	 * @param gameSide
+	 *
 	 */
-	public SocketConnectionWithPlayer(Socket clientSocket, GameSide gameSide){
-		
-		this.gameSide=gameSide;
+	public SocketConnectionWithPlayer(Socket clientSocket){
+
 		this.playerSocket=clientSocket;
 		
 		player = new Player();
@@ -102,13 +97,6 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 				sendString("false");
 			}
 		}
-	}
-			
-	public int getPlayersMaxNumber() throws DisconnectedException{
-		int playersMaxNumber=0;
-		sendString("SOCKETgetConfigurationsPlayersMaxNumber");
-		playersMaxNumber = Integer.parseInt(receiveString());
-		return playersMaxNumber;
 	}
 	
 	public boolean isCustomConfig() throws DisconnectedException{

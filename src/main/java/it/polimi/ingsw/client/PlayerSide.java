@@ -30,14 +30,12 @@ public class PlayerSide {
 	private char typeOfConnection;
 	
 	private SocketConnection socketConnection;
-	private SocketListener socketListener;
 	private RMIConnection rmiConnection;
 	
 	private Scanner in;
 	private InputHandler inputHandler;
 	
 	private boolean freeScanner;
-	private Thread threadScanner;
 
 	private Configurations config;
 	private boolean customConfig;
@@ -64,7 +62,7 @@ public class PlayerSide {
 		freeScanner=true;
 		in = new Scanner(System.in);
 		inputHandler = new InputHandler(this, in);
-		threadScanner = new Thread(new ScannerHandler());
+		Thread threadScanner = new Thread(new ScannerHandler());
 		threadScanner.start();
 		
 	}
@@ -92,9 +90,9 @@ public class PlayerSide {
 	 * socket with SocketListener
 	 */
 	private void handleSocketConnection(){
-		socketConnection = new SocketConnection(this);
+		socketConnection = new SocketConnection();
 		socketConnection.connectToServer();
-		socketListener = new SocketListener(this, socketConnection);
+		SocketListener socketListener = new SocketListener(this, socketConnection);
 		socketListener.startListening();
 	}
 	
@@ -117,7 +115,7 @@ public class PlayerSide {
 		int choice = inputHandler.inputNumber(1, 2);
 		
 		if(choice==1){
-			CreateConfigurations cc = new CreateConfigurations(this, inputHandler);
+			CreateConfigurations cc = new CreateConfigurations(inputHandler);
 			cc.startCreating();
 			config = cc.getConfigurations();
 			customConfig = true;

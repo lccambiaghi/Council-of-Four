@@ -15,7 +15,6 @@ import it.polimi.ingsw.utils.DisconnectedException;
  */
 public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 
-	private final GameSide gameSide;
 	private final Player player;
 	private final RMIPlayerSideInterface rmiPlayerSide;
 	
@@ -29,11 +28,9 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 	 * It creates the Player, create a Broker and sets it as parameter of the Player
 	 * 
 	 * @param rmiPlayerSide : the remote object the class will communicate to
-	 * @param gameSide
 	 */
-	public RMIConnectionWithPlayer(RMIPlayerSideInterface rmiPlayerSide, GameSide gameSide){
-	
-		this.gameSide=gameSide;
+	public RMIConnectionWithPlayer(RMIPlayerSideInterface rmiPlayerSide){
+
 		this.rmiPlayerSide=rmiPlayerSide;
 		
 		player = new Player();

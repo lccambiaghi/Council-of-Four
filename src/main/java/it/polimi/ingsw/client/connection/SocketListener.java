@@ -9,8 +9,7 @@ import it.polimi.ingsw.client.PlayerSide;
 public class SocketListener {
 
 	private boolean inputStop = false;
-	
-	private String message;
+
 	private final PlayerSide playerSide;
 	private final SocketConnection socketConnection;
 	
@@ -37,7 +36,7 @@ public class SocketListener {
 	public void startListening(){
 		
 		while(true){
-			message = socketConnection.receiveStringFS();
+			String message = socketConnection.receiveStringFS();
 			switch(message){
 			
 			case	"SOCKETlogin":

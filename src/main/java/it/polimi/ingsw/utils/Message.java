@@ -26,13 +26,6 @@ public final class Message {
 	public static String sayByeBye(){
 		return "It has been a pleasure having you as a player, BYE BYE!";
 	}
-
-	/**
-	 * @return message
-	 */
-	public static String tooLateTurnOver(){
-		return "Too late, your turn is over!";
-	}
 	
 	/**
 	 * @param players whose nickname has to be printed
@@ -156,24 +149,6 @@ public final class Message {
 		for(int i=0; i<arrayBalcony.length; i++)
 			message.append("\n").append(i+1).append(" ").append(arrayBalcony[i].getNameBalcony());
 
-		return message.toString();
-
-	}
-
-	/**
-	 * @param playerPoliticCards to print
-	 * @return message
-     */
-	public static String choosePoliticCard(List <PoliticCard> playerPoliticCards){
-
-		StringBuilder message = new StringBuilder();
-
-		message.append("Which Politics Cards would you like to use?");
-
-		for (int i=0; i<playerPoliticCards.size(); i++){
-			message.append("\n").append(i+1).append(". ")
-					.append(playerPoliticCards.get(i).getCardColor().toString());
-		}
 		return message.toString();
 
 	}

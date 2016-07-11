@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-import it.polimi.ingsw.client.PlayerSide;
 import it.polimi.ingsw.utils.Constant;
 
 /**
@@ -16,20 +15,16 @@ import it.polimi.ingsw.utils.Constant;
  * It offers methods to send strings/objects and receive strings.
  */
 public class SocketConnection {
-	
-	private final PlayerSide playerSide;
-	
+
 	private Socket mySocket;
 	private Scanner inSocket;
 	private PrintWriter outSocket;
 	
 	/**
 	 * Constructor of the class.
-	 * 
-	 * @param playerSide : the object PlayerSide that calls the constructor
+	 *
 	 */
-	public SocketConnection(PlayerSide playerSide){
-		this.playerSide=playerSide;
+	public SocketConnection(){
 	}
 	
 	/**
