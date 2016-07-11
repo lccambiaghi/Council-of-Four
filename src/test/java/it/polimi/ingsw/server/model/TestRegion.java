@@ -154,7 +154,6 @@ public class TestRegion {
 			objectOutputStream.writeObject(config);
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		}finally{
@@ -162,7 +161,6 @@ public class TestRegion {
 			try {
 				fileOutputStream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -182,17 +180,14 @@ public class TestRegion {
 	         this.config = (Configurations) objectInputStream.readObject();
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			// close the stream
 			try {
 				fileInputStream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

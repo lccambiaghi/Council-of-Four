@@ -1,10 +1,5 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.model.Bonus;
-import it.polimi.ingsw.server.model.City;
-import it.polimi.ingsw.server.model.Field;
-import it.polimi.ingsw.utils.Constant;
-
 import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
@@ -17,7 +12,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.server.TestCases;
 import it.polimi.ingsw.server.control.Player;
 
 public class TestField {
@@ -180,15 +174,13 @@ public class TestField {
 			objectOutputStream.writeObject(config);
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
+
 		}finally{
 			// close the stream
 			try {
 				fileOutputStream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -208,17 +200,14 @@ public class TestField {
 	         this.config = (Configurations) objectInputStream.readObject();
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			// close the stream
 			try {
 				fileInputStream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

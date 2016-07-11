@@ -185,11 +185,7 @@ public class ControlMatch {
 	private boolean atLeastTwoPlayersConnected(){
 		if(playersConnected==null){
 			return false;
-		}else if(playersConnected.size()==1){
-			return false;
-		}else{
-			return true;
-		}
+		}else return playersConnected.size() != 1;
 	}
 
 	private void getNextConnectedPlayerAndCheckMarket() {

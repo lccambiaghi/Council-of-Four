@@ -79,8 +79,6 @@ public class Field {
 
 		CityColor[] arrayCityColor = createArrayCityColor(numberCities);
 
-		//TODO REFACTOR
-
 		for(int itRegion = 0, itColor=0; itRegion<Constant.REGIONS_NUMBER; itRegion++){
 
 			RegionName regionName = RegionName.getRegionNameFromIndex(itRegion);

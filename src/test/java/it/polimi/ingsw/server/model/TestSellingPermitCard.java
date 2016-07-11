@@ -168,7 +168,6 @@ public class TestSellingPermitCard {
 			objectOutputStream.writeObject(config);
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		}finally{
@@ -176,7 +175,6 @@ public class TestSellingPermitCard {
 			try {
 				fileOutputStream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -195,18 +193,13 @@ public class TestSellingPermitCard {
 	         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 	         this.config = (Configurations) objectInputStream.readObject();
 		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
+		} finally{
 			// close the stream
 			try {
 				fileInputStream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

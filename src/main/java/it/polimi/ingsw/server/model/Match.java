@@ -66,14 +66,20 @@ public class Match {
 
 			// create an ObjectInputStream for the file we created before
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-			fileInputStream.close();
-
 			return (Configurations) objectInputStream.readObject();
 
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			// close the stream
+			try {
+				if (fileInputStream != null) {
+					fileInputStream.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return null;

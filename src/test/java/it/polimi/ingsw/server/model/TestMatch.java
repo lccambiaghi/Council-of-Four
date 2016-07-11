@@ -185,7 +185,6 @@ public class TestMatch {
 			objectOutputStream.writeObject(config);
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		}finally{
@@ -193,7 +192,6 @@ public class TestMatch {
 			try {
 				fileOutputStream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -213,17 +211,14 @@ public class TestMatch {
 	         this.config = (Configurations) objectInputStream.readObject();
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			// close the stream
 			try {
 				fileInputStream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
