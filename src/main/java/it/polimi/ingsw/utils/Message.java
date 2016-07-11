@@ -477,8 +477,15 @@ public final class Message {
      */
 	public static String getInfoPermitCard (PermitCard sellingPermitCard, int price){
 
-		return "PermitCard - Buildable Cities: " + Arrays.toString(sellingPermitCard.getArrayBuildableCities()) +
-				"\nThe price is: " + price + " coins";
+		StringBuilder message = new StringBuilder();
+		message.append("PermitCard - Buildable Cities: ");
+		
+		City[] arrayBuildableCities = sellingPermitCard.getArrayBuildableCities();
+		for(City city : arrayBuildableCities){
+			message.append(city.getCityName().toString()).append(" ");
+		}
+		message.append("\nThe price is ").append(price).append(" coins");
+		return message.toString();
 
 	}
 
@@ -489,7 +496,7 @@ public final class Message {
      */
 	public static String getInfoPoliticCard (PoliticCard sellingPoliticCard, int price){
 
-		return "Politic Card Color:" + " " + sellingPoliticCard.getCardColor() + ". " +
+		return "Politic Card Color:" + " " + sellingPoliticCard.getCardColor() +
 				"\nThe price is: " + price + " coins";
 	}
 
@@ -500,8 +507,8 @@ public final class Message {
      */
 	public static String getInfoAssistants (int sellingAssistants, int price){
 
-		return "Number of Assistants: " + sellingAssistants + ". " +
-				"The price is: " + price + " coins";
+		return "Number of Assistants: " + sellingAssistants +
+				"\nThe price is: " + price + " coins";
 
 	}
 
