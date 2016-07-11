@@ -6,6 +6,20 @@ import it.polimi.ingsw.utils.Constant;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * This class is used to show the status of the match at the players. The three final methods are used
+ * to print the map, the first is used when there is a match with 15 cities, and so on.
+ * 
+ * Furthermore the user can see the info of all cities, how the cities are linked, the position of the king,
+ * and the info of a specific city, to know the color and who has already built an emporium in it, and
+ * the bonuses that it has.
+ *   
+ * In addition the player can know the others player status and their positions on the routes and his status
+ * as for example how many assistants he has and the Permit Card that he has.
+ *
+ */
+
 public class InfoMatch {
 
 	private final String noneMsg = "-- none --";
@@ -16,6 +30,11 @@ public class InfoMatch {
 	private final ArrayList<Player> arrayListPlayer;
 	
 	private Player player;
+	
+	/**
+	 * The positive numbers, from 1 to 15 (18 or 21), are the index of the cities in the Enumeration
+	 * CityName. The number -3 is the border of a region. 
+	 */
 	
 	private final int[] posLow =
 		   	{1,	0, 	4, 	-3, 6, 	0, 	9, 	-3,	11,	0,	14,	-1,
@@ -68,6 +87,11 @@ public class InfoMatch {
 		this.arrayCity = field.getArrayCity();
 	}
 	
+	/**
+	 * This method shows the info of the cities. It prints all the cities and how the cities are linked.
+	 * In addition it prints in which city there is the king.
+	 */
+	
 	public void printInfoAllCities() {
 		println();
 		printCities();
@@ -103,7 +127,14 @@ public class InfoMatch {
 		println();
 		
 	}
-	
+	/**
+	 * This method is used to know the attributes of a specific city. The city is passed as a parameter
+	 * 
+	 * @param indexCity: the index of the city in the Enumeration
+	 * 
+	 * Then it shows the bonuses that are in the city, whos has already built an emporium in it, 
+	 * the color of the city. 
+	 */
 	public void printInfoCity(int indexCity) {
 		
 		println();
@@ -133,6 +164,10 @@ public class InfoMatch {
 		println();
 	}
 	
+	/**
+	 * This method prints all the regions and the Permit Card that are in the face up permit card area
+	 * of the regions, with their bonuses and their buildable cities.
+	 */
 	public void printInfoRegions() {
 		println();
 		for(int i=0; i<Constant.REGIONS_NUMBER; i++){
@@ -162,6 +197,11 @@ public class InfoMatch {
 		}
 	}
 	
+	/**
+	 * This is the method to print the Map from the arrays poslow, posmedium e poshigh. 
+	 * 
+	 * As I explained before, the numbers that are in the arrays represent the borders of the map.
+	 */
 	private void printCities() {
 		
 		int[] positions;
@@ -204,7 +244,9 @@ public class InfoMatch {
 		println(" " + RegionName.Sea + "    " + RegionName.Hill + "   " + RegionName.Mountain);
 	}
 	
-	
+	/**
+	 * This method read the matrix where are the cities links.
+	 */
 	private void printCityLinks() {
 		
 		println("City links:\n ");
@@ -228,6 +270,10 @@ public class InfoMatch {
 		println();
 	}
 	
+	/**
+	 * This method print all the balconies with their councillor. The first is at the left in the balcony
+	 * the last is in the right side.
+	 */
 	private void printBalconies() {
 		println();
 		Balcony[] arrayBalconies = field.getArrayBalcony();
@@ -243,6 +289,9 @@ public class InfoMatch {
 			
 	}
 	
+	/**
+	 * It shows the available councillors that players can elects.
+	 */
 	private void printAvailableCouncillors() {
 		
 		println();
@@ -254,6 +303,9 @@ public class InfoMatch {
 		println();
 	}
 	
+	/**
+	 * It shows the position of the players in the Richness Route, Victory Route and Nobility Route. 
+	 */
 	private void printPlayersInRoutes() {
 		println("Players status:");
 		for(Player aPlayer: arrayListPlayer){
