@@ -186,7 +186,6 @@ public class ControlMatch {
 		if(playersConnected==null){
 			return false;
 		}else if(playersConnected.size()==1){
-			playersConnected.get(0).getBroker().println(Message.youWon());
 			return false;
 		}else{
 			return true;
