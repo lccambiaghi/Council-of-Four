@@ -14,9 +14,9 @@ import it.polimi.ingsw.utils.ControlTimer;
 import it.polimi.ingsw.utils.Message;
 
 /**
- * This class control the market operations. It interacts with the player asking them what they
+ * This class controls the market operations. It interacts with the players asking them what they
  * want to sell and then what they want to buy.
- * When a player sells an object it's added to an arraylist of SellingObject, an useful
+ * When a player sells an object and this one is added to an ArrayList of SellingObject, an useful
  * abstract class that is in the model package.
  */
  
@@ -38,7 +38,7 @@ public class ControlMarket {
    
     /**
      * There is a control on the number of the players, if there are more than two players, 
-     * the market starts and notify all the players.
+     * the market starts and notifies all the players.
      */
     
     public void startMarket (){
@@ -56,11 +56,12 @@ public class ControlMarket {
     } 
     
     /**
-     * This method starts the selling phase and manages the turns of the players. For each player
-     * it creates a new Action. Then it launches the threadMarketHandler that manages the timer and the
-     * eventual disconnection by a player.
+     * This method starts the selling phase and manages the turns of the players. 
+     * 
+     * For each player it creates a new MarketSellAction. 
+     * Then it launches the threadMarketHandler that manages the timer and the
+     * eventual disconnection of the player.
      */
-    
     private void startSelling(){
     	
     	turn = 0;
@@ -85,6 +86,14 @@ public class ControlMarket {
     	
     }
    
+    
+    /**
+     * This method starts the buying phase and manages the turns of the players.
+     *  
+     * For each player it creates a new MarketByuAction. 
+     * Then it launches the threadMarketHandler that manages the timer and the
+     * eventual disconnection of the player.
+     */
     private void startBuying (){
     	
         turn = 0;
@@ -111,6 +120,16 @@ public class ControlMarket {
         while ((turn % playersBuyPhase.size()) != 0);      
     }
     
+    
+    /**
+     * This method handles the whole turn of the player.
+     * 
+     * It starts a thread whose task is to call the methods to communicate with the corresponding client.
+     * Then it waits until the player has completed the action or the timer to perform it expires.
+     * 
+	 * At last it checks the connection with the client and, if it has disconnected, it advises the 
+	 * other players of that.
+     */
     private void turnMarketHandler(){
     	
     	Thread turnMarketThread = new Thread(new Runnable(){
