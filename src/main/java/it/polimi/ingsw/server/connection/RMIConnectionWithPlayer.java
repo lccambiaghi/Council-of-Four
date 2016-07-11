@@ -15,13 +15,13 @@ import it.polimi.ingsw.utils.DisconnectedException;
  */
 public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 
-	private GameSide gameSide;
-	private Player player;
-	private RMIPlayerSideInterface rmiPlayerSide;
+	private final GameSide gameSide;
+	private final Player player;
+	private final RMIPlayerSideInterface rmiPlayerSide;
 	
 	private int intResult;
 	
-	private Object lock = new Object();
+	private final Object lock = new Object();
 	
 	/**
 	 * Constructor of the class
@@ -48,7 +48,7 @@ public class RMIConnectionWithPlayer implements ConnectionWithPlayerInterface{
 	}
 	
 	public void login(GameSide gameSide) throws DisconnectedException{
-		String nickname= null;
+		String nickname;
 		try {
 			rmiPlayerSide.login();
 			nickname = rmiPlayerSide.getNickname();

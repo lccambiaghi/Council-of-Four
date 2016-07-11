@@ -17,7 +17,7 @@ import java.util.*;
 
 public class NobilityRoute{
 
-	private Map <Player,Integer> nobilityMap = new HashMap<>();
+	private final Map <Player,Integer> nobilityMap = new HashMap<>();
 
 	private NobilityRouteCell [] arrayNobilityRouteCell = new NobilityRouteCell[Constant.NOBILITY_MAX+1];
 

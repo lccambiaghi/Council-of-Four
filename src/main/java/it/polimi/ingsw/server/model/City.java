@@ -23,7 +23,7 @@ public class City {
 
 	private final CityColor cityColor;
 
-	private ArrayList<Player> arrayListEmporium;
+	private final ArrayList<Player> arrayListEmporium;
 
 	private boolean colorBonusSatisfied;
 

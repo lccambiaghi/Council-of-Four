@@ -2,6 +2,8 @@ package it.polimi.ingsw.server.control;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
 import it.polimi.ingsw.server.control.actions.Action;
 import it.polimi.ingsw.server.control.actions.MarketBuyAction;
 import it.polimi.ingsw.server.control.actions.MarketSellAction;
@@ -22,15 +24,15 @@ public class ControlMarket {
  
     private final ArrayList <Player> players;
     
-    private ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
+    private final ArrayList<SellingObject> arrayListSellingObjects = new ArrayList<>();
     private final Match match;
     private Action action;
     
     private int turn;
     private Player player;
    
-    public ControlMarket (ArrayList<Player> arrayListPlayer, Match match){
-        this.players = new ArrayList<Player>(arrayListPlayer);
+    public ControlMarket (List<Player> arrayListPlayer, Match match){
+        this.players = new ArrayList<>(arrayListPlayer);
         this.match=match;
     }
    

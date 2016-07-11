@@ -14,7 +14,7 @@ public class Balcony {
 
 	private final String nameBalcony;
 
-	private ArrayList<Councillor> arrayListCouncillor = new ArrayList<>();
+	private final ArrayList<Councillor> arrayListCouncillor = new ArrayList<>();
 
 	/**
 	 * The constructor assigns the region name and adds councillors from available councillors to the balcony

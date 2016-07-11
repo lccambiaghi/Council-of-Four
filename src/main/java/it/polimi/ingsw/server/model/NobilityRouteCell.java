@@ -8,7 +8,7 @@ package it.polimi.ingsw.server.model;
 public class NobilityRouteCell {
 	
 	private int index;
-	private Bonus [] arrayBonus;
+	private final Bonus [] arrayBonus;
 
 	/**
 	 * The constructor creates the NobilityRouteCell, assigning it index and

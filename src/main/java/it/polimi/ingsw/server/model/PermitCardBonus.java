@@ -10,7 +10,7 @@ import java.util.Random;
 public class PermitCardBonus extends Bonus{
 	
 	/* The constructor assigns a random bonus to the created permit card*/
-	public PermitCardBonus(BonusName bonusName, int increment){
+	private PermitCardBonus(BonusName bonusName, int increment){
 		
 		this.bonusName=bonusName;
 		this.increment=increment;

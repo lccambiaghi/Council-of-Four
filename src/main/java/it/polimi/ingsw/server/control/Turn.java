@@ -35,8 +35,8 @@ import java.util.ArrayList;
  */
 public class Turn implements Runnable{
 
-	private Player player;
-	private Match match;
+	private final Player player;
+	private final Match match;
 	private ArrayList<Player> players = new ArrayList<>();
 
 	private int choice;
@@ -268,10 +268,6 @@ public class Turn implements Runnable{
 
 		actionsLeftHandler();
 		
-	}
-
-	private void broadcastOthers(String string, ArrayList<Player> players, Player playerNot) throws InterruptedException{
-			Broadcast.printlnBroadcastOthers(string, players, playerNot);
 	}
 	
 }

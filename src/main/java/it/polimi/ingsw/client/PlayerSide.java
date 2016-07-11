@@ -23,7 +23,7 @@ import it.polimi.ingsw.utils.MessageClient;
  */
 public class PlayerSide {
 	
-	private Object lock = new Object();
+	private final Object lock = new Object();
 	
 	private String nickname;
 	
@@ -45,7 +45,7 @@ public class PlayerSide {
 	/**
 	 * Constructor: it starts to communicate with the user and then with the server
 	 */
-	public PlayerSide() {
+	private PlayerSide() {
 		
 		initializeScanner();
 		
@@ -188,7 +188,7 @@ public class PlayerSide {
 	 * through the method "System.in.available".
 	 * It uses a "lock" that permits to control the stream in a Thread-safe way.
 	 */
-	class ScannerHandler implements Runnable{
+	private class ScannerHandler implements Runnable{
 		
 		@Override
 		public void run() {

@@ -35,14 +35,14 @@ import it.polimi.ingsw.utils.Message;
  */
 public class GameSide {
 	
-	private ArrayList<Player> arrayListAllPlayer = new ArrayList<>();
+	private final ArrayList<Player> arrayListAllPlayer = new ArrayList<>();
 	private final Object lockArrayListPlayer = new Object();
 	private final Object lockWaitingRoomFromGameSide = new Object();
 
 	private RMIGameSideInterface rmiGameSide;
 
 	private ServerSocket serverSocket;
-	private ListenSocket listenSocket;
+	private final ListenSocket listenSocket;
 	
 	private WaitingRoom waitingRoom;
 	
@@ -55,7 +55,7 @@ public class GameSide {
 	 * Initializes and locate the RMI registry and starts listening through Socket
 	 * launching a new thread
 	 */
-	public GameSide() {
+	private GameSide() {
 		
 		initializeRMI();
 		
@@ -94,7 +94,7 @@ public class GameSide {
 	 */
 	class ListenSocket extends Thread{
 		
-		private GameSide gameSide;
+		private final GameSide gameSide;
 		public ListenSocket(GameSide gameSide){this.gameSide=gameSide;}
 		
 		@Override
@@ -147,8 +147,8 @@ public class GameSide {
 	 */
 	class HandlePlayer extends Thread{
 		
-		private GameSide gameSide;
-		private Player player; 
+		private final GameSide gameSide;
+		private final Player player;
 		
 		public HandlePlayer(GameSide gameSide, Player player){
 			this.gameSide=gameSide;

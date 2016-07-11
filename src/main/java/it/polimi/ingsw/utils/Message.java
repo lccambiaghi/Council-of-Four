@@ -3,6 +3,7 @@ package it.polimi.ingsw.utils;
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.server.model.*;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -494,7 +495,7 @@ public final class Message {
      */
 	public static String getInfoPermitCard (PermitCard sellingPermitCard, int price){
 
-		return "PermitCard - Buildable Cities: " + sellingPermitCard.getArrayBuildableCities().toString() +
+		return "PermitCard - Buildable Cities: " + Arrays.toString(sellingPermitCard.getArrayBuildableCities()) +
 				"\nThe price is: " + price + " coins";
 
 	}

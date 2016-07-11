@@ -12,7 +12,7 @@ import it.polimi.ingsw.utils.Message;
 
 public class SellingPoliticCard extends SellingObject{
 
-	private PoliticCard sellingPoliticCard;
+	private final PoliticCard sellingPoliticCard;
 	
 	public SellingPoliticCard (PoliticCard politicCard, Player player, int price){
 		this.sellingPoliticCard=politicCard;

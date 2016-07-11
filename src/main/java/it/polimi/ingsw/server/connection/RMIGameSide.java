@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.control.GameSide;
 
 public class RMIGameSide extends UnicastRemoteObject implements RMIGameSideInterface{
 	
-	private GameSide gameSide;
+	private final GameSide gameSide;
 	
 	public RMIGameSide(GameSide gameSide) throws RemoteException{
 		this.gameSide=gameSide;

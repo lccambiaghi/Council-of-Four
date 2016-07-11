@@ -8,7 +8,7 @@ import it.polimi.ingsw.utils.Constant;
  */
 public class FaceUpPermitCardArea {
 	
-	private PermitCard[] arrayPermitCard;
+	private final PermitCard[] arrayPermitCard;
 
 	private final City[] arrayBuildableCities;
 

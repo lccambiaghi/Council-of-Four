@@ -33,10 +33,10 @@ import it.polimi.ingsw.utils.Message;
  */
 public class WaitingRoom extends Thread{
 
-	private ArrayList<Player> arrayListPlayerMatch = new ArrayList<>();
+	private final ArrayList<Player> arrayListPlayerMatch = new ArrayList<>();
 	
-	private GameSide gameSide;
-	private Player firstPlayer;
+	private final GameSide gameSide;
+	private final Player firstPlayer;
 	
 	private int playersMaxNumber;
 	private Configurations config = null;
@@ -126,9 +126,9 @@ public class WaitingRoom extends Thread{
 	 */
 	private void removeInactivePlayersAndHandleActiveOnes(){
 		Player p;
-		for(int i=0; i<arrayListPlayerMatch.size(); i++){
-			p=arrayListPlayerMatch.get(i);
-			if(!p.isConnected())
+		for (Player anArrayListPlayerMatch : arrayListPlayerMatch) {
+			p = anArrayListPlayerMatch;
+			if (!p.isConnected())
 				gameSide.removePlayerFromArrayList(p);
 			else
 				gameSide.startHandlePlayer(gameSide, p);
@@ -268,8 +268,8 @@ public class WaitingRoom extends Thread{
 	 */
 	private void saveFileConfigurations(Configurations config){
 		
-		FileOutputStream fileOutputStream = null;
-		ObjectOutputStream objectOutputStream = null;
+		FileOutputStream fileOutputStream;
+		ObjectOutputStream objectOutputStream;
 		try {
 			fileOutputStream = new FileOutputStream(Constant.PATH_FILE_CONFIGURATIONS);
 			objectOutputStream = new ObjectOutputStream(fileOutputStream);

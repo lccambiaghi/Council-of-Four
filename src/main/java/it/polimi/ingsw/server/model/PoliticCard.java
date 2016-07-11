@@ -7,7 +7,7 @@ package it.polimi.ingsw.server.model;
 
 public class PoliticCard {
 	
-	private Color cardColor;
+	private final Color cardColor;
 
 	/**
 	 * The constructor assigns a random color to the newly created politic card

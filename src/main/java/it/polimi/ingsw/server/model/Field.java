@@ -26,13 +26,13 @@ public class Field {
 
 	private AvailableCouncillors availableCouncillors;
 
-	private ArrayList<Player> arrayListPlayer;
+	private final ArrayList<Player> arrayListPlayer;
 
 	private NobilityRoute nobilityRoute;
 
 	private final Region[] arrayRegion = new Region[Constant.REGIONS_NUMBER];
 
-	private Deque<Integer> kingRewardTiles = new ArrayDeque<>();
+	private final Deque<Integer> kingRewardTiles = new ArrayDeque<>();
 	
 	private King king;
 

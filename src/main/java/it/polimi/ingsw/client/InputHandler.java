@@ -21,8 +21,8 @@ import it.polimi.ingsw.server.model.CityName;
 
 public class InputHandler {
 
-	private Scanner in;
-	private PlayerSide playerSide;
+	private final Scanner in;
+	private final PlayerSide playerSide;
 	
 	private boolean stopped = false;
 	
@@ -148,7 +148,7 @@ public class InputHandler {
 	public Character[] inputCity (CityName currentCity, CityName lastCity){
 		
 		String string;
-		boolean correct=true;
+		boolean correct;
 		ArrayList <Character> temp;
 		
 		int asciiLowerBound= (int) currentCity.toString().charAt(0);

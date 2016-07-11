@@ -18,13 +18,13 @@ import it.polimi.ingsw.utils.Constant;
 
 public class Match {
 
-	private ArrayList<Player> arrayListPlayer;
+	private final ArrayList<Player> arrayListPlayer;
 
-	private Field field;
+	private final Field field;
 
-	private ControlMarket market;
+	private final ControlMarket market;
 
-	private InfoMatch infoMatch;
+	private final InfoMatch infoMatch;
 	
 	/**
 	 * It assigns the initially attributes of the players, that it receives as parameter.

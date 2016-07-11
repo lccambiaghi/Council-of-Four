@@ -7,9 +7,9 @@ package it.polimi.ingsw.server.model;
 
 public class Region {
 
-	private RegionName regionName;
-	private City[] arrayCity;
-	private FaceUpPermitCardArea faceUpPermitCardArea;
+	private final RegionName regionName;
+	private final City[] arrayCity;
+	private final FaceUpPermitCardArea faceUpPermitCardArea;
 	private boolean regionBonusSatisfied;
 	
 	/**

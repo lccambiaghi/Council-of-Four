@@ -123,9 +123,9 @@ public class BuildEmporiumPermitCardMainAction extends Action {
 
 			City[] arrayCity = permitCard.getArrayBuildableCities();
 
-			for (int j = 0; j < arrayCity.length; j++) {
+			for (City anArrayCity : arrayCity) {
 
-				if (!arrayCity[j].isEmporiumAlreadyBuilt(player)) {
+				if (!anArrayCity.isEmporiumAlreadyBuilt(player)) {
 
 					Collections.swap(playerPermitCards, i, numberUsablePermitCards);
 

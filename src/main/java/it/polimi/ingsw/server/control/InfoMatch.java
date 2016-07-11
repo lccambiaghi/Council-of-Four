@@ -8,30 +8,30 @@ import it.polimi.ingsw.utils.Constant;
 
 public class InfoMatch {
 
-	private String noneMsg = "-- none --";
+	private final String noneMsg = "-- none --";
 	
-	private Field field;
+	private final Field field;
 	
-	private City[] arrayCity;
-	private ArrayList<Player> arrayListPlayer;
+	private final City[] arrayCity;
+	private final ArrayList<Player> arrayListPlayer;
 	
 	private Player player;
 	
-	private int[] posLow =
+	private final int[] posLow =
 		   	{1,	0, 	4, 	-3, 6, 	0, 	9, 	-3,	11,	0,	14,	-1,
 			0,	0,	0,	-3,	0,	0,	0,	-3,	0,	0,	0,	-1,
 		   	2, 	0, 	5, 	-3, 7, 	0,	10, -3,	12,	0,	15,	-1,
 			0,	0,	0,	-3,	0,	0,	0,	-3,	0,	0,	0,	-1,
 			0, 	3, 	0, 	-3, 0, 	8, 	0, 	-3,	 0,	13,	0,	-2};
 	
-	private int[] posMedium =
+	private final int[] posMedium =
 			{1,	0,	4,	-3,	7,	0,	10,	-3,	13,	0,	16,	-1,
 			0,	0,	0,	-3,	0,	0,	0,	-3,	0,	0,	0,	-1,
 			2,	0,	5,	-3,	8,	0,	11,	-3,	14,	0,	17,	-1,
 			0,	0,	0,	-3,	0,	0,	0,	-3,	0,	0,	0,	-1,
 			3,	0,	6,	-3,	9,	0,	12,	-3,	15,	0,	18,	-2};
 	
-	private int[] posHigh =
+	private final int[] posHigh =
 			{1,	0,	5,	-3,	8,	0,	12,	-3,	15,	0,	19,	-1,
 			0,	4,	0,	-3,	0,	11,	0,	-3,	0,	18,	0,	-1,		
 			2,	0,	6,	-3,	9,	0,	13,	-3,	16,	0,	20,	-1,

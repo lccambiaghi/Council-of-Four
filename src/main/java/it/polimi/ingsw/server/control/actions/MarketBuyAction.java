@@ -61,7 +61,6 @@ public class MarketBuyAction extends Action {
             do{
                 choosenObject = player.getBroker().askInputNumber(0, arrayListSellingObjects.size())-1;
                 if(choosenObject==-1){
-                    buyingSuccessful=true;
                     return false;
                 }              
                 else{
@@ -90,7 +89,7 @@ public class MarketBuyAction extends Action {
      * @return true if he has sufficient money, false otherwise
      * @throws InterruptedException
      */
-    private boolean canBuy(int price, Player playerTurn) throws InterruptedException{
+    private boolean canBuy(int price, Player playerTurn) {
         if(checkIfEnoughRichness(playerTurn, price)){
             return true;
         }

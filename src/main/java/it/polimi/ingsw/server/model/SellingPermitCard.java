@@ -11,7 +11,7 @@ import it.polimi.ingsw.utils.Message;
 
 public class SellingPermitCard extends SellingObject {
 
-	private PermitCard sellingPermitCard;
+	private final PermitCard sellingPermitCard;
 	
 	public SellingPermitCard (PermitCard permitCard, Player player, int price){
 		this.sellingPermitCard=permitCard;

@@ -17,7 +17,7 @@ import it.polimi.ingsw.utils.Constant;
  */
 public class SocketConnection {
 	
-	private PlayerSide playerSide;
+	private final PlayerSide playerSide;
 	
 	private Socket mySocket;
 	private Scanner inSocket;
@@ -81,7 +81,7 @@ public class SocketConnection {
 	 * @param object to be sent
 	 */
 	public void sendObjectTS(Object object){
-		ObjectOutputStream objectOutputStream = null;
+		ObjectOutputStream objectOutputStream;
 		try {
 			objectOutputStream = new ObjectOutputStream(mySocket.getOutputStream());
 			objectOutputStream.writeObject(object);

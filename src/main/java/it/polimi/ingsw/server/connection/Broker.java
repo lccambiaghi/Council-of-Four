@@ -24,8 +24,8 @@ import it.polimi.ingsw.utils.DisconnectedException;
  */
 public class Broker {
 
-	private ConnectionWithPlayerInterface connectionWithPlayer;
-	private Player player;
+	private final ConnectionWithPlayerInterface connectionWithPlayer;
+	private final Player player;
 	
 	/**
 	 * Constructor of the class

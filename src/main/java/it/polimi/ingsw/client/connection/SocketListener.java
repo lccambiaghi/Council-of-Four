@@ -11,8 +11,8 @@ public class SocketListener {
 	private boolean inputStop = false;
 	
 	private String message;
-	private PlayerSide playerSide;
-	private SocketConnection socketConnection;
+	private final PlayerSide playerSide;
+	private final SocketConnection socketConnection;
 	
 	/**
 	 * The constructor of the class
@@ -96,8 +96,8 @@ public class SocketListener {
 	 */
 	class HandleInputNumber extends Thread{
 		
-		int lowerBound;
-		int upperBound;
+		final int lowerBound;
+		final int upperBound;
 		
 		public HandleInputNumber(int lowerBound,int upperBound){
 			this.lowerBound=lowerBound;

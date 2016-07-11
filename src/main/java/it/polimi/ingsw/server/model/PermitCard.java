@@ -14,7 +14,7 @@ import it.polimi.ingsw.utils.Constant;
 
 public class PermitCard {
 
-	private City[] arrayBuildableCities;
+	private final City[] arrayBuildableCities;
 
 	private Bonus[] arrayBonus;
 	

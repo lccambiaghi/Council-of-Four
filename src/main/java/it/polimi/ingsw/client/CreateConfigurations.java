@@ -20,7 +20,7 @@ import it.polimi.ingsw.utils.Constant;
 
 public class CreateConfigurations{
 
-	private PlayerSide playerSide;
+	private final PlayerSide playerSide;
 	private Configurations config;
 	private final InputHandler inputHandler;
 	
@@ -38,7 +38,7 @@ public class CreateConfigurations{
 		return config;
 	}
 	
-	public Configurations startCreating(){
+	public void startCreating(){
 		
 		this.config = new Configurations();
 		
@@ -91,9 +91,9 @@ public class CreateConfigurations{
 					System.out.print(CityName.getCityNameFromIndex(j).toString()+" ");
 				}
 				Character[] input=inputHandler.inputCity(cityName,CityName.getCityNameFromIndex(cityNumber-1));
-				for (int j=0; j<input.length;j++){
-					    cityLinksMatrix[i][CityName.valueOf(String.valueOf(input[j])).ordinal()]=1;				    
-					}
+				for (Character anInput : input) {
+					cityLinksMatrix[i][CityName.valueOf(String.valueOf(anInput)).ordinal()] = 1;
+				}
 				}
 				
 			for(int i=0; i<cityNumber; i++){
@@ -144,8 +144,7 @@ public class CreateConfigurations{
 					+"Insert a value between " + numberBonusesMin + " and 5");
 			config.setCityBonusNumberMax(inputHandler.inputNumber(numberBonusesMin, 5));
 		}
-		
-		return config;
+
 	}
 	
 	/**
@@ -180,8 +179,8 @@ public class CreateConfigurations{
 	private ArrayList <CityBonus> askForBonus (int i){
 		CityName cityName = CityName.getCityNameFromIndex(i) ;
 		ArrayList <CityBonus> cityBonus = new ArrayList <>();
-		int increment=0;
-		BonusName chosenBonus=null;
+		int increment;
+		BonusName chosenBonus;
 		int choice;
 		ArrayList <Integer> oldChoices = new ArrayList <>();
 		

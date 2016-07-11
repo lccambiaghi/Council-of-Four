@@ -25,7 +25,7 @@ import it.polimi.ingsw.utils.Constant;
  */
 public class RMIConnection {
 
-	private PlayerSide playerSide;
+	private final PlayerSide playerSide;
 	
 	private RMIGameSideInterface rmiGameSide;
 	private RMIPlayerSideInterface rmiPlayerSide;
