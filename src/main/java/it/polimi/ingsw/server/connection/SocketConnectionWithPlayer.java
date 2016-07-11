@@ -27,6 +27,7 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 	private PrintWriter outputSocket;
 	
 	private int intResult;
+	private boolean stopped = false;
 	
 	private final Object lock = new Object();
 
@@ -127,7 +128,17 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 		sendString("SOCKETinputNumber");
 		sendString(String.valueOf(lowerBound));
 		sendString(String.valueOf(upperBound));
-		this.intResult = Integer.parseInt(receiveString());
+		while(!stopped){
+			try {
+				if(playerSocket.getInputStream().available()>0){
+					intResult = Integer.parseInt(receiveString());
+					stopped=true;
+				}else{
+					Thread.sleep(100);
+				}
+			} catch (NumberFormatException | IOException | InterruptedException e) {}
+		}
+		stopped=false;
 		synchronized (lock) {
 			lock.notify();
 		}
@@ -135,6 +146,7 @@ public class SocketConnectionWithPlayer implements ConnectionWithPlayerInterface
 	
 	public void stopInputNumber() throws DisconnectedException{
 		sendString("SOCKETstopInputNumber");
+		stopped=true;
 	}
 	
 	public void print(String string) throws DisconnectedException{
