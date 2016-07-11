@@ -27,6 +27,9 @@ public final class Message {
 		return "It has been a pleasure having you as a player, BYE BYE!";
 	}
 	
+	/**
+	 * @return message
+	 */
 	public static String turnOverBecauseTimer(){
 		return "\nThe timer of your turn has expired. Your turn will be skipped!\n ";
 	}
