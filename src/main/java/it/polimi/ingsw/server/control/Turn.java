@@ -219,6 +219,7 @@ public class Turn implements Runnable{
 		if (action.preliminarySteps()) {
 			action.execute();
 			player.setQuickActionDone(true);
+			player.getBroker().println(Message.actionCompleted());
 			Broadcast.printlnBroadcastOthers(action.getResultMsg(), players, player);
 		}
 		
@@ -263,6 +264,7 @@ public class Turn implements Runnable{
 		if (action.preliminarySteps()) {
 			action.execute();
 			player.decrementMainActionLeft(1);
+			player.getBroker().println(Message.actionCompleted());
 			Broadcast.printlnBroadcastOthers(action.getResultMsg(), players, player);
 		}
 

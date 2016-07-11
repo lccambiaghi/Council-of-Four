@@ -129,6 +129,13 @@ public final class Message {
 	/**
 	 * @return message
      */
+	public static String actionCompleted(){
+		return "\nAction completed succesfully!\n ";
+	}
+	
+	/**
+	 * @return message
+     */
 	public static String chooseRegion_1_3(){
 		return "Choose a region:\n" +
 			"1. Sea\n" +

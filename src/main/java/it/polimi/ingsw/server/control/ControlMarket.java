@@ -119,6 +119,7 @@ public class ControlMarket {
 	    			player.getBroker().println(Message.yourTurn(Constant.TIMER_SECONDS_MARKET_ACTION));
 					if (action.preliminarySteps()){
 					    action.execute();
+					    player.getBroker().println(Message.actionCompleted());
 			    		Broadcast.printlnBroadcastOthers(action.getResultMsg(), players, player);
 					}
 				} catch (InterruptedException e) {}
