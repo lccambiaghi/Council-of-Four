@@ -9,29 +9,30 @@ import it.polimi.ingsw.utils.Constant;
 import java.util.ArrayList;
 
 /**
- * This class is used to interact with the first player of the match, it allows to choose
- * how many custom parameters he wants into the match. 
- * In detail our game allow to choose an existing configurations or to create the custom
+ * This class is used to interact with the first player of the match, it allows him to set
+ * the custom parameters he wants into the match.
+ *
+ * In detail our game allows to choose existing configurations or to create custom
  * configurations. So we have implemented the match creation with parameters and the
- * arbitrary creations of the configurations by the first player. 
+ * arbitrary creations of the configurations bythe first player.
  * 
- *  The first player first of all choose the number of the Cities with which to play
- *  (15,18,21), to set the bonuses number minimum and maximum that are on the PermitCards,
- *  the number of cells of the Nobility Route with bonuses.
+ *  The first player first of all chooses the number of the Cities with which to play
+ *  (15,18,21), then sets the minimum and maximum number of bonuses present on PermitCards,
+ *  the number of cells of the Nobility Route and their bonuses.
  *  
- *  Then we ask to the player if he wants to play with pre-configured links into the cities,
- *  if yes he can choose 3 different levels of connections (low, medium, high), so from
- *  lower connection to higher. Otherwise he can creates his own map, connecting as he wants
- *  the cities each other, respecting some costraints, as for example the city that he can 
- *  insert only following cities. This is important because the data is stored into a 
- *  square matrix with dimension "number cities". Next, the matrix is made symmetric in order to
+ *  Then we ask to the player if he wants to play with cities' pre-configured links,
+ *  if yes he can choose 3 different levels of connections.
+ *  Otherwise he can create his own map, connecting cities like he wants
+ *  respecting some costraints: for example city A can
+ *  only be linked to cities B, C, D, etc. This is important because the data is stored into a
+ *  square matrix with dimension "number cities". Next, this matrix is made symmetric in order to
  *  link cities on a one-to-one correspondence. Our assumption was that the minimum number of links
  *  of each city must be 1.
  *  
  *  In the same way are managed the bonuses of the cities. If the user decides to play with 
- *  random bonuses, the server asks to him how many bonuses he wants to set as minimum and maximum.
- *  Otherwise the player can choose the bonuses and the increments. In addition he can choose if
- *  don't set any bonus in a city or insert all of them.
+ *  random bonuses, the server asks him how many bonuses he wants to set as minimum and maximum.
+ *
+ *  Otherwise the player can choose for each city the bonus types and their increments.
  * 
  */
 
@@ -42,7 +43,7 @@ public class CreateConfigurations{
 	
 	/**
 	 * Constructor of the class
-	 * @param inputHandler:
+	 * @param inputHandler
 	 */
 	public CreateConfigurations(InputHandler inputHandler){
 		this.inputHandler=inputHandler;
@@ -142,7 +143,7 @@ public class CreateConfigurations{
 		if(!config.isCityBonusRandom()){
 		    ArrayList<CityBonus> arrayListCityBonus[] = new ArrayList[cityNumber];
 		    for (int i=0; i<arrayListCityBonus.length; i++){
-		    	if(i!=Constant.INITIALLY_KING_CITY){
+		    	if(i!=Constant.KING_INITIAL_CITY_INDEX){
 		    	arrayListCityBonus[i] = new ArrayList<>();
 		    	arrayListCityBonus[i]=askForBonus(i);
 		    	}
@@ -165,7 +166,7 @@ public class CreateConfigurations{
 	 * This method is used to select which level of connections the players wants among
 	 * the cities. 
 	 * @param inputNumber: a number among 1 and 3, inserted by the player
-	 * @return: the char combined to the input level
+	 * @return the char combined to the input level
 	 */
 	private char chooseDifficulty(int inputNumber) {
 		char difficulty;
