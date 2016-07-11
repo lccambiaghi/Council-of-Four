@@ -38,7 +38,7 @@ public class MarketBuyAction extends Action {
      * and if the answer is positive, it shows all the objects that are in the arraylist.
      * The player can choose one of them or quit the market. If it hasn't money and he cannot
      * buy nothing, he can presses 0 and quits the buying phase.
-     * @param arrayListSelingObjects
+     *
      * @throws InterruptedException
      */
      
@@ -84,11 +84,9 @@ public class MarketBuyAction extends Action {
     }
    
     /**
-     * The method verify if the buyer has the sufficient richness to buy the object, then
-     * it provides to set the new values of the richness for the buyer and the seller.
+     * The method verify if the buyer has the sufficient richness to buy the object
      * @param price
      * @param playerTurn: the buyer
-     * @param sellingPlayer
      * @return true if he has sufficient money, false otherwise
      * @throws InterruptedException
      */

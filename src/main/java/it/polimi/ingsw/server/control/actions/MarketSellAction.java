@@ -100,7 +100,7 @@ public class MarketSellAction extends Action{
      * This method read the value inserted by the player and call the right method to
      * ask to the player the physical object. When it has finished the object is added
      * to the arraylist of selling object
-     * @param playerTurn
+     * @param player
      * @param type: it could be "PoliticCard", "PermitCard" or "Assistants"
      * @throws InterruptedException
      */
@@ -136,7 +136,7 @@ public class MarketSellAction extends Action{
      * a value from an lowerbound to an upperbound. After that he has to choose the price of the
      * object.  
      * @param playerTurn
-     * @return
+     * @return the Selling Politic Card Object
      * @throws InterruptedException
      */
    
@@ -157,7 +157,7 @@ public class MarketSellAction extends Action{
      * a value from an lowerbound to an upperbound. After that he has to choose the price of the
      * object.  
      * @param playerTurn
-     * @return
+     * @return the Selling Permit Card Object
      * @throws InterruptedException
      */
     private PermitCard askPermitCard(Player playerTurn) throws InterruptedException{
@@ -178,7 +178,7 @@ public class MarketSellAction extends Action{
      * After that he has to choose the price of them.
      *  
      * @param playerTurn
-     * @return
+     * @return the Selling Assistants Object
      * @throws InterruptedException
      */
     private int askAssistant(Player playerTurn) throws InterruptedException{
