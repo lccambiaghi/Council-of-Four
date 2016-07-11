@@ -264,12 +264,12 @@ public final class Message {
 	public static String choosePermitCardNoBonus(List <PermitCard> playerPermitCards){
 		StringBuilder message = new StringBuilder ();
 
-		message.append("Choose a Permit Card:\n Your Cards: ");
+		message.append("Choose a Permit Card:\nYour Cards: ");
 
 		for (int i=0; i<playerPermitCards.size(); i++){
 			PermitCard permitCard = playerPermitCards.get(i);
 
-			message.append("\n").append(i+1).append(". \nBuildable Cities:\n");
+			message.append("\n").append(i+1).append(". \nBuildable Cities: ");
 			for (City buildableCity : permitCard.getArrayBuildableCities()){
 				message.append(buildableCity.getCityName().toString()).append(" ");
 			}
