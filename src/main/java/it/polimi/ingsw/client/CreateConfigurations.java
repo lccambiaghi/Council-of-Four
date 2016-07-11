@@ -11,10 +11,27 @@ import java.util.ArrayList;
 /**
  * This class is used to interact with the first player of the match, it allows to choose
  * how many custom parameters he wants into the match. 
- * In detail the user can choose the number of the cities, the minimum and maximum values
- * of the bonuses that he wants on the Permit Cards, if he wants play with pre-configured
- * maps or create his personal map (connecting each city) and if the bonuses of the cities
- * are random or if he wants choose them.
+ * In detail our game allow to choose an existing configurations or to create the custom
+ * configurations. So we have implemented the match creation with parameters and the
+ * arbitrary creations of the configurations by the first player. 
+ * 
+ *  The first player first of all choose the number of the Cities with which to play
+ *  (15,18,21), to set the bonuses number minimum and maximum that are on the PermitCards,
+ *  the number of cells of the Nobility Route with bonuses.
+ *  
+ *  Then we ask to the player if he wants to play with pre-configured links into the cities,
+ *  if yes he can choose 3 different levels of connections (low, medium, high), so from
+ *  lower connection to higher. Otherwise he can creates his own map, connecting as he wants
+ *  the cities each other, respecting some costraints, as for example the city that he can 
+ *  insert only following cities. This is important because the data is stored into a 
+ *  square matrix with dimension "number cities". Next, the matrix is made symmetric in order to
+ *  link cities on a one-to-one correspondence. Our assumption was that the minimum number of links
+ *  of each city must be 1.
+ *  
+ *  In the same way are managed the bonuses of the cities. If the user decides to play with 
+ *  random bonuses, the server asks to him how many bonuses he wants to set as minimum and maximum.
+ *  Otherwise the player can choose the bonuses and the increments. In addition he can choose if
+ *  don't set any bonus in a city or insert all of them.
  * 
  */
 
