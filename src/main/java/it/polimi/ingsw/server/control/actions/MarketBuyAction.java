@@ -55,10 +55,10 @@ public class MarketBuyAction extends Action {
         if(player.getBroker().askInputNumber(1,2)==1){
             player.getBroker().println(Message.askObjectToBuy());
             player.getBroker().println(Message.skipBuying());
+            do{
             for (int i=0; i<arrayListSellingObjects.size();i++){
                 player.getBroker().println((i+1)+ ". " + arrayListSellingObjects.get(i).getObjectInfo());
             }
-            do{
                 choosenObject = player.getBroker().askInputNumber(0, arrayListSellingObjects.size())-1;
                 if(choosenObject==-1){
                     return false;
