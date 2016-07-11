@@ -372,7 +372,9 @@ public class ControlMatch {
 			p.resetMatchStatus();
 		try {
 			Thread.sleep(1000); //Gives moment of glory for the winner and meditation for the losers
-		} catch (InterruptedException e) {}
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 	}
 	
 }
