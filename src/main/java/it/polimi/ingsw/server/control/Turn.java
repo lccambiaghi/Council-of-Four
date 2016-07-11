@@ -67,7 +67,7 @@ public class Turn implements Runnable{
 		try {
 			infoOrAction();
 		} catch (InterruptedException e) {
-			System.out.println("The thread managing " + player.getNickname() + " has been successfully interrupted");
+			//Thread interrupted because of timer
 		}
 		
 	}

@@ -152,6 +152,7 @@ public class ControlMarket {
     		turnMarketThread.interrupt();
     		while(turnMarketThread.isAlive()) 
     			;
+    		player.getBroker().println(Message.turnOverBecauseTimer());
     	}
     	
     	if(!player.isConnected()){

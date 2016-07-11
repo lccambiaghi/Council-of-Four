@@ -27,6 +27,10 @@ public final class Message {
 		return "It has been a pleasure having you as a player, BYE BYE!";
 	}
 	
+	public static String turnOverBecauseTimer(){
+		return "\nThe timer of your turn has expired. Your turn will be skipped!\n ";
+	}
+	
 	/**
 	 * @param players whose nickname has to be printed
 	 * @return message
@@ -269,7 +273,7 @@ public final class Message {
 		for (int i=0; i<playerPermitCards.size(); i++){
 			PermitCard permitCard = playerPermitCards.get(i);
 
-			message.append("\n").append(i+1).append(". \nBuildable Cities: ");
+			message.append("\n").append(i+1).append(". Buildable Cities: ");
 			for (City buildableCity : permitCard.getArrayBuildableCities()){
 				message.append(buildableCity.getCityName().toString()).append(" ");
 			}

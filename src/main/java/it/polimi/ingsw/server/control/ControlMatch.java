@@ -256,6 +256,7 @@ public class ControlMatch {
 			turnThread.interrupt();
 			while(turnThread.isAlive()) 
     			;
+			player.getBroker().println(Message.turnOverBecauseTimer());
 		}
 		
 	}
@@ -369,6 +370,9 @@ public class ControlMatch {
 	private void resetPlayersStatus(){
 		for(Player p: playersConnected)
 			p.resetMatchStatus();
+		try {
+			Thread.sleep(1000); //Gives moment of glory for the winner and meditation for the losers
+		} catch (InterruptedException e) {}
 	}
 	
 }
