@@ -131,7 +131,7 @@ public class Broker {
 				} catch (DisconnectedException e1) {
 					player.setConnected(false);
 				}
-				throw new InterruptedException();
+				throw e;
 			}
 		}
 		return connectionWithPlayer.getIntResult();

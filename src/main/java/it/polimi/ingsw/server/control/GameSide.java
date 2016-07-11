@@ -202,7 +202,9 @@ public class GameSide {
 			int choice = 0;
 			try {
 				choice = player.getBroker().askInputNumber(1, 2);
-			} catch (InterruptedException e){}
+			} catch (InterruptedException e){
+				Thread.currentThread().interrupt();
+			}
 			return choice==1;
 		}
 		
@@ -232,7 +234,9 @@ public class GameSide {
 							lockWaitingRoom.wait();
 						}
 						
-					} catch (InterruptedException e) {}
+					} catch (InterruptedException e) {
+						Thread.currentThread().interrupt();
+					}
 					
 					
 				}else{

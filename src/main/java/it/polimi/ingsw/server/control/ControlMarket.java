@@ -141,7 +141,9 @@ public class ControlMarket {
 					    player.getBroker().println(Message.actionCompleted());
 			    		Broadcast.printlnBroadcastOthers(action.getResultMsg(), players, player);
 					}
-				} catch (InterruptedException e) {}
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
     		}
 		});
     	turnMarketThread.start();

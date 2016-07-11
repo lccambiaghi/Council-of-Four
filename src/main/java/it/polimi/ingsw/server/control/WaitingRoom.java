@@ -94,7 +94,9 @@ public class WaitingRoom extends Thread{
 			
 			try {
 				Thread.sleep(1000);
-			} catch (InterruptedException e) {}
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
 			
 		}
 
@@ -153,6 +155,7 @@ public class WaitingRoom extends Thread{
 					
 				} catch (InterruptedException e) {
 					firstPlayer.getBroker().println("You'll play using the standard max players number and configurations");
+					Thread.currentThread().interrupt();
 				}finally{
 					firstPlayer.getBroker().println("You are waiting for other players to join you!");
 				}

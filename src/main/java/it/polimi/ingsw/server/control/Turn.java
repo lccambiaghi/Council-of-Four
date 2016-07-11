@@ -67,6 +67,7 @@ public class Turn implements Runnable{
 		try {
 			infoOrAction();
 		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
 			//Thread interrupted because of timer
 		}
 		
