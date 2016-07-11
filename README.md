@@ -15,4 +15,5 @@ RMI + Socket + CLI
 ADVANCED FEATURES:
 
 1) Configurable Map
+
 2) Automatic generation of game configurations
