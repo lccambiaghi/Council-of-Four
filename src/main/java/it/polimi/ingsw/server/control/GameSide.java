@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * common variables.
  *
  */
-public class GameSide implements Serializable{
+public class GameSide {
 	
 	private final ArrayList<Player> arrayListAllPlayer = new ArrayList<>();
 	private final Object lockArrayListPlayer = new Object();

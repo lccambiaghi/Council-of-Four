@@ -22,7 +22,7 @@ import java.util.Scanner;
  * chooseConnection: the method permits the user to choose the type of connection through which he wants
  * to connect to the server: Socket or RMI
  */
-public class PlayerSide implements Serializable{
+public class PlayerSide {
 	
 	private final Object lock = new Object();
 	
