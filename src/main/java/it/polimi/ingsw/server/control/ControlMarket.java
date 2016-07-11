@@ -1,5 +1,9 @@
 package it.polimi.ingsw.server.control;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import it.polimi.ingsw.server.control.actions.Action;
 import it.polimi.ingsw.server.control.actions.MarketBuyAction;
 import it.polimi.ingsw.server.control.actions.MarketSellAction;
@@ -8,10 +12,6 @@ import it.polimi.ingsw.server.model.SellingObject;
 import it.polimi.ingsw.utils.Constant;
 import it.polimi.ingsw.utils.ControlTimer;
 import it.polimi.ingsw.utils.Message;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * This class control the market operations. It interacts with the player asking them what they
@@ -130,6 +130,8 @@ public class ControlMarket {
     	
     	if(turnMarketThread.isAlive()){
     		turnMarketThread.interrupt();
+    		while(turnMarketThread.isAlive()) 
+    			;
     	}
     	
     	if(!player.isConnected()){
@@ -162,3 +164,4 @@ public class ControlMarket {
     }
    
 }
+

@@ -27,10 +27,10 @@ public class Constant {
 	public static final int PLAYERS_MAX_NUMBER = 8;
 	
 	//timers
-	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 300; //todo change it back
+	public static final int TIMER_SECONDS_TO_PERFORM_ACTION = 4; //TODO change it back
 	public static final int TIMER_SECONDS_NEW_MATCH = 20; 
 	public static final int TIMER_SECONDS_WAITING_CONFIGURATIONS = 10;
-	public static final int TIMER_SECONDS_MARKET_ACTION = 40;
+	public static final int TIMER_SECONDS_MARKET_ACTION = 4;
 
 	//assumptions
 	public static final int CITIES_NUMBER_LOW = 15;

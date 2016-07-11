@@ -1,10 +1,10 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.model.CityName;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import it.polimi.ingsw.server.model.CityName;
 
 
 /**
@@ -122,8 +122,10 @@ public class InputHandler {
 		boolean go = true;
 		while(go){
 			if(System.in.available() > 0){
-				go=false;
-				return in.nextLine();
+				if(System.in.available() > 0){
+					go=false;
+					return in.nextLine();
+				}
 			}else{
 				Thread.sleep(100);
 				if(stopped){
