@@ -1,14 +1,14 @@
 package it.polimi.ingsw.client;
 
-import java.io.IOException;
-import java.rmi.RemoteException;
-import java.util.Scanner;
-
 import it.polimi.ingsw.client.connection.RMIConnection;
 import it.polimi.ingsw.client.connection.SocketConnection;
 import it.polimi.ingsw.client.connection.SocketListener;
 import it.polimi.ingsw.server.model.Configurations;
 import it.polimi.ingsw.utils.MessageClient;
+
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.util.Scanner;
 
 /**
  * This class contains the main that launches the client.

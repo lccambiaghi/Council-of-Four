@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.utils.Constant;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import it.polimi.ingsw.utils.Constant;
 
 /**
  * This class handles the arrayList of availableCouncillors.

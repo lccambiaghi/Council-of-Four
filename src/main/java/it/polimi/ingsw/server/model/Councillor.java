@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.model.Color;
-
 /**
  * This class offers all the parameters and method needed to handle a councillor
  */

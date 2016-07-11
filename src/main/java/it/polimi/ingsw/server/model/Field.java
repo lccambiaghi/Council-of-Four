@@ -1,12 +1,12 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.control.Player;
+import it.polimi.ingsw.utils.Constant;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-
-import it.polimi.ingsw.server.control.Player;
-import it.polimi.ingsw.utils.Constant;
 
 /**
  * This is the core of the Model.

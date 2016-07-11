@@ -1,11 +1,11 @@
 package it.polimi.ingsw.server.control.actions;
 
-import java.util.ArrayList;
-
 import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.server.model.SellingObject;
 import it.polimi.ingsw.utils.Message;
+
+import java.util.ArrayList;
 
 /**
  * Preliminary Steps: the method verify that the arrayList of Selling Objects is not empty

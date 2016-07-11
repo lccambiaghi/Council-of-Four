@@ -1,8 +1,9 @@
 package it.polimi.ingsw.server.connection;
 
-import java.rmi.*;
-
 import it.polimi.ingsw.client.connection.RMIPlayerSideInterface;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 public interface RMIGameSideInterface extends Remote{
 

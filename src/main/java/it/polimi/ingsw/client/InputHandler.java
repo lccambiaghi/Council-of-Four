@@ -1,10 +1,10 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.server.model.CityName;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import it.polimi.ingsw.server.model.CityName;
 
 
 /**

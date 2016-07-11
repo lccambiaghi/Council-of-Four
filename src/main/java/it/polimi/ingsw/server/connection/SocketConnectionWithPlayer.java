@@ -1,16 +1,16 @@
 package it.polimi.ingsw.server.connection;
 
+import it.polimi.ingsw.server.control.GameSide;
+import it.polimi.ingsw.server.control.Player;
+import it.polimi.ingsw.server.model.Configurations;
+import it.polimi.ingsw.utils.DisconnectedException;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-import it.polimi.ingsw.server.control.GameSide;
-import it.polimi.ingsw.server.control.Player;
-import it.polimi.ingsw.server.model.Configurations;
-import it.polimi.ingsw.utils.DisconnectedException;
 
 /**
  * This class implements ConnectionWithPlayerInterface and implements its methods.

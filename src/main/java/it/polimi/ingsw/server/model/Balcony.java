@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.utils.Constant;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import it.polimi.ingsw.utils.Constant;
 
 /**
  * The Balcony class offers the methods to operate on the councillors of his balcony.

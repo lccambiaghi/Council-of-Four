@@ -1,14 +1,14 @@
 package it.polimi.ingsw.server.control;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-
 import it.polimi.ingsw.server.model.Configurations;
 import it.polimi.ingsw.utils.Constant;
 import it.polimi.ingsw.utils.ControlTimer;
 import it.polimi.ingsw.utils.Message;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 /**
  * This class permits to launch a match when enough players are connected to the match.

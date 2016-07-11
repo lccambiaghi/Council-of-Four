@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.utils.Constant;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
-
-import it.polimi.ingsw.utils.Constant;
 
 /**
  * This class creates the Permit Cards. It receives the city of the region and then with a random

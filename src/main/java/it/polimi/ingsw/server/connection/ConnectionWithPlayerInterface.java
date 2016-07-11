@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.connection;
 
 import it.polimi.ingsw.server.control.GameSide;
-import it.polimi.ingsw.server.control.Player;
 import it.polimi.ingsw.server.model.Configurations;
 import it.polimi.ingsw.utils.DisconnectedException;
 

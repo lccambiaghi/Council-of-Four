@@ -1,19 +1,13 @@
 package it.polimi.ingsw.server.control.actions;
 
+import it.polimi.ingsw.server.control.ControlMarket;
+import it.polimi.ingsw.server.control.Player;
+import it.polimi.ingsw.server.model.*;
+import it.polimi.ingsw.utils.Message;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import it.polimi.ingsw.server.control.ControlMarket;
-import it.polimi.ingsw.server.control.Player;
-import it.polimi.ingsw.server.model.Match;
-import it.polimi.ingsw.server.model.PermitCard;
-import it.polimi.ingsw.server.model.PoliticCard;
-import it.polimi.ingsw.server.model.SellingAssistants;
-import it.polimi.ingsw.server.model.SellingObject;
-import it.polimi.ingsw.server.model.SellingPermitCard;
-import it.polimi.ingsw.server.model.SellingPoliticCard;
-import it.polimi.ingsw.utils.Message;
 
 /**
  * Preliminary Steps: the method verifies that the player can sell something, doing a control on his objects.

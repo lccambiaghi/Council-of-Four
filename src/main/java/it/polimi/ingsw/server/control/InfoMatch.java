@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.control;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.utils.Constant;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfoMatch {
 

@@ -1,17 +1,17 @@
 package it.polimi.ingsw.server.control;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.rmi.Naming;
-import java.util.ArrayList;
-
 import it.polimi.ingsw.server.connection.RMIGameSide;
 import it.polimi.ingsw.server.connection.RMIGameSideInterface;
 import it.polimi.ingsw.server.connection.SocketConnectionWithPlayer;
 import it.polimi.ingsw.utils.Constant;
 import it.polimi.ingsw.utils.DisconnectedException;
 import it.polimi.ingsw.utils.Message;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.rmi.Naming;
+import java.util.ArrayList;
 
 /**
  * This class contains the main that launches the server.
